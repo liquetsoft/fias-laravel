@@ -23,7 +23,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Tests\\": "tests/"
+      "Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Tests\\": "tests/",
+      "Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Generator\\": "generator/"
     }
   },
   "repositories": [
