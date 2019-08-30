@@ -1,0 +1,12 @@
+version: '3.7'
+
+
+# container to run tests and other developer activities
+services:
+  php:
+    container_name: fias-laravel-php
+    image: fias-laravel-php
+    build:
+      context: php
+    volumes:
+      - ./../:/var/app:cached
