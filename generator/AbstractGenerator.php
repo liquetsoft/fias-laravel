@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 
+use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
 use SplFileInfo;
 use InvalidArgumentException;
+use RuntimeException;
 use Throwable;
 
 /**
@@ -20,14 +22,15 @@ abstract class AbstractGenerator
     protected $registry;
 
     /**
-     * Процесс генерации классов.
+     * Создает php класс для указанного дескриптора.
      *
-     * @param SplFileInfo $dir
-     * @param string      $namespace
+     * @param EntityDescriptor $descriptor
+     * @param SplFileInfo      $dir
+     * @param string           $namespace
      *
      * @throws Throwable
      */
-    abstract protected function generate(SplFileInfo $dir, string $namespace): void;
+    abstract protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace): void;
 
     /**
      * @param EntityRegistry $registry
@@ -56,6 +59,22 @@ abstract class AbstractGenerator
         } catch (Throwable $e) {
             $message = 'Error while class generation.';
             throw new RuntimeException($message, 0, $e);
+        }
+    }
+
+    /**
+     * Процесс генерации классов.
+     *
+     * @param SplFileInfo $dir
+     * @param string      $namespace
+     *
+     * @throws Throwable
+     */
+    protected function generate(SplFileInfo $dir, string $namespace): void
+    {
+        $descriptors = $this->registry->getDescriptors();
+        foreach ($descriptors as $descriptor) {
+            $this->generateClassByDescriptor($descriptor, $dir, $namespace);
         }
     }
 

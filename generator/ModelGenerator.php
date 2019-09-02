@@ -14,7 +14,6 @@ use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PsrPrinter;
 use SplFileInfo;
-use Throwable;
 
 /**
  * Объект, который создает классы моделей из описания моделей в yaml.
@@ -23,23 +22,6 @@ class ModelGenerator extends AbstractGenerator
 {
     /**
      * @inheritDoc
-     */
-    protected function generate(SplFileInfo $dir, string $namespace): void
-    {
-        $descriptors = $this->registry->getDescriptors();
-        foreach ($descriptors as $descriptor) {
-            $this->generateClassByDescriptor($descriptor, $dir, $namespace);
-        }
-    }
-
-    /**
-     * Создает php класс для указанного дескриптора.
-     *
-     * @param EntityDescriptor $descriptor
-     * @param SplFileInfo      $dir
-     * @param string           $namespace
-     *
-     * @throws Throwable
      */
     protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace): void
     {
