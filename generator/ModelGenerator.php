@@ -6,7 +6,6 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\EntityField;
 use Nette\PhpGenerator\PhpFile;
@@ -15,8 +14,6 @@ use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PsrPrinter;
 use SplFileInfo;
-use InvalidArgumentException;
-use RuntimeException;
 use Throwable;
 
 /**
@@ -25,47 +22,7 @@ use Throwable;
 class ModelGenerator extends AbstractGenerator
 {
     /**
-     * @var EntityRegistry
-     */
-    protected $registry;
-
-    /**
-     * @param EntityRegistry $registry
-     */
-    public function __construct(EntityRegistry $registry)
-    {
-        $this->registry = $registry;
-    }
-
-    /**
-     * Создает классы сущностей в указанной папке с указанным пространством имен.
-     *
-     * @param SplFileInfo $dir
-     * @param string      $namespace
-     *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
-     */
-    public function run(SplFileInfo $dir, string $namespace = ''): void
-    {
-        $this->checkDir($dir);
-        $unifiedNamespace = $this->unifyNamespace($namespace);
-
-        try {
-            $this->generate($dir, $unifiedNamespace);
-        } catch (Throwable $e) {
-            $message = 'Error while class generation.';
-            throw new RuntimeException($message, 0, $e);
-        }
-    }
-
-    /**
-     * Процесс генерации классов.
-     *
-     * @param SplFileInfo $dir
-     * @param string      $namespace
-     *
-     * @throws Throwable
+     * @inheritDoc
      */
     protected function generate(SplFileInfo $dir, string $namespace): void
     {

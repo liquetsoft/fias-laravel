@@ -4,14 +4,61 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 
+use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
 use SplFileInfo;
 use InvalidArgumentException;
+use Throwable;
 
 /**
  * Абстрактный класс для генераторов сущностей.
  */
 abstract class AbstractGenerator
 {
+    /**
+     * @var EntityRegistry
+     */
+    protected $registry;
+
+    /**
+     * Процесс генерации классов.
+     *
+     * @param SplFileInfo $dir
+     * @param string      $namespace
+     *
+     * @throws Throwable
+     */
+    abstract protected function generate(SplFileInfo $dir, string $namespace): void;
+
+    /**
+     * @param EntityRegistry $registry
+     */
+    public function __construct(EntityRegistry $registry)
+    {
+        $this->registry = $registry;
+    }
+
+    /**
+     * Создает классы сущностей в указанной папке с указанным пространством имен.
+     *
+     * @param SplFileInfo $dir
+     * @param string      $namespace
+     *
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     */
+    public function run(SplFileInfo $dir, string $namespace = ''): void
+    {
+        $this->checkDir($dir);
+        $unifiedNamespace = $this->unifyNamespace($namespace);
+
+        try {
+            $this->generate($dir, $unifiedNamespace);
+        } catch (Throwable $e) {
+            $message = 'Error while class generation.';
+            throw new RuntimeException($message, 0, $e);
+        }
+    }
+
     /**
      * Проверяет, что каталог существует и доступен на запись.
      *
