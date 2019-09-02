@@ -19,6 +19,7 @@ class NormativeDocumentType extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'ndtypeid',
         'name',
     ];
 

@@ -20,6 +20,7 @@ class RoomType extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'rmtypeid',
         'name',
         'shortname',
     ];

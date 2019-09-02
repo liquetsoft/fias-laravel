@@ -35,6 +35,7 @@ class House extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'houseid',
         'houseguid',
         'aoguid',
         'housenum',

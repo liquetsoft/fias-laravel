@@ -133,9 +133,7 @@ class ModelGenerator extends AbstractGenerator
         $fill = [];
         foreach ($descriptor->getFields() as $field) {
             $this->decorateProperty($class, $field);
-            if (!$field->isPrimary()) {
-                $fill[] = $this->unifyColumnName($field->getName());
-            }
+            $fill[] = $this->unifyColumnName($field->getName());
         }
 
         $tableName = $this->convertClassnameToTableName($descriptor->getName());

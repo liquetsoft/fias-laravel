@@ -20,6 +20,7 @@ class StructureStatus extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'strstatid',
         'name',
         'shortname',
     ];

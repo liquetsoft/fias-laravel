@@ -31,6 +31,7 @@ class Room extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'roomid',
         'roomguid',
         'houseguid',
         'regioncode',

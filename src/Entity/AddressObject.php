@@ -55,6 +55,7 @@ class AddressObject extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'aoid',
         'aoguid',
         'parentguid',
         'previd',

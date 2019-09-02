@@ -19,6 +19,7 @@ class CenterStatus extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'centerstid',
         'name',
     ];
 

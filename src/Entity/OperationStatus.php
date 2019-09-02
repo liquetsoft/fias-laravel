@@ -19,6 +19,7 @@ class OperationStatus extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'operstatid',
         'name',
     ];
 

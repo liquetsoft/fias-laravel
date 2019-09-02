@@ -19,6 +19,7 @@ class EstateStatus extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'eststatid',
         'name',
     ];
 

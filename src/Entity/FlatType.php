@@ -20,6 +20,7 @@ class FlatType extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'fltypeid',
         'name',
         'shortname',
     ];

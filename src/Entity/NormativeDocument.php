@@ -23,6 +23,7 @@ class NormativeDocument extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'normdocid',
         'docname',
         'docdate',
         'docnum',

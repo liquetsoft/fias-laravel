@@ -19,6 +19,7 @@ class ActualStatus extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'actstatid',
         'name',
     ];
 

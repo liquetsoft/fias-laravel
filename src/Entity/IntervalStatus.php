@@ -19,6 +19,7 @@ class IntervalStatus extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'intvstatid',
         'name',
     ];
 

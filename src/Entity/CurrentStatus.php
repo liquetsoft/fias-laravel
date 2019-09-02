@@ -19,6 +19,7 @@ class CurrentStatus extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'curentstid',
         'name',
     ];
 

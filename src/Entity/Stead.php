@@ -35,6 +35,7 @@ class Stead extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'steadguid',
         'number',
         'regioncode',
         'postalcode',

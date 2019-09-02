@@ -21,6 +21,7 @@ class AddressObjectType extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'kodtst',
         'level',
         'socrname',
         'scname',

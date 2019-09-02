@@ -19,6 +19,7 @@ class HouseStateStatus extends Model
 
     /** @var string[] */
     protected $fillable = [
+        'housestid',
         'name',
     ];
 
