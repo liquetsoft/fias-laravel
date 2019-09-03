@@ -31,6 +31,7 @@ fixer: ## Run fixes for code style
 
 buildEntities: ## Build entities from yaml file with description
 	$(docker_compose_bin) --file "$(docker_compose_yml)" run --rm -u $(user_id) "$(php_container_name)" php -f generator/generate_entities.php
+	$(docker_compose_bin) --file "$(docker_compose_yml)" run --rm -u $(user_id) "$(php_container_name)" vendor/bin/php-cs-fixer fix -q
 
 linter: ## Run code checks
 	$(docker_compose_bin) --file "$(docker_compose_yml)" run --rm -u $(user_id) "$(php_container_name)" vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --stop-on-violation

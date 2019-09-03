@@ -25,7 +25,6 @@ if (!is_dir($dir)) {
     mkdir($dir, 0777, true);
 }
 $dirObject = new SplFileInfo($dir);
-$currentState = new SplFileInfo(__DIR__ . '/current_state.yaml');
 $namespace = 'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Migration';
-$generator = new MigrationGenerator($registry, $currentState);
+$generator = new MigrationGenerator($registry);
 $generator->run($dirObject, $namespace);

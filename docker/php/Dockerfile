@@ -1,6 +1,6 @@
 FROM php:7.2-cli-alpine
 
-
+# alpine components
 RUN set -xe && apk update && apk add --no-cache \
     libzip \
     bash \
@@ -15,6 +15,7 @@ RUN set -xe && apk update && apk add --no-cache \
     make
 
 
+# php pecl components
 RUN docker-php-ext-install pdo_pgsql zip pcntl sockets soap \
     && docker-php-source extract \
     && pecl install xdebug \
@@ -25,8 +26,10 @@ RUN docker-php-ext-install pdo_pgsql zip pcntl sockets soap \
     && echo 'date.timezone=Europe/London' >> /usr/local/etc/php/conf.d/php-date.ini
 
 
+# composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && mkdir -p /.composer && chmod -Rf 777 /.composer
+    && mkdir -p /.composer \
+    && chmod -Rf 777 /.composer
 
 
 WORKDIR /var/app
