@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle;
 
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Liquetsoft\Fias\Component\Downloader\CurlDownloader;
@@ -26,7 +25,7 @@ use Closure;
 /**
  * Service provider для модуля.
  */
-class LiquetsoftFiasBundleServiceProvider extends ServiceProvider implements DeferrableProvider
+class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 {
     /**
      * @var string
@@ -40,21 +39,20 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider implements Def
      */
     public function register(): void
     {
-        $descriptions = $this->getServicesDescription();
-
+        $descriptions = $this->getServicesDescriptions();
         foreach ($descriptions as $key => $description) {
             $this->app->singleton($key, $description);
         }
     }
 
     /**
-     * @inheritDoc
+     * Загружает данныем модуля в приложение.
+     *
+     * @return void
      */
-    public function provides(): array
+    public function boot(): void
     {
-        $descriptions = $this->getServicesDescription();
-
-        return array_keys($descriptions);
+        $this->loadMigrationsFrom(__DIR__ . '/Migration');
     }
 
     /**
@@ -62,29 +60,55 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider implements Def
      *
      * @return array<string, Closure|string>
      */
-    protected function getServicesDescription(): array
+    protected function getServicesDescriptions(): array
     {
-        return [
-            $this->prefixString('informer.soap') => function (Application $app) {
-                return new SoapClient($this->getOptionString('informer_wsdl'), ['exceptions' => true]);
-            },
-            FiasInformer::class => function (Application $app) {
-                new SoapFiasInformer($app->get($this->prefixString('informer.soap')));
-            },
-            Downloader::class => CurlDownloader::class,
-            Unpacker::class => RarUnpacker::class,
-            XmlReader::class => BaseXmlReader::class,
-            $this->prefixString('serializer.serializer') => FiasSerializer::class,
-            EntityRegistry::class => function (Application $app) {
-                return new YamlEntityRegistry($this->getOptionString('registry_yaml'));
-            },
-            EntityManager::class => function (Application $app) {
-                return new BaseEntityManager(
-                    $app->get(EntityRegistry::class),
-                    $this->getOptionArray('entity_bindings')
-                );
-            },
-        ];
+        $servicesList = [];
+
+        // soap-клиент для получения сссылки на массив с файлами
+        $servicesList[$this->prefixString('informer.soap')] = function () {
+            return new SoapClient(
+                $this->getOptionString('informer_wsdl'),
+                ['exceptions' => true]
+            );
+        };
+
+        // объект, который получает ссылку на ФИАС через soap-клиент
+        $servicesList[FiasInformer::class] = function (Application $app) {
+            new SoapFiasInformer(
+                $app->get(
+                    $this->prefixString('informer.soap')
+                )
+            );
+        };
+
+        // объект, который загружает файлы
+        $servicesList[Downloader::class] = CurlDownloader::class;
+
+        // объект, который распаковывает архивы
+        $servicesList[Unpacker::class] = RarUnpacker::class;
+
+        // объект, который читает xml из файла
+        $servicesList[XmlReader::class] = BaseXmlReader::class;
+
+        // сериалайзер, который преобразует xml для единичной записи в объект
+        $servicesList[$this->prefixString('serializer.serializer')] = FiasSerializer::class;
+
+        // объект с описаниями сущностей ФИАС
+        $servicesList[EntityRegistry::class] = function () {
+            return new YamlEntityRegistry(
+                $this->getOptionString('registry_yaml')
+            );
+        };
+
+        // объект, который определяет отношения между сущностями ФИАС и системы
+        $servicesList[EntityManager::class] = function (Application $app) {
+            return new BaseEntityManager(
+                $app->get(EntityRegistry::class),
+                $this->getOptionArray('entity_bindings')
+            );
+        };
+
+        return $servicesList;
     }
 
     /**
