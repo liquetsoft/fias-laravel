@@ -15,10 +15,14 @@ use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer;
 use Liquetsoft\Fias\Component\Serializer\FiasSerializer;
+use Liquetsoft\Fias\Component\Storage\Storage;
 use Liquetsoft\Fias\Component\Unpacker\RarUnpacker;
 use Liquetsoft\Fias\Component\Unpacker\Unpacker;
+use Liquetsoft\Fias\Component\VersionManager\VersionManager;
 use Liquetsoft\Fias\Component\XmlReader\BaseXmlReader;
 use Liquetsoft\Fias\Component\XmlReader\XmlReader;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
+use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\EloquentStorage;
 use SoapClient;
 use Closure;
 
@@ -108,6 +112,18 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
             );
         };
 
+        // объект для записи данных в БД
+        $servicesList[Storage::class] = function () {
+            return new EloquentStorage($this->getOptionInt('insert_batch_count'));
+        };
+
+        // объект, который хранит текущую версию ФИАС
+        $servicesList[VersionManager::class] = function () {
+            return new EloquentVersionManager(
+                $this->getOptionString('version_manager_entity')
+            );
+        };
+
         return $servicesList;
     }
 
@@ -123,6 +139,20 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $option = config($this->prefixString($name));
 
         return is_string($option) ? $option : '';
+    }
+
+    /**
+     * Возвращает значение указанной опции в виде целого числа.
+     *
+     * @param string $name
+     *
+     * @return int
+     */
+    protected function getOptionInt(string $name): int
+    {
+        $option = config($this->prefixString($name));
+
+        return is_int($option) ? $option : 0;
     }
 
     /**

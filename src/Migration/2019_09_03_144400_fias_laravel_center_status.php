@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'CenterStatus'.
  */
-class CenterStatus1567520703 extends Migration
+class CenterStatus20190903144400 extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_center_status'.

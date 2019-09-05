@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'EstateStatus'.
  */
-class EstateStatus1567520703 extends Migration
+class EstateStatus20190903144400 extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_estate_status'.

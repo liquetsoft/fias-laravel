@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'Stead'.
  */
-class Stead1567520703 extends Migration
+class Stead20190903144400 extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_stead'.
