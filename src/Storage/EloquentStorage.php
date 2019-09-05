@@ -7,10 +7,7 @@ namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
-use Ramsey\Uuid\UuidInterface;
-use DateTimeInterface;
 use RuntimeException;
-use Exception;
 use Throwable;
 
 /**
@@ -21,11 +18,26 @@ class EloquentStorage implements Storage
     /**
      * Сохраненные в памяти данные для мнодественной вставки.
      *
-     * Массив вида 'имя таблицы' => 'массив массивов данных для вставки'.
+     * Массив вида 'класс сущности => 'массив массивов данных для вставки'.
      *
-     * @var mixed[]
+     * @var array<string, array>
      */
     protected $insertData = [];
+
+    /**
+     * Размер стека для одномоментной вставки.
+     *
+     * @var int
+     */
+    protected $insertBatch;
+
+    /**
+     * @param int $insertBatch
+     */
+    public function __construct(int $insertBatch = 1000)
+    {
+        $this->insertBatch = $insertBatch;
+    }
 
     /**
      * @inheritdoc
@@ -47,21 +59,11 @@ class EloquentStorage implements Storage
      */
     public function insert(object $entity): void
     {
-        $meta = $this->em->getClassMetadata(get_class($entity));
-        $table = $meta->getTableName();
-        $fileds = $meta->getFieldNames();
-        $insertArray = [];
-        foreach ($fileds as $field) {
-            $value = $meta->getFieldValue($entity, $field);
-            if ($value instanceof DateTimeInterface) {
-                $value = $value->format('Y-m-d H:i:s');
-            } elseif ($value instanceof UuidInterface) {
-                $value = $value->toString();
-            }
-            $column = $meta->getColumnName($field);
-            $insertArray[$column] = $value;
-        }
-        $this->insertData[$table][] = $insertArray;
+        $this->checkIsEntityAllowedForEloquent($entity);
+
+        $class = get_class($entity);
+        $this->insertData[$class][] = $entity->getAttributes();
+
         $this->checkAndFlushInsert(false);
     }
 
@@ -73,10 +75,10 @@ class EloquentStorage implements Storage
      */
     protected function checkAndFlushInsert(bool $forceInsert = false): void
     {
-        foreach ($this->insertData as $tableName => $insertData) {
+        foreach ($this->insertData as $className => $insertData) {
             if ($forceInsert || count($insertData) >= $this->insertBatch) {
-                $this->bulkInsert($tableName, $insertData);
-                unset($this->insertData[$tableName]);
+                $this->bulkInsert($className, $insertData);
+                unset($this->insertData[$className]);
             }
         }
     }
@@ -84,64 +86,18 @@ class EloquentStorage implements Storage
     /**
      * Отправляет запрос на массовую вставку данных в таблицу.
      *
-     * @param string  $tableName
+     * @param string  $className
      * @param mixed[] $data
      *
      * @throws RuntimeException
      */
-    protected function bulkInsert(string $tableName, array $data): void
+    protected function bulkInsert(string $className, array $data): void
     {
-        try {
-            $this->prepareAndRunBulkInsert($tableName, $data);
-        } catch (UniqueConstraintViolationException $e) {
-            $this->prepareAndRunBulkSafely($tableName, $data);
+        if (class_exists($className)) {
+            $className::insert($data);
+        } else {
+            throw new RuntimeException("'{$className}' is not a class name.");
         }
-    }
-
-    /**
-     * В случае исключения при множественной вставке, пробуем вставку по одной
-     * записи, чтобы не откатывать весь блок записей.
-     *
-     * Только для некоторых случаев:
-     *    - повторяющийся первичный ключ
-     *
-     * @param string  $table
-     * @param mixed[] $data
-     */
-    protected function prepareAndRunBulkSafely(string $tableName, array $data): void
-    {
-        foreach ($data as $item) {
-            try {
-                $this->prepareAndRunBulkInsert($tableName, [$item]);
-            } catch (Exception $e) {
-                //@TODO залогировать исключение
-            }
-        }
-    }
-
-    /**
-     * Непосредственное создание и запуск запроса на исполнение.
-     *
-     * @param string  $tableName
-     * @param mixed[] $data
-     *
-     * @throws RuntimeException
-     */
-    protected function prepareAndRunBulkInsert(string $tableName, array $data): void
-    {
-        $dataSample = reset($data);
-        $paramNames = implode(', ', array_keys($dataSample));
-        $paramValues = implode(', ', array_fill(0, count($dataSample), '?'));
-        $dataValues = '(' . implode('), (', array_fill(0, count($data), $paramValues)) . ')';
-        $sql = "INSERT INTO {$tableName} ({$paramNames}) VALUES {$dataValues}";
-        $stmt = $this->em->getConnection()->prepare($sql);
-        $count = 0;
-        foreach ($data as $item) {
-            foreach ($item as $value) {
-                $stmt->bindValue(++$count, $value);
-            }
-        }
-        $stmt->execute();
     }
 
     /**
