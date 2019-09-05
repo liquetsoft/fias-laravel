@@ -14,6 +14,13 @@ use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
 use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer;
+use Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\DownloadTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\InformDeltaTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\InformFullTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\PrepareFolderTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\TruncateTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\UnpackTask;
 use Liquetsoft\Fias\Component\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Liquetsoft\Fias\Component\Unpacker\RarUnpacker;
@@ -123,6 +130,31 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                 $this->getOptionString('version_manager_entity')
             );
         };
+
+        // задача для очистки базы
+        $servicesList[$this->prefixString('task.cleanup')] = CleanupTask::class;
+
+        // задача для подготовки каталога загрузки
+        $servicesList[$this->prefixString('task.prepare.folder')] = function () {
+            return new PrepareFolderTask(
+                $this->getOptionString('temp_dir')
+            );
+        };
+
+        // задача для получения ссылки на полную версию
+        $servicesList[$this->prefixString('task.inform.full')] = InformFullTask::class;
+
+        // задача для получения ссылки на изменения
+        $servicesList[$this->prefixString('task.inform.delta')] = InformDeltaTask::class;
+
+        // задача для загрузки файлов
+        $servicesList[$this->prefixString('task.download')] = DownloadTask::class;
+
+        // задача для распаковки файлов
+        $servicesList[$this->prefixString('task.unpack')] = UnpackTask::class;
+
+        // задача для очистки хранилища
+        $servicesList[$this->prefixString('task.data.truncate')] = TruncateTask::class;
 
         return $servicesList;
     }
