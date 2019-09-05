@@ -127,7 +127,7 @@ abstract class AbstractGenerator
      */
     protected function unifyColumnName(string $name): string
     {
-        return trim(strtolower(str_replace('_', '', $name)));
+        return trim(strtolower($name));
     }
 
     /**

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Перечень полных, сокращённых наименований типов адресных элементов и уровней их классификациих.
  *
- * @property int    $kodtst
+ * @property int    $kod_t_st
  * @property int    $level
  * @property string $socrname
  * @property string $scname
@@ -21,7 +21,7 @@ class AddressObjectType extends Model
 
     /** @var string[] */
     protected $fillable = [
-        'kodtst',
+        'kod_t_st',
         'level',
         'socrname',
         'scname',

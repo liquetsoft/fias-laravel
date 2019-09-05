@@ -20,7 +20,7 @@ class FiasVersion20190903144400 extends Migration
             // создание полей таблицы
             $table->unsignedInteger('version')->nullable(false)->comment('Номер версии ФИАС');
             $table->string('url', 255)->nullable(false)->comment('Ссылка для загрузки указанной версии ФИАС');
-            $table->string('createdat', 255)->nullable(false)->comment('Дата создания записи');
+            $table->string('created_at', 255)->nullable(false)->comment('Дата создания записи');
             // создание индексов таблицы
             $table->primary('version');
         });

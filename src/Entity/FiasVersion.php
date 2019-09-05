@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int    $version
  * @property string $url
- * @property string $createdat
+ * @property string $created_at
  */
 class FiasVersion extends Model
 {
@@ -22,7 +22,7 @@ class FiasVersion extends Model
     protected $fillable = [
         'version',
         'url',
-        'createdat',
+        'created_at',
     ];
 
     /**
