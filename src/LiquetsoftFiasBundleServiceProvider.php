@@ -15,12 +15,17 @@ use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer;
 use Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\DataDeleteTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\DataInsertTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\DataUpsertTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DownloadTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\InformDeltaTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\InformFullTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\PrepareFolderTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\TruncateTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\UnpackTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\VersionGetTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\VersionSetTask;
 use Liquetsoft\Fias\Component\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Liquetsoft\Fias\Component\Unpacker\RarUnpacker;
@@ -155,6 +160,21 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
         // задача для очистки хранилища
         $servicesList[$this->prefixString('task.data.truncate')] = TruncateTask::class;
+
+        // задача для вставки данных в хранилище
+        $servicesList[$this->prefixString('task.data.insert')] = DataInsertTask::class;
+
+        // задача для удаления данных из хранилища
+        $servicesList[$this->prefixString('task.data.delete')] = DataDeleteTask::class;
+
+        // задача для обновления данных в хрпнилище
+        $servicesList[$this->prefixString('task.data.upsert')] = DataUpsertTask::class;
+
+        // задача для получения ссылки на новую версию ФИАС
+        $servicesList[$this->prefixString('task.version.get')] = VersionGetTask::class;
+
+        // задача для сохранения установленной версии
+        $servicesList[$this->prefixString('task.version.set')] = VersionSetTask::class;
 
         return $servicesList;
     }
