@@ -14,6 +14,7 @@ use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
 use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer;
+use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataDeleteTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataInsertTask;
@@ -175,6 +176,51 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
         // задача для сохранения установленной версии
         $servicesList[$this->prefixString('task.version.set')] = VersionSetTask::class;
+
+        // процесс установки полной версии ФИАС
+        $servicesList[$this->prefixString('pipe.install')] = function (Application $app) {
+            return new ArrayPipe(
+                [
+                    $app->get($this->prefixString('task.prepare.folder')),
+                    $app->get($this->prefixString('task.inform.full')),
+                    $app->get($this->prefixString('task.download')),
+                    $app->get($this->prefixString('task.unpack')),
+                    $app->get($this->prefixString('task.data.truncate')),
+                    $app->get($this->prefixString('task.data.insert')),
+                    $app->get($this->prefixString('task.data.delete')),
+                    $app->get($this->prefixString('task.version.set')),
+                ],
+                $app->get($this->prefixString('task.cleanup'))
+            );
+        };
+
+        // процесс установки версии ФИАС из загруженных на диск файлов
+        $servicesList[$this->prefixString('pipe.install_from_folder')] = function (Application $app) {
+            return new ArrayPipe(
+                [
+                    $app->get($this->prefixString('task.data.truncate')),
+                    $app->get($this->prefixString('task.data.insert')),
+                    $app->get($this->prefixString('task.data.delete')),
+                ]
+            );
+        };
+
+        // процесс обновления установленной версии ФИАС
+        $servicesList[$this->prefixString('pipe.update')] = function (Application $app) {
+            return new ArrayPipe(
+                [
+                    $app->get($this->prefixString('task.version.get')),
+                    $app->get($this->prefixString('task.prepare.folder')),
+                    $app->get($this->prefixString('task.inform.delta')),
+                    $app->get($this->prefixString('task.download')),
+                    $app->get($this->prefixString('task.unpack')),
+                    $app->get($this->prefixString('task.data.upsert')),
+                    $app->get($this->prefixString('task.data.delete')),
+                    $app->get($this->prefixString('task.version.set')),
+                ],
+                $app->get($this->prefixString('task.cleanup'))
+            );
+        };
 
         return $servicesList;
     }
