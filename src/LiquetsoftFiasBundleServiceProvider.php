@@ -34,6 +34,9 @@ use Liquetsoft\Fias\Component\Unpacker\Unpacker;
 use Liquetsoft\Fias\Component\VersionManager\VersionManager;
 use Liquetsoft\Fias\Component\XmlReader\BaseXmlReader;
 use Liquetsoft\Fias\Component\XmlReader\XmlReader;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallCommand;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\TruncateCommand;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
 use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\EloquentStorage;
 use SoapClient;
@@ -74,9 +77,18 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(__DIR__ . '/Migration');
+
         $this->publishes([
             __DIR__ . "/Config/{$this->prefixString('php')}" => config_path($this->prefixString('php')),
         ]);
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                InstallCommand::class,
+                UpdateCommand::class,
+                TruncateCommand::class,
+            ]);
+        }
     }
 
     /**
