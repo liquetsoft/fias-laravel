@@ -60,6 +60,10 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         foreach ($descriptions as $key => $description) {
             $this->app->singleton($key, $description);
         }
+
+        $this->mergeConfigFrom(
+            __DIR__ . "/Config/{$this->prefixString('php')}", $this->bundlePrefix
+        );
     }
 
     /**
@@ -70,6 +74,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(__DIR__ . '/Migration');
+        $this->publishes([
+            __DIR__ . "/Config/{$this->prefixString('php')}" => config_path($this->prefixString('php')),
+        ]);
     }
 
     /**
