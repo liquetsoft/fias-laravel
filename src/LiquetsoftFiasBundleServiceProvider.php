@@ -40,7 +40,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\TruncateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
-use Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage\EloquentStorage;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage\EloquentStorage;
 use SoapClient;
 use Closure;
 

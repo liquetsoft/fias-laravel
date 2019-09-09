@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Storage;
+namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage;
 
 use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Component\Exception\StorageException;
