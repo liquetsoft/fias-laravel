@@ -184,13 +184,34 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[$this->prefixString('task.data.truncate')] = TruncateTask::class;
 
         // задача для вставки данных в хранилище
-        $servicesList[$this->prefixString('task.data.insert')] = DataInsertTask::class;
+        $servicesList[$this->prefixString('task.data.insert')] = function (Application $app): Task {
+            return new DataInsertTask(
+                $app->get(EntityManager::class),
+                $app->get(XmlReader::class),
+                $app->get(Storage::class),
+                $app->get($this->prefixString('serializer.serializer'))
+            );
+        };
 
         // задача для удаления данных из хранилища
-        $servicesList[$this->prefixString('task.data.delete')] = DataDeleteTask::class;
+        $servicesList[$this->prefixString('task.data.delete')] = function (Application $app): Task {
+            return new DataDeleteTask(
+                $app->get(EntityManager::class),
+                $app->get(XmlReader::class),
+                $app->get(Storage::class),
+                $app->get($this->prefixString('serializer.serializer'))
+            );
+        };
 
         // задача для обновления данных в хрпнилище
-        $servicesList[$this->prefixString('task.data.upsert')] = DataUpsertTask::class;
+        $servicesList[$this->prefixString('task.data.upsert')] = function (Application $app): Task {
+            return new DataUpsertTask(
+                $app->get(EntityManager::class),
+                $app->get(XmlReader::class),
+                $app->get(Storage::class),
+                $app->get($this->prefixString('serializer.serializer'))
+            );
+        };
 
         // задача для получения ссылки на новую версию ФИАС
         $servicesList[$this->prefixString('task.version.get')] = VersionGetTask::class;
