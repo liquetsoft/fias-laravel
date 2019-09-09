@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'StructureStatus'.
  */
-class StructureStatus20190903144400 extends Migration
+class StructureStatus extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_structure_status'.

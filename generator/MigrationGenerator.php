@@ -25,7 +25,7 @@ class MigrationGenerator extends AbstractGenerator
     {
         $fileName = '2019_09_03_144400_' . $this->convertClassnameToTableName($descriptor->getName());
         $fullPath = "{$dir->getPathname()}/{$fileName}.php";
-        $className = $this->unifyClassName($descriptor->getName()) . '20190903144400';
+        $className = $this->unifyClassName($descriptor->getName());
 
         $phpFile = new PhpFile;
         $phpFile->setStrictTypes();

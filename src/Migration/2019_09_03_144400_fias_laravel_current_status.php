@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'CurrentStatus'.
  */
-class CurrentStatus20190903144400 extends Migration
+class CurrentStatus extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_current_status'.

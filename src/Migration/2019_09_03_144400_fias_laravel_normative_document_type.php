@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'NormativeDocumentType'.
  */
-class NormativeDocumentType20190903144400 extends Migration
+class NormativeDocumentType extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_normative_document_type'.

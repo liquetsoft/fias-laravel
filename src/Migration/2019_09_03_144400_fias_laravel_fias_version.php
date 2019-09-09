@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'FiasVersion'.
  */
-class FiasVersion20190903144400 extends Migration
+class FiasVersion extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_fias_version'.
