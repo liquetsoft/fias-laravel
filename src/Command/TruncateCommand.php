@@ -6,6 +6,7 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 
 use Exception;
 use Illuminate\Console\Command;
+use Illuminate\Foundation\Application;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 
@@ -31,12 +32,14 @@ class TruncateCommand extends Command
     protected $task;
 
     /**
-     * В конструкторе передаем ссылку на операцию очистки таблицы.
+     * В конструкторе передаем ссылку на пайплайн установки.
+     *
+     * @param Application $app
      */
-    public function __construct()
+    public function __construct(Application $app)
     {
         parent::__construct();
-        $this->task = $this->getLaravel()->get('liquetsoft_fias.task.data.truncate');
+        $this->task = $app->get('liquetsoft_fias.task.data.truncate');
     }
 
     /**

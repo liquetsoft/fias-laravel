@@ -8,6 +8,7 @@ use Illuminate\Console\Command;
 use Liquetsoft\Fias\Component\Exception\PipeException;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
+use Illuminate\Foundation\Application;
 
 /**
  * Консольная команда для установки ФИАС с ноля.
@@ -31,11 +32,13 @@ class InstallCommand extends Command
 
     /**
      * В конструкторе передаем ссылку на пайплайн установки.
+     *
+     * @param Application $app
      */
-    public function __construct()
+    public function __construct(Application $app)
     {
         parent::__construct();
-        $this->pipeline = $this->getLaravel()->get('liquetsoft_fias.pipe.install');
+        $this->pipeline = $app->get('liquetsoft_fias.pipe.install');
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 
 use Illuminate\Console\Command;
+use Illuminate\Foundation\Application;
 use Liquetsoft\Fias\Component\Exception\PipeException;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
@@ -34,11 +35,13 @@ class UpdateCommand extends Command
 
     /**
      * В конструкторе передаем ссылку на пайплайн установки.
+     *
+     * @param Application $app
      */
-    public function __construct()
+    public function __construct(Application $app)
     {
         parent::__construct();
-        $this->pipeline = $this->getLaravel()->get('liquetsoft_fias.pipe.update');
+        $this->pipeline = $app->get('liquetsoft_fias.pipe.update');
     }
 
     /**
