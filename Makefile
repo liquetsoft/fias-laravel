@@ -23,6 +23,9 @@ build: ## Build container and install composer libs
 	$(docker_compose_bin) --file "$(docker_compose_yml)" build
 	$(docker_compose_bin) --file "$(docker_compose_yml)" run --rm -u $(user_id) "$(php_container_name)" composer install
 
+shell: ## Runs shell in container
+	$(docker_compose_bin) --file "$(docker_compose_yml)" run --rm -u $(user_id) "$(php_container_name)" /bin/bash
+
 test: ## Execute library tests
 	$(docker_compose_bin) --file "$(docker_compose_yml)" run --rm -u $(user_id) "$(php_container_name)" vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-html=tests/coverage
 

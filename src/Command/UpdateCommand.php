@@ -46,7 +46,7 @@ class UpdateCommand extends Command
      *
      * @throws PipeException
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info('Updating FIAS.');
         $start = microtime(true);

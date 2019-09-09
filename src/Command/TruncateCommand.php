@@ -44,7 +44,7 @@ class TruncateCommand extends Command
      *
      * @throws Exception
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info('Truncating storage for binded entities.');
 

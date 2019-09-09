@@ -43,7 +43,7 @@ class InstallCommand extends Command
      *
      * @throws PipeException
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info('Installing full version of FIAS.');
         $start = microtime(true);

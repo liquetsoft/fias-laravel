@@ -15,6 +15,7 @@ use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
+use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataDeleteTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataInsertTask;
@@ -23,6 +24,7 @@ use Liquetsoft\Fias\Component\Pipeline\Task\DownloadTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\InformDeltaTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\InformFullTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\PrepareFolderTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use Liquetsoft\Fias\Component\Pipeline\Task\TruncateTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\UnpackTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\VersionGetTask;
@@ -101,7 +103,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList = [];
 
         // soap-клиент для получения сссылки на массив с файлами
-        $servicesList[$this->prefixString('informer.soap')] = function () {
+        $servicesList[$this->prefixString('informer.soap')] = function (): SoapClient {
             return new SoapClient(
                 $this->getOptionString('informer_wsdl'),
                 ['exceptions' => true]
@@ -109,8 +111,8 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         };
 
         // объект, который получает ссылку на ФИАС через soap-клиент
-        $servicesList[FiasInformer::class] = function (Application $app) {
-            new SoapFiasInformer(
+        $servicesList[FiasInformer::class] = function (Application $app): FiasInformer {
+            return new SoapFiasInformer(
                 $app->get(
                     $this->prefixString('informer.soap')
                 )
@@ -130,14 +132,14 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[$this->prefixString('serializer.serializer')] = FiasSerializer::class;
 
         // объект с описаниями сущностей ФИАС
-        $servicesList[EntityRegistry::class] = function () {
+        $servicesList[EntityRegistry::class] = function (): EntityRegistry {
             return new YamlEntityRegistry(
                 $this->getOptionString('registry_yaml')
             );
         };
 
         // объект, который определяет отношения между сущностями ФИАС и системы
-        $servicesList[EntityManager::class] = function (Application $app) {
+        $servicesList[EntityManager::class] = function (Application $app): EntityManager {
             return new BaseEntityManager(
                 $app->get(EntityRegistry::class),
                 $this->getOptionArray('entity_bindings')
@@ -145,12 +147,12 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         };
 
         // объект для записи данных в БД
-        $servicesList[Storage::class] = function () {
+        $servicesList[Storage::class] = function (): Storage {
             return new EloquentStorage($this->getOptionInt('insert_batch_count'));
         };
 
         // объект, который хранит текущую версию ФИАС
-        $servicesList[VersionManager::class] = function () {
+        $servicesList[VersionManager::class] = function (): VersionManager {
             return new EloquentVersionManager(
                 $this->getOptionString('version_manager_entity')
             );
@@ -160,7 +162,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[$this->prefixString('task.cleanup')] = CleanupTask::class;
 
         // задача для подготовки каталога загрузки
-        $servicesList[$this->prefixString('task.prepare.folder')] = function () {
+        $servicesList[$this->prefixString('task.prepare.folder')] = function (): Task {
             return new PrepareFolderTask(
                 $this->getOptionString('temp_dir')
             );
@@ -197,7 +199,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[$this->prefixString('task.version.set')] = VersionSetTask::class;
 
         // процесс установки полной версии ФИАС
-        $servicesList[$this->prefixString('pipe.install')] = function (Application $app) {
+        $servicesList[$this->prefixString('pipe.install')] = function (Application $app): Pipe {
             return new ArrayPipe(
                 [
                     $app->get($this->prefixString('task.prepare.folder')),
@@ -214,7 +216,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         };
 
         // процесс установки версии ФИАС из загруженных на диск файлов
-        $servicesList[$this->prefixString('pipe.install_from_folder')] = function (Application $app) {
+        $servicesList[$this->prefixString('pipe.install_from_folder')] = function (Application $app): Pipe {
             return new ArrayPipe(
                 [
                     $app->get($this->prefixString('task.data.truncate')),
@@ -225,7 +227,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         };
 
         // процесс обновления установленной версии ФИАС
-        $servicesList[$this->prefixString('pipe.update')] = function (Application $app) {
+        $servicesList[$this->prefixString('pipe.update')] = function (Application $app): Pipe {
             return new ArrayPipe(
                 [
                     $app->get($this->prefixString('task.version.get')),
