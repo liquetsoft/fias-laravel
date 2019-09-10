@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'AddressObjectType'.
  */
-class AddressObjectType extends Migration
+class FiasLaravelAddressObjectType extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_address_object_type'.

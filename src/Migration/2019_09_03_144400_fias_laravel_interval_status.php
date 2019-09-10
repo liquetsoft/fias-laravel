@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'IntervalStatus'.
  */
-class IntervalStatus extends Migration
+class FiasLaravelIntervalStatus extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_interval_status'.

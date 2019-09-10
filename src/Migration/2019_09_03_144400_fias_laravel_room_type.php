@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'RoomType'.
  */
-class RoomType extends Migration
+class FiasLaravelRoomType extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_room_type'.

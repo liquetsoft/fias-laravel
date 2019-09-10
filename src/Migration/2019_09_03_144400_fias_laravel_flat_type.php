@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'FlatType'.
  */
-class FlatType extends Migration
+class FiasLaravelFlatType extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_flat_type'.
