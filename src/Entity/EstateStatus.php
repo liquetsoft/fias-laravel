@@ -23,6 +23,12 @@ class EstateStatus extends Model
         'name',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'eststatid' => 'integer',
+        'name' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */

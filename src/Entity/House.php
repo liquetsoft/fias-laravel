@@ -54,6 +54,24 @@ class House extends Model
         'divtype',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'housenum' => 'string',
+        'strstatus' => 'integer',
+        'eststatus' => 'integer',
+        'statstatus' => 'integer',
+        'ifnsfl' => 'string',
+        'ifnsul' => 'string',
+        'okato' => 'string',
+        'oktmo' => 'string',
+        'postalcode' => 'string',
+        'startdate' => 'datetime',
+        'enddate' => 'datetime',
+        'updatedate' => 'datetime',
+        'counter' => 'integer',
+        'divtype' => 'integer',
+    ];
+
     /**
      * @inheritDoc
      */

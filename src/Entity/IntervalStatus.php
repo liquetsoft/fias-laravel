@@ -23,6 +23,12 @@ class IntervalStatus extends Model
         'name',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'intvstatid' => 'integer',
+        'name' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */

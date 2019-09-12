@@ -81,10 +81,16 @@ class ModelGenerator extends AbstractGenerator
             ->addComment('@var string')
         ;
 
-        $defaultValue = new PhpLiteral("[\n    '" . implode("',\n    '", $fill) . "',\n]");
-        $class->addProperty('fillable', $defaultValue)
+        $fillableValue = new PhpLiteral("[\n    '" . implode("',\n    '", $fill) . "',\n]");
+        $class->addProperty('fillable', $fillableValue)
             ->setVisibility('protected')
             ->addComment('@var string[]')
+        ;
+
+        $castValue = new PhpLiteral($this->createCastValue($descriptor));
+        $class->addProperty('casts', $castValue)
+            ->setVisibility('protected')
+            ->addComment('@var array<string, string>')
         ;
 
         $class->addMethod('getIncrementing')
@@ -118,5 +124,39 @@ class ModelGenerator extends AbstractGenerator
         }
 
         $class->addComment("@property {$varType} \${$name}");
+    }
+
+    /**
+     * Создает массив для тайпкаста модели eloquent.
+     */
+    protected function createCastValue(EntityDescriptor $descriptor)
+    {
+        $types = "[\n";
+
+        foreach ($descriptor->getFields() as $field) {
+            $name = $this->unifyColumnName($field->getName());
+            $type = trim($field->getType() . '_' . $field->getSubType(), ' _');
+            switch ($type) {
+                case 'int':
+                    $castType = 'integer';
+                    break;
+                case 'string':
+                    $castType = 'string';
+                    break;
+                case 'string_date':
+                    $castType = 'datetime';
+                    break;
+                default:
+                    $castType = null;
+                    break;
+            }
+            if ($castType) {
+                $types .= "    '{$name}' => '{$castType}',\n";
+            }
+        }
+
+        $types .= ']';
+
+        return $types;
     }
 }

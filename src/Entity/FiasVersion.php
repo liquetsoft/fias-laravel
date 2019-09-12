@@ -25,6 +25,12 @@ class FiasVersion extends Model
         'created_at',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'version' => 'integer',
+        'url' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */

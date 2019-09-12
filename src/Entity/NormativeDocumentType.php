@@ -23,6 +23,12 @@ class NormativeDocumentType extends Model
         'name',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'ndtypeid' => 'integer',
+        'name' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */

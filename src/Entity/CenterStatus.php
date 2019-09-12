@@ -23,6 +23,12 @@ class CenterStatus extends Model
         'name',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'centerstid' => 'integer',
+        'name' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */

@@ -27,6 +27,14 @@ class AddressObjectType extends Model
         'scname',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'kod_t_st' => 'integer',
+        'level' => 'integer',
+        'socrname' => 'string',
+        'scname' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */

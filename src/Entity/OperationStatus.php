@@ -23,6 +23,12 @@ class OperationStatus extends Model
         'name',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'operstatid' => 'integer',
+        'name' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */

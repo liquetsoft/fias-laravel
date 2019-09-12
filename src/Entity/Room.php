@@ -46,6 +46,19 @@ class Room extends Model
         'normdoc',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'regioncode' => 'string',
+        'flatnumber' => 'string',
+        'flattype' => 'integer',
+        'postalcode' => 'string',
+        'startdate' => 'datetime',
+        'enddate' => 'datetime',
+        'updatedate' => 'datetime',
+        'operstatus' => 'string',
+        'livestatus' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */

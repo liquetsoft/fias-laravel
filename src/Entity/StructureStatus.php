@@ -25,6 +25,13 @@ class StructureStatus extends Model
         'shortname',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'strstatid' => 'integer',
+        'name' => 'string',
+        'shortname' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */

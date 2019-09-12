@@ -94,6 +94,42 @@ class AddressObject extends Model
         'divtype',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'code' => 'string',
+        'formalname' => 'string',
+        'offname' => 'string',
+        'shortname' => 'string',
+        'aolevel' => 'integer',
+        'regioncode' => 'string',
+        'areacode' => 'string',
+        'autocode' => 'string',
+        'citycode' => 'string',
+        'ctarcode' => 'string',
+        'placecode' => 'string',
+        'plancode' => 'string',
+        'streetcode' => 'string',
+        'extrcode' => 'string',
+        'sextcode' => 'string',
+        'plaincode' => 'string',
+        'currstatus' => 'integer',
+        'actstatus' => 'integer',
+        'livestatus' => 'integer',
+        'centstatus' => 'integer',
+        'operstatus' => 'integer',
+        'ifnsfl' => 'string',
+        'ifnsul' => 'string',
+        'terrifnsfl' => 'string',
+        'terrifnsul' => 'string',
+        'okato' => 'string',
+        'oktmo' => 'string',
+        'postalcode' => 'string',
+        'startdate' => 'datetime',
+        'enddate' => 'datetime',
+        'updatedate' => 'datetime',
+        'divtype' => 'integer',
+    ];
+
     /**
      * @inheritDoc
      */

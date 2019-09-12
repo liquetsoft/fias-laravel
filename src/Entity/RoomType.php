@@ -25,6 +25,13 @@ class RoomType extends Model
         'shortname',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'rmtypeid' => 'integer',
+        'name' => 'string',
+        'shortname' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */

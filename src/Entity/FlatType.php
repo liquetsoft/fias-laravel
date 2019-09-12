@@ -25,6 +25,13 @@ class FlatType extends Model
         'shortname',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'fltypeid' => 'integer',
+        'name' => 'string',
+        'shortname' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */

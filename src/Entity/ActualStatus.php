@@ -23,6 +23,12 @@ class ActualStatus extends Model
         'name',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'actstatid' => 'integer',
+        'name' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */

@@ -23,6 +23,12 @@ class HouseStateStatus extends Model
         'name',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'housestid' => 'integer',
+        'name' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */

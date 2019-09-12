@@ -30,6 +30,14 @@ class NormativeDocument extends Model
         'doctype',
     ];
 
+    /** @var array<string, string> */
+    protected $casts = [
+        'docname' => 'string',
+        'docdate' => 'datetime',
+        'docnum' => 'string',
+        'doctype' => 'string',
+    ];
+
     /**
      * @inheritDoc
      */
