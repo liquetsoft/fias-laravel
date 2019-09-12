@@ -23,13 +23,13 @@ class FiasSerializerTest extends BaseCase
     public function testDenormalize()
     {
         $data = <<<EOT
-<ActualStatus 
-    actstatid="10" 
-    NAME="test" 
-    fLoatNum="10.1" 
+<ActualStatus
+    actstatid="10"
+    NAME="test"
+    fLoatNum="10.1"
     bool_val="1"
     testDateVal="10.10.2019 10:10:10"
-    timestamp="10.10.2019 10:10:10"
+    timestamp="10101010"
     defaultItem="defaultItem"
     />
 EOT;
@@ -45,7 +45,7 @@ EOT;
         $this->assertSame(true, $model->boolVal);
         $this->assertInstanceOf(Carbon::class, $model->test_date_val);
         $this->assertSame('2019-10-10 10:10', $model->test_date_val->format('Y-m-d H:i'));
-        $this->assertSame(1570698610, $model->timestamp);
+        $this->assertSame(10101010, $model->timestamp);
         $this->assertSame('defaultItem', $model->defaultItem);
     }
 
