@@ -29,7 +29,6 @@ use Liquetsoft\Fias\Component\Pipeline\Task\TruncateTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\UnpackTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\VersionGetTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\VersionSetTask;
-use Liquetsoft\Fias\Component\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Liquetsoft\Fias\Component\Unpacker\RarUnpacker;
 use Liquetsoft\Fias\Component\Unpacker\Unpacker;
@@ -41,6 +40,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\TruncateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage\EloquentStorage;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use SoapClient;
 use Closure;
 
