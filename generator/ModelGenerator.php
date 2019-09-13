@@ -69,10 +69,14 @@ class ModelGenerator extends AbstractGenerator
             $class->addComment("{$description}.\n");
         }
 
+        $isPrimaryIsUuid = false;
         $fill = [];
         foreach ($descriptor->getFields() as $field) {
             $this->decorateProperty($class, $field);
             $fill[] = $this->unifyColumnName($field->getName());
+            if ($field->isPrimary() && $field->getSubType() === 'uuid') {
+                $isPrimaryIsUuid = true;
+            }
         }
 
         $tableName = $this->convertClassnameToTableName($descriptor->getName());
@@ -97,7 +101,17 @@ class ModelGenerator extends AbstractGenerator
             ->addComment('@inheritDoc')
             ->setVisibility('public')
             ->setReturnType('bool')
-            ->setBody('return false;');
+            ->setBody('return false;')
+        ;
+
+        if ($isPrimaryIsUuid) {
+            $class->addMethod('getKeyType')
+                ->addComment('@inheritDoc')
+                ->setVisibility('public')
+                ->setReturnType('string')
+                ->setBody("return 'string';")
+            ;
+        }
     }
 
     /**

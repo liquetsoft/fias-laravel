@@ -136,4 +136,12 @@ class AddressObject extends Model
     {
         return false;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getKeyType(): string
+    {
+        return 'string';
+    }
 }

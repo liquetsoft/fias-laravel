@@ -66,4 +66,12 @@ class Room extends Model
     {
         return false;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getKeyType(): string
+    {
+        return 'string';
+    }
 }
