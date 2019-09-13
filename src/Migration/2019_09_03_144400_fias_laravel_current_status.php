@@ -18,10 +18,8 @@ class FiasLaravelCurrentStatus extends Migration
     {
         Schema::create('fias_laravel_current_status', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('curentstid')->nullable(false);
+            $table->unsignedInteger('curentstid')->nullable(false)->primary();
             $table->string('name', 255)->nullable(false);
-            // создание индексов таблицы
-            $table->primary('curentstid');
         });
     }
 

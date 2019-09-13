@@ -18,9 +18,9 @@ class FiasLaravelRoom extends Migration
     {
         Schema::create('fias_laravel_room', function (Blueprint $table) {
             // создание полей таблицы
-            $table->string('roomid', 255)->nullable(false);
-            $table->string('roomguid', 255);
-            $table->string('houseguid', 255);
+            $table->uuid('roomid')->nullable(false)->primary();
+            $table->uuid('roomguid');
+            $table->uuid('houseguid');
             $table->string('regioncode', 2)->nullable(false);
             $table->string('flatnumber', 50)->nullable(false);
             $table->unsignedInteger('flattype')->nullable(false);
@@ -30,9 +30,7 @@ class FiasLaravelRoom extends Migration
             $table->datetime('updatedate')->nullable(false);
             $table->string('operstatus', 255)->nullable(false);
             $table->string('livestatus', 255)->nullable(false);
-            $table->string('normdoc', 255);
-            // создание индексов таблицы
-            $table->primary('roomid');
+            $table->uuid('normdoc');
         });
     }
 

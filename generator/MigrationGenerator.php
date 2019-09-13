@@ -69,6 +69,9 @@ class MigrationGenerator extends AbstractGenerator
                 case 'int':
                     $migration = "\$table->unsignedInteger('{$name}')";
                     break;
+                case 'string_uuid':
+                    $migration = "\$table->uuid('{$name}')";
+                    break;
                 case 'string_date':
                     $migration = "\$table->datetime('{$name}')";
                     break;
@@ -83,17 +86,21 @@ class MigrationGenerator extends AbstractGenerator
             if ($field->getDescription()) {
                 $migration .= "->comment('" . addcslashes($field->getDescription(), "'") . "')";
             }
+            if ($field->isPrimary()) {
+                $migration .= '->primary()';
+            }
             $migration .= ';';
             $method->addBody("    {$migration}");
         }
 
-        $method->addBody('    // создание индексов таблицы');
+        $isIndexCommentAdded = false;
         foreach ($descriptor->getFields() as $field) {
             $name = $this->unifyColumnName($field->getName());
-            if ($field->isPrimary()) {
-                $method->addBody("    \$table->primary('{$name}');");
-            }
             if ($field->isIndex()) {
+                if (!$isIndexCommentAdded) {
+                    $method->addBody('    // создание индексов таблицы');
+                    $isIndexCommentAdded = true;
+                }
                 $method->addBody("    \$table->index('{$name}');");
             }
         }

@@ -18,11 +18,11 @@ class FiasLaravelAddressObject extends Migration
     {
         Schema::create('fias_laravel_address_object', function (Blueprint $table) {
             // создание полей таблицы
-            $table->string('aoid', 255)->nullable(false)->comment('Уникальный идентификатор записи. Ключевое поле.');
-            $table->string('aoguid', 255)->comment('Глобальный уникальный идентификатор адресного объекта');
-            $table->string('parentguid', 255)->comment('Идентификатор объекта родительского объекта');
-            $table->string('previd', 255)->comment('Идентификатор записи связывания с предыдушей исторической записью');
-            $table->string('nextid', 255)->comment('Идентификатор записи  связывания с последующей исторической записью');
+            $table->uuid('aoid')->nullable(false)->comment('Уникальный идентификатор записи. Ключевое поле.')->primary();
+            $table->uuid('aoguid')->comment('Глобальный уникальный идентификатор адресного объекта');
+            $table->uuid('parentguid')->comment('Идентификатор объекта родительского объекта');
+            $table->uuid('previd')->comment('Идентификатор записи связывания с предыдушей исторической записью');
+            $table->uuid('nextid')->comment('Идентификатор записи  связывания с последующей исторической записью');
             $table->string('code', 255)->comment('Код адресного объекта одной строкой с признаком актуальности из КЛАДР 4.0.');
             $table->string('formalname', 255)->nullable(false)->comment('Формализованное наименование');
             $table->string('offname', 255)->nullable(false)->comment('Официальное наименование');
@@ -56,7 +56,6 @@ class FiasLaravelAddressObject extends Migration
             $table->datetime('updatedate')->nullable(false)->comment('Дата внесения (обновления) записи');
             $table->unsignedInteger('divtype')->nullable(false)->comment('Признак адресации');
             // создание индексов таблицы
-            $table->primary('aoid');
             $table->index('aoguid');
         });
     }

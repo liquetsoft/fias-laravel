@@ -18,10 +18,8 @@ class FiasLaravelOperationStatus extends Migration
     {
         Schema::create('fias_laravel_operation_status', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('operstatid')->nullable(false);
+            $table->unsignedInteger('operstatid')->nullable(false)->primary();
             $table->string('name', 255)->nullable(false);
-            // создание индексов таблицы
-            $table->primary('operstatid');
         });
     }
 

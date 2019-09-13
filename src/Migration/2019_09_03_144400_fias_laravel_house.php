@@ -18,9 +18,9 @@ class FiasLaravelHouse extends Migration
     {
         Schema::create('fias_laravel_house', function (Blueprint $table) {
             // создание полей таблицы
-            $table->string('houseid', 255)->nullable(false);
-            $table->string('houseguid', 255);
-            $table->string('aoguid', 255);
+            $table->uuid('houseid')->nullable(false)->primary();
+            $table->uuid('houseguid');
+            $table->uuid('aoguid');
             $table->string('housenum', 20)->nullable(false);
             $table->unsignedInteger('strstatus')->nullable(false);
             $table->unsignedInteger('eststatus')->nullable(false);
@@ -35,8 +35,6 @@ class FiasLaravelHouse extends Migration
             $table->datetime('updatedate')->nullable(false);
             $table->unsignedInteger('counter')->nullable(false);
             $table->unsignedInteger('divtype')->nullable(false);
-            // создание индексов таблицы
-            $table->primary('houseid');
         });
     }
 

@@ -18,10 +18,8 @@ class FiasLaravelNormativeDocumentType extends Migration
     {
         Schema::create('fias_laravel_normative_document_type', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('ndtypeid')->nullable(false);
+            $table->unsignedInteger('ndtypeid')->nullable(false)->primary();
             $table->string('name', 255)->nullable(false);
-            // создание индексов таблицы
-            $table->primary('ndtypeid');
         });
     }
 

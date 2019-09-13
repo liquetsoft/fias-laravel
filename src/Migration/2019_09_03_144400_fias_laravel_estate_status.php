@@ -18,10 +18,8 @@ class FiasLaravelEstateStatus extends Migration
     {
         Schema::create('fias_laravel_estate_status', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('eststatid')->nullable(false);
+            $table->unsignedInteger('eststatid')->nullable(false)->primary();
             $table->string('name', 255)->nullable(false);
-            // создание индексов таблицы
-            $table->primary('eststatid');
         });
     }
 

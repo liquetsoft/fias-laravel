@@ -18,11 +18,9 @@ class FiasLaravelFlatType extends Migration
     {
         Schema::create('fias_laravel_flat_type', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('fltypeid')->nullable(false);
+            $table->unsignedInteger('fltypeid')->nullable(false)->primary();
             $table->string('name', 255)->nullable(false);
             $table->string('shortname', 255)->nullable(false);
-            // создание индексов таблицы
-            $table->primary('fltypeid');
         });
     }
 

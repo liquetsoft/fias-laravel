@@ -18,11 +18,9 @@ class FiasLaravelRoomType extends Migration
     {
         Schema::create('fias_laravel_room_type', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('rmtypeid')->nullable(false);
+            $table->unsignedInteger('rmtypeid')->nullable(false)->primary();
             $table->string('name', 255)->nullable(false);
             $table->string('shortname', 255)->nullable(false);
-            // создание индексов таблицы
-            $table->primary('rmtypeid');
         });
     }
 

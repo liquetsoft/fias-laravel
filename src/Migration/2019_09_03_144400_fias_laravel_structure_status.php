@@ -18,11 +18,9 @@ class FiasLaravelStructureStatus extends Migration
     {
         Schema::create('fias_laravel_structure_status', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('strstatid')->nullable(false);
+            $table->unsignedInteger('strstatid')->nullable(false)->primary();
             $table->string('name', 255)->nullable(false);
             $table->string('shortname', 255)->nullable(false);
-            // создание индексов таблицы
-            $table->primary('strstatid');
         });
     }
 

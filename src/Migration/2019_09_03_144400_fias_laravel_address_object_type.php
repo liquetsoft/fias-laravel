@@ -18,12 +18,10 @@ class FiasLaravelAddressObjectType extends Migration
     {
         Schema::create('fias_laravel_address_object_type', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('kod_t_st')->nullable(false);
+            $table->unsignedInteger('kod_t_st')->nullable(false)->primary();
             $table->unsignedInteger('level')->nullable(false);
             $table->string('socrname', 255)->nullable(false);
             $table->string('scname', 255)->nullable(false);
-            // создание индексов таблицы
-            $table->primary('kod_t_st');
         });
     }
 

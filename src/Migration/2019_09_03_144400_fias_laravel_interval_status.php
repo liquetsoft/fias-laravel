@@ -18,10 +18,8 @@ class FiasLaravelIntervalStatus extends Migration
     {
         Schema::create('fias_laravel_interval_status', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('intvstatid')->nullable(false);
+            $table->unsignedInteger('intvstatid')->nullable(false)->primary();
             $table->string('name', 255)->nullable(false);
-            // создание индексов таблицы
-            $table->primary('intvstatid');
         });
     }
 

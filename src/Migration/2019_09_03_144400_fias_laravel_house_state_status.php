@@ -18,10 +18,8 @@ class FiasLaravelHouseStateStatus extends Migration
     {
         Schema::create('fias_laravel_house_state_status', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('housestid')->nullable(false);
+            $table->unsignedInteger('housestid')->nullable(false)->primary();
             $table->string('name', 255)->nullable(false);
-            // создание индексов таблицы
-            $table->primary('housestid');
         });
     }
 

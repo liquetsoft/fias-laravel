@@ -18,10 +18,8 @@ class FiasLaravelCenterStatus extends Migration
     {
         Schema::create('fias_laravel_center_status', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('centerstid')->nullable(false);
+            $table->unsignedInteger('centerstid')->nullable(false)->primary();
             $table->string('name', 255)->nullable(false);
-            // создание индексов таблицы
-            $table->primary('centerstid');
         });
     }
 
