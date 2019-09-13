@@ -134,6 +134,9 @@ class ModelGenerator extends AbstractGenerator
         $types = "[\n";
 
         foreach ($descriptor->getFields() as $field) {
+            if ($field->isNullable()) {
+                continue;
+            }
             $name = $this->unifyColumnName($field->getName());
             $type = trim($field->getType() . '_' . $field->getSubType(), ' _');
             switch ($type) {

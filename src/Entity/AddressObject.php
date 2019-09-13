@@ -96,7 +96,6 @@ class AddressObject extends Model
 
     /** @var array<string, string> */
     protected $casts = [
-        'code' => 'string',
         'formalname' => 'string',
         'offname' => 'string',
         'shortname' => 'string',
