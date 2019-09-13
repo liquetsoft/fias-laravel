@@ -6,6 +6,7 @@ use Liquetsoft\Fias\Component\EntityRegistry\ArrayEntityRegistry;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\ModelGenerator;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\MigrationGenerator;
 use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\ResourceGenerator;
 
 $root = dirname(__DIR__);
 $entitiesYaml = $root . '/vendor/liquetsoft/fias-component/resources/fias_entities.yaml';
@@ -58,4 +59,13 @@ if (!is_dir($dir)) {
 $dirObject = new SplFileInfo($dir);
 $namespace = 'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Migration';
 $generator = new MigrationGenerator($registry);
+$generator->run($dirObject, $namespace);
+
+$dir = $root . '/src/Resource';
+if (!is_dir($dir)) {
+    mkdir($dir, 0777, true);
+}
+$dirObject = new SplFileInfo($dir);
+$namespace = 'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Resource';
+$generator = new ResourceGenerator($registry);
 $generator->run($dirObject, $namespace);

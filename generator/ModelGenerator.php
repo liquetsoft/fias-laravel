@@ -57,7 +57,7 @@ class ModelGenerator extends AbstractGenerator
     }
 
     /**
-     * Добавляет всен необходимые для класса комментарии.
+     * Добавляет все необходимые для класса комментарии.
      *
      * @param ClassType        $class
      * @param EntityDescriptor $descriptor
