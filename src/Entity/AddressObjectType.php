@@ -7,7 +7,7 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Перечень полных, сокращённых наименований типов адресных элементов и уровней их классификациих.
+ * Перечень полных, сокращённых наименований типов адресных элементов и уровней их классификации.
  *
  * @property int    $kod_t_st
  * @property int    $level

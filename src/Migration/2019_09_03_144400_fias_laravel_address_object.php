@@ -53,7 +53,7 @@ class FiasLaravelAddressObject extends Migration
             $table->string('postalcode', 6)->nullable(false)->comment('Почтовый индекс');
             $table->datetime('startdate')->nullable(false)->comment('Начало действия записи');
             $table->datetime('enddate')->nullable(false)->comment('Окончание действия записи');
-            $table->datetime('updatedate')->nullable(false)->comment('Дата  внесения (обновления) записи');
+            $table->datetime('updatedate')->nullable(false)->comment('Дата внесения (обновления) записи');
             $table->unsignedInteger('divtype')->nullable(false)->comment('Признак адресации');
             // создание индексов таблицы
             $table->primary('aoid');
