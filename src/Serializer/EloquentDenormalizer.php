@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer;
 
-use DateTime;
 use Exception;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster\EloquentTypeCaster;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster\TypeCaster;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
@@ -17,6 +18,23 @@ use Throwable;
  */
 class EloquentDenormalizer implements DenormalizerInterface
 {
+    /**
+     * @var TypeCaster|null
+     */
+    protected $typeCaster;
+
+    /**
+     * @param TypeCaster|null $typeCaster
+     */
+    public function __construct(?TypeCaster $typeCaster = null)
+    {
+        if ($typeCaster === null) {
+            $typeCaster = new EloquentTypeCaster();
+        }
+
+        $this->typeCaster = $typeCaster;
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -36,6 +54,7 @@ class EloquentDenormalizer implements DenormalizerInterface
 
         try {
             $dataArray = $this->createDataArrayForModel($data, $entity);
+            $entity->fill($dataArray);
         } catch (Throwable $e) {
             throw new NotNormalizableValueException(
                 "Can't denormalize data to eloquent model.",
@@ -43,7 +62,6 @@ class EloquentDenormalizer implements DenormalizerInterface
                 $e
             );
         }
-        $entity->fill($dataArray);
 
         return $entity;
     }
@@ -133,33 +151,12 @@ class EloquentDenormalizer implements DenormalizerInterface
     protected function castValueForModel($value, string $attributeName, Model $entity)
     {
         $casts = $entity->getCasts();
-        switch ($casts[$attributeName] ?? '') {
-            case 'integer':
-                $castedValue = (int) $value;
-                break;
-            case 'real':
-            case 'float':
-            case 'double':
-                $castedValue = (float) $value;
-                break;
-            case 'string':
-                $castedValue = (string) $value;
-                break;
-            case 'boolean':
-                $castedValue = (bool) $value;
-                break;
-            case 'date':
-            case 'datetime':
-                $castedValue = new DateTime($value);
-                break;
-            case 'timestamp':
-                $castedValue = is_numeric($value) ? (int) $value : (new DateTime($value))->getTimestamp();
-                break;
-            default:
-                $castedValue = $value;
-                break;
+        $type = $casts[$attributeName] ?? '';
+
+        if ($this->typeCaster && $this->typeCaster->canCast($type, $value)) {
+            $value = $this->typeCaster->cast($type, $value);
         }
 
-        return $castedValue;
+        return $value;
     }
 }
