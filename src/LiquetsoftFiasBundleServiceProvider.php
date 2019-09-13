@@ -102,6 +102,22 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     {
         $servicesList = [];
 
+        $this->registerServices($servicesList);
+        $this->registerTasks($servicesList);
+        $this->registerPipelines($servicesList);
+
+        return $servicesList;
+    }
+
+    /**
+     * Регистрирует сервисы бандла.
+     *
+     * @param array $servicesList
+     *
+     * @return void
+     */
+    protected function registerServices(array &$servicesList): void
+    {
         // soap-клиент для получения сссылки на массив с файлами
         $servicesList[$this->prefixString('informer.soap')] = function (): SoapClient {
             return new SoapClient(
@@ -157,7 +173,17 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                 $this->getOptionString('version_manager_entity')
             );
         };
+    }
 
+    /**
+     * Регистрирует задачи бандла.
+     *
+     * @param array $servicesList
+     *
+     * @return void
+     */
+    protected function registerTasks(array &$servicesList): void
+    {
         // задача для очистки базы
         $servicesList[$this->prefixString('task.cleanup')] = CleanupTask::class;
 
@@ -218,7 +244,17 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
         // задача для сохранения установленной версии
         $servicesList[$this->prefixString('task.version.set')] = VersionSetTask::class;
+    }
 
+    /**
+     * Регистрирует пайплайны бандла.
+     *
+     * @param array $servicesList
+     *
+     * @return void
+     */
+    protected function registerPipelines(array &$servicesList): void
+    {
         // процесс установки полной версии ФИАС
         $servicesList[$this->prefixString('pipe.install')] = function (Application $app): Pipe {
             return new ArrayPipe(
@@ -263,8 +299,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                 $app->get($this->prefixString('task.cleanup'))
             );
         };
-
-        return $servicesList;
     }
 
     /**
