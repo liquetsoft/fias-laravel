@@ -9,6 +9,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'CenterStatus'.
+ *
+ * @property int    $centerstid
+ * @property string $name
  */
 class CenterStatus extends JsonResource
 {
@@ -22,8 +25,8 @@ class CenterStatus extends JsonResource
     public function toArray($request): array
     {
         return[
-            'centerstid' => $this->centerstid ?? null,
-            'name' => $this->name ?? null,
+            'centerstid' => $this->centerstid,
+            'name' => $this->name,
         ];
     }
 }

@@ -9,6 +9,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'NormativeDocument'.
+ *
+ * @property string $normdocid
+ * @property string $docname
+ * @property Carbon $docdate
+ * @property string $docnum
+ * @property string $doctype
  */
 class NormativeDocument extends JsonResource
 {
@@ -22,11 +28,11 @@ class NormativeDocument extends JsonResource
     public function toArray($request): array
     {
         return[
-            'normdocid' => $this->normdocid ?? null,
-            'docname' => $this->docname ?? null,
-            'docdate' => $this->docdate ?? null,
-            'docnum' => $this->docnum ?? null,
-            'doctype' => $this->doctype ?? null,
+            'normdocid' => $this->normdocid,
+            'docname' => $this->docname,
+            'docdate' => $this->docdate,
+            'docnum' => $this->docnum,
+            'doctype' => $this->doctype,
         ];
     }
 }

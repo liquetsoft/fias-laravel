@@ -9,6 +9,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'FlatType'.
+ *
+ * @property int    $fltypeid
+ * @property string $name
+ * @property string $shortname
  */
 class FlatType extends JsonResource
 {
@@ -22,9 +26,9 @@ class FlatType extends JsonResource
     public function toArray($request): array
     {
         return[
-            'fltypeid' => $this->fltypeid ?? null,
-            'name' => $this->name ?? null,
-            'shortname' => $this->shortname ?? null,
+            'fltypeid' => $this->fltypeid,
+            'name' => $this->name,
+            'shortname' => $this->shortname,
         ];
     }
 }

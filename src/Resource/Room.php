@@ -9,6 +9,20 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'Room'.
+ *
+ * @property string      $roomid
+ * @property string|null $roomguid
+ * @property string|null $houseguid
+ * @property string      $regioncode
+ * @property string      $flatnumber
+ * @property int         $flattype
+ * @property string      $postalcode
+ * @property Carbon      $startdate
+ * @property Carbon      $enddate
+ * @property Carbon      $updatedate
+ * @property string      $operstatus
+ * @property string      $livestatus
+ * @property string|null $normdoc
  */
 class Room extends JsonResource
 {
@@ -22,19 +36,19 @@ class Room extends JsonResource
     public function toArray($request): array
     {
         return[
-            'roomid' => $this->roomid ?? null,
-            'roomguid' => $this->roomguid ?? null,
-            'houseguid' => $this->houseguid ?? null,
-            'regioncode' => $this->regioncode ?? null,
-            'flatnumber' => $this->flatnumber ?? null,
-            'flattype' => $this->flattype ?? null,
-            'postalcode' => $this->postalcode ?? null,
-            'startdate' => $this->startdate ?? null,
-            'enddate' => $this->enddate ?? null,
-            'updatedate' => $this->updatedate ?? null,
-            'operstatus' => $this->operstatus ?? null,
-            'livestatus' => $this->livestatus ?? null,
-            'normdoc' => $this->normdoc ?? null,
+            'roomid' => $this->roomid,
+            'roomguid' => $this->roomguid,
+            'houseguid' => $this->houseguid,
+            'regioncode' => $this->regioncode,
+            'flatnumber' => $this->flatnumber,
+            'flattype' => $this->flattype,
+            'postalcode' => $this->postalcode,
+            'startdate' => $this->startdate,
+            'enddate' => $this->enddate,
+            'updatedate' => $this->updatedate,
+            'operstatus' => $this->operstatus,
+            'livestatus' => $this->livestatus,
+            'normdoc' => $this->normdoc,
         ];
     }
 }

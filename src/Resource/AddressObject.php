@@ -9,6 +9,44 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'AddressObject'.
+ *
+ * @property string      $aoid
+ * @property string|null $aoguid
+ * @property string|null $parentguid
+ * @property string|null $previd
+ * @property string|null $nextid
+ * @property string|null $code
+ * @property string      $formalname
+ * @property string      $offname
+ * @property string      $shortname
+ * @property int         $aolevel
+ * @property string      $regioncode
+ * @property string      $areacode
+ * @property string      $autocode
+ * @property string      $citycode
+ * @property string      $ctarcode
+ * @property string      $placecode
+ * @property string      $plancode
+ * @property string      $streetcode
+ * @property string      $extrcode
+ * @property string      $sextcode
+ * @property string      $plaincode
+ * @property int         $currstatus
+ * @property int         $actstatus
+ * @property int         $livestatus
+ * @property int         $centstatus
+ * @property int         $operstatus
+ * @property string      $ifnsfl
+ * @property string      $ifnsul
+ * @property string      $terrifnsfl
+ * @property string      $terrifnsul
+ * @property string      $okato
+ * @property string      $oktmo
+ * @property string      $postalcode
+ * @property Carbon      $startdate
+ * @property Carbon      $enddate
+ * @property Carbon      $updatedate
+ * @property int         $divtype
  */
 class AddressObject extends JsonResource
 {
@@ -22,43 +60,43 @@ class AddressObject extends JsonResource
     public function toArray($request): array
     {
         return[
-            'aoid' => $this->aoid ?? null,
-            'aoguid' => $this->aoguid ?? null,
-            'parentguid' => $this->parentguid ?? null,
-            'previd' => $this->previd ?? null,
-            'nextid' => $this->nextid ?? null,
-            'code' => $this->code ?? null,
-            'formalname' => $this->formalname ?? null,
-            'offname' => $this->offname ?? null,
-            'shortname' => $this->shortname ?? null,
-            'aolevel' => $this->aolevel ?? null,
-            'regioncode' => $this->regioncode ?? null,
-            'areacode' => $this->areacode ?? null,
-            'autocode' => $this->autocode ?? null,
-            'citycode' => $this->citycode ?? null,
-            'ctarcode' => $this->ctarcode ?? null,
-            'placecode' => $this->placecode ?? null,
-            'plancode' => $this->plancode ?? null,
-            'streetcode' => $this->streetcode ?? null,
-            'extrcode' => $this->extrcode ?? null,
-            'sextcode' => $this->sextcode ?? null,
-            'plaincode' => $this->plaincode ?? null,
-            'currstatus' => $this->currstatus ?? null,
-            'actstatus' => $this->actstatus ?? null,
-            'livestatus' => $this->livestatus ?? null,
-            'centstatus' => $this->centstatus ?? null,
-            'operstatus' => $this->operstatus ?? null,
-            'ifnsfl' => $this->ifnsfl ?? null,
-            'ifnsul' => $this->ifnsul ?? null,
-            'terrifnsfl' => $this->terrifnsfl ?? null,
-            'terrifnsul' => $this->terrifnsul ?? null,
-            'okato' => $this->okato ?? null,
-            'oktmo' => $this->oktmo ?? null,
-            'postalcode' => $this->postalcode ?? null,
-            'startdate' => $this->startdate ?? null,
-            'enddate' => $this->enddate ?? null,
-            'updatedate' => $this->updatedate ?? null,
-            'divtype' => $this->divtype ?? null,
+            'aoid' => $this->aoid,
+            'aoguid' => $this->aoguid,
+            'parentguid' => $this->parentguid,
+            'previd' => $this->previd,
+            'nextid' => $this->nextid,
+            'code' => $this->code,
+            'formalname' => $this->formalname,
+            'offname' => $this->offname,
+            'shortname' => $this->shortname,
+            'aolevel' => $this->aolevel,
+            'regioncode' => $this->regioncode,
+            'areacode' => $this->areacode,
+            'autocode' => $this->autocode,
+            'citycode' => $this->citycode,
+            'ctarcode' => $this->ctarcode,
+            'placecode' => $this->placecode,
+            'plancode' => $this->plancode,
+            'streetcode' => $this->streetcode,
+            'extrcode' => $this->extrcode,
+            'sextcode' => $this->sextcode,
+            'plaincode' => $this->plaincode,
+            'currstatus' => $this->currstatus,
+            'actstatus' => $this->actstatus,
+            'livestatus' => $this->livestatus,
+            'centstatus' => $this->centstatus,
+            'operstatus' => $this->operstatus,
+            'ifnsfl' => $this->ifnsfl,
+            'ifnsul' => $this->ifnsul,
+            'terrifnsfl' => $this->terrifnsfl,
+            'terrifnsul' => $this->terrifnsul,
+            'okato' => $this->okato,
+            'oktmo' => $this->oktmo,
+            'postalcode' => $this->postalcode,
+            'startdate' => $this->startdate,
+            'enddate' => $this->enddate,
+            'updatedate' => $this->updatedate,
+            'divtype' => $this->divtype,
         ];
     }
 }

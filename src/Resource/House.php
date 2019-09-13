@@ -9,6 +9,24 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'House'.
+ *
+ * @property string      $houseid
+ * @property string|null $houseguid
+ * @property string|null $aoguid
+ * @property string      $housenum
+ * @property int         $strstatus
+ * @property int         $eststatus
+ * @property int         $statstatus
+ * @property string      $ifnsfl
+ * @property string      $ifnsul
+ * @property string      $okato
+ * @property string      $oktmo
+ * @property string      $postalcode
+ * @property Carbon      $startdate
+ * @property Carbon      $enddate
+ * @property Carbon      $updatedate
+ * @property int         $counter
+ * @property int         $divtype
  */
 class House extends JsonResource
 {
@@ -22,23 +40,23 @@ class House extends JsonResource
     public function toArray($request): array
     {
         return[
-            'houseid' => $this->houseid ?? null,
-            'houseguid' => $this->houseguid ?? null,
-            'aoguid' => $this->aoguid ?? null,
-            'housenum' => $this->housenum ?? null,
-            'strstatus' => $this->strstatus ?? null,
-            'eststatus' => $this->eststatus ?? null,
-            'statstatus' => $this->statstatus ?? null,
-            'ifnsfl' => $this->ifnsfl ?? null,
-            'ifnsul' => $this->ifnsul ?? null,
-            'okato' => $this->okato ?? null,
-            'oktmo' => $this->oktmo ?? null,
-            'postalcode' => $this->postalcode ?? null,
-            'startdate' => $this->startdate ?? null,
-            'enddate' => $this->enddate ?? null,
-            'updatedate' => $this->updatedate ?? null,
-            'counter' => $this->counter ?? null,
-            'divtype' => $this->divtype ?? null,
+            'houseid' => $this->houseid,
+            'houseguid' => $this->houseguid,
+            'aoguid' => $this->aoguid,
+            'housenum' => $this->housenum,
+            'strstatus' => $this->strstatus,
+            'eststatus' => $this->eststatus,
+            'statstatus' => $this->statstatus,
+            'ifnsfl' => $this->ifnsfl,
+            'ifnsul' => $this->ifnsul,
+            'okato' => $this->okato,
+            'oktmo' => $this->oktmo,
+            'postalcode' => $this->postalcode,
+            'startdate' => $this->startdate,
+            'enddate' => $this->enddate,
+            'updatedate' => $this->updatedate,
+            'counter' => $this->counter,
+            'divtype' => $this->divtype,
         ];
     }
 }

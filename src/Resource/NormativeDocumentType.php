@@ -9,6 +9,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'NormativeDocumentType'.
+ *
+ * @property int    $ndtypeid
+ * @property string $name
  */
 class NormativeDocumentType extends JsonResource
 {
@@ -22,8 +25,8 @@ class NormativeDocumentType extends JsonResource
     public function toArray($request): array
     {
         return[
-            'ndtypeid' => $this->ndtypeid ?? null,
-            'name' => $this->name ?? null,
+            'ndtypeid' => $this->ndtypeid,
+            'name' => $this->name,
         ];
     }
 }

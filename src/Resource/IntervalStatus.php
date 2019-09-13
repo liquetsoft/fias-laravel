@@ -9,6 +9,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'IntervalStatus'.
+ *
+ * @property int    $intvstatid
+ * @property string $name
  */
 class IntervalStatus extends JsonResource
 {
@@ -22,8 +25,8 @@ class IntervalStatus extends JsonResource
     public function toArray($request): array
     {
         return[
-            'intvstatid' => $this->intvstatid ?? null,
-            'name' => $this->name ?? null,
+            'intvstatid' => $this->intvstatid,
+            'name' => $this->name,
         ];
     }
 }

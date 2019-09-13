@@ -9,6 +9,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'FiasVersion'.
+ *
+ * @property int    $version
+ * @property string $url
+ * @property string $created_at
  */
 class FiasVersion extends JsonResource
 {
@@ -22,9 +26,9 @@ class FiasVersion extends JsonResource
     public function toArray($request): array
     {
         return[
-            'version' => $this->version ?? null,
-            'url' => $this->url ?? null,
-            'created_at' => $this->created_at ?? null,
+            'version' => $this->version,
+            'url' => $this->url,
+            'created_at' => $this->created_at,
         ];
     }
 }

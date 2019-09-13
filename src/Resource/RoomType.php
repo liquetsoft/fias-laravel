@@ -9,6 +9,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'RoomType'.
+ *
+ * @property int    $rmtypeid
+ * @property string $name
+ * @property string $shortname
  */
 class RoomType extends JsonResource
 {
@@ -22,9 +26,9 @@ class RoomType extends JsonResource
     public function toArray($request): array
     {
         return[
-            'rmtypeid' => $this->rmtypeid ?? null,
-            'name' => $this->name ?? null,
-            'shortname' => $this->shortname ?? null,
+            'rmtypeid' => $this->rmtypeid,
+            'name' => $this->name,
+            'shortname' => $this->shortname,
         ];
     }
 }

@@ -9,6 +9,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'AddressObjectType'.
+ *
+ * @property int    $kod_t_st
+ * @property int    $level
+ * @property string $socrname
+ * @property string $scname
  */
 class AddressObjectType extends JsonResource
 {
@@ -22,10 +27,10 @@ class AddressObjectType extends JsonResource
     public function toArray($request): array
     {
         return[
-            'kod_t_st' => $this->kod_t_st ?? null,
-            'level' => $this->level ?? null,
-            'socrname' => $this->socrname ?? null,
-            'scname' => $this->scname ?? null,
+            'kod_t_st' => $this->kod_t_st,
+            'level' => $this->level,
+            'socrname' => $this->socrname,
+            'scname' => $this->scname,
         ];
     }
 }
