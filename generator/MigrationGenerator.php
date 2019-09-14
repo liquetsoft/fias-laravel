@@ -77,7 +77,11 @@ class MigrationGenerator extends AbstractGenerator
                     break;
                 default:
                     $length = $field->getLength() ?: 255;
-                    $migration = "\$table->string('{$name}', {$length})";
+                    if ($length > 255) {
+                        $migration = "\$table->text('{$name}')";
+                    } else {
+                        $migration = "\$table->string('{$name}', {$length})";
+                    }
                     break;
             }
             if (!$field->isNullable()) {

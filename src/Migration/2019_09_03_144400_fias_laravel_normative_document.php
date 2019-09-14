@@ -19,7 +19,7 @@ class FiasLaravelNormativeDocument extends Migration
         Schema::create('fias_laravel_normative_document', function (Blueprint $table) {
             // создание полей таблицы
             $table->uuid('normdocid')->nullable(false)->primary();
-            $table->string('docname', 1000)->nullable(false);
+            $table->text('docname')->nullable(false);
             $table->datetime('docdate')->nullable(false);
             $table->string('docnum', 255)->nullable(false);
             $table->string('doctype', 255)->nullable(false);
