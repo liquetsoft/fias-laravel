@@ -24,7 +24,7 @@ class ActualStatus extends JsonResource
      */
     public function toArray($request): array
     {
-        return[
+        return [
             'actstatid' => $this->actstatid,
             'name' => $this->name,
         ];

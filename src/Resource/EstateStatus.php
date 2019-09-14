@@ -24,7 +24,7 @@ class EstateStatus extends JsonResource
      */
     public function toArray($request): array
     {
-        return[
+        return [
             'eststatid' => $this->eststatid,
             'name' => $this->name,
         ];

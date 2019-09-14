@@ -25,7 +25,7 @@ class StructureStatus extends JsonResource
      */
     public function toArray($request): array
     {
-        return[
+        return [
             'strstatid' => $this->strstatid,
             'name' => $this->name,
             'shortname' => $this->shortname,

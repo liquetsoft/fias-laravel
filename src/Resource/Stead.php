@@ -39,7 +39,7 @@ class Stead extends JsonResource
      */
     public function toArray($request): array
     {
-        return[
+        return [
             'steadguid' => $this->steadguid,
             'number' => $this->number,
             'regioncode' => $this->regioncode,

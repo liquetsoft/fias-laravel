@@ -39,7 +39,7 @@ class House extends JsonResource
      */
     public function toArray($request): array
     {
-        return[
+        return [
             'houseid' => $this->houseid,
             'houseguid' => $this->houseguid,
             'aoguid' => $this->aoguid,

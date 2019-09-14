@@ -25,7 +25,7 @@ class FiasVersion extends JsonResource
      */
     public function toArray($request): array
     {
-        return[
+        return [
             'version' => $this->version,
             'url' => $this->url,
             'created_at' => $this->created_at,

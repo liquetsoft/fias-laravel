@@ -35,7 +35,7 @@ class Room extends JsonResource
      */
     public function toArray($request): array
     {
-        return[
+        return [
             'roomid' => $this->roomid,
             'roomguid' => $this->roomguid,
             'houseguid' => $this->houseguid,

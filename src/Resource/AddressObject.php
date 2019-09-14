@@ -59,7 +59,7 @@ class AddressObject extends JsonResource
      */
     public function toArray($request): array
     {
-        return[
+        return [
             'aoid' => $this->aoid,
             'aoguid' => $this->aoguid,
             'parentguid' => $this->parentguid,

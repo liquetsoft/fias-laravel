@@ -25,7 +25,7 @@ class FlatType extends JsonResource
      */
     public function toArray($request): array
     {
-        return[
+        return [
             'fltypeid' => $this->fltypeid,
             'name' => $this->name,
             'shortname' => $this->shortname,

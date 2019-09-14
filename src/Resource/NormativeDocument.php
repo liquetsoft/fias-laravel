@@ -27,7 +27,7 @@ class NormativeDocument extends JsonResource
      */
     public function toArray($request): array
     {
-        return[
+        return [
             'normdocid' => $this->normdocid,
             'docname' => $this->docname,
             'docdate' => $this->docdate,

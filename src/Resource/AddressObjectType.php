@@ -26,7 +26,7 @@ class AddressObjectType extends JsonResource
      */
     public function toArray($request): array
     {
-        return[
+        return [
             'kod_t_st' => $this->kod_t_st,
             'level' => $this->level,
             'socrname' => $this->socrname,

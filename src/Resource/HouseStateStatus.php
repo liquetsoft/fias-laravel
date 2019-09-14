@@ -24,7 +24,7 @@ class HouseStateStatus extends JsonResource
      */
     public function toArray($request): array
     {
-        return[
+        return [
             'housestid' => $this->housestid,
             'name' => $this->name,
         ];

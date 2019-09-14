@@ -68,7 +68,7 @@ class ResourceGenerator extends AbstractGenerator
             $name = $this->unifyColumnName($field->getName());
             $toArray[] = "'{$name}' => \$this->{$name}";
         }
-        $methodBody = "return[\n    " . implode(",\n    ", $toArray) . "\n];";
+        $methodBody = "return [\n    " . implode(",\n    ", $toArray) . "\n];";
 
         $method = $class->addMethod('toArray')
             ->addComment("Преобразует сущность '{$entityName}' в массив.\n")
