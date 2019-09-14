@@ -35,6 +35,10 @@ class FiasLaravelStead extends Migration
             $table->string('livestatus', 255)->nullable(false);
             $table->string('divtype', 255)->nullable(false);
             $table->uuid('normdoc');
+            // настройки таблицы
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

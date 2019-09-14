@@ -22,6 +22,10 @@ class FiasLaravelAddressObjectType extends Migration
             $table->unsignedInteger('level')->nullable(false);
             $table->string('socrname', 255)->nullable(false);
             $table->string('scname', 255)->nullable(false);
+            // настройки таблицы
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

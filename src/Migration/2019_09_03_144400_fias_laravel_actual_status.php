@@ -20,6 +20,10 @@ class FiasLaravelActualStatus extends Migration
             // создание полей таблицы
             $table->unsignedInteger('actstatid')->nullable(false)->primary();
             $table->string('name', 255)->nullable(false);
+            // настройки таблицы
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

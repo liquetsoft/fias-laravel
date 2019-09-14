@@ -57,6 +57,10 @@ class FiasLaravelAddressObject extends Migration
             $table->unsignedInteger('divtype')->nullable(false)->comment('Признак адресации');
             // создание индексов таблицы
             $table->index('aoguid');
+            // настройки таблицы
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

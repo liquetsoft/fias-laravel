@@ -109,6 +109,11 @@ class MigrationGenerator extends AbstractGenerator
             }
         }
 
+        $method->addBody('    // настройки таблицы');
+        $method->addBody("    \$table->engine = 'InnoDB';");
+        $method->addBody("    \$table->charset = 'utf8';");
+        $method->addBody("    \$table->collation = 'utf8_unicode_ci';");
+
         $method->addBody('});');
     }
 

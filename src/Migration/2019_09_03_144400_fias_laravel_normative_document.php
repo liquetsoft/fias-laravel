@@ -23,6 +23,10 @@ class FiasLaravelNormativeDocument extends Migration
             $table->datetime('docdate')->nullable(false);
             $table->string('docnum', 255)->nullable(false);
             $table->string('doctype', 255)->nullable(false);
+            // настройки таблицы
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 
