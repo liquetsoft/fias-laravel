@@ -24,22 +24,27 @@ return [
      * Ссылка на WSDL сервися, который возврашает ссылки на архив с ФИАС для указанных версий.
      */
     'informer_wsdl' => 'http://fias.nalog.ru/WebServices/Public/DownloadService.asmx?WSDL',
+
     /*
      * Путь к yaml файлу с описаниями сущностей ФИАС.
      */
     'registry_yaml' => base_path('vendor/liquetsoft/fias-component/resources/fias_entities.yaml'),
+
     /*
      * Путь к папке со временными файлами для процесса загрузки.
      */
     'temp_dir' => storage_path('liquetsoft_fias'),
+
     /*
      * Имя класса для сущности, которая хранит историю версий ФИАС.
      */
     'version_manager_entity' => FiasVersion::class,
+
     /*
      * Количество записей для вставки с помошью bulk insert.
      */
     'insert_batch_count' => 800,
+
     /*
      * Связка между сущностями ФИАС и моделями в проекте.
      */
