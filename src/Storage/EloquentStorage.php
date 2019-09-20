@@ -144,7 +144,7 @@ class EloquentStorage implements Storage
     }
 
     /**
-     * ПРоверяет, что объект является моделью eloquent.
+     * Проверяет, что объект является моделью eloquent.
      *
      * @param object $entity
      *
