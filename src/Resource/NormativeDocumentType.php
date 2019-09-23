@@ -25,8 +25,8 @@ class NormativeDocumentType extends JsonResource
     public function toArray($request): array
     {
         return [
-            'ndtypeid' => $this->ndtypeid,
-            'name' => $this->name,
+            'ndtypeid' => (int) $this->ndtypeid,
+            'name' => (string) $this->name,
         ];
     }
 }

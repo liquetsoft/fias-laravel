@@ -26,9 +26,9 @@ class StructureStatus extends JsonResource
     public function toArray($request): array
     {
         return [
-            'strstatid' => $this->strstatid,
-            'name' => $this->name,
-            'shortname' => $this->shortname,
+            'strstatid' => (int) $this->strstatid,
+            'name' => (string) $this->name,
+            'shortname' => (string) $this->shortname,
         ];
     }
 }

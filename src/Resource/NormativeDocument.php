@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Resource;
 
+use DateTimeInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'NormativeDocument'.
  *
- * @property string $normdocid
- * @property string $docname
- * @property Carbon $docdate
- * @property string $docnum
- * @property string $doctype
+ * @property string                   $normdocid
+ * @property string                   $docname
+ * @property DateTimeInterface|string $docdate
+ * @property string                   $docnum
+ * @property string                   $doctype
  */
 class NormativeDocument extends JsonResource
 {
@@ -28,11 +29,11 @@ class NormativeDocument extends JsonResource
     public function toArray($request): array
     {
         return [
-            'normdocid' => $this->normdocid,
-            'docname' => $this->docname,
-            'docdate' => $this->docdate,
-            'docnum' => $this->docnum,
-            'doctype' => $this->doctype,
+            'normdocid' => (string) $this->normdocid,
+            'docname' => (string) $this->docname,
+            'docdate' => $this->docdate instanceof DateTimeInterface ? $this->docdate->format('Y-m-d H:i:s') : (string) $this->docdate,
+            'docnum' => (string) $this->docnum,
+            'doctype' => (string) $this->doctype,
         ];
     }
 }

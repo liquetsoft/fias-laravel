@@ -12,10 +12,11 @@ use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PsrPrinter;
+use DateTimeInterface;
 use SplFileInfo;
 
 /**
- * Объект, который создает классы моделей из описания моделей в yaml.
+ * Объект, который создает классы для ресурсов моделей.
  */
 class ResourceGenerator extends AbstractGenerator
 {
@@ -49,6 +50,11 @@ class ResourceGenerator extends AbstractGenerator
     {
         $namespace->addUse(JsonResource::class);
         $namespace->addUse(Request::class);
+        foreach ($descriptor->getFields() as $field) {
+            if ($field->getSubType() === 'date') {
+                $namespace->addUse(DateTimeInterface::class);
+            }
+        }
     }
 
     /**
@@ -64,9 +70,7 @@ class ResourceGenerator extends AbstractGenerator
 
         $toArray = [];
         foreach ($descriptor->getFields() as $field) {
-            $this->decorateProperty($class, $field);
-            $name = $this->unifyColumnName($field->getName());
-            $toArray[] = "'{$name}' => \$this->{$name}";
+            $toArray[] = $this->decorateProperty($class, $field);
         }
         $methodBody = "return [\n    " . implode(",\n    ", $toArray) . "\n];";
 
@@ -86,8 +90,10 @@ class ResourceGenerator extends AbstractGenerator
      *
      * @param ClassType   $class
      * @param EntityField $field
+     *
+     * @return string
      */
-    protected function decorateProperty(ClassType $class, EntityField $field): void
+    protected function decorateProperty(ClassType $class, EntityField $field): string
     {
         $name = $this->unifyColumnName($field->getName());
         $type = trim($field->getType() . '_' . $field->getSubType(), ' _');
@@ -95,15 +101,20 @@ class ResourceGenerator extends AbstractGenerator
         switch ($type) {
             case 'int':
                 $varType = 'int' . ($field->isNullable() ? '|null' : '');
+                $transform = "(int) \$this->{$name}";
                 break;
             case 'string_date':
-                $varType = 'Carbon' . ($field->isNullable() ? '|null' : '');
+                $varType = 'DateTimeInterface|string' . ($field->isNullable() ? '|null' : '');
+                $transform = "\$this->{$name} instanceof DateTimeInterface ? \$this->{$name}->format('Y-m-d H:i:s') : (string) \$this->{$name}";
                 break;
             default:
                 $varType = 'string' . ($field->isNullable() ? '|null' : '');
+                $transform = "(string) \$this->{$name}";
                 break;
         }
 
         $class->addComment("@property {$varType} \${$name}");
+
+        return "'{$name}' => {$transform}";
     }
 }

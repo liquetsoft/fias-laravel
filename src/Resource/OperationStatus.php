@@ -25,8 +25,8 @@ class OperationStatus extends JsonResource
     public function toArray($request): array
     {
         return [
-            'operstatid' => $this->operstatid,
-            'name' => $this->name,
+            'operstatid' => (int) $this->operstatid,
+            'name' => (string) $this->name,
         ];
     }
 }

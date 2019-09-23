@@ -25,8 +25,8 @@ class IntervalStatus extends JsonResource
     public function toArray($request): array
     {
         return [
-            'intvstatid' => $this->intvstatid,
-            'name' => $this->name,
+            'intvstatid' => (int) $this->intvstatid,
+            'name' => (string) $this->name,
         ];
     }
 }
