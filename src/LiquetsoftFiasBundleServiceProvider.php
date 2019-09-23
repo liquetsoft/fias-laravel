@@ -41,6 +41,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage\EloquentStorage;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
+use Psr\Log\LoggerInterface;
 use SoapClient;
 use Closure;
 
@@ -268,7 +269,8 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     $app->get($this->prefixString('task.data.delete')),
                     $app->get($this->prefixString('task.version.set')),
                 ],
-                $app->get($this->prefixString('task.cleanup'))
+                $app->get($this->prefixString('task.cleanup')),
+                $app->get(LoggerInterface::class)
             );
         };
 
@@ -279,7 +281,10 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     $app->get($this->prefixString('task.data.truncate')),
                     $app->get($this->prefixString('task.data.insert')),
                     $app->get($this->prefixString('task.data.delete')),
-                ]
+                    $app->get(LoggerInterface::class),
+                ],
+                null,
+                $app->get(LoggerInterface::class)
             );
         };
 
@@ -296,7 +301,8 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     $app->get($this->prefixString('task.data.delete')),
                     $app->get($this->prefixString('task.version.set')),
                 ],
-                $app->get($this->prefixString('task.cleanup'))
+                $app->get($this->prefixString('task.cleanup')),
+                $app->get(LoggerInterface::class)
             );
         };
     }
