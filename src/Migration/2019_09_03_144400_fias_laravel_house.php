@@ -18,6 +18,7 @@ class FiasLaravelHouse extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_house');
         Schema::create('fias_laravel_house', function (Blueprint $table) {
             // создание полей таблицы
             $table->uuid('houseid')->nullable(false)->primary();

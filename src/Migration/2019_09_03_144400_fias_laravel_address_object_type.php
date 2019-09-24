@@ -16,6 +16,7 @@ class FiasLaravelAddressObjectType extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_address_object_type');
         Schema::create('fias_laravel_address_object_type', function (Blueprint $table) {
             // создание полей таблицы
             $table->unsignedInteger('kod_t_st')->nullable(false)->primary();

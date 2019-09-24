@@ -16,6 +16,7 @@ class FiasLaravelStead extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_stead');
         Schema::create('fias_laravel_stead', function (Blueprint $table) {
             // создание полей таблицы
             $table->uuid('steadguid')->nullable(false)->primary();

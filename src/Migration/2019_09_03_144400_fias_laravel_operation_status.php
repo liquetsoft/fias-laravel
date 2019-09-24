@@ -16,6 +16,7 @@ class FiasLaravelOperationStatus extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_operation_status');
         Schema::create('fias_laravel_operation_status', function (Blueprint $table) {
             // создание полей таблицы
             $table->unsignedInteger('operstatid')->nullable(false)->primary();

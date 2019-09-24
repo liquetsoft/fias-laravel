@@ -16,6 +16,7 @@ class FiasLaravelFiasVersion extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_fias_version');
         Schema::create('fias_laravel_fias_version', function (Blueprint $table) {
             // создание полей таблицы
             $table->unsignedInteger('version')->nullable(false)->comment('Номер версии ФИАС')->primary();

@@ -63,6 +63,7 @@ class MigrationGenerator extends AbstractGenerator
             ->setReturnType('void')
         ;
 
+        $method->addBody("Schema::dropIfExists('{$tableName}');");
         $method->addBody("Schema::create('{$tableName}', function (Blueprint \$table) {");
         $method->addBody('    // создание полей таблицы');
         foreach ($descriptor->getFields() as $field) {

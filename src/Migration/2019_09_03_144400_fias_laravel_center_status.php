@@ -16,6 +16,7 @@ class FiasLaravelCenterStatus extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_center_status');
         Schema::create('fias_laravel_center_status', function (Blueprint $table) {
             // создание полей таблицы
             $table->unsignedInteger('centerstid')->nullable(false)->primary();

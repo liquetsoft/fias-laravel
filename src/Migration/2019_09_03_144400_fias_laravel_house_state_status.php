@@ -16,6 +16,7 @@ class FiasLaravelHouseStateStatus extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_house_state_status');
         Schema::create('fias_laravel_house_state_status', function (Blueprint $table) {
             // создание полей таблицы
             $table->unsignedInteger('housestid')->nullable(false)->primary();

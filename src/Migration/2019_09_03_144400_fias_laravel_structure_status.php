@@ -16,6 +16,7 @@ class FiasLaravelStructureStatus extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_structure_status');
         Schema::create('fias_laravel_structure_status', function (Blueprint $table) {
             // создание полей таблицы
             $table->unsignedInteger('strstatid')->nullable(false)->primary();

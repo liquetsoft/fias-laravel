@@ -16,6 +16,7 @@ class FiasLaravelAddressObject extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_address_object');
         Schema::create('fias_laravel_address_object', function (Blueprint $table) {
             // создание полей таблицы
             $table->uuid('aoid')->nullable(false)->comment('Уникальный идентификатор записи. Ключевое поле.')->primary();

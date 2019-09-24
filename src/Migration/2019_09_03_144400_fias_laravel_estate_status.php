@@ -16,6 +16,7 @@ class FiasLaravelEstateStatus extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_estate_status');
         Schema::create('fias_laravel_estate_status', function (Blueprint $table) {
             // создание полей таблицы
             $table->unsignedInteger('eststatid')->nullable(false)->primary();

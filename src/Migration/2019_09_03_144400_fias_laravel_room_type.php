@@ -16,6 +16,7 @@ class FiasLaravelRoomType extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_room_type');
         Schema::create('fias_laravel_room_type', function (Blueprint $table) {
             // создание полей таблицы
             $table->unsignedInteger('rmtypeid')->nullable(false)->primary();

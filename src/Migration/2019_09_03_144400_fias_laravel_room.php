@@ -18,6 +18,7 @@ class FiasLaravelRoom extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_room');
         Schema::create('fias_laravel_room', function (Blueprint $table) {
             // создание полей таблицы
             $table->uuid('roomid')->nullable(false)->primary();

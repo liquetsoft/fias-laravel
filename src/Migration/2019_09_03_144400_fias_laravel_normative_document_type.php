@@ -16,6 +16,7 @@ class FiasLaravelNormativeDocumentType extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_normative_document_type');
         Schema::create('fias_laravel_normative_document_type', function (Blueprint $table) {
             // создание полей таблицы
             $table->unsignedInteger('ndtypeid')->nullable(false)->primary();

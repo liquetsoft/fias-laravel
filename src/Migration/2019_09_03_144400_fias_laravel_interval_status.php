@@ -16,6 +16,7 @@ class FiasLaravelIntervalStatus extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_interval_status');
         Schema::create('fias_laravel_interval_status', function (Blueprint $table) {
             // создание полей таблицы
             $table->unsignedInteger('intvstatid')->nullable(false)->primary();

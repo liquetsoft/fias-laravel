@@ -16,6 +16,7 @@ class FiasLaravelNormativeDocument extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('fias_laravel_normative_document');
         Schema::create('fias_laravel_normative_document', function (Blueprint $table) {
             // создание полей таблицы
             $table->uuid('normdocid')->nullable(false)->primary();
