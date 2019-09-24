@@ -7,6 +7,8 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Connection;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
@@ -34,6 +36,8 @@ class MigrationGenerator extends AbstractGenerator
         $phpFile->addUse(Migration::class);
         $phpFile->addUse(Blueprint::class);
         $phpFile->addUse(Schema::class);
+        $phpFile->addUse(DB::class);
+        $phpFile->addUse(Connection::class);
 
         $class = $phpFile->addClass($className)->addExtend(Migration::class);
         $class->addComment("Миграция для создания сущности '{$descriptor->getName()}'.");
@@ -115,6 +119,35 @@ class MigrationGenerator extends AbstractGenerator
         $method->addBody("    \$table->collation = 'utf8_unicode_ci';");
 
         $method->addBody('});');
+
+        if ($descriptor->getPartitionsCount() > 1) {
+            $partitioningPrimaries = [];
+            $partitionFields = [];
+            foreach ($descriptor->getFields() as $field) {
+                $name = $this->unifyColumnName($field->getName());
+                if ($field->isPartition()) {
+                    $partitionFields[] = $name;
+                    $partitioningPrimaries[] = $name;
+                }
+                if ($field->isPrimary()) {
+                    $partitioningPrimaries[] = $name;
+                }
+            }
+            $partitioningPrimaries = implode(', ', $partitioningPrimaries);
+            $partitionFields = implode(', ', $partitionFields);
+            $method->addBody("\n");
+            $method->addBody('//для mysql большие таблицы нужно разбивать на части');
+            $method->addBody('$connection = DB::connection();');
+            $method->addBody("if (\$connection instanceof Connection && \$connection->getDriverName() === 'mysql') {");
+            if ($partitionFields) {
+                $method->addBody('    //поля для партицирования должны входить в каждый уникальный ключ, в т.ч. primary');
+                $method->addBody("    DB::connection()->unprepared('ALTER TABLE {$tableName} DROP PRIMARY KEY');");
+                $method->addBody("    DB::connection()->unprepared('ALTER TABLE {$tableName} ADD PRIMARY KEY({$partitioningPrimaries})');");
+            }
+            $method->addBody('    //разбиваем таблицу на части');
+            $method->addBody("    DB::connection()->unprepared('ALTER TABLE {$tableName} PARTITION BY KEY({$partitionFields}) PARTITIONS {$descriptor->getPartitionsCount()};');");
+            $method->addBody('}');
+        }
     }
 
     /**
