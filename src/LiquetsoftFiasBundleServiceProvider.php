@@ -79,7 +79,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/Migration');
+        if ($this->getOptionBool('allow_bundle_migrations')) {
+            $this->loadMigrationsFrom(__DIR__ . '/Migration');
+        }
 
         $this->publishes([
             __DIR__ . "/Config/{$this->prefixString('php')}" => config_path($this->prefixString('php')),
@@ -347,6 +349,20 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $option = config($this->prefixString($name));
 
         return is_array($option) ? $option : [];
+    }
+
+    /**
+     * Возвращает значение указанной опции в виде bool.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    protected function getOptionBool(string $name): bool
+    {
+        $option = config($this->prefixString($name));
+
+        return (bool) $option;
     }
 
     /**

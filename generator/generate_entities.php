@@ -4,6 +4,7 @@ use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityRegistry\ArrayEntityRegistry;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\ModelGenerator;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\ModelTestGenerator;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\MigrationGenerator;
 use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\ResourceGenerator;
@@ -51,6 +52,15 @@ if (!is_dir($dir)) {
 $dirObject = new SplFileInfo($dir);
 $namespace = 'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Entity';
 $generator = new ModelGenerator($registry);
+$generator->run($dirObject, $namespace);
+
+$dir = $root . '/tests/Entity';
+if (!is_dir($dir)) {
+    mkdir($dir, 0777, true);
+}
+$dirObject = new SplFileInfo($dir);
+$namespace = 'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Tests\\Entity';
+$generator = new ModelTestGenerator($registry);
 $generator->run($dirObject, $namespace);
 
 $dir = $root . '/src/Migration';

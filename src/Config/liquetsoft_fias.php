@@ -21,6 +21,11 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\StructureStatus;
 
 return [
     /*
+     * Исрользовать или нет миграции из состава бандла.
+     */
+    'allow_bundle_migrations' => true,
+
+    /*
      * Ссылка на WSDL сервися, который возврашает ссылки на архив с ФИАС для указанных версий.
      */
     'informer_wsdl' => 'http://fias.nalog.ru/WebServices/Public/DownloadService.asmx?WSDL',
