@@ -32,6 +32,13 @@ class EloquentStorage implements Storage
     protected $insertBatch;
 
     /**
+     * Список колонок для классов моделей.
+     *
+     * @var array<string, array>
+     */
+    protected $columnsLists = [];
+
+    /**
      * @param int $insertBatch
      */
     public function __construct(int $insertBatch = 1000)
@@ -59,10 +66,15 @@ class EloquentStorage implements Storage
      */
     public function insert(object $entity): void
     {
-        $this->checkIsEntityAllowedForEloquent($entity);
+        $model = $this->checkIsEntityAllowedForEloquent($entity);
 
-        $class = get_class($entity);
-        $this->insertData[$class][] = $entity->getAttributes();
+        $class = get_class($model);
+        $columns = $this->getColumsListForModel($model);
+        $item = [];
+        foreach ($columns as $column) {
+            $item[$column] = $entity->getAttribute($column);
+        }
+        $this->insertData[$class][] = $item;
 
         $this->checkAndFlushInsert(false);
     }
@@ -105,10 +117,10 @@ class EloquentStorage implements Storage
      */
     public function delete(object $entity): void
     {
-        $this->checkIsEntityAllowedForEloquent($entity);
+        $model = $this->checkIsEntityAllowedForEloquent($entity);
 
         try {
-            $entity->refresh()->delete();
+            $model->refresh()->delete();
         } catch (Throwable $e) {
             throw new StorageException("Can't delete entity from storage.", 0, $e);
         }
@@ -119,10 +131,10 @@ class EloquentStorage implements Storage
      */
     public function upsert(object $entity): void
     {
-        $this->checkIsEntityAllowedForEloquent($entity);
+        $model = $this->checkIsEntityAllowedForEloquent($entity);
 
         try {
-            $entity->refresh()->save();
+            $model->refresh()->save();
         } catch (Throwable $e) {
             throw new StorageException("Can't update or insert entity in storage.", 0, $e);
         }
@@ -148,9 +160,11 @@ class EloquentStorage implements Storage
      *
      * @param object $entity
      *
+     * @return Model
+     *
      * @throws StorageException
      */
-    protected function checkIsEntityAllowedForEloquent(object $entity): void
+    protected function checkIsEntityAllowedForEloquent(object $entity): Model
     {
         if (!($entity instanceof Model)) {
             throw new StorageException(
@@ -158,5 +172,28 @@ class EloquentStorage implements Storage
                 . "', got '" . get_class($entity) . "'."
             );
         }
+
+        return $entity;
+    }
+
+    /**
+     * Возвращает список колонок для таблицы, которой соответствует указанная модель.
+     *
+     * @param Model $model
+     *
+     * @return string[]
+     */
+    protected function getColumsListForModel(Model $model): array
+    {
+        $class = get_class($model);
+
+        if (!isset($this->columnsLists[$class])) {
+            $this->columnsLists[$class] = $model->getConnection()
+                ->getSchemaBuilder()
+                ->getColumnListing($model->getTable())
+            ;
+        }
+
+        return $this->columnsLists[$class];
     }
 }
