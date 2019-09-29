@@ -152,7 +152,11 @@ class EloquentStorage implements Storage
             );
         }
 
-        $entityClassName::query()->delete();
+        try {
+            $entityClassName::query()->delete();
+        } catch (Throwable $e) {
+            throw new StorageException("Can't truncate storage.", 0, $e);
+        }
     }
 
     /**
