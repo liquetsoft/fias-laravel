@@ -240,7 +240,7 @@ class EloquentStorage implements Storage
                     "Error while inserting item of class '{$className}' to eloquent storage. Item wasn't proceed.",
                     [
                         'item' => $item,
-                        'exception' => $e,
+                        'error_message' => $e->getMessage(),
                     ]
                 );
             }
