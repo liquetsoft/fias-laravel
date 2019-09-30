@@ -166,8 +166,11 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         };
 
         // объект для записи данных в БД
-        $servicesList[Storage::class] = function (): Storage {
-            return new EloquentStorage($this->getOptionInt('insert_batch_count'));
+        $servicesList[Storage::class] = function (Application $app): Storage {
+            return new EloquentStorage(
+                $this->getOptionInt('insert_batch_count'),
+                $app->get(LoggerInterface::class)
+            );
         };
 
         // объект, который хранит текущую версию ФИАС
