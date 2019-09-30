@@ -7,7 +7,8 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
-use RuntimeException;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use Throwable;
 
 /**
@@ -15,6 +16,20 @@ use Throwable;
  */
 class EloquentStorage implements Storage
 {
+    /**
+     * Размер стека для одномоментной вставки.
+     *
+     * @var int
+     */
+    protected $insertBatch;
+
+    /**
+     * Объект для логгирования данных.
+     *
+     * @var LoggerInterface|null
+     */
+    protected $logger;
+
     /**
      * Сохраненные в памяти данные для множественной вставки.
      *
@@ -25,13 +40,6 @@ class EloquentStorage implements Storage
     protected $insertData = [];
 
     /**
-     * Размер стека для одномоментной вставки.
-     *
-     * @var int
-     */
-    protected $insertBatch;
-
-    /**
      * Список колонок для классов моделей.
      *
      * @var array<string, array>
@@ -39,11 +47,13 @@ class EloquentStorage implements Storage
     protected $columnsLists = [];
 
     /**
-     * @param int $insertBatch
+     * @param int                  $insertBatch
+     * @param LoggerInterface|null $logger
      */
-    public function __construct(int $insertBatch = 1000)
+    public function __construct(int $insertBatch = 1000, ?LoggerInterface $logger = null)
     {
         $this->insertBatch = $insertBatch;
+        $this->logger = $logger;
     }
 
     /**
@@ -69,7 +79,7 @@ class EloquentStorage implements Storage
         $model = $this->checkIsEntityAllowedForEloquent($entity);
 
         $class = get_class($model);
-        $columns = $this->getColumsListForModel($model);
+        $columns = $this->getColumnsListForModel($model);
         $item = [];
         foreach ($columns as $column) {
             $item[$column] = $entity->getAttribute($column);
@@ -77,39 +87,6 @@ class EloquentStorage implements Storage
         $this->insertData[$class][] = $item;
 
         $this->checkAndFlushInsert(false);
-    }
-
-    /**
-     * Проверяет нужно ли отправлять запросы на множественные вставки элементов,
-     * сохраненых в памяти.
-     *
-     * @param bool $forceInsert
-     */
-    protected function checkAndFlushInsert(bool $forceInsert = false): void
-    {
-        foreach ($this->insertData as $className => $insertData) {
-            if ($forceInsert || count($insertData) >= $this->insertBatch) {
-                $this->bulkInsert($className, $insertData);
-                unset($this->insertData[$className]);
-            }
-        }
-    }
-
-    /**
-     * Отправляет запрос на массовую вставку данных в таблицу.
-     *
-     * @param string  $className
-     * @param mixed[] $data
-     *
-     * @throws RuntimeException
-     */
-    protected function bulkInsert(string $className, array $data): void
-    {
-        if (class_exists($className)) {
-            $className::insert($data);
-        } else {
-            throw new RuntimeException("'{$className}' is not a class name.");
-        }
     }
 
     /**
@@ -187,7 +164,7 @@ class EloquentStorage implements Storage
      *
      * @return string[]
      */
-    protected function getColumsListForModel(Model $model): array
+    protected function getColumnsListForModel(Model $model): array
     {
         $class = get_class($model);
 
@@ -199,5 +176,88 @@ class EloquentStorage implements Storage
         }
 
         return $this->columnsLists[$class];
+    }
+
+    /**
+     * Проверяет нужно ли отправлять запросы на множественные вставки элементов,
+     * сохраненых в памяти.
+     *
+     * @param bool $forceInsert
+     *
+     * @throws StorageException
+     */
+    protected function checkAndFlushInsert(bool $forceInsert = false): void
+    {
+        foreach ($this->insertData as $className => $insertData) {
+            if ($forceInsert || count($insertData) >= $this->insertBatch) {
+                $this->bulkInsert($className, $insertData);
+                unset($this->insertData[$className]);
+            }
+        }
+    }
+
+    /**
+     * Отправляет запрос на массовую вставку данных в таблицу.
+     *
+     * @param string  $className
+     * @param mixed[] $data
+     *
+     * @throws StorageException
+     */
+    protected function bulkInsert(string $className, array $data): void
+    {
+        if (!class_exists($className)) {
+            throw new StorageException("'{$className}' is not a class name.");
+        }
+
+        try {
+            $className::insert($data);
+        } catch (Throwable $e) {
+            $this->bulkInsertFallback($className, $data);
+        }
+    }
+
+    /**
+     * Фоллбэк на случай, если при записи бандла произошла ошибка. Пробуем сохранить все записи по одной.
+     *
+     * @param string  $className
+     * @param mixed[] $data
+     *
+     * @throws StorageException
+     */
+    protected function bulkInsertFallback(string $className, array $data): void
+    {
+        if (!class_exists($className)) {
+            throw new StorageException("'{$className}' is not a class name.");
+        }
+
+        foreach ($data as $item) {
+            try {
+                $className::insert([$item]);
+            } catch (Throwable $e) {
+                $this->log(
+                    LogLevel::ERROR,
+                    "Error while inserting item of class '{$className}' to eloquent storage. Item wasn't proceed.",
+                    [
+                        'item' => $item,
+                        'exception' => $e,
+                    ]
+                );
+            }
+        }
+    }
+
+    /**
+     * Запись сообщения в лог.
+     *
+     * @param string $errorLevel
+     * @param string $message
+     * @param array  $context
+     */
+    protected function log(string $errorLevel, string $message, array $context = []): void
+    {
+        if ($this->logger) {
+            $this->logger->log($errorLevel, $message, $context);
+        }
     }
 }
