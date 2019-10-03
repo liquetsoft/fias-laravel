@@ -89,7 +89,9 @@ class MigrationGenerator extends AbstractGenerator
                     }
                     break;
             }
-            if (!$field->isNullable()) {
+            if ($field->isNullable()) {
+                $migration .= '->nullable(true)';
+            } else {
                 $migration .= '->nullable(false)';
             }
             if ($field->getDescription()) {

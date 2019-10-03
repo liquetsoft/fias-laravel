@@ -27,15 +27,15 @@ class FiasLaravelStead extends Migration
             $table->string('ifnsul', 4)->nullable(false);
             $table->string('okato', 11)->nullable(false);
             $table->string('oktmo', 11)->nullable(false);
-            $table->uuid('parentguid');
-            $table->uuid('steadid');
+            $table->uuid('parentguid')->nullable(true);
+            $table->uuid('steadid')->nullable(true);
             $table->string('operstatus', 255)->nullable(false);
             $table->datetime('startdate')->nullable(false);
             $table->datetime('enddate')->nullable(false);
             $table->datetime('updatedate')->nullable(false);
             $table->string('livestatus', 255)->nullable(false);
             $table->string('divtype', 255)->nullable(false);
-            $table->uuid('normdoc');
+            $table->uuid('normdoc')->nullable(true);
             // настройки таблицы
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

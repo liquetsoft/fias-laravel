@@ -22,8 +22,8 @@ class FiasLaravelHouse extends Migration
         Schema::create('fias_laravel_house', function (Blueprint $table) {
             // создание полей таблицы
             $table->uuid('houseid')->nullable(false)->primary();
-            $table->uuid('houseguid');
-            $table->uuid('aoguid');
+            $table->uuid('houseguid')->nullable(true);
+            $table->uuid('aoguid')->nullable(true);
             $table->string('housenum', 20)->nullable(false);
             $table->unsignedInteger('strstatus')->nullable(false);
             $table->unsignedInteger('eststatus')->nullable(false);

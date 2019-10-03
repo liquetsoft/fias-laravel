@@ -20,11 +20,11 @@ class FiasLaravelAddressObject extends Migration
         Schema::create('fias_laravel_address_object', function (Blueprint $table) {
             // создание полей таблицы
             $table->uuid('aoid')->nullable(false)->comment('Уникальный идентификатор записи. Ключевое поле.')->primary();
-            $table->uuid('aoguid')->comment('Глобальный уникальный идентификатор адресного объекта');
-            $table->uuid('parentguid')->comment('Идентификатор объекта родительского объекта');
-            $table->uuid('previd')->comment('Идентификатор записи связывания с предыдушей исторической записью');
-            $table->uuid('nextid')->comment('Идентификатор записи  связывания с последующей исторической записью');
-            $table->string('code', 255)->comment('Код адресного объекта одной строкой с признаком актуальности из КЛАДР 4.0.');
+            $table->uuid('aoguid')->nullable(true)->comment('Глобальный уникальный идентификатор адресного объекта');
+            $table->uuid('parentguid')->nullable(true)->comment('Идентификатор объекта родительского объекта');
+            $table->uuid('previd')->nullable(true)->comment('Идентификатор записи связывания с предыдушей исторической записью');
+            $table->uuid('nextid')->nullable(true)->comment('Идентификатор записи  связывания с последующей исторической записью');
+            $table->string('code', 255)->nullable(true)->comment('Код адресного объекта одной строкой с признаком актуальности из КЛАДР 4.0.');
             $table->string('formalname', 255)->nullable(false)->comment('Формализованное наименование');
             $table->string('offname', 255)->nullable(false)->comment('Официальное наименование');
             $table->string('shortname', 255)->nullable(false)->comment('Краткое наименование типа объекта');
