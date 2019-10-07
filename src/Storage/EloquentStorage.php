@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
@@ -79,12 +80,7 @@ class EloquentStorage implements Storage
         $model = $this->checkIsEntityAllowedForEloquent($entity);
 
         $class = get_class($model);
-        $columns = $this->getColumnsListForModel($model);
-        $item = [];
-        foreach ($columns as $column) {
-            $item[$column] = $entity->getAttribute($column);
-        }
-        $this->insertData[$class][] = $item;
+        $this->insertData[$class][] = $this->collectValuesFromModel($model);
 
         $this->checkAndFlushInsert(false);
     }
@@ -155,6 +151,29 @@ class EloquentStorage implements Storage
         }
 
         return $entity;
+    }
+
+    /**
+     * Возвращает массив значений модели для вставки в таблицу.
+     *
+     * @param Model $entity
+     *
+     * @return array
+     */
+    protected function collectValuesFromModel(Model $entity): array
+    {
+        $columns = $this->getColumnsListForModel($entity);
+
+        $item = [];
+        foreach ($columns as $column) {
+            $columnValue = $entity->getAttribute($column);
+            if ($columnValue instanceof DateTimeInterface) {
+                $columnValue = $columnValue->format('Y-m-d H:i:s');
+            }
+            $item[$column] = $columnValue;
+        }
+
+        return $item;
     }
 
     /**
