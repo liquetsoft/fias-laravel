@@ -235,7 +235,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
             );
         };
 
-        // задача для обновления данных в хрпнилище
+        // задача для обновления данных в хранилище
         $servicesList[$this->prefixString('task.data.upsert')] = function (Application $app): Task {
             return new DataUpsertTask(
                 $app->get(EntityManager::class),
