@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения по нормативному документу, являющемуся основанием присвоения адресному элементу наименования.
  *
- * @property string $normdocid
- * @property string $docname
- * @property Carbon $docdate
- * @property string $docnum
- * @property string $doctype
+ * @property string      $normdocid
+ * @property string|null $docname
+ * @property Carbon|null $docdate
+ * @property string|null $docnum
+ * @property string      $doctype
  */
 class NormativeDocument extends Model
 {
@@ -32,9 +32,6 @@ class NormativeDocument extends Model
 
     /** @var array<string, string> */
     protected $casts = [
-        'docname' => 'string',
-        'docdate' => 'datetime',
-        'docnum' => 'string',
         'doctype' => 'string',
     ];
 

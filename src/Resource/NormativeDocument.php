@@ -11,11 +11,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * Ресурс для сущности 'NormativeDocument'.
  *
- * @property string                   $normdocid
- * @property string                   $docname
- * @property DateTimeInterface|string $docdate
- * @property string                   $docnum
- * @property string                   $doctype
+ * @property string                        $normdocid
+ * @property string|null                   $docname
+ * @property DateTimeInterface|string|null $docdate
+ * @property string|null                   $docnum
+ * @property string                        $doctype
  */
 class NormativeDocument extends JsonResource
 {
