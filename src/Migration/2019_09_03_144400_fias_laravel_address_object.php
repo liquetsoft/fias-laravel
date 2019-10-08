@@ -46,12 +46,12 @@ class FiasLaravelAddressObject extends Migration
             $table->unsignedInteger('centstatus')->nullable(false)->comment('Статус центра');
             $table->unsignedInteger('operstatus')->nullable(false)->comment('Статус действия над записью – причина появления записи');
             $table->string('ifnsfl', 4)->nullable(false)->comment('Код ИФНС ФЛ');
-            $table->string('ifnsul', 4)->nullable(false)->comment('Код ИФНС ЮЛ');
-            $table->string('terrifnsfl', 4)->nullable(false)->comment('Код территориального участка ИФНС ФЛ');
-            $table->string('terrifnsul', 4)->nullable(false)->comment('Код территориального участка ИФНС ЮЛ');
+            $table->string('ifnsul', 4)->nullable(true)->comment('Код ИФНС ЮЛ');
+            $table->string('terrifnsfl', 4)->nullable(true)->comment('Код территориального участка ИФНС ФЛ');
+            $table->string('terrifnsul', 4)->nullable(true)->comment('Код территориального участка ИФНС ЮЛ');
             $table->string('okato', 11)->nullable(false)->comment('OKATO');
-            $table->string('oktmo', 11)->nullable(false)->comment('OKTMO');
-            $table->string('postalcode', 6)->nullable(false)->comment('Почтовый индекс');
+            $table->string('oktmo', 11)->nullable(true)->comment('OKTMO');
+            $table->string('postalcode', 6)->nullable(true)->comment('Почтовый индекс');
             $table->datetime('startdate')->nullable(false)->comment('Начало действия записи');
             $table->datetime('enddate')->nullable(false)->comment('Окончание действия записи');
             $table->datetime('updatedate')->nullable(false)->comment('Дата внесения (обновления) записи');

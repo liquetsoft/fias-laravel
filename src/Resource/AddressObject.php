@@ -38,12 +38,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int                      $centstatus
  * @property int                      $operstatus
  * @property string                   $ifnsfl
- * @property string                   $ifnsul
- * @property string                   $terrifnsfl
- * @property string                   $terrifnsul
+ * @property string|null              $ifnsul
+ * @property string|null              $terrifnsfl
+ * @property string|null              $terrifnsul
  * @property string                   $okato
- * @property string                   $oktmo
- * @property string                   $postalcode
+ * @property string|null              $oktmo
+ * @property string|null              $postalcode
  * @property DateTimeInterface|string $startdate
  * @property DateTimeInterface|string $enddate
  * @property DateTimeInterface|string $updatedate

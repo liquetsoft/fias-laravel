@@ -37,12 +37,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int         $centstatus
  * @property int         $operstatus
  * @property string      $ifnsfl
- * @property string      $ifnsul
- * @property string      $terrifnsfl
- * @property string      $terrifnsul
+ * @property string|null $ifnsul
+ * @property string|null $terrifnsfl
+ * @property string|null $terrifnsul
  * @property string      $okato
- * @property string      $oktmo
- * @property string      $postalcode
+ * @property string|null $oktmo
+ * @property string|null $postalcode
  * @property Carbon      $startdate
  * @property Carbon      $enddate
  * @property Carbon      $updatedate
@@ -117,12 +117,7 @@ class AddressObject extends Model
         'centstatus' => 'integer',
         'operstatus' => 'integer',
         'ifnsfl' => 'string',
-        'ifnsul' => 'string',
-        'terrifnsfl' => 'string',
-        'terrifnsul' => 'string',
         'okato' => 'string',
-        'oktmo' => 'string',
-        'postalcode' => 'string',
         'startdate' => 'datetime',
         'enddate' => 'datetime',
         'updatedate' => 'datetime',
