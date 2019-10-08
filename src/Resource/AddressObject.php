@@ -31,17 +31,17 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string                   $streetcode
  * @property string                   $extrcode
  * @property string                   $sextcode
- * @property string                   $plaincode
+ * @property string|null              $plaincode
  * @property int                      $currstatus
  * @property int                      $actstatus
  * @property int                      $livestatus
  * @property int                      $centstatus
  * @property int                      $operstatus
- * @property string                   $ifnsfl
+ * @property string|null              $ifnsfl
  * @property string|null              $ifnsul
  * @property string|null              $terrifnsfl
  * @property string|null              $terrifnsul
- * @property string                   $okato
+ * @property string|null              $okato
  * @property string|null              $oktmo
  * @property string|null              $postalcode
  * @property DateTimeInterface|string $startdate

@@ -30,17 +30,17 @@ use Illuminate\Database\Eloquent\Model;
  * @property string      $streetcode
  * @property string      $extrcode
  * @property string      $sextcode
- * @property string      $plaincode
+ * @property string|null $plaincode
  * @property int         $currstatus
  * @property int         $actstatus
  * @property int         $livestatus
  * @property int         $centstatus
  * @property int         $operstatus
- * @property string      $ifnsfl
+ * @property string|null $ifnsfl
  * @property string|null $ifnsul
  * @property string|null $terrifnsfl
  * @property string|null $terrifnsul
- * @property string      $okato
+ * @property string|null $okato
  * @property string|null $oktmo
  * @property string|null $postalcode
  * @property Carbon      $startdate
@@ -110,14 +110,11 @@ class AddressObject extends Model
         'streetcode' => 'string',
         'extrcode' => 'string',
         'sextcode' => 'string',
-        'plaincode' => 'string',
         'currstatus' => 'integer',
         'actstatus' => 'integer',
         'livestatus' => 'integer',
         'centstatus' => 'integer',
         'operstatus' => 'integer',
-        'ifnsfl' => 'string',
-        'okato' => 'string',
         'startdate' => 'datetime',
         'enddate' => 'datetime',
         'updatedate' => 'datetime',
