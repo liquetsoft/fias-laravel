@@ -27,7 +27,7 @@ class FiasLaravelRoom extends Migration
             $table->string('regioncode', 2)->nullable(false);
             $table->string('flatnumber', 50)->nullable(false);
             $table->unsignedInteger('flattype')->nullable(false);
-            $table->string('postalcode', 6)->nullable(false);
+            $table->string('postalcode', 6)->nullable(true);
             $table->datetime('startdate')->nullable(false);
             $table->datetime('enddate')->nullable(false);
             $table->datetime('updatedate')->nullable(false);

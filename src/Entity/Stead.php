@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\Model;
  * Сведения о земельных участках.
  *
  * @property string      $steadguid
- * @property string      $number
+ * @property string|null $number
  * @property string      $regioncode
- * @property string      $postalcode
+ * @property string|null $postalcode
  * @property string      $ifnsfl
  * @property string      $ifnsul
  * @property string      $okato
@@ -56,9 +56,7 @@ class Stead extends Model
 
     /** @var array<string, string> */
     protected $casts = [
-        'number' => 'string',
         'regioncode' => 'string',
-        'postalcode' => 'string',
         'ifnsfl' => 'string',
         'ifnsul' => 'string',
         'okato' => 'string',

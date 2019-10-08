@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string      $regioncode
  * @property string      $flatnumber
  * @property int         $flattype
- * @property string      $postalcode
+ * @property string|null $postalcode
  * @property Carbon      $startdate
  * @property Carbon      $enddate
  * @property Carbon      $updatedate
@@ -51,7 +51,6 @@ class Room extends Model
         'regioncode' => 'string',
         'flatnumber' => 'string',
         'flattype' => 'integer',
-        'postalcode' => 'string',
         'startdate' => 'datetime',
         'enddate' => 'datetime',
         'updatedate' => 'datetime',

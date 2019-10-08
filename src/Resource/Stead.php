@@ -12,9 +12,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * Ресурс для сущности 'Stead'.
  *
  * @property string                   $steadguid
- * @property string                   $number
+ * @property string|null              $number
  * @property string                   $regioncode
- * @property string                   $postalcode
+ * @property string|null              $postalcode
  * @property string                   $ifnsfl
  * @property string                   $ifnsul
  * @property string                   $okato

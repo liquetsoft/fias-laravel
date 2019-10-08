@@ -17,7 +17,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string                   $regioncode
  * @property string                   $flatnumber
  * @property int                      $flattype
- * @property string                   $postalcode
+ * @property string|null              $postalcode
  * @property DateTimeInterface|string $startdate
  * @property DateTimeInterface|string $enddate
  * @property DateTimeInterface|string $updatedate

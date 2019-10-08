@@ -20,9 +20,9 @@ class FiasLaravelStead extends Migration
         Schema::create('fias_laravel_stead', function (Blueprint $table) {
             // создание полей таблицы
             $table->uuid('steadguid')->nullable(false)->primary();
-            $table->string('number', 255)->nullable(false);
+            $table->string('number', 255)->nullable(true);
             $table->string('regioncode', 2)->nullable(false);
-            $table->string('postalcode', 6)->nullable(false);
+            $table->string('postalcode', 6)->nullable(true);
             $table->string('ifnsfl', 4)->nullable(false);
             $table->string('ifnsul', 4)->nullable(false);
             $table->string('okato', 11)->nullable(false);
