@@ -13,15 +13,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property string      $houseid
  * @property string|null $houseguid
  * @property string|null $aoguid
- * @property string      $housenum
+ * @property string|null $housenum
  * @property int         $strstatus
  * @property int         $eststatus
  * @property int         $statstatus
- * @property string      $ifnsfl
- * @property string      $ifnsul
- * @property string      $okato
- * @property string      $oktmo
- * @property string      $postalcode
+ * @property string|null $ifnsfl
+ * @property string|null $ifnsul
+ * @property string|null $okato
+ * @property string|null $oktmo
+ * @property string|null $postalcode
  * @property Carbon      $startdate
  * @property Carbon      $enddate
  * @property Carbon      $updatedate
@@ -56,15 +56,9 @@ class House extends Model
 
     /** @var array<string, string> */
     protected $casts = [
-        'housenum' => 'string',
         'strstatus' => 'integer',
         'eststatus' => 'integer',
         'statstatus' => 'integer',
-        'ifnsfl' => 'string',
-        'ifnsul' => 'string',
-        'okato' => 'string',
-        'oktmo' => 'string',
-        'postalcode' => 'string',
         'startdate' => 'datetime',
         'enddate' => 'datetime',
         'updatedate' => 'datetime',

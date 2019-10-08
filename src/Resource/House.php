@@ -14,15 +14,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string                   $houseid
  * @property string|null              $houseguid
  * @property string|null              $aoguid
- * @property string                   $housenum
+ * @property string|null              $housenum
  * @property int                      $strstatus
  * @property int                      $eststatus
  * @property int                      $statstatus
- * @property string                   $ifnsfl
- * @property string                   $ifnsul
- * @property string                   $okato
- * @property string                   $oktmo
- * @property string                   $postalcode
+ * @property string|null              $ifnsfl
+ * @property string|null              $ifnsul
+ * @property string|null              $okato
+ * @property string|null              $oktmo
+ * @property string|null              $postalcode
  * @property DateTimeInterface|string $startdate
  * @property DateTimeInterface|string $enddate
  * @property DateTimeInterface|string $updatedate
