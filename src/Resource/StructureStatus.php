@@ -10,9 +10,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * Ресурс для сущности 'StructureStatus'.
  *
- * @property int    $strstatid
- * @property string $name
- * @property string $shortname
+ * @property int         $strstatid
+ * @property string      $name
+ * @property string|null $shortname
  */
 class StructureStatus extends JsonResource
 {

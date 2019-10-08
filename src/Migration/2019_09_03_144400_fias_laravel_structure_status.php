@@ -21,7 +21,7 @@ class FiasLaravelStructureStatus extends Migration
             // создание полей таблицы
             $table->unsignedInteger('strstatid')->nullable(false)->primary();
             $table->string('name', 255)->nullable(false);
-            $table->string('shortname', 255)->nullable(false);
+            $table->string('shortname', 255)->nullable(true);
             // настройки таблицы
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

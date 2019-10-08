@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Перечень видов строений.
  *
- * @property int    $strstatid
- * @property string $name
- * @property string $shortname
+ * @property int         $strstatid
+ * @property string      $name
+ * @property string|null $shortname
  */
 class StructureStatus extends Model
 {
@@ -29,7 +29,6 @@ class StructureStatus extends Model
     protected $casts = [
         'strstatid' => 'integer',
         'name' => 'string',
-        'shortname' => 'string',
     ];
 
     /**
