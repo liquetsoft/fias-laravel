@@ -36,6 +36,7 @@ use Liquetsoft\Fias\Component\VersionManager\VersionManager;
 use Liquetsoft\Fias\Component\XmlReader\BaseXmlReader;
 use Liquetsoft\Fias\Component\XmlReader\XmlReader;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallCommand;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallFromFolder;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\TruncateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
@@ -92,6 +93,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                 InstallCommand::class,
                 UpdateCommand::class,
                 TruncateCommand::class,
+                InstallFromFolder::class,
             ]);
         }
     }
@@ -286,7 +288,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     $app->get($this->prefixString('task.data.truncate')),
                     $app->get($this->prefixString('task.data.insert')),
                     $app->get($this->prefixString('task.data.delete')),
-                    $app->get(LoggerInterface::class),
                 ],
                 null,
                 $app->get(LoggerInterface::class)
