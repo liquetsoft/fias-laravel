@@ -76,6 +76,20 @@ EOT;
         $this->expectException(InvalidArgumentException::class);
         $normalizer->deserialize($data, $type, 'xml', ['object_to_populate' => new stdClass]);
     }
+
+    /**
+     * Проверяет, что пустая строка вернется как пустая строка, а не null.
+     */
+    public function testDenormalizeEmptyString()
+    {
+        $data = '<ActualStatus name=""/>';
+        $type = FiasSerializerMock::class;
+
+        $normalizer = new FiasSerializer();
+        $model = $normalizer->deserialize($data, $type, 'xml');
+
+        $this->assertSame('', $model->getAttribute('name'));
+    }
 }
 
 /**
