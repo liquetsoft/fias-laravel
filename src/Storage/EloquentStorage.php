@@ -70,6 +70,8 @@ class EloquentStorage implements Storage
     public function stop(): void
     {
         $this->checkAndFlushInsert(true);
+        $this->insertData = [];
+        $this->columnsLists = [];
     }
 
     /**
