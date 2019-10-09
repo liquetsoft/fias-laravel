@@ -6,6 +6,7 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Psr\Log\LoggerInterface;
@@ -62,6 +63,10 @@ class EloquentStorage implements Storage
      */
     public function start(): void
     {
+        $connection = DB::connection();
+        if (method_exists($connection, 'disableQueryLog')) {
+            $connection->disableQueryLog();
+        }
     }
 
     /**
@@ -70,8 +75,14 @@ class EloquentStorage implements Storage
     public function stop(): void
     {
         $this->checkAndFlushInsert(true);
+
         $this->insertData = [];
         $this->columnsLists = [];
+
+        $connection = DB::connection();
+        if (method_exists($connection, 'enableQueryLog')) {
+            $connection->enableQueryLog();
+        }
     }
 
     /**
