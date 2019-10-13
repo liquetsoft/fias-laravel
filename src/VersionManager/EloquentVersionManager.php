@@ -81,9 +81,9 @@ class EloquentVersionManager implements VersionManager
     {
         $trimmedEntityClassName = trim($this->entityClassName, " \t\n\r\0\x0B\\");
 
-        if (!is_subclass_of($trimmedEntityClassName, FiasVersion::class)) {
+        if ($trimmedEntityClassName !== FiasVersion::class && !is_subclass_of($trimmedEntityClassName, FiasVersion::class)) {
             throw new RuntimeException(
-                "Entity class must be a child of '" . FiasVersion::class . "' class, got '{$trimmedEntityClassName}'."
+                "Entity class must be a '" . FiasVersion::class . "' instance or it's successor class, got '{$trimmedEntityClassName}'."
                 . " Please check that 'liquetsoft_fias.version_manager_entity' parameter is properly configured."
             );
         }
