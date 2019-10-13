@@ -41,6 +41,12 @@ $registry = new ArrayEntityRegistry(array_merge($yamlRegistry->getDescriptors(),
                 'description' => 'Дата создания записи',
                 'isNullable' => false,
             ]),
+            new BaseEntityField([
+                'name' => 'updated_at',
+                'type' => 'date',
+                'description' => 'Дата обновления записи',
+                'isNullable' => false,
+            ]),
         ],
     ]),
 ]));

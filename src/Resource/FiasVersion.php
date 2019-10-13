@@ -13,6 +13,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int    $version
  * @property string $url
  * @property string $created_at
+ * @property string $updated_at
  */
 class FiasVersion extends JsonResource
 {
@@ -29,6 +30,7 @@ class FiasVersion extends JsonResource
             'version' => (int) $this->version,
             'url' => (string) $this->url,
             'created_at' => (string) $this->created_at,
+            'updated_at' => (string) $this->updated_at,
         ];
     }
 }

@@ -33,6 +33,7 @@ class FiasVersionTest extends BaseCase
         $this->assertContains('version', $fields);
         $this->assertContains('url', $fields);
         $this->assertContains('created_at', $fields);
+        $this->assertContains('updated_at', $fields);
     }
 
     /**

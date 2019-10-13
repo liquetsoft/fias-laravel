@@ -23,6 +23,7 @@ class FiasVersion extends BaseCase
         $model->version = $this->createFakeData()->numberBetween(1, 1000000);
         $model->url = $this->createFakeData()->word;
         $model->created_at = $this->createFakeData()->word;
+        $model->updated_at = $this->createFakeData()->word;
 
         $resource = new Resource($model);
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
@@ -34,5 +35,7 @@ class FiasVersion extends BaseCase
         $this->assertSame($model->url, $array['url']);
         $this->assertArrayHasKey('created_at', $array);
         $this->assertSame($model->created_at, $array['created_at']);
+        $this->assertArrayHasKey('updated_at', $array);
+        $this->assertSame($model->updated_at, $array['updated_at']);
     }
 }
