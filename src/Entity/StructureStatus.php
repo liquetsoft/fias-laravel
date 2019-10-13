@@ -21,6 +21,9 @@ class StructureStatus extends Model
     /** @var string */
     protected $table = 'fias_laravel_structure_status';
 
+    /** @var string */
+    protected $primaryKey = 'strstatid';
+
     /** @var string[] */
     protected $fillable = [
         'strstatid',

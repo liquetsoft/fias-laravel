@@ -24,6 +24,9 @@ class NormativeDocument extends Model
     /** @var string */
     protected $table = 'fias_laravel_normative_document';
 
+    /** @var string */
+    protected $primaryKey = 'normdocid';
+
     /** @var string[] */
     protected $fillable = [
         'normdocid',

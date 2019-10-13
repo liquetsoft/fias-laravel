@@ -56,6 +56,9 @@ class AddressObject extends Model
     /** @var string */
     protected $table = 'fias_laravel_address_object';
 
+    /** @var string */
+    protected $primaryKey = 'aoid';
+
     /** @var string[] */
     protected $fillable = [
         'aoid',

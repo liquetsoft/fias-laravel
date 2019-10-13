@@ -20,6 +20,9 @@ class NormativeDocumentType extends Model
     /** @var string */
     protected $table = 'fias_laravel_normative_document_type';
 
+    /** @var string */
+    protected $primaryKey = 'ndtypeid';
+
     /** @var string[] */
     protected $fillable = [
         'ndtypeid',

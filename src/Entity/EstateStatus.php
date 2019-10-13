@@ -20,6 +20,9 @@ class EstateStatus extends Model
     /** @var string */
     protected $table = 'fias_laravel_estate_status';
 
+    /** @var string */
+    protected $primaryKey = 'eststatid';
+
     /** @var string[] */
     protected $fillable = [
         'eststatid',

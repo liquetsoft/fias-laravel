@@ -120,6 +120,7 @@ class EloquentStorage implements Storage
         $model = $this->checkIsEntityAllowedForEloquent($entity);
 
         try {
+            dd($model);
             $model->refresh()->save();
         } catch (Throwable $e) {
             throw new StorageException("Can't update or insert entity in storage.", 0, $e);

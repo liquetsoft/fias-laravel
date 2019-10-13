@@ -20,6 +20,9 @@ class OperationStatus extends Model
     /** @var string */
     protected $table = 'fias_laravel_operation_status';
 
+    /** @var string */
+    protected $primaryKey = 'operstatid';
+
     /** @var string[] */
     protected $fillable = [
         'operstatid',

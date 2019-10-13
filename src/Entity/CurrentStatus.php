@@ -20,6 +20,9 @@ class CurrentStatus extends Model
     /** @var string */
     protected $table = 'fias_laravel_current_status';
 
+    /** @var string */
+    protected $primaryKey = 'curentstid';
+
     /** @var string[] */
     protected $fillable = [
         'curentstid',

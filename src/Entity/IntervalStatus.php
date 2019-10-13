@@ -20,6 +20,9 @@ class IntervalStatus extends Model
     /** @var string */
     protected $table = 'fias_laravel_interval_status';
 
+    /** @var string */
+    protected $primaryKey = 'intvstatid';
+
     /** @var string[] */
     protected $fillable = [
         'intvstatid',

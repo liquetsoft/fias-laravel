@@ -21,6 +21,9 @@ class FlatType extends Model
     /** @var string */
     protected $table = 'fias_laravel_flat_type';
 
+    /** @var string */
+    protected $primaryKey = 'fltypeid';
+
     /** @var string[] */
     protected $fillable = [
         'fltypeid',

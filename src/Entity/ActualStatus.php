@@ -20,6 +20,9 @@ class ActualStatus extends Model
     /** @var string */
     protected $table = 'fias_laravel_actual_status';
 
+    /** @var string */
+    protected $primaryKey = 'actstatid';
+
     /** @var string[] */
     protected $fillable = [
         'actstatid',

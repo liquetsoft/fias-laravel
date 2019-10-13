@@ -36,6 +36,9 @@ class Stead extends Model
     /** @var string */
     protected $table = 'fias_laravel_stead';
 
+    /** @var string */
+    protected $primaryKey = 'steadguid';
+
     /** @var string[] */
     protected $fillable = [
         'steadguid',

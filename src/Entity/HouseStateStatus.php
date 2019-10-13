@@ -20,6 +20,9 @@ class HouseStateStatus extends Model
     /** @var string */
     protected $table = 'fias_laravel_house_state_status';
 
+    /** @var string */
+    protected $primaryKey = 'housestid';
+
     /** @var string[] */
     protected $fillable = [
         'housestid',

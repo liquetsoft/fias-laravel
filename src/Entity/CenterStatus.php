@@ -20,6 +20,9 @@ class CenterStatus extends Model
     /** @var string */
     protected $table = 'fias_laravel_center_status';
 
+    /** @var string */
+    protected $primaryKey = 'centerstid';
+
     /** @var string[] */
     protected $fillable = [
         'centerstid',

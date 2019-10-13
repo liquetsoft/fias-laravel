@@ -36,6 +36,9 @@ class House extends Model
     /** @var string */
     protected $table = 'fias_laravel_house';
 
+    /** @var string */
+    protected $primaryKey = 'houseid';
+
     /** @var string[] */
     protected $fillable = [
         'houseid',

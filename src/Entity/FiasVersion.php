@@ -21,6 +21,9 @@ class FiasVersion extends Model
     /** @var string */
     protected $table = 'fias_laravel_fias_version';
 
+    /** @var string */
+    protected $primaryKey = 'version';
+
     /** @var string[] */
     protected $fillable = [
         'version',

@@ -32,6 +32,9 @@ class Room extends Model
     /** @var string */
     protected $table = 'fias_laravel_room';
 
+    /** @var string */
+    protected $primaryKey = 'roomid';
+
     /** @var string[] */
     protected $fillable = [
         'roomid',

@@ -22,6 +22,9 @@ class AddressObjectType extends Model
     /** @var string */
     protected $table = 'fias_laravel_address_object_type';
 
+    /** @var string */
+    protected $primaryKey = 'kod_t_st';
+
     /** @var string[] */
     protected $fillable = [
         'kod_t_st',

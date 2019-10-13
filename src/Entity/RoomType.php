@@ -21,6 +21,9 @@ class RoomType extends Model
     /** @var string */
     protected $table = 'fias_laravel_room_type';
 
+    /** @var string */
+    protected $primaryKey = 'rmtypeid';
+
     /** @var string[] */
     protected $fillable = [
         'rmtypeid',
