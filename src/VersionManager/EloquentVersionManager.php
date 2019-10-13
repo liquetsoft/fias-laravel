@@ -61,7 +61,7 @@ class EloquentVersionManager implements VersionManager
         $response = new InformerResponseBase;
 
         $entityClassName = $this->getEntityClassName();
-        $entity = $entityClassName::query()->orderBy('created_at', 'desc');
+        $entity = $entityClassName::query()->orderBy('created_at', 'desc')->first();
         if ($entity) {
             $response->setVersion($entity->version);
             $response->setUrl($entity->url);
