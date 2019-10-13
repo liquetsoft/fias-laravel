@@ -106,7 +106,11 @@ class EloquentStorage implements Storage
         $model = $this->checkIsEntityAllowedForEloquent($entity);
 
         try {
-            $model->refresh()->delete();
+            $persistedModel = $model->query()->find($model->getKey());
+            if ($persistedModel instanceof Model) {
+                $persistedModel->delete();
+            }
+            unset($persistedModel);
         } catch (Throwable $e) {
             throw new StorageException("Can't delete entity from storage.", 0, $e);
         }
@@ -120,8 +124,10 @@ class EloquentStorage implements Storage
         $model = $this->checkIsEntityAllowedForEloquent($entity);
 
         try {
-            dd($model);
-            $model->refresh()->save();
+            $persistedModel = $model->query()->findOrNew($model->getKey());
+            $persistedModel->fill($model->getAttributes());
+            $persistedModel->save();
+            unset($persistedModel);
         } catch (Throwable $e) {
             throw new StorageException("Can't update or insert entity in storage.", 0, $e);
         }

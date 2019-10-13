@@ -18,6 +18,9 @@ class FiasVersion extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $table = 'fias_laravel_fias_version';
 
@@ -36,12 +39,4 @@ class FiasVersion extends Model
         'version' => 'integer',
         'url' => 'string',
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getIncrementing(): bool
-    {
-        return false;
-    }
 }

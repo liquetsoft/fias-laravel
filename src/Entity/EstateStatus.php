@@ -17,6 +17,9 @@ class EstateStatus extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $table = 'fias_laravel_estate_status';
 
@@ -34,12 +37,4 @@ class EstateStatus extends Model
         'eststatid' => 'integer',
         'name' => 'string',
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getIncrementing(): bool
-    {
-        return false;
-    }
 }

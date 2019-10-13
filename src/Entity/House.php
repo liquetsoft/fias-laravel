@@ -33,11 +33,17 @@ class House extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $table = 'fias_laravel_house';
 
     /** @var string */
     protected $primaryKey = 'houseid';
+
+    /** @var string */
+    protected $keyType = 'string';
 
     /** @var string[] */
     protected $fillable = [
@@ -71,20 +77,4 @@ class House extends Model
         'counter' => 'integer',
         'divtype' => 'integer',
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getIncrementing(): bool
-    {
-        return false;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getKeyType(): string
-    {
-        return 'string';
-    }
 }

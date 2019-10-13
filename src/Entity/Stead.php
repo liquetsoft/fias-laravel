@@ -33,11 +33,17 @@ class Stead extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $table = 'fias_laravel_stead';
 
     /** @var string */
     protected $primaryKey = 'steadguid';
+
+    /** @var string */
+    protected $keyType = 'string';
 
     /** @var string[] */
     protected $fillable = [
@@ -74,20 +80,4 @@ class Stead extends Model
         'livestatus' => 'string',
         'divtype' => 'string',
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getIncrementing(): bool
-    {
-        return false;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getKeyType(): string
-    {
-        return 'string';
-    }
 }

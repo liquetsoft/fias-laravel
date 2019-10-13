@@ -17,6 +17,9 @@ class CenterStatus extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $table = 'fias_laravel_center_status';
 
@@ -34,12 +37,4 @@ class CenterStatus extends Model
         'centerstid' => 'integer',
         'name' => 'string',
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getIncrementing(): bool
-    {
-        return false;
-    }
 }

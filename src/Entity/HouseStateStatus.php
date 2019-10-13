@@ -17,6 +17,9 @@ class HouseStateStatus extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $table = 'fias_laravel_house_state_status';
 
@@ -34,12 +37,4 @@ class HouseStateStatus extends Model
         'housestid' => 'integer',
         'name' => 'string',
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getIncrementing(): bool
-    {
-        return false;
-    }
 }

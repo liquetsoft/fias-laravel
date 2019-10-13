@@ -21,11 +21,17 @@ class NormativeDocument extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $table = 'fias_laravel_normative_document';
 
     /** @var string */
     protected $primaryKey = 'normdocid';
+
+    /** @var string */
+    protected $keyType = 'string';
 
     /** @var string[] */
     protected $fillable = [
@@ -40,20 +46,4 @@ class NormativeDocument extends Model
     protected $casts = [
         'doctype' => 'string',
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getIncrementing(): bool
-    {
-        return false;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getKeyType(): string
-    {
-        return 'string';
-    }
 }

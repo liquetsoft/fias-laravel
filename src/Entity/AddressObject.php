@@ -53,11 +53,17 @@ class AddressObject extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $table = 'fias_laravel_address_object';
 
     /** @var string */
     protected $primaryKey = 'aoid';
+
+    /** @var string */
+    protected $keyType = 'string';
 
     /** @var string[] */
     protected $fillable = [
@@ -126,20 +132,4 @@ class AddressObject extends Model
         'updatedate' => 'datetime',
         'divtype' => 'integer',
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getIncrementing(): bool
-    {
-        return false;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getKeyType(): string
-    {
-        return 'string';
-    }
 }

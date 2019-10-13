@@ -29,11 +29,17 @@ class Room extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $table = 'fias_laravel_room';
 
     /** @var string */
     protected $primaryKey = 'roomid';
+
+    /** @var string */
+    protected $keyType = 'string';
 
     /** @var string[] */
     protected $fillable = [
@@ -63,20 +69,4 @@ class Room extends Model
         'operstatus' => 'string',
         'livestatus' => 'string',
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getIncrementing(): bool
-    {
-        return false;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getKeyType(): string
-    {
-        return 'string';
-    }
 }

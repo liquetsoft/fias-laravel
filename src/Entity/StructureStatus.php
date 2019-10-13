@@ -18,6 +18,9 @@ class StructureStatus extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $table = 'fias_laravel_structure_status';
 
@@ -36,12 +39,4 @@ class StructureStatus extends Model
         'strstatid' => 'integer',
         'name' => 'string',
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getIncrementing(): bool
-    {
-        return false;
-    }
 }

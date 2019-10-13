@@ -18,6 +18,9 @@ class RoomType extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $table = 'fias_laravel_room_type';
 
@@ -37,12 +40,4 @@ class RoomType extends Model
         'name' => 'string',
         'shortname' => 'string',
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getIncrementing(): bool
-    {
-        return false;
-    }
 }

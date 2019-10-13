@@ -19,6 +19,9 @@ class AddressObjectType extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $table = 'fias_laravel_address_object_type';
 
@@ -39,12 +42,4 @@ class AddressObjectType extends Model
         'level' => 'integer',
         'socrname' => 'string',
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getIncrementing(): bool
-    {
-        return false;
-    }
 }

@@ -17,6 +17,9 @@ class ActualStatus extends Model
     /** @var bool */
     public $timestamps = false;
 
+    /** @var bool */
+    public $incrementing = false;
+
     /** @var string */
     protected $table = 'fias_laravel_actual_status';
 
@@ -34,12 +37,4 @@ class ActualStatus extends Model
         'actstatid' => 'integer',
         'name' => 'string',
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function getIncrementing(): bool
-    {
-        return false;
-    }
 }

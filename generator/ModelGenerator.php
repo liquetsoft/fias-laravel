@@ -88,6 +88,11 @@ class ModelGenerator extends AbstractGenerator
             ->addComment('@var bool')
         ;
 
+        $class->addProperty('incrementing', new PhpLiteral('false'))
+            ->setVisibility('public')
+            ->addComment('@var bool')
+        ;
+
         $tableName = $this->convertClassnameToTableName($descriptor->getName());
         $class->addProperty('table', $tableName)
             ->setVisibility('protected')
@@ -98,6 +103,13 @@ class ModelGenerator extends AbstractGenerator
             ->setVisibility('protected')
             ->addComment('@var string')
         ;
+
+        if ($isPrimaryIsUuid) {
+            $class->addProperty('keyType', 'string')
+                ->setVisibility('protected')
+                ->addComment('@var string')
+            ;
+        }
 
         $fillableValue = new PhpLiteral("[\n    '" . implode("',\n    '", $fill) . "',\n]");
         $class->addProperty('fillable', $fillableValue)
@@ -110,22 +122,6 @@ class ModelGenerator extends AbstractGenerator
             ->setVisibility('protected')
             ->addComment('@var array<string, string>')
         ;
-
-        $class->addMethod('getIncrementing')
-            ->addComment('@inheritDoc')
-            ->setVisibility('public')
-            ->setReturnType('bool')
-            ->setBody('return false;')
-        ;
-
-        if ($isPrimaryIsUuid) {
-            $class->addMethod('getKeyType')
-                ->addComment('@inheritDoc')
-                ->setVisibility('public')
-                ->setReturnType('string')
-                ->setBody("return 'string';")
-            ;
-        }
     }
 
     /**
