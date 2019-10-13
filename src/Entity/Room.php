@@ -26,6 +26,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Room extends Model
 {
+    /** @var bool */
+    public $timestamps = false;
+
     /** @var string */
     protected $table = 'fias_laravel_room';
 

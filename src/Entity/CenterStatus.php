@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CenterStatus extends Model
 {
+    /** @var bool */
+    public $timestamps = false;
+
     /** @var string */
     protected $table = 'fias_laravel_center_status';
 

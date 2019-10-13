@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class StructureStatus extends Model
 {
+    /** @var bool */
+    public $timestamps = false;
+
     /** @var string */
     protected $table = 'fias_laravel_structure_status';
 

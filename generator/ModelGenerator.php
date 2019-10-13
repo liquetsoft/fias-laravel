@@ -79,6 +79,11 @@ class ModelGenerator extends AbstractGenerator
             }
         }
 
+        $class->addProperty('timestamps', new PhpLiteral('false'))
+            ->setVisibility('public')
+            ->addComment('@var bool')
+        ;
+
         $tableName = $this->convertClassnameToTableName($descriptor->getName());
         $class->addProperty('table', $tableName)
             ->setVisibility('protected')

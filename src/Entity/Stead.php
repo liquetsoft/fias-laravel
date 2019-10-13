@@ -30,6 +30,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Stead extends Model
 {
+    /** @var bool */
+    public $timestamps = false;
+
     /** @var string */
     protected $table = 'fias_laravel_stead';
 

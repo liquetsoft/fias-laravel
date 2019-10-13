@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class IntervalStatus extends Model
 {
+    /** @var bool */
+    public $timestamps = false;
+
     /** @var string */
     protected $table = 'fias_laravel_interval_status';
 

@@ -16,6 +16,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class AddressObjectType extends Model
 {
+    /** @var bool */
+    public $timestamps = false;
+
     /** @var string */
     protected $table = 'fias_laravel_address_object_type';
 

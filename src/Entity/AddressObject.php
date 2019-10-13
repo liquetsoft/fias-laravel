@@ -50,6 +50,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class AddressObject extends Model
 {
+    /** @var bool */
+    public $timestamps = false;
+
     /** @var string */
     protected $table = 'fias_laravel_address_object';
 

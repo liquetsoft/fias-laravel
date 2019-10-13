@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class NormativeDocumentType extends Model
 {
+    /** @var bool */
+    public $timestamps = false;
+
     /** @var string */
     protected $table = 'fias_laravel_normative_document_type';
 

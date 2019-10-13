@@ -14,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ActualStatus extends Model
 {
+    /** @var bool */
+    public $timestamps = false;
+
     /** @var string */
     protected $table = 'fias_laravel_actual_status';
 

@@ -12,10 +12,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int    $version
  * @property string $url
  * @property string $created_at
- * @property string $updated_at
  */
 class FiasVersion extends Model
 {
+    /** @var bool */
+    public $timestamps = false;
+
     /** @var string */
     protected $table = 'fias_laravel_fias_version';
 
@@ -24,7 +26,6 @@ class FiasVersion extends Model
         'version',
         'url',
         'created_at',
-        'updated_at',
     ];
 
     /** @var array<string, string> */
