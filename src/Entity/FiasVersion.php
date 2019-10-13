@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int    $version
  * @property string $url
  * @property string $created_at
+ * @property string $updated_at
  */
 class FiasVersion extends Model
 {
@@ -23,6 +24,7 @@ class FiasVersion extends Model
         'version',
         'url',
         'created_at',
+        'updated_at',
     ];
 
     /** @var array<string, string> */
