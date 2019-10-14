@@ -94,6 +94,7 @@
     * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\StructureStatus`,
     * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FiasVersion`.
 
+Для примера, все шаги установки проделаны в [тестовом проекте](https://github.com/liquetsoft/fias-laravel-example).
 
 
 Использование
