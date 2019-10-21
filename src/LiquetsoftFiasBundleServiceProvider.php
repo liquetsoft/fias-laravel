@@ -24,6 +24,7 @@ use Liquetsoft\Fias\Component\Pipeline\Task\DownloadTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\InformDeltaTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\InformFullTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\PrepareFolderTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\SelectFilesToProceedTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use Liquetsoft\Fias\Component\Pipeline\Task\TruncateTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\UnpackTask;
@@ -217,6 +218,11 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         // задача для очистки хранилища
         $servicesList[$this->prefixString('task.data.truncate')] = TruncateTask::class;
 
+        // задача для получения списка файлов для обработки
+        $servicesList[$this->prefixString('task.data.select_files')] = function (Application $app): Task {
+            return new SelectFilesToProceedTask($app->get(EntityManager::class));
+        };
+
         // задача для вставки данных в хранилище
         $servicesList[$this->prefixString('task.data.insert')] = function (Application $app): Task {
             return new DataInsertTask(
@@ -272,6 +278,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     $app->get($this->prefixString('task.download')),
                     $app->get($this->prefixString('task.unpack')),
                     $app->get($this->prefixString('task.data.truncate')),
+                    $app->get($this->prefixString('task.data.select_files')),
                     $app->get($this->prefixString('task.data.insert')),
                     $app->get($this->prefixString('task.data.delete')),
                     $app->get($this->prefixString('task.version.set')),
@@ -286,6 +293,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
             return new ArrayPipe(
                 [
                     $app->get($this->prefixString('task.data.truncate')),
+                    $app->get($this->prefixString('task.data.select_files')),
                     $app->get($this->prefixString('task.data.insert')),
                     $app->get($this->prefixString('task.data.delete')),
                 ],
@@ -303,6 +311,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     $app->get($this->prefixString('task.inform.delta')),
                     $app->get($this->prefixString('task.download')),
                     $app->get($this->prefixString('task.unpack')),
+                    $app->get($this->prefixString('task.data.select_files')),
                     $app->get($this->prefixString('task.data.upsert')),
                     $app->get($this->prefixString('task.data.delete')),
                     $app->get($this->prefixString('task.version.set')),
