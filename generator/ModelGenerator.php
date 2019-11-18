@@ -8,10 +8,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\EntityField;
+use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpLiteral;
 use Nette\PhpGenerator\PhpNamespace;
-use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PsrPrinter;
 use SplFileInfo;
 

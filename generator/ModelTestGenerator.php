@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
+use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
-use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PsrPrinter;
 use SplFileInfo;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 
 /**
  * Объект, который создает классы тестов для моделей из описания моделей в yaml.

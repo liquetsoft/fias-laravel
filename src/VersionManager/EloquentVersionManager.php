@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager;
 
 use Carbon\Carbon;
-use Liquetsoft\Fias\Component\VersionManager\VersionManager;
 use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\FiasInformer\InformerResponseBase;
+use Liquetsoft\Fias\Component\VersionManager\VersionManager;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FiasVersion;
 use RuntimeException;
 

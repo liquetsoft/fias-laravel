@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer;
 
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster\EloquentTypeCaster;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster\TypeCaster;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
-use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Throwable;
 
 /**

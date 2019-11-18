@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 
 use Illuminate\Console\Command;
+use Illuminate\Foundation\Application;
 use InvalidArgumentException;
 use Liquetsoft\Fias\Component\Exception\PipeException;
-use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
-use Illuminate\Foundation\Application;
+use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use SplFileInfo;
 
