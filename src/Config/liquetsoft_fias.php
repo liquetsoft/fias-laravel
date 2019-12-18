@@ -25,7 +25,7 @@ return [
      */
     'allow_bundle_migrations' => true,
     /*
-     * Ссылка на WSDL сервися, который возврашает ссылки на архив с ФИАС для указанных версий.
+     * Ссылка на WSDL сервиса, который возвращает ссылки на архив с ФИАС для указанных версий.
      */
     'informer_wsdl' => 'http://fias.nalog.ru/WebServices/Public/DownloadService.asmx?WSDL',
     /*
