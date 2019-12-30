@@ -7,7 +7,7 @@
   "require": {
     "php": ">=7.2.0",
     "ext-soap": "*",
-    "liquetsoft/fias-component": "^3.0",
+    "liquetsoft/fias-component": "^3.3",
     "illuminate/database": "^5.8||^6.0",
     "laravel/framework": "^5.8||^6.0"
   },
