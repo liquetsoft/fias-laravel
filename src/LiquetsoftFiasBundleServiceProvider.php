@@ -45,7 +45,6 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage\EloquentStorage;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
 use Psr\Log\LoggerInterface;
-use SoapClient;
 
 /**
  * Service provider для модуля.
@@ -124,21 +123,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      */
     protected function registerServices(array &$servicesList): void
     {
-        // soap-клиент для получения сссылки на массив с файлами
-        $servicesList[$this->prefixString('informer.soap')] = function (): SoapClient {
-            return new SoapClient(
-                $this->getOptionString('informer_wsdl'),
-                ['exceptions' => true]
-            );
-        };
-
         // объект, который получает ссылку на ФИАС через soap-клиент
         $servicesList[FiasInformer::class] = function (Application $app): FiasInformer {
-            return new SoapFiasInformer(
-                $app->get(
-                    $this->prefixString('informer.soap')
-                )
-            );
+            return new SoapFiasInformer($this->getOptionString('informer_wsdl'));
         };
 
         // объект, который загружает файлы
