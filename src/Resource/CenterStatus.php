@@ -25,8 +25,8 @@ class CenterStatus extends JsonResource
     public function toArray($request): array
     {
         return [
-            'centerstid' => (int) $this->centerstid,
-            'name' => (string) $this->name,
+            'centerstid' => $this->centerstid,
+            'name' => $this->name,
         ];
     }
 }
