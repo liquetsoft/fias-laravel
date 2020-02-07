@@ -124,7 +124,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     protected function registerServices(array &$servicesList): void
     {
         // объект, который получает ссылку на ФИАС через soap-клиент
-        $servicesList[FiasInformer::class] = function (Application $app): FiasInformer {
+        $servicesList[FiasInformer::class] = function (): FiasInformer {
             return new SoapFiasInformer($this->getOptionString('informer_wsdl'));
         };
 
