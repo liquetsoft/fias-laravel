@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 
+use DateTimeInterface;
 use Illuminate\Http\Request;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
@@ -50,6 +51,7 @@ class ResourceTestGenerator extends AbstractGenerator
         $namespace->addUse(BaseCase::class);
         $namespace->addUse(stdClass::class);
         $namespace->addUse(Request::class);
+        $namespace->addUse(DateTimeInterface::class);
         $namespace->addUse(
             'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Resource\\' . $this->unifyClassName($descriptor->getName()),
             'Resource'
@@ -85,7 +87,7 @@ class ResourceTestGenerator extends AbstractGenerator
                     break;
                 case 'string_date':
                     $fake = '$this->createFakeData()->dateTime()';
-                    $toAssert[] = "\$this->assertSame(\$model->{$name}->format('Y-m-d H:i:s'), \$array['{$name}']);";
+                    $toAssert[] = "\$this->assertSame(\$model->{$name}->format(DateTimeInterface::ATOM), \$array['{$name}']);";
                     break;
                 default:
                     $fake = '$this->createFakeData()->word';

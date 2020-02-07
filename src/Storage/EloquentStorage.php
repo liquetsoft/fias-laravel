@@ -106,7 +106,7 @@ class EloquentStorage implements Storage
         $model = $this->checkIsEntityAllowedForEloquent($entity);
 
         try {
-            /** @var Model $persistedModel */
+            /** @var Model|null $persistedModel */
             $persistedModel = $model->query()->find($model->getKey());
             if ($persistedModel instanceof Model) {
                 $persistedModel->delete();

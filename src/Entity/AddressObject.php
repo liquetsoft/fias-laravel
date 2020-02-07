@@ -10,43 +10,43 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Реестр адресообразующих элементов.
  *
- * @property string      $aoid
- * @property string|null $aoguid
- * @property string|null $parentguid
- * @property string|null $previd
- * @property string|null $nextid
- * @property string|null $code
- * @property string      $formalname
- * @property string      $offname
- * @property string      $shortname
- * @property int         $aolevel
- * @property string      $regioncode
- * @property string      $areacode
- * @property string      $autocode
- * @property string      $citycode
- * @property string      $ctarcode
- * @property string      $placecode
- * @property string      $plancode
- * @property string      $streetcode
- * @property string      $extrcode
- * @property string      $sextcode
- * @property string|null $plaincode
- * @property int         $currstatus
- * @property int         $actstatus
- * @property int         $livestatus
- * @property int         $centstatus
- * @property int         $operstatus
- * @property string|null $ifnsfl
- * @property string|null $ifnsul
- * @property string|null $terrifnsfl
- * @property string|null $terrifnsul
- * @property string|null $okato
- * @property string|null $oktmo
- * @property string|null $postalcode
- * @property Carbon      $startdate
- * @property Carbon      $enddate
- * @property Carbon      $updatedate
- * @property int         $divtype
+ * @property string      $aoid       Уникальный идентификатор записи. Ключевое поле.
+ * @property string|null $aoguid     Глобальный уникальный идентификатор адресного объекта
+ * @property string|null $parentguid Идентификатор родительского объекта
+ * @property string|null $previd     Идентификатор записи связывания с предыдушей исторической записью
+ * @property string|null $nextid     Идентификатор записи связывания с последующей исторической записью
+ * @property string|null $code       Код адресного объекта одной строкой с признаком актуальности из КЛАДР 4.0.
+ * @property string      $formalname Формализованное наименование
+ * @property string      $offname    Официальное наименование
+ * @property string      $shortname  Краткое наименование типа объекта
+ * @property int         $aolevel    Уровень адресного объекта
+ * @property string      $regioncode Код региона
+ * @property string      $areacode   Код района
+ * @property string      $autocode   Код автономии
+ * @property string      $citycode   Код города
+ * @property string      $ctarcode   Код внутригородского района
+ * @property string      $placecode  Код населенного пункта
+ * @property string      $plancode   Код элемента планировочной структуры
+ * @property string      $streetcode Код улицы
+ * @property string      $extrcode   Код дополнительного адресообразующего элемента
+ * @property string      $sextcode   Код подчиненного дополнительного адресообразующего элемента
+ * @property string|null $plaincode  Код адресного объекта из КЛАДР 4.0 одной строкой без признака актуальности (последних двух цифр)
+ * @property int         $currstatus Статус актуальности КЛАДР 4 (последние две цифры в коде)
+ * @property int         $actstatus  Статус актуальности адресного объекта ФИАС. Актуальный адрес на текущую дату. Обычно последняя запись об адресном объекте
+ * @property int         $livestatus Признак действующего адресного объекта
+ * @property int         $centstatus Статус центра
+ * @property int         $operstatus Статус действия над записью – причина появления записи
+ * @property string|null $ifnsfl     Код ИФНС ФЛ
+ * @property string|null $ifnsul     Код ИФНС ЮЛ
+ * @property string|null $terrifnsfl Код территориального участка ИФНС ФЛ
+ * @property string|null $terrifnsul Код территориального участка ИФНС ЮЛ
+ * @property string|null $okato      OKATO
+ * @property string|null $oktmo      OKTMO
+ * @property string|null $postalcode Почтовый индекс
+ * @property Carbon      $startdate  Начало действия записи
+ * @property Carbon      $enddate    Окончание действия записи
+ * @property Carbon      $updatedate Дата внесения (обновления) записи
+ * @property int         $divtype    Признак адресации
  */
 class AddressObject extends Model
 {

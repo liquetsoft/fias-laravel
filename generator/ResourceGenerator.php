@@ -101,15 +101,20 @@ class ResourceGenerator extends AbstractGenerator
         switch ($type) {
             case 'int':
                 $varType = 'int' . ($field->isNullable() ? '|null' : '');
-                $transform = "(int) \$this->{$name}";
+                $transform = "\$this->{$name}";
                 break;
             case 'string_date':
-                $varType = 'DateTimeInterface|string' . ($field->isNullable() ? '|null' : '');
-                $transform = "\$this->{$name} instanceof DateTimeInterface ? \$this->{$name}->format('Y-m-d H:i:s') : (string) \$this->{$name}";
+                if ($field->isNullable()) {
+                    $varType = 'DateTimeInterface|null';
+                    $transform = "\$this->{$name} ? \$this->{$name}->format(DateTimeInterface::ATOM) : null";
+                } else {
+                    $varType = 'DateTimeInterface';
+                    $transform = "\$this->{$name}->format(DateTimeInterface::ATOM)";
+                }
                 break;
             default:
                 $varType = 'string' . ($field->isNullable() ? '|null' : '');
-                $transform = "(string) \$this->{$name}";
+                $transform = "\$this->{$name}";
                 break;
         }
 

@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Модель, которая хранит историю версий ФИАС.
  *
- * @property int    $version
- * @property string $url
- * @property string $created_at
+ * @property int    $version    Номер версии ФИАС
+ * @property string $url        Ссылка для загрузки указанной версии ФИАС
+ * @property string $created_at Дата создания записи
  */
 class FiasVersion extends Model
 {

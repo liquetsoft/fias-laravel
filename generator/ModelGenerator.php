@@ -147,7 +147,12 @@ class ModelGenerator extends AbstractGenerator
                 break;
         }
 
-        $class->addComment("@property {$varType} \${$name}");
+        $description = '';
+        if ($field->getDescription()) {
+            $description = ' ' . $field->getDescription();
+        }
+
+        $class->addComment("@property {$varType} \${$name}{$description}");
     }
 
     /**

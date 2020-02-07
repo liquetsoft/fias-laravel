@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Resource;
 
+use DateTimeInterface;
 use Illuminate\Http\Request;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Resource\NormativeDocument as Resource;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
@@ -35,7 +36,7 @@ class NormativeDocument extends BaseCase
         $this->assertArrayHasKey('docname', $array);
         $this->assertSame($model->docname, $array['docname']);
         $this->assertArrayHasKey('docdate', $array);
-        $this->assertSame($model->docdate->format('Y-m-d H:i:s'), $array['docdate']);
+        $this->assertSame($model->docdate->format(DateTimeInterface::ATOM), $array['docdate']);
         $this->assertArrayHasKey('docnum', $array);
         $this->assertSame($model->docnum, $array['docnum']);
         $this->assertArrayHasKey('doctype', $array);
