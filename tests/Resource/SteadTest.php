@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Resource;
 
+use DateTimeInterface;
 use Illuminate\Http\Request;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Resource\Stead as Resource;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
@@ -65,11 +66,11 @@ class Stead extends BaseCase
         $this->assertArrayHasKey('operstatus', $array);
         $this->assertSame($model->operstatus, $array['operstatus']);
         $this->assertArrayHasKey('startdate', $array);
-        $this->assertSame($model->startdate->format('Y-m-d H:i:s'), $array['startdate']);
+        $this->assertSame($model->startdate->format(DateTimeInterface::ATOM), $array['startdate']);
         $this->assertArrayHasKey('enddate', $array);
-        $this->assertSame($model->enddate->format('Y-m-d H:i:s'), $array['enddate']);
+        $this->assertSame($model->enddate->format(DateTimeInterface::ATOM), $array['enddate']);
         $this->assertArrayHasKey('updatedate', $array);
-        $this->assertSame($model->updatedate->format('Y-m-d H:i:s'), $array['updatedate']);
+        $this->assertSame($model->updatedate->format(DateTimeInterface::ATOM), $array['updatedate']);
         $this->assertArrayHasKey('livestatus', $array);
         $this->assertSame($model->livestatus, $array['livestatus']);
         $this->assertArrayHasKey('divtype', $array);

@@ -53,9 +53,9 @@ class House extends JsonResource
             'okato' => $this->okato,
             'oktmo' => $this->oktmo,
             'postalcode' => $this->postalcode,
-            'startdate' => $this->startdate->format('Y-m-d H:i:s'),
-            'enddate' => $this->enddate->format('Y-m-d H:i:s'),
-            'updatedate' => $this->updatedate->format('Y-m-d H:i:s'),
+            'startdate' => $this->startdate->format(DateTimeInterface::ATOM),
+            'enddate' => $this->enddate->format(DateTimeInterface::ATOM),
+            'updatedate' => $this->updatedate->format(DateTimeInterface::ATOM),
             'counter' => $this->counter,
             'divtype' => $this->divtype,
         ];

@@ -31,7 +31,7 @@ class NormativeDocument extends JsonResource
         return [
             'normdocid' => $this->normdocid,
             'docname' => $this->docname,
-            'docdate' => $this->docdate ? $this->docdate->format('Y-m-d H:i:s') : null,
+            'docdate' => $this->docdate ? $this->docdate->format(DateTimeInterface::ATOM) : null,
             'docnum' => $this->docnum,
             'doctype' => $this->doctype,
         ];

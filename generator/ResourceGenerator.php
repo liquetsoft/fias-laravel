@@ -106,10 +106,10 @@ class ResourceGenerator extends AbstractGenerator
             case 'string_date':
                 if ($field->isNullable()) {
                     $varType = 'DateTimeInterface|null';
-                    $transform = "\$this->{$name} ? \$this->{$name}->format('Y-m-d H:i:s') : null";
+                    $transform = "\$this->{$name} ? \$this->{$name}->format(DateTimeInterface::ATOM) : null";
                 } else {
                     $varType = 'DateTimeInterface';
-                    $transform = "\$this->{$name}->format('Y-m-d H:i:s')";
+                    $transform = "\$this->{$name}->format(DateTimeInterface::ATOM)";
                 }
                 break;
             default:
