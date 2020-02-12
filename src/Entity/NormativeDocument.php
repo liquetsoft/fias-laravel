@@ -44,6 +44,10 @@ class NormativeDocument extends Model
 
     /** @var array<string, string> */
     protected $casts = [
+        'normdocid' => 'string',
+        'docname' => 'string',
+        'docdate' => 'datetime',
+        'docnum' => 'string',
         'doctype' => 'string',
     ];
 }
