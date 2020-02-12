@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int    $version    Номер версии ФИАС
  * @property string $url        Ссылка для загрузки указанной версии ФИАС
- * @property string $created_at Дата создания записи
+ * @property Carbon $created_at Дата создания записи
  */
 class FiasVersion extends Model
 {
@@ -38,5 +39,6 @@ class FiasVersion extends Model
     protected $casts = [
         'version' => 'integer',
         'url' => 'string',
+        'created_at' => 'datetime',
     ];
 }

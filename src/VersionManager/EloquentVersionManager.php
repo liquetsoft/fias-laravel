@@ -58,7 +58,7 @@ class EloquentVersionManager implements VersionManager
      */
     public function getCurrentVersion(): InformerResponse
     {
-        $response = new InformerResponseBase;
+        $response = new InformerResponseBase();
 
         $entityClassName = $this->getEntityClassName();
         $entity = $entityClassName::query()->orderBy('created_at', 'desc')->first();
