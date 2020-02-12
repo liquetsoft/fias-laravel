@@ -68,9 +68,18 @@ class House extends Model
 
     /** @var array<string, string> */
     protected $casts = [
+        'houseid' => 'string',
+        'houseguid' => 'string',
+        'aoguid' => 'string',
+        'housenum' => 'string',
         'strstatus' => 'integer',
         'eststatus' => 'integer',
         'statstatus' => 'integer',
+        'ifnsfl' => 'string',
+        'ifnsul' => 'string',
+        'okato' => 'string',
+        'oktmo' => 'string',
+        'postalcode' => 'string',
         'startdate' => 'datetime',
         'enddate' => 'datetime',
         'updatedate' => 'datetime',

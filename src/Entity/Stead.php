@@ -68,16 +68,22 @@ class Stead extends Model
 
     /** @var array<string, string> */
     protected $casts = [
+        'steadguid' => 'string',
+        'number' => 'string',
         'regioncode' => 'string',
+        'postalcode' => 'string',
         'ifnsfl' => 'string',
         'ifnsul' => 'string',
         'okato' => 'string',
         'oktmo' => 'string',
+        'parentguid' => 'string',
+        'steadid' => 'string',
         'operstatus' => 'string',
         'startdate' => 'datetime',
         'enddate' => 'datetime',
         'updatedate' => 'datetime',
         'livestatus' => 'string',
         'divtype' => 'string',
+        'normdoc' => 'string',
     ];
 }

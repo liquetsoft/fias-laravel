@@ -163,9 +163,6 @@ class ModelGenerator extends AbstractGenerator
         $types = "[\n";
 
         foreach ($descriptor->getFields() as $field) {
-            if ($field->isNullable()) {
-                continue;
-            }
             $name = $this->unifyColumnName($field->getName());
             $type = trim($field->getType() . '_' . $field->getSubType(), ' _');
             switch ($type) {
@@ -173,6 +170,7 @@ class ModelGenerator extends AbstractGenerator
                     $castType = 'integer';
                     break;
                 case 'string':
+                case 'string_uuid':
                     $castType = 'string';
                     break;
                 case 'string_date':

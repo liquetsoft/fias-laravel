@@ -153,7 +153,7 @@ class EloquentDenormalizer implements DenormalizerInterface
         $casts = $entity->getCasts();
         $type = $casts[$attributeName] ?? '';
 
-        if ($this->typeCaster && $this->typeCaster->canCast($type, $value)) {
+        if ($value !== null && $this->typeCaster && $this->typeCaster->canCast($type, $value)) {
             $value = $this->typeCaster->cast($type, $value);
         }
 

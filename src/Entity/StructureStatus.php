@@ -38,5 +38,6 @@ class StructureStatus extends Model
     protected $casts = [
         'strstatid' => 'integer',
         'name' => 'string',
+        'shortname' => 'string',
     ];
 }

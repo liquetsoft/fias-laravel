@@ -41,5 +41,6 @@ class AddressObjectType extends Model
         'kod_t_st' => 'integer',
         'level' => 'integer',
         'socrname' => 'string',
+        'scname' => 'string',
     ];
 }
