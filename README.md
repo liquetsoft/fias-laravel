@@ -13,7 +13,7 @@
 Установка
 ---------
 1. Установить пакет с помощью composer:
-    
+
     ```bash
     composer require liquetsoft/fias-laravel
     ```
@@ -26,26 +26,26 @@
         Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\LiquetsoftFiasBundleServiceProvider::class,
     ],
     ```
-   
+
 3. Бандл предоставляет свою конфигурацию и по умолчанию будет использовать именно её. Настоятельно рекомендуется опубликовать копию конфигурации в проект, а не использовать встроенную:
 
     ```bash
     php artisan vendor:publish --provider="Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\LiquetsoftFiasBundleServiceProvider"
     ```
-   
+
 4. Бандл предоставляет миграции, которые создадут структуру таблиц в базе данных:
 
     ```bash
     php artisan migrate
     ```
-   
+
    Миграции можно отключить с помощью опции `allow_bundle_migrations`, в случае если структура не подходит или является избыточной:
-   
+
     ```php
     // config/liquetsoft_fias.php
     'allow_bundle_migrations' => false,
     ```
-   
+
 5. Бандл пытается конвертировать записи ФИАС в объекты. Необходимо указать какие именно сущности используются (те сущности, для которых не указан класс конвертации использоваться не будут) и в какие объекты конвертируются (важно понимать, что сущность на стороне проекта может быть любой, [сериализатор symfony](https://symfony.com/doc/current/components/serializer.html) попробует преобразовать xml в указанный объект):
 
     ```php
@@ -77,9 +77,9 @@
         'StructureStatus' => StructureStatus::class,
     ],
     ```
-    
+
     В составе бандла поставляются так же соответствующие eloquent-модели и ресурсные классы:
-    
+
     * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ActualStatus`,
     * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddressObject`,
     * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddressObjectType`,
@@ -134,3 +134,29 @@ $this->app->singleton(\Liquetsoft\Fias\Component\Unpacker\Unpacker::class, funct
     return new \Liquetsoft\Fias\Component\Unpacker\ProcessUnpacker($commandTemplate);
 });
 ```
+
+
+Allowed Memory Size Exhausted
+-----------------------------
+
+В некоторых установках laravel во время установки ФИАС возникает ошибка из-за недостатка оперативной памяти для скрипта. Это связано с пакетами для дебага и логирования. Для установки ФИАС следует либо отключать эти пакеты совсем, либо отключать обработку запросов к базе данных.
+
+Известные конфликты:
+
+1. **facade/ignition**:
+
+    * опубликуйте конфигурационный файл, если он еще не опубликован, с помощью команды:
+
+        ```bash
+        php artisan vendor:publish --provider="Facade\Ignition\IgnitionServiceProvider" --tag="flare-config"
+        ```
+
+    * отключите логирование запросов к базе данных:
+
+        ```php
+        //в config/flare.php
+        'reporting' => [
+            'report_queries' => false,
+            'report_query_bindings' => false,
+        ],
+        ```

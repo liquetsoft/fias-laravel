@@ -49,6 +49,14 @@ class EloquentStorage implements Storage
     protected $columnsLists = [];
 
     /**
+     * Флаг, который обозначает, что после завершения работы нужно включить
+     * логгирование.
+     *
+     * @var bool
+     */
+    protected $needToEnableLogging = false;
+
+    /**
      * @param int                  $insertBatch
      * @param LoggerInterface|null $logger
      */
@@ -64,7 +72,12 @@ class EloquentStorage implements Storage
     public function start(): void
     {
         $connection = DB::connection();
-        if (method_exists($connection, 'disableQueryLog')) {
+        if (
+            method_exists($connection, 'disableQueryLog')
+            && method_exists($connection, 'logging')
+            && $connection->logging() === true
+        ) {
+            $this->needToEnableLogging = true;
             $connection->disableQueryLog();
         }
     }
@@ -80,7 +93,11 @@ class EloquentStorage implements Storage
         $this->columnsLists = [];
 
         $connection = DB::connection();
-        if (method_exists($connection, 'enableQueryLog')) {
+        if (
+            $this->needToEnableLogging
+            && method_exists($connection, 'enableQueryLog')
+        ) {
+            $this->needToEnableLogging = false;
             $connection->enableQueryLog();
         }
     }
