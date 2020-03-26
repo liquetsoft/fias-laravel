@@ -1,4 +1,4 @@
-FROM php:7.2-cli-alpine
+FROM php:7.4-cli-alpine
 
 # alpine components
 RUN set -xe && apk update && apk add --no-cache \
@@ -7,6 +7,7 @@ RUN set -xe && apk update && apk add --no-cache \
     curl \
     libmcrypt-dev \
     libxml2-dev \
+    libzip-dev \
     postgresql-dev \
     pcre-dev \
     git \
@@ -20,8 +21,6 @@ RUN docker-php-ext-install pdo_pgsql zip pcntl sockets soap \
     && docker-php-source extract \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
-    && pecl install rar \
-    && docker-php-ext-enable rar \
     && docker-php-source delete \
     && echo 'date.timezone=Europe/London' >> /usr/local/etc/php/conf.d/php-date.ini
 

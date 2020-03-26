@@ -105,6 +105,22 @@ class EloquentStorage implements Storage
     /**
      * @inheritdoc
      */
+    public function supports(object $entity): bool
+    {
+        return $this->supportsClass(get_class($entity));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function supportsClass(string $class): bool
+    {
+        return is_subclass_of($class, Model::class);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function insert(object $entity): void
     {
         $model = $this->checkIsEntityAllowedForEloquent($entity);
