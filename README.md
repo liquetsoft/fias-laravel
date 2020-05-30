@@ -10,6 +10,8 @@
 
 Для установки ФИАС используются xml-файлы, ссылки на которые предоставляются SOAP-сервисом информирования ФИАС.
 
+
+
 Установка
 ---------
 1. Установить пакет с помощью composer:
@@ -102,6 +104,7 @@
 Для примера, все шаги установки проделаны в [тестовом проекте](https://github.com/liquetsoft/fias-laravel-example).
 
 
+
 Использование
 -------------
 
@@ -121,19 +124,6 @@
 
 Соответственно, установка запускается только в первый раз, а обновление следует поставить в качестве задачи для `cron`.
 
-
-Замена разархиватора
---------------------
-
-Из-за проблем с установкой ext-rar в php7.3 и выше, была добавлена возможность распаковывать архивы с помощью командной строки. Для замены нужно определить команду для распаковки и заменить сервис разархивации:
-
-```php
-//AppServiceProvider::register
-$this->app->singleton(\Liquetsoft\Fias\Component\Unpacker\Unpacker::class, function ($app) {
-    $commandTemplate = new \Liquetsoft\Fias\Component\Process\TemplateProcess('unrar x {{source}} {{destination}}');
-    return new \Liquetsoft\Fias\Component\Unpacker\ProcessUnpacker($commandTemplate);
-});
-```
 
 
 Allowed Memory Size Exhausted
