@@ -129,7 +129,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         };
 
         // объект, который загружает файлы
-        $servicesList[Downloader::class] = CurlDownloader::class;
+        $servicesList[Downloader::class] = function (): Downloader {
+            return new CurlDownloader($this->getOptionArray('curl_settings'));
+        };
 
         // объект, который распаковывает архивы
         $servicesList[Unpacker::class] = ZipUnpacker::class;
