@@ -32,8 +32,8 @@ use Liquetsoft\Fias\Component\Pipeline\Task\UnpackTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\VersionGetTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\VersionSetTask;
 use Liquetsoft\Fias\Component\Storage\Storage;
-use Liquetsoft\Fias\Component\Unpacker\RarUnpacker;
 use Liquetsoft\Fias\Component\Unpacker\Unpacker;
+use Liquetsoft\Fias\Component\Unpacker\ZipUnpacker;
 use Liquetsoft\Fias\Component\VersionManager\VersionManager;
 use Liquetsoft\Fias\Component\XmlReader\BaseXmlReader;
 use Liquetsoft\Fias\Component\XmlReader\XmlReader;
@@ -132,7 +132,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[Downloader::class] = CurlDownloader::class;
 
         // объект, который распаковывает архивы
-        $servicesList[Unpacker::class] = RarUnpacker::class;
+        $servicesList[Unpacker::class] = ZipUnpacker::class;
 
         // объект, который читает xml из файла
         $servicesList[XmlReader::class] = BaseXmlReader::class;
