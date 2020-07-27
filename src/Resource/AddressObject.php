@@ -32,7 +32,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string            $extrcode
  * @property string            $sextcode
  * @property string|null       $plaincode
- * @property int               $currstatus
+ * @property int|null          $currstatus
  * @property int               $actstatus
  * @property int               $livestatus
  * @property int               $centstatus

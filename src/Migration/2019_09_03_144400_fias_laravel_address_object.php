@@ -40,7 +40,7 @@ class FiasLaravelAddressObject extends Migration
             $table->string('extrcode', 4)->nullable(false)->comment('Код дополнительного адресообразующего элемента');
             $table->string('sextcode', 3)->nullable(false)->comment('Код подчиненного дополнительного адресообразующего элемента');
             $table->string('plaincode', 15)->nullable(true)->comment('Код адресного объекта из КЛАДР 4.0 одной строкой без признака актуальности (последних двух цифр)');
-            $table->unsignedInteger('currstatus')->nullable(false)->comment('Статус актуальности КЛАДР 4 (последние две цифры в коде)');
+            $table->unsignedInteger('currstatus')->nullable(true)->comment('Статус актуальности КЛАДР 4 (последние две цифры в коде)');
             $table->unsignedInteger('actstatus')->nullable(false)->comment('Статус актуальности адресного объекта ФИАС. Актуальный адрес на текущую дату. Обычно последняя запись об адресном объекте');
             $table->unsignedInteger('livestatus')->nullable(false)->comment('Признак действующего адресного объекта');
             $table->unsignedInteger('centstatus')->nullable(false)->comment('Статус центра');
