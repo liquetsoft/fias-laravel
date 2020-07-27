@@ -31,7 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string      $extrcode   Код дополнительного адресообразующего элемента
  * @property string      $sextcode   Код подчиненного дополнительного адресообразующего элемента
  * @property string|null $plaincode  Код адресного объекта из КЛАДР 4.0 одной строкой без признака актуальности (последних двух цифр)
- * @property int         $currstatus Статус актуальности КЛАДР 4 (последние две цифры в коде)
+ * @property int|null    $currstatus Статус актуальности КЛАДР 4 (последние две цифры в коде)
  * @property int         $actstatus  Статус актуальности адресного объекта ФИАС. Актуальный адрес на текущую дату. Обычно последняя запись об адресном объекте
  * @property int         $livestatus Признак действующего адресного объекта
  * @property int         $centstatus Статус центра
