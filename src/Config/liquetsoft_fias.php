@@ -29,14 +29,6 @@ return [
      */
     'informer_wsdl' => 'http://fias.nalog.ru/WebServices/Public/DownloadService.asmx?WSDL',
     /*
-     * Путь к yaml файлу с описаниями сущностей ФИАС.
-     */
-    'registry_yaml' => base_path('vendor/liquetsoft/fias-component/resources/fias_entities.yaml'),
-    /*
-     * Путь к папке со временными файлами для процесса загрузки.
-     */
-    'temp_dir' => storage_path('liquetsoft_fias'),
-    /*
      * Имя класса для сущности, которая хранит историю версий ФИАС.
      */
     'version_manager_entity' => FiasVersion::class,
@@ -66,4 +58,12 @@ return [
         'Stead' => Stead::class,
         'StructureStatus' => StructureStatus::class,
     ],
+    /*
+     * Путь к yaml файлу с описаниями сущностей ФИАС.
+     */
+    // 'registry_yaml' => base_path('vendor/liquetsoft/fias-component/resources/fias_entities.yaml'),
+    /*
+     * Путь к папке со временными файлами для процесса загрузки.
+     */
+    // 'temp_dir' => storage_path('liquetsoft_fias'),
 ];

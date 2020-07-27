@@ -10,7 +10,9 @@
     "liquetsoft/fias-component": "^6.2",
     "illuminate/database": "^5.8|^6.0|^7.0",
     "illuminate/support": "^5.8|^6.0|^7.0",
-    "illuminate/contracts": "^5.8|^6.0|^7.0"
+    "illuminate/contracts": "^5.8|^6.0|^7.0",
+    "illuminate/http": "^5.8|^6.0|^7.0",
+    "illuminate/console": "^5.8|^6.0|^7.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.0|^9.0",

@@ -6,7 +6,7 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Foundation\Application;
+use Illuminate\Contracts\Foundation\Application;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 

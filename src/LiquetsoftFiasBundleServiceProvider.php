@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle;
 
 use Closure;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Liquetsoft\Fias\Component\Downloader\CurlDownloader;
@@ -85,7 +86,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__ . "/Config/{$this->prefixString('php')}" => config_path($this->prefixString('php')),
+            __DIR__ . "/Config/{$this->prefixString('php')}" => $this->app->configPath($this->prefixString('php')),
         ]);
 
         if ($this->app->runningInConsole()) {
@@ -103,7 +104,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return array<string, Closure|string>
      */
-    protected function getServicesDescriptions(): array
+    private function getServicesDescriptions(): array
     {
         $servicesList = [];
 
@@ -121,7 +122,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerServices(array &$servicesList): void
+    private function registerServices(array &$servicesList): void
     {
         // объект, который получает ссылку на ФИАС через soap-клиент
         $servicesList[FiasInformer::class] = function (): FiasInformer {
@@ -143,9 +144,12 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[$this->prefixString('serializer.serializer')] = FiasSerializer::class;
 
         // объект с описаниями сущностей ФИАС
-        $servicesList[EntityRegistry::class] = function (): EntityRegistry {
+        $servicesList[EntityRegistry::class] = function (Application $app): EntityRegistry {
             return new YamlEntityRegistry(
-                $this->getOptionString('registry_yaml')
+                $this->getOptionString(
+                    'registry_yaml',
+                    $app->basePath('vendor/liquetsoft/fias-component/resources/fias_entities.yaml')
+                )
             );
         };
 
@@ -180,15 +184,18 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerTasks(array &$servicesList): void
+    private function registerTasks(array &$servicesList): void
     {
         // задача для очистки базы
         $servicesList[$this->prefixString('task.cleanup')] = CleanupTask::class;
 
         // задача для подготовки каталога загрузки
-        $servicesList[$this->prefixString('task.prepare.folder')] = function (): Task {
+        $servicesList[$this->prefixString('task.prepare.folder')] = function (Application $app): Task {
             return new PrepareFolderTask(
-                $this->getOptionString('temp_dir')
+                $this->getOptionString(
+                    'temp_dir',
+                    rtrim($app->storagePath(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $this->bundlePrefix
+                )
             );
         };
 
@@ -256,7 +263,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerPipelines(array &$servicesList): void
+    private function registerPipelines(array &$servicesList): void
     {
         // процесс установки полной версии ФИАС
         $servicesList[$this->prefixString('pipe.install')] = function (Application $app): Pipe {
@@ -315,14 +322,15 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      * Возвращает значение указанной опции в виде строки.
      *
      * @param string $name
+     * @param string $default
      *
      * @return string
      */
-    protected function getOptionString(string $name): string
+    private function getOptionString(string $name, string $default = ''): string
     {
-        $option = config($this->prefixString($name));
+        $option = $this->getOption($name);
 
-        return is_string($option) ? $option : '';
+        return is_string($option) ? $option : $default;
     }
 
     /**
@@ -332,9 +340,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return int
      */
-    protected function getOptionInt(string $name): int
+    private function getOptionInt(string $name): int
     {
-        $option = config($this->prefixString($name));
+        $option = $this->getOption($name);
 
         return is_int($option) ? $option : 0;
     }
@@ -346,9 +354,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    protected function getOptionArray(string $name): array
+    private function getOptionArray(string $name): array
     {
-        $option = config($this->prefixString($name));
+        $option = $this->getOption($name);
 
         return is_array($option) ? $option : [];
     }
@@ -360,11 +368,24 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return bool
      */
-    protected function getOptionBool(string $name): bool
+    private function getOptionBool(string $name): bool
     {
-        $option = config($this->prefixString($name));
+        return (bool) $this->getOption($name);
+    }
 
-        return (bool) $option;
+    /**
+     * Returns option value by set name.
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    private function getOption(string $name)
+    {
+        /** @var ConfigRepository $config */
+        $config = $this->app->make('config');
+
+        return $config->get($this->prefixString($name));
     }
 
     /**
@@ -374,7 +395,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return string
      */
-    protected function prefixString(string $string): string
+    private function prefixString(string $string): string
     {
         if (strpos($string, $this->bundlePrefix) !== 0) {
             $string = $this->bundlePrefix . '.' . ltrim($string, '.');
