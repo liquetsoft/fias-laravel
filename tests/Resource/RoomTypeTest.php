@@ -19,7 +19,7 @@ class RoomType extends BaseCase
      */
     public function testToArray()
     {
-        $model = new stdClass;
+        $model = new stdClass();
         $model->rmtypeid = $this->createFakeData()->numberBetween(1, 1000000);
         $model->name = $this->createFakeData()->word;
         $model->shortname = $this->createFakeData()->word;

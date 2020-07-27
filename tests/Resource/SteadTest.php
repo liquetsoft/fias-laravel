@@ -20,7 +20,7 @@ class Stead extends BaseCase
      */
     public function testToArray()
     {
-        $model = new stdClass;
+        $model = new stdClass();
         $model->steadguid = $this->createFakeData()->uuid;
         $model->number = $this->createFakeData()->word;
         $model->regioncode = $this->createFakeData()->word;

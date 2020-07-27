@@ -31,7 +31,7 @@ class MigrationGenerator extends AbstractGenerator
         $className = implode('', array_map('ucfirst', $className));
         $className = $this->unifyClassName($className);
 
-        $phpFile = new PhpFile;
+        $phpFile = new PhpFile();
         $phpFile->setStrictTypes();
         $phpFile->addUse(Migration::class);
         $phpFile->addUse(Blueprint::class);
@@ -44,7 +44,7 @@ class MigrationGenerator extends AbstractGenerator
         $this->decorateClassWithUpMethodByDescription($class, $descriptor);
         $this->decorateClassWithDownMethodByDescription($class, $descriptor);
 
-        file_put_contents($fullPath, (new PsrPrinter)->printFile($phpFile));
+        file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));
     }
 
     /**

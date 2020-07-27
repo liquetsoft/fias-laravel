@@ -20,7 +20,7 @@ class AddressObject extends BaseCase
      */
     public function testToArray()
     {
-        $model = new stdClass;
+        $model = new stdClass();
         $model->aoid = $this->createFakeData()->uuid;
         $model->aoguid = $this->createFakeData()->uuid;
         $model->parentguid = $this->createFakeData()->uuid;
