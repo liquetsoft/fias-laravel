@@ -84,17 +84,21 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
             $this->loadMigrationsFrom(__DIR__ . '/Migration');
         }
 
-        $this->publishes([
-            __DIR__ . "/Config/{$this->prefixString('php')}" => config_path($this->prefixString('php')),
-        ]);
+        $this->publishes(
+            [
+                __DIR__ . "/Config/{$this->prefixString('php')}" => config_path($this->prefixString('php')),
+            ]
+        );
 
         if ($this->app->runningInConsole()) {
-            $this->commands([
-                InstallCommand::class,
-                UpdateCommand::class,
-                TruncateCommand::class,
-                InstallFromFolder::class,
-            ]);
+            $this->commands(
+                [
+                    InstallCommand::class,
+                    UpdateCommand::class,
+                    TruncateCommand::class,
+                    InstallFromFolder::class,
+                ]
+            );
         }
     }
 
@@ -103,7 +107,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return array<string, Closure|string>
      */
-    protected function getServicesDescriptions(): array
+    private function getServicesDescriptions(): array
     {
         $servicesList = [];
 
@@ -121,7 +125,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerServices(array &$servicesList): void
+    private function registerServices(array &$servicesList): void
     {
         // объект, который получает ссылку на ФИАС через soap-клиент
         $servicesList[FiasInformer::class] = function (): FiasInformer {
@@ -180,7 +184,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerTasks(array &$servicesList): void
+    private function registerTasks(array &$servicesList): void
     {
         // задача для очистки базы
         $servicesList[$this->prefixString('task.cleanup')] = CleanupTask::class;
@@ -256,7 +260,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerPipelines(array &$servicesList): void
+    private function registerPipelines(array &$servicesList): void
     {
         // процесс установки полной версии ФИАС
         $servicesList[$this->prefixString('pipe.install')] = function (Application $app): Pipe {
@@ -318,9 +322,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return string
      */
-    protected function getOptionString(string $name): string
+    private function getOptionString(string $name): string
     {
-        $option = config($this->prefixString($name));
+        $option = $this->getOptionByName($name);
 
         return is_string($option) ? $option : '';
     }
@@ -332,9 +336,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return int
      */
-    protected function getOptionInt(string $name): int
+    private function getOptionInt(string $name): int
     {
-        $option = config($this->prefixString($name));
+        $option = $this->getOptionByName($name);
 
         return is_int($option) ? $option : 0;
     }
@@ -346,9 +350,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    protected function getOptionArray(string $name): array
+    private function getOptionArray(string $name): array
     {
-        $option = config($this->prefixString($name));
+        $option = $this->getOptionByName($name);
 
         return is_array($option) ? $option : [];
     }
@@ -360,11 +364,21 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return bool
      */
-    protected function getOptionBool(string $name): bool
+    private function getOptionBool(string $name): bool
     {
-        $option = config($this->prefixString($name));
+        return (bool) $this->getOptionByName($name);
+    }
 
-        return (bool) $option;
+    /**
+     * Возвращает значение опции по ее названию.
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    private function getOptionByName(string $name)
+    {
+        return config($this->prefixString($name));
     }
 
     /**
@@ -374,7 +388,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return string
      */
-    protected function prefixString(string $string): string
+    private function prefixString(string $string): string
     {
         if (strpos($string, $this->bundlePrefix) !== 0) {
             $string = $this->bundlePrefix . '.' . ltrim($string, '.');
