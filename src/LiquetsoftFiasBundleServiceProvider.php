@@ -15,6 +15,8 @@ use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
 use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer;
+use Liquetsoft\Fias\Component\FilesDispatcher\EntityFileDispatcher;
+use Liquetsoft\Fias\Component\FilesDispatcher\FilesDispatcher;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask;
@@ -173,6 +175,14 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[VersionManager::class] = function (): VersionManager {
             return new EloquentVersionManager(
                 $this->getOptionString('version_manager_entity')
+            );
+        };
+
+        // сервис, который разбивает обрабатываемые файлы между потоками
+        $servicesList[FilesDispatcher::class] = function (Application $app): FilesDispatcher {
+            return new EntityFileDispatcher(
+                $app->get(EntityManager::class),
+                $this->getOptionArray('entities_to_parallel')
             );
         };
     }

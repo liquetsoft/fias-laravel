@@ -66,4 +66,14 @@ return [
         'Stead' => Stead::class,
         'StructureStatus' => StructureStatus::class,
     ],
+    /*
+     * Список сущностей, которые должны обрабатываться в разных потоках.
+     */
+    'entities_to_parallel' => [
+        'AddressObject',
+        'House',
+        'Stead',
+        'Room',
+        'NormativeDocument',
+    ],
 ];
