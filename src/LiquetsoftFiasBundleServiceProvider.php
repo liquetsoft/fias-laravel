@@ -271,7 +271,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                 $app->get(FilesDispatcher::class),
                 $this->getOptionString('path_to_bin'),
                 $this->getOptionString('command_name'),
-                $this->getOptionInt('number_of_parallel'),
+                $this->getOptionInt('number_of_parallel')
             );
         };
     }
