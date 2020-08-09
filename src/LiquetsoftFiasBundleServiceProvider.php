@@ -27,6 +27,7 @@ use Liquetsoft\Fias\Component\Pipeline\Task\DownloadTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\InformDeltaTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\InformFullTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\PrepareFolderTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\ProcessSwitchTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\SelectFilesToProceedTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use Liquetsoft\Fias\Component\Pipeline\Task\TruncateTask;
@@ -263,6 +264,16 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
         // задача для сохранения установленной версии
         $servicesList[$this->prefixString('task.version.set')] = VersionSetTask::class;
+
+        // задача, которая запускает установку в параллельных процессах
+        $servicesList[$this->prefixString('task.process_switcher')] = function (Application $app): Task {
+            return new ProcessSwitchTask(
+                $app->get(FilesDispatcher::class),
+                $this->getOptionString('path_to_bin'),
+                $this->getOptionString('command_name'),
+                $this->getOptionInt('number_of_parallel'),
+            );
+        };
     }
 
     /**
@@ -274,25 +285,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      */
     private function registerPipelines(array &$servicesList): void
     {
-        // процесс установки полной версии ФИАС
-        $servicesList[$this->prefixString('pipe.install')] = function (Application $app): Pipe {
-            return new ArrayPipe(
-                [
-                    $app->get($this->prefixString('task.prepare.folder')),
-                    $app->get($this->prefixString('task.inform.full')),
-                    $app->get($this->prefixString('task.download')),
-                    $app->get($this->prefixString('task.unpack')),
-                    $app->get($this->prefixString('task.data.truncate')),
-                    $app->get($this->prefixString('task.data.select_files')),
-                    $app->get($this->prefixString('task.data.insert')),
-                    $app->get($this->prefixString('task.data.delete')),
-                    $app->get($this->prefixString('task.version.set')),
-                ],
-                $app->get($this->prefixString('task.cleanup')),
-                $app->get(LoggerInterface::class)
-            );
-        };
-
         // процесс для параллельной установки ФИАС в нескольких потоках
         $servicesList[$this->prefixString('pipe.install_parallel_running')] = function (Application $app): Pipe {
             return new ArrayPipe(
@@ -305,14 +297,31 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
             );
         };
 
+        // процесс установки полной версии ФИАС
+        $servicesList[$this->prefixString('pipe.install')] = function (Application $app): Pipe {
+            return new ArrayPipe(
+                [
+                    $app->get($this->prefixString('task.prepare.folder')),
+                    $app->get($this->prefixString('task.inform.full')),
+                    $app->get($this->prefixString('task.download')),
+                    $app->get($this->prefixString('task.unpack')),
+                    $app->get($this->prefixString('task.data.truncate')),
+                    $app->get($this->prefixString('task.data.select_files')),
+                    $app->get($this->prefixString('task.process_switcher')),
+                    $app->get($this->prefixString('task.version.set')),
+                ],
+                $app->get($this->prefixString('task.cleanup')),
+                $app->get(LoggerInterface::class)
+            );
+        };
+
         // процесс установки версии ФИАС из загруженных на диск файлов
         $servicesList[$this->prefixString('pipe.install_from_folder')] = function (Application $app): Pipe {
             return new ArrayPipe(
                 [
                     $app->get($this->prefixString('task.data.truncate')),
                     $app->get($this->prefixString('task.data.select_files')),
-                    $app->get($this->prefixString('task.data.insert')),
-                    $app->get($this->prefixString('task.data.delete')),
+                    $app->get($this->prefixString('task.process_switcher')),
                 ],
                 null,
                 $app->get(LoggerInterface::class)

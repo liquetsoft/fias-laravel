@@ -76,4 +76,16 @@ return [
         'Room',
         'NormativeDocument',
     ],
+    /*
+     * Путь для запуска artisan.
+     */
+    'path_to_bin' => base_path('artisan'),
+    /*
+     * Имя команды для запуска параллельных процессов установки.
+     */
+    'command_name' => 'liquetsoft:fias:install_parallel_running',
+    /*
+     * Максимальное число параллельных процессов установки.
+     */
+    'number_of_parallel' => 5,
 ];
