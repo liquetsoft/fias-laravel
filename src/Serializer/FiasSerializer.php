@@ -26,9 +26,9 @@ class FiasSerializer extends Serializer
                 new EloquentDenormalizer(),
                 new ObjectNormalizer(
                     null,
-                    new FiasNameConverter,
+                    new FiasNameConverter(),
                     null,
-                    new ReflectionExtractor,
+                    new ReflectionExtractor(),
                     null,
                     null,
                     [ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true]

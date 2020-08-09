@@ -39,7 +39,7 @@ class EloquentVersionManager implements VersionManager
     public function setCurrentVersion(InformerResponse $info): VersionManager
     {
         $entityClassName = $this->getEntityClassName();
-        $entity = new $entityClassName;
+        $entity = new $entityClassName();
 
         $entity->version = $info->getVersion();
         $entity->url = $info->getUrl();

@@ -61,7 +61,7 @@ class InstallParallelRunningCommand extends Command
         }
         $filesToDelete = json_decode((string) $filesToDelete, true);
 
-        $state = new ArrayState;
+        $state = new ArrayState();
         $state->setAndLockParameter(Task::FILES_TO_INSERT_PARAM, $filesToInsert);
         $state->setAndLockParameter(Task::FILES_TO_DELETE_PARAM, $filesToDelete);
         $this->pipeline->run($state);

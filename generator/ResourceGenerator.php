@@ -28,7 +28,7 @@ class ResourceGenerator extends AbstractGenerator
         $name = $this->unifyClassName($descriptor->getName());
         $fullPath = "{$dir->getPathname()}/{$name}.php";
 
-        $phpFile = new PhpFile;
+        $phpFile = new PhpFile();
         $phpFile->setStrictTypes();
 
         $namespace = $phpFile->addNamespace($namespace);
@@ -37,7 +37,7 @@ class ResourceGenerator extends AbstractGenerator
         $class = $namespace->addClass($name)->addExtend(JsonResource::class);
         $this->decorateClass($class, $descriptor);
 
-        file_put_contents($fullPath, (new PsrPrinter)->printFile($phpFile));
+        file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));
     }
 
     /**

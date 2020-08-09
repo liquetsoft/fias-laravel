@@ -20,7 +20,7 @@ class NormativeDocument extends BaseCase
      */
     public function testToArray()
     {
-        $model = new stdClass;
+        $model = new stdClass();
         $model->normdocid = $this->createFakeData()->uuid;
         $model->docname = $this->createFakeData()->word;
         $model->docdate = $this->createFakeData()->dateTime();

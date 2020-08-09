@@ -44,7 +44,7 @@ class EloquentDenormalizer implements DenormalizerInterface
      */
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        $entity = !empty($context['object_to_populate']) ? $context['object_to_populate'] : new $class;
+        $entity = !empty($context['object_to_populate']) ? $context['object_to_populate'] : new $class();
 
         if (!($entity instanceof Model)) {
             throw new InvalidArgumentException(

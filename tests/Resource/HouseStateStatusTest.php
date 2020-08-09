@@ -19,7 +19,7 @@ class HouseStateStatus extends BaseCase
      */
     public function testToArray()
     {
-        $model = new stdClass;
+        $model = new stdClass();
         $model->housestid = $this->createFakeData()->numberBetween(1, 1000000);
         $model->name = $this->createFakeData()->word;
 
