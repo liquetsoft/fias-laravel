@@ -41,6 +41,7 @@ use Liquetsoft\Fias\Component\XmlReader\BaseXmlReader;
 use Liquetsoft\Fias\Component\XmlReader\XmlReader;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallFromFolder;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallParallelRunningCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\TruncateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
@@ -96,6 +97,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
             $this->commands(
                 [
                     InstallCommand::class,
+                    InstallParallelRunningCommand::class,
                     UpdateCommand::class,
                     TruncateCommand::class,
                     InstallFromFolder::class,
@@ -287,6 +289,18 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     $app->get($this->prefixString('task.version.set')),
                 ],
                 $app->get($this->prefixString('task.cleanup')),
+                $app->get(LoggerInterface::class)
+            );
+        };
+
+        // процесс для параллельной установки ФИАС в нескольких потоках
+        $servicesList[$this->prefixString('pipe.install_parallel_running')] = function (Application $app): Pipe {
+            return new ArrayPipe(
+                [
+                    $app->get($this->prefixString('task.data.insert')),
+                    $app->get($this->prefixString('task.data.delete')),
+                ],
+                null,
                 $app->get(LoggerInterface::class)
             );
         };
