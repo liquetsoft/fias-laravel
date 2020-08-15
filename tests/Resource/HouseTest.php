@@ -20,7 +20,7 @@ class House extends BaseCase
      */
     public function testToArray()
     {
-        $model = new stdClass;
+        $model = new stdClass();
         $model->houseid = $this->createFakeData()->uuid;
         $model->houseguid = $this->createFakeData()->uuid;
         $model->aoguid = $this->createFakeData()->uuid;

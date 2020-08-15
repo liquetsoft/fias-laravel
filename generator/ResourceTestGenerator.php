@@ -28,7 +28,7 @@ class ResourceTestGenerator extends AbstractGenerator
         $name = $this->unifyClassName($descriptor->getName());
         $fullPath = "{$dir->getPathname()}/{$name}Test.php";
 
-        $phpFile = new PhpFile;
+        $phpFile = new PhpFile();
         $phpFile->setStrictTypes();
 
         $namespace = $phpFile->addNamespace($namespace);
@@ -37,7 +37,7 @@ class ResourceTestGenerator extends AbstractGenerator
         $class = $namespace->addClass($name)->addExtend(BaseCase::class);
         $this->decorateClass($class, $descriptor);
 
-        file_put_contents($fullPath, (new PsrPrinter)->printFile($phpFile));
+        file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));
     }
 
     /**

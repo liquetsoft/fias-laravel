@@ -15,6 +15,8 @@ use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
 use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer;
+use Liquetsoft\Fias\Component\FilesDispatcher\EntityFileDispatcher;
+use Liquetsoft\Fias\Component\FilesDispatcher\FilesDispatcher;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask;
@@ -25,6 +27,7 @@ use Liquetsoft\Fias\Component\Pipeline\Task\DownloadTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\InformDeltaTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\InformFullTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\PrepareFolderTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\ProcessSwitchTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\SelectFilesToProceedTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use Liquetsoft\Fias\Component\Pipeline\Task\TruncateTask;
@@ -39,6 +42,7 @@ use Liquetsoft\Fias\Component\XmlReader\BaseXmlReader;
 use Liquetsoft\Fias\Component\XmlReader\XmlReader;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallFromFolder;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallParallelRunningCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\TruncateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
@@ -84,17 +88,22 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
             $this->loadMigrationsFrom(__DIR__ . '/Migration');
         }
 
-        $this->publishes([
-            __DIR__ . "/Config/{$this->prefixString('php')}" => config_path($this->prefixString('php')),
-        ]);
+        $this->publishes(
+            [
+                __DIR__ . "/Config/{$this->prefixString('php')}" => config_path($this->prefixString('php')),
+            ]
+        );
 
         if ($this->app->runningInConsole()) {
-            $this->commands([
-                InstallCommand::class,
-                UpdateCommand::class,
-                TruncateCommand::class,
-                InstallFromFolder::class,
-            ]);
+            $this->commands(
+                [
+                    InstallCommand::class,
+                    InstallParallelRunningCommand::class,
+                    UpdateCommand::class,
+                    TruncateCommand::class,
+                    InstallFromFolder::class,
+                ]
+            );
         }
     }
 
@@ -103,7 +112,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return array<string, Closure|string>
      */
-    protected function getServicesDescriptions(): array
+    private function getServicesDescriptions(): array
     {
         $servicesList = [];
 
@@ -121,7 +130,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerServices(array &$servicesList): void
+    private function registerServices(array &$servicesList): void
     {
         // объект, который получает ссылку на ФИАС через soap-клиент
         $servicesList[FiasInformer::class] = function (): FiasInformer {
@@ -171,6 +180,14 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                 $this->getOptionString('version_manager_entity')
             );
         };
+
+        // сервис, который разбивает обрабатываемые файлы между потоками
+        $servicesList[FilesDispatcher::class] = function (Application $app): FilesDispatcher {
+            return new EntityFileDispatcher(
+                $app->get(EntityManager::class),
+                $this->getOptionArray('entities_to_parallel')
+            );
+        };
     }
 
     /**
@@ -180,7 +197,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerTasks(array &$servicesList): void
+    private function registerTasks(array &$servicesList): void
     {
         // задача для очистки базы
         $servicesList[$this->prefixString('task.cleanup')] = CleanupTask::class;
@@ -247,6 +264,16 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
         // задача для сохранения установленной версии
         $servicesList[$this->prefixString('task.version.set')] = VersionSetTask::class;
+
+        // задача, которая запускает установку в параллельных процессах
+        $servicesList[$this->prefixString('task.process_switcher')] = function (Application $app): Task {
+            return new ProcessSwitchTask(
+                $app->get(FilesDispatcher::class),
+                $this->getOptionString('path_to_bin'),
+                $this->getOptionString('command_name'),
+                $this->getOptionInt('number_of_parallel')
+            );
+        };
     }
 
     /**
@@ -256,8 +283,20 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerPipelines(array &$servicesList): void
+    private function registerPipelines(array &$servicesList): void
     {
+        // процесс для параллельной установки ФИАС в нескольких потоках
+        $servicesList[$this->prefixString('pipe.install_parallel_running')] = function (Application $app): Pipe {
+            return new ArrayPipe(
+                [
+                    $app->get($this->prefixString('task.data.insert')),
+                    $app->get($this->prefixString('task.data.delete')),
+                ],
+                null,
+                $app->get(LoggerInterface::class)
+            );
+        };
+
         // процесс установки полной версии ФИАС
         $servicesList[$this->prefixString('pipe.install')] = function (Application $app): Pipe {
             return new ArrayPipe(
@@ -268,8 +307,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     $app->get($this->prefixString('task.unpack')),
                     $app->get($this->prefixString('task.data.truncate')),
                     $app->get($this->prefixString('task.data.select_files')),
-                    $app->get($this->prefixString('task.data.insert')),
-                    $app->get($this->prefixString('task.data.delete')),
+                    $app->get($this->prefixString('task.process_switcher')),
                     $app->get($this->prefixString('task.version.set')),
                 ],
                 $app->get($this->prefixString('task.cleanup')),
@@ -283,8 +321,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                 [
                     $app->get($this->prefixString('task.data.truncate')),
                     $app->get($this->prefixString('task.data.select_files')),
-                    $app->get($this->prefixString('task.data.insert')),
-                    $app->get($this->prefixString('task.data.delete')),
+                    $app->get($this->prefixString('task.process_switcher')),
                 ],
                 null,
                 $app->get(LoggerInterface::class)
@@ -318,9 +355,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return string
      */
-    protected function getOptionString(string $name): string
+    private function getOptionString(string $name): string
     {
-        $option = config($this->prefixString($name));
+        $option = $this->getOptionByName($name);
 
         return is_string($option) ? $option : '';
     }
@@ -332,9 +369,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return int
      */
-    protected function getOptionInt(string $name): int
+    private function getOptionInt(string $name): int
     {
-        $option = config($this->prefixString($name));
+        $option = $this->getOptionByName($name);
 
         return is_int($option) ? $option : 0;
     }
@@ -346,9 +383,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    protected function getOptionArray(string $name): array
+    private function getOptionArray(string $name): array
     {
-        $option = config($this->prefixString($name));
+        $option = $this->getOptionByName($name);
 
         return is_array($option) ? $option : [];
     }
@@ -360,11 +397,21 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return bool
      */
-    protected function getOptionBool(string $name): bool
+    private function getOptionBool(string $name): bool
     {
-        $option = config($this->prefixString($name));
+        return (bool) $this->getOptionByName($name);
+    }
 
-        return (bool) $option;
+    /**
+     * Возвращает значение опции по ее названию.
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    private function getOptionByName(string $name)
+    {
+        return config($this->prefixString($name));
     }
 
     /**
@@ -374,7 +421,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @return string
      */
-    protected function prefixString(string $string): string
+    private function prefixString(string $string): string
     {
         if (strpos($string, $this->bundlePrefix) !== 0) {
             $string = $this->bundlePrefix . '.' . ltrim($string, '.');

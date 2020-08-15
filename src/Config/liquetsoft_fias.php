@@ -66,4 +66,26 @@ return [
         'Stead' => Stead::class,
         'StructureStatus' => StructureStatus::class,
     ],
+    /*
+     * Список сущностей, которые должны обрабатываться в разных потоках.
+     */
+    'entities_to_parallel' => [
+        'AddressObject',
+        'House',
+        'Stead',
+        'Room',
+        'NormativeDocument',
+    ],
+    /*
+     * Путь для запуска artisan.
+     */
+    'path_to_bin' => base_path('artisan'),
+    /*
+     * Имя команды для запуска параллельных процессов установки.
+     */
+    'command_name' => 'liquetsoft:fias:install_parallel_running',
+    /*
+     * Максимальное число параллельных процессов установки.
+     */
+    'number_of_parallel' => 5,
 ];

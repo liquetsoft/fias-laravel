@@ -20,7 +20,7 @@ class FiasVersion extends BaseCase
      */
     public function testToArray()
     {
-        $model = new stdClass;
+        $model = new stdClass();
         $model->version = $this->createFakeData()->numberBetween(1, 1000000);
         $model->url = $this->createFakeData()->word;
         $model->created_at = $this->createFakeData()->dateTime();

@@ -51,7 +51,7 @@ class InstallCommand extends Command
         $this->info('Installing full version of FIAS.');
         $start = microtime(true);
 
-        $state = new ArrayState;
+        $state = new ArrayState();
         $this->pipeline->run($state);
 
         $total = round(microtime(true) - $start, 4);

@@ -4,7 +4,7 @@ $finder = PhpCsFixer\Finder::create()->in(__DIR__);
 
 $rules = [
     '@Symfony' => true,
-    'new_with_braces' => false,
+    'new_with_braces' => true,
     'phpdoc_inline_tag' => false,
     'concat_space' => ['spacing' => 'one'],
     'array_syntax' => ['syntax' => 'short'],
