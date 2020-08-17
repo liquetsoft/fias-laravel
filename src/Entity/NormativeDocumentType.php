@@ -7,10 +7,10 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Типы нормативных документов.
+ * Тип нормативного документа.
  *
- * @property int    $ndtypeid
- * @property string $name
+ * @property int    $ndtypeid Идентификатор записи (ключ)
+ * @property string $name     Наименование типа нормативного документа
  */
 class NormativeDocumentType extends Model
 {

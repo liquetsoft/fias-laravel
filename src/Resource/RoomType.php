@@ -10,9 +10,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * Ресурс для сущности 'RoomType'.
  *
- * @property int    $rmtypeid
- * @property string $name
- * @property string $shortname
+ * @property int         $rmtypeid
+ * @property string      $name
+ * @property string|null $shortname
  */
 class RoomType extends JsonResource
 {

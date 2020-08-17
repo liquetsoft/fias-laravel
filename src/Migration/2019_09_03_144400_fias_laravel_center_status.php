@@ -19,8 +19,8 @@ class FiasLaravelCenterStatus extends Migration
         Schema::dropIfExists('fias_laravel_center_status');
         Schema::create('fias_laravel_center_status', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('centerstid')->nullable(false)->primary();
-            $table->string('name', 255)->nullable(false);
+            $table->unsignedInteger('centerstid')->nullable(false)->comment('Идентификатор статуса')->primary();
+            $table->string('name', 100)->nullable(false)->comment('Наименование');
             // настройки таблицы
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

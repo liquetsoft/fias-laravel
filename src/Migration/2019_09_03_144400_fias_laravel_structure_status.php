@@ -19,9 +19,9 @@ class FiasLaravelStructureStatus extends Migration
         Schema::dropIfExists('fias_laravel_structure_status');
         Schema::create('fias_laravel_structure_status', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('strstatid')->nullable(false)->primary();
-            $table->string('name', 255)->nullable(false);
-            $table->string('shortname', 255)->nullable(true);
+            $table->unsignedInteger('strstatid')->nullable(false)->comment('Признак строения')->primary();
+            $table->string('name', 20)->nullable(false)->comment('Наименование');
+            $table->string('shortname', 20)->nullable(true)->comment('Краткое наименование');
             // настройки таблицы
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

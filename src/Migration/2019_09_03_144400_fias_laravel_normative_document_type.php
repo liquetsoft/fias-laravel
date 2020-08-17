@@ -19,8 +19,8 @@ class FiasLaravelNormativeDocumentType extends Migration
         Schema::dropIfExists('fias_laravel_normative_document_type');
         Schema::create('fias_laravel_normative_document_type', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('ndtypeid')->nullable(false)->primary();
-            $table->string('name', 255)->nullable(false);
+            $table->unsignedInteger('ndtypeid')->nullable(false)->comment('Идентификатор записи (ключ)')->primary();
+            $table->string('name', 250)->nullable(false)->comment('Наименование типа нормативного документа');
             // настройки таблицы
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

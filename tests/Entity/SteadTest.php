@@ -47,6 +47,11 @@ class SteadTest extends BaseCase
         $this->assertContains('livestatus', $fields);
         $this->assertContains('divtype', $fields);
         $this->assertContains('normdoc', $fields);
+        $this->assertContains('terrifnsfl', $fields);
+        $this->assertContains('terrifnsul', $fields);
+        $this->assertContains('previd', $fields);
+        $this->assertContains('nextid', $fields);
+        $this->assertContains('cadnum', $fields);
     }
 
     /**

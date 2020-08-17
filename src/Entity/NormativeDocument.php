@@ -10,11 +10,12 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения по нормативному документу, являющемуся основанием присвоения адресному элементу наименования.
  *
- * @property string      $normdocid
- * @property string|null $docname
- * @property Carbon|null $docdate
- * @property string|null $docnum
- * @property string      $doctype
+ * @property string      $normdocid Идентификатор нормативного документа
+ * @property string|null $docname   Наименование документа
+ * @property Carbon|null $docdate   Дата документа
+ * @property string|null $docnum    Номер документа
+ * @property int         $doctype   Тип документа
+ * @property string|null $docimgid  Идентификатор образа (внешний ключ)
  */
 class NormativeDocument extends Model
 {
@@ -40,6 +41,7 @@ class NormativeDocument extends Model
         'docdate',
         'docnum',
         'doctype',
+        'docimgid',
     ];
 
     /** @var array<string, string> */
@@ -48,6 +50,7 @@ class NormativeDocument extends Model
         'docname' => 'string',
         'docdate' => 'datetime',
         'docnum' => 'string',
-        'doctype' => 'string',
+        'doctype' => 'integer',
+        'docimgid' => 'string',
     ];
 }

@@ -38,6 +38,13 @@ class House extends BaseCase
         $model->updatedate = $this->createFakeData()->dateTime();
         $model->counter = $this->createFakeData()->numberBetween(1, 1000000);
         $model->divtype = $this->createFakeData()->numberBetween(1, 1000000);
+        $model->regioncode = $this->createFakeData()->word;
+        $model->terrifnsfl = $this->createFakeData()->word;
+        $model->terrifnsul = $this->createFakeData()->word;
+        $model->buildnum = $this->createFakeData()->word;
+        $model->strucnum = $this->createFakeData()->word;
+        $model->normdoc = $this->createFakeData()->uuid;
+        $model->cadnum = $this->createFakeData()->word;
 
         $resource = new Resource($model);
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
@@ -77,5 +84,19 @@ class House extends BaseCase
         $this->assertSame($model->counter, $array['counter']);
         $this->assertArrayHasKey('divtype', $array);
         $this->assertSame($model->divtype, $array['divtype']);
+        $this->assertArrayHasKey('regioncode', $array);
+        $this->assertSame($model->regioncode, $array['regioncode']);
+        $this->assertArrayHasKey('terrifnsfl', $array);
+        $this->assertSame($model->terrifnsfl, $array['terrifnsfl']);
+        $this->assertArrayHasKey('terrifnsul', $array);
+        $this->assertSame($model->terrifnsul, $array['terrifnsul']);
+        $this->assertArrayHasKey('buildnum', $array);
+        $this->assertSame($model->buildnum, $array['buildnum']);
+        $this->assertArrayHasKey('strucnum', $array);
+        $this->assertSame($model->strucnum, $array['strucnum']);
+        $this->assertArrayHasKey('normdoc', $array);
+        $this->assertSame($model->normdoc, $array['normdoc']);
+        $this->assertArrayHasKey('cadnum', $array);
+        $this->assertSame($model->cadnum, $array['cadnum']);
     }
 }

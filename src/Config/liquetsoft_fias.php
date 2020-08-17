@@ -9,8 +9,6 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\EstateStatus;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FiasVersion;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FlatType;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\House;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\HouseStateStatus;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\IntervalStatus;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\NormativeDocument;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\NormativeDocumentType;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\OperationStatus;
@@ -29,9 +27,9 @@ return [
      */
     'informer_wsdl' => 'http://fias.nalog.ru/WebServices/Public/DownloadService.asmx?WSDL',
     /*
-     * Путь к yaml файлу с описаниями сущностей ФИАС.
+     * Путь к yaml файлу с описаниями сущностей ФИАС. null - использовать по умолчанию.
      */
-    'registry_yaml' => base_path('vendor/liquetsoft/fias-component/resources/fias_entities.yaml'),
+    'registry_path' => null,
     /*
      * Путь к папке со временными файлами для процесса загрузки.
      */
@@ -56,8 +54,6 @@ return [
         'EstateStatus' => EstateStatus::class,
         'FlatType' => FlatType::class,
         'House' => House::class,
-        'HouseStateStatus' => HouseStateStatus::class,
-        'IntervalStatus' => IntervalStatus::class,
         'NormativeDocument' => NormativeDocument::class,
         'NormativeDocumentType' => NormativeDocumentType::class,
         'OperationStatus' => OperationStatus::class,

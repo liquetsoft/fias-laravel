@@ -22,6 +22,7 @@ class EstateStatus extends BaseCase
         $model = new stdClass();
         $model->eststatid = $this->createFakeData()->numberBetween(1, 1000000);
         $model->name = $this->createFakeData()->word;
+        $model->shortname = $this->createFakeData()->word;
 
         $resource = new Resource($model);
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
@@ -31,5 +32,7 @@ class EstateStatus extends BaseCase
         $this->assertSame($model->eststatid, $array['eststatid']);
         $this->assertArrayHasKey('name', $array);
         $this->assertSame($model->name, $array['name']);
+        $this->assertArrayHasKey('shortname', $array);
+        $this->assertSame($model->shortname, $array['shortname']);
     }
 }

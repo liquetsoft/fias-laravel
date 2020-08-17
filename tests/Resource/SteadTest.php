@@ -31,13 +31,18 @@ class Stead extends BaseCase
         $model->oktmo = $this->createFakeData()->word;
         $model->parentguid = $this->createFakeData()->uuid;
         $model->steadid = $this->createFakeData()->uuid;
-        $model->operstatus = $this->createFakeData()->word;
+        $model->operstatus = $this->createFakeData()->numberBetween(1, 1000000);
         $model->startdate = $this->createFakeData()->dateTime();
         $model->enddate = $this->createFakeData()->dateTime();
         $model->updatedate = $this->createFakeData()->dateTime();
-        $model->livestatus = $this->createFakeData()->word;
-        $model->divtype = $this->createFakeData()->word;
+        $model->livestatus = $this->createFakeData()->numberBetween(1, 1000000);
+        $model->divtype = $this->createFakeData()->numberBetween(1, 1000000);
         $model->normdoc = $this->createFakeData()->uuid;
+        $model->terrifnsfl = $this->createFakeData()->word;
+        $model->terrifnsul = $this->createFakeData()->word;
+        $model->previd = $this->createFakeData()->uuid;
+        $model->nextid = $this->createFakeData()->uuid;
+        $model->cadnum = $this->createFakeData()->word;
 
         $resource = new Resource($model);
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
@@ -77,5 +82,15 @@ class Stead extends BaseCase
         $this->assertSame($model->divtype, $array['divtype']);
         $this->assertArrayHasKey('normdoc', $array);
         $this->assertSame($model->normdoc, $array['normdoc']);
+        $this->assertArrayHasKey('terrifnsfl', $array);
+        $this->assertSame($model->terrifnsfl, $array['terrifnsfl']);
+        $this->assertArrayHasKey('terrifnsul', $array);
+        $this->assertSame($model->terrifnsul, $array['terrifnsul']);
+        $this->assertArrayHasKey('previd', $array);
+        $this->assertSame($model->previd, $array['previd']);
+        $this->assertArrayHasKey('nextid', $array);
+        $this->assertSame($model->nextid, $array['nextid']);
+        $this->assertArrayHasKey('cadnum', $array);
+        $this->assertSame($model->cadnum, $array['cadnum']);
     }
 }

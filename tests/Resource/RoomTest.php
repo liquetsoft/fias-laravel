@@ -31,9 +31,15 @@ class Room extends BaseCase
         $model->startdate = $this->createFakeData()->dateTime();
         $model->enddate = $this->createFakeData()->dateTime();
         $model->updatedate = $this->createFakeData()->dateTime();
-        $model->operstatus = $this->createFakeData()->word;
-        $model->livestatus = $this->createFakeData()->word;
+        $model->operstatus = $this->createFakeData()->numberBetween(1, 1000000);
+        $model->livestatus = $this->createFakeData()->numberBetween(1, 1000000);
         $model->normdoc = $this->createFakeData()->uuid;
+        $model->roomnumber = $this->createFakeData()->word;
+        $model->roomtype = $this->createFakeData()->numberBetween(1, 1000000);
+        $model->previd = $this->createFakeData()->uuid;
+        $model->nextid = $this->createFakeData()->uuid;
+        $model->cadnum = $this->createFakeData()->word;
+        $model->roomcadnum = $this->createFakeData()->word;
 
         $resource = new Resource($model);
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
@@ -65,5 +71,17 @@ class Room extends BaseCase
         $this->assertSame($model->livestatus, $array['livestatus']);
         $this->assertArrayHasKey('normdoc', $array);
         $this->assertSame($model->normdoc, $array['normdoc']);
+        $this->assertArrayHasKey('roomnumber', $array);
+        $this->assertSame($model->roomnumber, $array['roomnumber']);
+        $this->assertArrayHasKey('roomtype', $array);
+        $this->assertSame($model->roomtype, $array['roomtype']);
+        $this->assertArrayHasKey('previd', $array);
+        $this->assertSame($model->previd, $array['previd']);
+        $this->assertArrayHasKey('nextid', $array);
+        $this->assertSame($model->nextid, $array['nextid']);
+        $this->assertArrayHasKey('cadnum', $array);
+        $this->assertSame($model->cadnum, $array['cadnum']);
+        $this->assertArrayHasKey('roomcadnum', $array);
+        $this->assertSame($model->roomcadnum, $array['roomcadnum']);
     }
 }

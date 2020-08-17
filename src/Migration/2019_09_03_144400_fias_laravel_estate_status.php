@@ -19,8 +19,9 @@ class FiasLaravelEstateStatus extends Migration
         Schema::dropIfExists('fias_laravel_estate_status');
         Schema::create('fias_laravel_estate_status', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('eststatid')->nullable(false)->primary();
-            $table->string('name', 255)->nullable(false);
+            $table->unsignedInteger('eststatid')->nullable(false)->comment('Признак владения')->primary();
+            $table->string('name', 20)->nullable(false)->comment('Наименование');
+            $table->string('shortname', 20)->nullable(true)->comment('Краткое наименование');
             // настройки таблицы
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

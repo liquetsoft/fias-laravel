@@ -20,7 +20,7 @@ class AddressObjectType extends BaseCase
     public function testToArray()
     {
         $model = new stdClass();
-        $model->kod_t_st = $this->createFakeData()->numberBetween(1, 1000000);
+        $model->kod_t_st = $this->createFakeData()->word;
         $model->level = $this->createFakeData()->numberBetween(1, 1000000);
         $model->socrname = $this->createFakeData()->word;
         $model->scname = $this->createFakeData()->word;

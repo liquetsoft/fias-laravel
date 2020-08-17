@@ -35,6 +35,7 @@ class NormativeDocumentTest extends BaseCase
         $this->assertContains('docdate', $fields);
         $this->assertContains('docnum', $fields);
         $this->assertContains('doctype', $fields);
+        $this->assertContains('docimgid', $fields);
     }
 
     /**

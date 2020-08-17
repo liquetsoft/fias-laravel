@@ -10,11 +10,7 @@ docker_compose_bin := $(shell command -v docker-compose 2> /dev/null)
 docker_compose_yml := docker/docker-compose.yml
 user_id := $(shell id -u)
 
-.PHONY : help pull build push login test clean \
-         app-pull app app-push\
-         sources-pull sources sources-push\
-         nginx-pull nginx nginx-push\
-         up down restart shell install
+.PHONY : build shell test fixer buildEntities linter
 .DEFAULT_GOAL := build
 
 # --- [ Development tasks ] -------------------------------------------------------------------------------------------
@@ -41,4 +37,3 @@ linter: ## Run code checks
 	$(docker_compose_bin) --file "$(docker_compose_yml)" run --rm -u $(user_id) "$(php_container_name)" vendor/bin/phpcpd ./src --exclude ./src/Model -v
 	$(docker_compose_bin) --file "$(docker_compose_yml)" run --rm -u $(user_id) "$(php_container_name)" vendor/bin/psalm --show-info=false
 	$(docker_compose_bin) --file "$(docker_compose_yml)" run --rm -u $(user_id) "$(php_container_name)" vendor/bin/phpunit --configuration phpunit.xml.dist
-
