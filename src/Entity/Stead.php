@@ -62,7 +62,7 @@ class Stead extends Model
     protected $table = 'fias_laravel_stead';
 
     /** @var string */
-    protected $primaryKey = 'steadguid';
+    protected $primaryKey = 'steadid';
 
     /** @var string */
     protected $keyType = 'string';

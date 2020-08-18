@@ -19,7 +19,7 @@ class FiasLaravelStead extends Migration
         Schema::dropIfExists('fias_laravel_stead');
         Schema::create('fias_laravel_stead', function (Blueprint $table) {
             // создание полей таблицы
-            $table->uuid('steadguid')->nullable(false)->comment('Глобальный уникальный идентификатор адресного объекта (земельного участка)')->primary();
+            $table->uuid('steadguid')->nullable(false)->comment('Глобальный уникальный идентификатор адресного объекта (земельного участка)');
             $table->string('number', 120)->nullable(true)->comment('Номер земельного участка');
             $table->string('regioncode', 2)->nullable(false)->comment('Код региона');
             $table->string('postalcode', 6)->nullable(true)->comment('Почтовый индекс');
@@ -28,7 +28,7 @@ class FiasLaravelStead extends Migration
             $table->string('okato', 11)->nullable(true)->comment('OKATO');
             $table->string('oktmo', 11)->nullable(true)->comment('OKTMO');
             $table->uuid('parentguid')->nullable(true)->comment('Идентификатор объекта родительского объекта');
-            $table->uuid('steadid')->nullable(false)->comment('Уникальный идентификатор записи. Ключевое поле.');
+            $table->uuid('steadid')->nullable(false)->comment('Уникальный идентификатор записи. Ключевое поле.')->primary();
             $table->unsignedInteger('operstatus')->nullable(false)->comment('Статус действия над записью – причина появления записи (см. описание таблицы OperationStatus): 01 – Инициация; 10 – Добавление; 20 – Изменение; 21 – Групповое изменение; 30 – Удаление; 31 - Удаление вследствие удаления вышестоящего объекта; 40 – Присоединение адресного объекта (слияние); 41 – Переподчинение вследствие слияния вышестоящего объекта; 42 - Прекращение существования вследствие присоединения к другому адресному объекту; 43 - Создание нового адресного объекта в результате слияния адресных объектов; 50 – Переподчинение; 51 – Переподчинение вследствие переподчинения вышестоящего объекта; 60 – Прекращение существования вследствие дробления; 61 – Создание нового адресного объекта в результате дробления');
             $table->datetime('startdate')->nullable(false)->comment('Начало действия записи');
             $table->datetime('enddate')->nullable(false)->comment('Окончание действия записи');
