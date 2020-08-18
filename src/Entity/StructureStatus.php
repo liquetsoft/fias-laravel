@@ -7,11 +7,11 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Перечень видов строений.
+ * Признак строения.
  *
- * @property int         $strstatid
- * @property string      $name
- * @property string|null $shortname
+ * @property int         $strstatid Признак строения
+ * @property string      $name      Наименование
+ * @property string|null $shortname Краткое наименование
  */
 class StructureStatus extends Model
 {

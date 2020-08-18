@@ -15,19 +15,24 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string|null       $number
  * @property string            $regioncode
  * @property string|null       $postalcode
- * @property string            $ifnsfl
- * @property string            $ifnsul
- * @property string            $okato
- * @property string            $oktmo
+ * @property string|null       $ifnsfl
+ * @property string|null       $ifnsul
+ * @property string|null       $okato
+ * @property string|null       $oktmo
  * @property string|null       $parentguid
- * @property string|null       $steadid
- * @property string            $operstatus
+ * @property string            $steadid
+ * @property int               $operstatus
  * @property DateTimeInterface $startdate
  * @property DateTimeInterface $enddate
  * @property DateTimeInterface $updatedate
- * @property string            $livestatus
- * @property string            $divtype
+ * @property int               $livestatus
+ * @property int               $divtype
  * @property string|null       $normdoc
+ * @property string|null       $terrifnsfl
+ * @property string|null       $terrifnsul
+ * @property string|null       $previd
+ * @property string|null       $nextid
+ * @property string|null       $cadnum
  */
 class Stead extends JsonResource
 {
@@ -58,6 +63,11 @@ class Stead extends JsonResource
             'livestatus' => $this->livestatus,
             'divtype' => $this->divtype,
             'normdoc' => $this->normdoc,
+            'terrifnsfl' => $this->terrifnsfl,
+            'terrifnsul' => $this->terrifnsul,
+            'previd' => $this->previd,
+            'nextid' => $this->nextid,
+            'cadnum' => $this->cadnum,
         ];
     }
 }

@@ -7,10 +7,12 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Перечень статусов актуальности записи адресного элемента по ФИАС.
+ * Статус актуальности ФИАС.
  *
- * @property int    $actstatid
- * @property string $name
+ * @property int    $actstatid Идентификатор статуса (ключ)
+ * @property string $name      Наименование
+ *                             0 – Не актуальный
+ *                             1 – Актуальный (последняя запись по адресному объекту)
  */
 class ActualStatus extends Model
 {

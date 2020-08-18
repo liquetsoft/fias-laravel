@@ -12,8 +12,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * Ресурс для сущности 'Room'.
  *
  * @property string            $roomid
- * @property string|null       $roomguid
- * @property string|null       $houseguid
+ * @property string            $roomguid
+ * @property string            $houseguid
  * @property string            $regioncode
  * @property string            $flatnumber
  * @property int               $flattype
@@ -21,9 +21,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property DateTimeInterface $startdate
  * @property DateTimeInterface $enddate
  * @property DateTimeInterface $updatedate
- * @property string            $operstatus
- * @property string            $livestatus
+ * @property int               $operstatus
+ * @property int               $livestatus
  * @property string|null       $normdoc
+ * @property string|null       $roomnumber
+ * @property int|null          $roomtype
+ * @property string|null       $previd
+ * @property string|null       $nextid
+ * @property string|null       $cadnum
+ * @property string|null       $roomcadnum
  */
 class Room extends JsonResource
 {
@@ -50,6 +56,12 @@ class Room extends JsonResource
             'operstatus' => $this->operstatus,
             'livestatus' => $this->livestatus,
             'normdoc' => $this->normdoc,
+            'roomnumber' => $this->roomnumber,
+            'roomtype' => $this->roomtype,
+            'previd' => $this->previd,
+            'nextid' => $this->nextid,
+            'cadnum' => $this->cadnum,
+            'roomcadnum' => $this->roomcadnum,
         ];
     }
 }

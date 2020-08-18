@@ -58,6 +58,7 @@ class AddressObject extends BaseCase
         $model->enddate = $this->createFakeData()->dateTime();
         $model->updatedate = $this->createFakeData()->dateTime();
         $model->divtype = $this->createFakeData()->numberBetween(1, 1000000);
+        $model->normdoc = $this->createFakeData()->uuid;
 
         $resource = new Resource($model);
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
@@ -137,5 +138,7 @@ class AddressObject extends BaseCase
         $this->assertSame($model->updatedate->format(DateTimeInterface::ATOM), $array['updatedate']);
         $this->assertArrayHasKey('divtype', $array);
         $this->assertSame($model->divtype, $array['divtype']);
+        $this->assertArrayHasKey('normdoc', $array);
+        $this->assertSame($model->normdoc, $array['normdoc']);
     }
 }

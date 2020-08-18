@@ -32,6 +32,7 @@ class EstateStatusTest extends BaseCase
 
         $this->assertContains('eststatid', $fields);
         $this->assertContains('name', $fields);
+        $this->assertContains('shortname', $fields);
     }
 
     /**

@@ -7,10 +7,10 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Перечень статусов актуальности записи адресного элемента по классификатору КЛАДР4.0.
+ * Статус актуальности КЛАДР 4.0.
  *
- * @property int    $curentstid
- * @property string $name
+ * @property int    $curentstid Идентификатор статуса (ключ)
+ * @property string $name       Наименование (0 - актуальный, 1-50, 2-98 – исторический (кроме 51), 51 - переподчиненный, 99 - несуществующий)
  */
 class CurrentStatus extends Model
 {

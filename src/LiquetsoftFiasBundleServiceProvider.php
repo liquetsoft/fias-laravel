@@ -12,7 +12,7 @@ use Liquetsoft\Fias\Component\Downloader\Downloader;
 use Liquetsoft\Fias\Component\EntityManager\BaseEntityManager;
 use Liquetsoft\Fias\Component\EntityManager\EntityManager;
 use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
-use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
+use Liquetsoft\Fias\Component\EntityRegistry\PhpArrayFileRegistry;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer;
 use Liquetsoft\Fias\Component\FilesDispatcher\EntityFileDispatcher;
@@ -153,8 +153,8 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
         // объект с описаниями сущностей ФИАС
         $servicesList[EntityRegistry::class] = function (): EntityRegistry {
-            return new YamlEntityRegistry(
-                $this->getOptionString('registry_yaml')
+            return new PhpArrayFileRegistry(
+                $this->getOptionString('registry_path') ?: null
             );
         };
 

@@ -15,7 +15,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string|null            $docname
  * @property DateTimeInterface|null $docdate
  * @property string|null            $docnum
- * @property string                 $doctype
+ * @property int                    $doctype
+ * @property string|null            $docimgid
  */
 class NormativeDocument extends JsonResource
 {
@@ -34,6 +35,7 @@ class NormativeDocument extends JsonResource
             'docdate' => $this->docdate ? $this->docdate->format(DateTimeInterface::ATOM) : null,
             'docnum' => $this->docnum,
             'doctype' => $this->doctype,
+            'docimgid' => $this->docimgid,
         ];
     }
 }

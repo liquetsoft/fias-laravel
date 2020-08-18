@@ -43,6 +43,12 @@ class RoomTest extends BaseCase
         $this->assertContains('operstatus', $fields);
         $this->assertContains('livestatus', $fields);
         $this->assertContains('normdoc', $fields);
+        $this->assertContains('roomnumber', $fields);
+        $this->assertContains('roomtype', $fields);
+        $this->assertContains('previd', $fields);
+        $this->assertContains('nextid', $fields);
+        $this->assertContains('cadnum', $fields);
+        $this->assertContains('roomcadnum', $fields);
     }
 
     /**

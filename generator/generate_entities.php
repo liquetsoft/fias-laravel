@@ -3,7 +3,8 @@
 use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityRegistry\ArrayEntityRegistry;
-use Liquetsoft\Fias\Component\EntityRegistry\YamlEntityRegistry;
+use Liquetsoft\Fias\Component\EntityRegistry\PhpArrayFileRegistry;
+use Liquetsoft\Fias\Component\Helper\FileSystemHelper;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\MigrationGenerator;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\ModelGenerator;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\ModelTestGenerator;
@@ -15,8 +16,8 @@ $entitiesYaml = $root . '/vendor/liquetsoft/fias-component/resources/fias_entiti
 
 require_once $root . '/vendor/autoload.php';
 
-$yamlRegistry = new YamlEntityRegistry($entitiesYaml);
-$registry = new ArrayEntityRegistry(array_merge($yamlRegistry->getDescriptors(), [
+$defaultRegistry = new PhpArrayFileRegistry();
+$registry = new ArrayEntityRegistry(array_merge($defaultRegistry->getDescriptors(), [
     new BaseEntityDescriptor([
         'name' => 'FiasVersion',
         'description' => 'Модель, которая хранит историю версий ФИАС',
@@ -47,45 +48,50 @@ $registry = new ArrayEntityRegistry(array_merge($yamlRegistry->getDescriptors(),
 ]));
 
 $dir = $root . '/src/Entity';
-if (!is_dir($dir)) {
-    mkdir($dir, 0777, true);
+if (is_dir($dir)) {
+    FileSystemHelper::remove(new SplFileInfo($dir));
 }
+mkdir($dir, 0777, true);
 $dirObject = new SplFileInfo($dir);
 $namespace = 'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Entity';
 $generator = new ModelGenerator($registry);
 $generator->run($dirObject, $namespace);
 
 $dir = $root . '/tests/Entity';
-if (!is_dir($dir)) {
-    mkdir($dir, 0777, true);
+if (is_dir($dir)) {
+    FileSystemHelper::remove(new SplFileInfo($dir));
 }
+mkdir($dir, 0777, true);
 $dirObject = new SplFileInfo($dir);
 $namespace = 'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Tests\\Entity';
 $generator = new ModelTestGenerator($registry);
 $generator->run($dirObject, $namespace);
 
 $dir = $root . '/src/Migration';
-if (!is_dir($dir)) {
-    mkdir($dir, 0777, true);
+if (is_dir($dir)) {
+    FileSystemHelper::remove(new SplFileInfo($dir));
 }
+mkdir($dir, 0777, true);
 $dirObject = new SplFileInfo($dir);
 $namespace = 'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Migration';
 $generator = new MigrationGenerator($registry);
 $generator->run($dirObject, $namespace);
 
 $dir = $root . '/src/Resource';
-if (!is_dir($dir)) {
-    mkdir($dir, 0777, true);
+if (is_dir($dir)) {
+    FileSystemHelper::remove(new SplFileInfo($dir));
 }
+mkdir($dir, 0777, true);
 $dirObject = new SplFileInfo($dir);
 $namespace = 'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Resource';
 $generator = new ResourceGenerator($registry);
 $generator->run($dirObject, $namespace);
 
 $dir = $root . '/tests/Resource';
-if (!is_dir($dir)) {
-    mkdir($dir, 0777, true);
+if (is_dir($dir)) {
+    FileSystemHelper::remove(new SplFileInfo($dir));
 }
+mkdir($dir, 0777, true);
 $dirObject = new SplFileInfo($dir);
 $namespace = 'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Tests\\Resource';
 $generator = new ResourceTestGenerator($registry);

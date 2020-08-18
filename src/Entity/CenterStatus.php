@@ -7,10 +7,10 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Перечень возможных статусов (центров) адресных объектов административных единиц.
+ * Статус центра.
  *
- * @property int    $centerstid
- * @property string $name
+ * @property int    $centerstid Идентификатор статуса
+ * @property string $name       Наименование
  */
 class CenterStatus extends Model
 {

@@ -10,7 +10,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * Ресурс для сущности 'AddressObjectType'.
  *
- * @property int         $kod_t_st
+ * @property string      $kod_t_st
  * @property int         $level
  * @property string      $socrname
  * @property string|null $scname

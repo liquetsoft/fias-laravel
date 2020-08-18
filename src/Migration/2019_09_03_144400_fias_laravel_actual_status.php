@@ -19,8 +19,8 @@ class FiasLaravelActualStatus extends Migration
         Schema::dropIfExists('fias_laravel_actual_status');
         Schema::create('fias_laravel_actual_status', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('actstatid')->nullable(false)->primary();
-            $table->string('name', 255)->nullable(false);
+            $table->unsignedInteger('actstatid')->nullable(false)->comment('Идентификатор статуса (ключ)')->primary();
+            $table->string('name', 100)->nullable(false)->comment('Наименование 0 – Не актуальный 1 – Актуальный (последняя запись по адресному объекту)');
             // настройки таблицы
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

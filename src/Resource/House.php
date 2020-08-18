@@ -12,10 +12,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * Ресурс для сущности 'House'.
  *
  * @property string            $houseid
- * @property string|null       $houseguid
- * @property string|null       $aoguid
+ * @property string            $houseguid
+ * @property string            $aoguid
  * @property string|null       $housenum
- * @property int               $strstatus
+ * @property int|null          $strstatus
  * @property int               $eststatus
  * @property int               $statstatus
  * @property string|null       $ifnsfl
@@ -28,6 +28,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property DateTimeInterface $updatedate
  * @property int               $counter
  * @property int               $divtype
+ * @property string|null       $regioncode
+ * @property string|null       $terrifnsfl
+ * @property string|null       $terrifnsul
+ * @property string|null       $buildnum
+ * @property string|null       $strucnum
+ * @property string|null       $normdoc
+ * @property string|null       $cadnum
  */
 class House extends JsonResource
 {
@@ -58,6 +65,13 @@ class House extends JsonResource
             'updatedate' => $this->updatedate->format(DateTimeInterface::ATOM),
             'counter' => $this->counter,
             'divtype' => $this->divtype,
+            'regioncode' => $this->regioncode,
+            'terrifnsfl' => $this->terrifnsfl,
+            'terrifnsul' => $this->terrifnsul,
+            'buildnum' => $this->buildnum,
+            'strucnum' => $this->strucnum,
+            'normdoc' => $this->normdoc,
+            'cadnum' => $this->cadnum,
         ];
     }
 }

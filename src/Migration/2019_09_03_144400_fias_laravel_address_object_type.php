@@ -19,10 +19,10 @@ class FiasLaravelAddressObjectType extends Migration
         Schema::dropIfExists('fias_laravel_address_object_type');
         Schema::create('fias_laravel_address_object_type', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('kod_t_st')->nullable(false)->primary();
-            $table->unsignedInteger('level')->nullable(false);
-            $table->string('socrname', 255)->nullable(false);
-            $table->string('scname', 255)->nullable(true);
+            $table->string('kod_t_st', 4)->nullable(false)->comment('Ключевое поле')->primary();
+            $table->unsignedInteger('level')->nullable(false)->comment('Уровень адресного объекта');
+            $table->string('socrname', 50)->nullable(false)->comment('Полное наименование типа объекта');
+            $table->string('scname', 10)->nullable(true)->comment('Краткое наименование типа объекта');
             // настройки таблицы
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

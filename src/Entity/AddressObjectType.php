@@ -7,12 +7,12 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Перечень полных, сокращённых наименований типов адресных элементов и уровней их классификации.
+ * Тип адресного объекта.
  *
- * @property int         $kod_t_st
- * @property int         $level
- * @property string      $socrname
- * @property string|null $scname
+ * @property string      $kod_t_st Ключевое поле
+ * @property int         $level    Уровень адресного объекта
+ * @property string      $socrname Полное наименование типа объекта
+ * @property string|null $scname   Краткое наименование типа объекта
  */
 class AddressObjectType extends Model
 {
@@ -28,6 +28,9 @@ class AddressObjectType extends Model
     /** @var string */
     protected $primaryKey = 'kod_t_st';
 
+    /** @var string */
+    protected $keyType = 'string';
+
     /** @var string[] */
     protected $fillable = [
         'kod_t_st',
@@ -38,7 +41,7 @@ class AddressObjectType extends Model
 
     /** @var array<string, string> */
     protected $casts = [
-        'kod_t_st' => 'integer',
+        'kod_t_st' => 'string',
         'level' => 'integer',
         'socrname' => 'string',
         'scname' => 'string',

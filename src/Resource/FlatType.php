@@ -10,9 +10,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * Ресурс для сущности 'FlatType'.
  *
- * @property int    $fltypeid
- * @property string $name
- * @property string $shortname
+ * @property int         $fltypeid
+ * @property string      $name
+ * @property string|null $shortname
  */
 class FlatType extends JsonResource
 {

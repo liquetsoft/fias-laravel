@@ -25,7 +25,8 @@ class NormativeDocument extends BaseCase
         $model->docname = $this->createFakeData()->word;
         $model->docdate = $this->createFakeData()->dateTime();
         $model->docnum = $this->createFakeData()->word;
-        $model->doctype = $this->createFakeData()->word;
+        $model->doctype = $this->createFakeData()->numberBetween(1, 1000000);
+        $model->docimgid = $this->createFakeData()->uuid;
 
         $resource = new Resource($model);
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
@@ -41,5 +42,7 @@ class NormativeDocument extends BaseCase
         $this->assertSame($model->docnum, $array['docnum']);
         $this->assertArrayHasKey('doctype', $array);
         $this->assertSame($model->doctype, $array['doctype']);
+        $this->assertArrayHasKey('docimgid', $array);
+        $this->assertSame($model->docimgid, $array['docimgid']);
     }
 }

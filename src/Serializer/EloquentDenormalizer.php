@@ -42,9 +42,9 @@ class EloquentDenormalizer implements DenormalizerInterface
      *
      * @psalm-suppress InvalidStringClass
      */
-    public function denormalize($data, $class, $format = null, array $context = [])
+    public function denormalize($data, $type, $format = null, array $context = [])
     {
-        $entity = !empty($context['object_to_populate']) ? $context['object_to_populate'] : new $class();
+        $entity = !empty($context['object_to_populate']) ? $context['object_to_populate'] : new $type();
 
         if (!($entity instanceof Model)) {
             throw new InvalidArgumentException(

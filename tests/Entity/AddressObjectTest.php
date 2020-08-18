@@ -67,6 +67,7 @@ class AddressObjectTest extends BaseCase
         $this->assertContains('enddate', $fields);
         $this->assertContains('updatedate', $fields);
         $this->assertContains('divtype', $fields);
+        $this->assertContains('normdoc', $fields);
     }
 
     /**

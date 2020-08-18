@@ -47,6 +47,13 @@ class HouseTest extends BaseCase
         $this->assertContains('updatedate', $fields);
         $this->assertContains('counter', $fields);
         $this->assertContains('divtype', $fields);
+        $this->assertContains('regioncode', $fields);
+        $this->assertContains('terrifnsfl', $fields);
+        $this->assertContains('terrifnsul', $fields);
+        $this->assertContains('buildnum', $fields);
+        $this->assertContains('strucnum', $fields);
+        $this->assertContains('normdoc', $fields);
+        $this->assertContains('cadnum', $fields);
     }
 
     /**

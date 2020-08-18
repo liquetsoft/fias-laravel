@@ -7,10 +7,11 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Перечень возможных видов владений.
+ * Признак владения.
  *
- * @property int    $eststatid
- * @property string $name
+ * @property int         $eststatid Признак владения
+ * @property string      $name      Наименование
+ * @property string|null $shortname Краткое наименование
  */
 class EstateStatus extends Model
 {
@@ -30,11 +31,13 @@ class EstateStatus extends Model
     protected $fillable = [
         'eststatid',
         'name',
+        'shortname',
     ];
 
     /** @var array<string, string> */
     protected $casts = [
         'eststatid' => 'integer',
         'name' => 'string',
+        'shortname' => 'string',
     ];
 }

@@ -19,9 +19,9 @@ class FiasLaravelRoomType extends Migration
         Schema::dropIfExists('fias_laravel_room_type');
         Schema::create('fias_laravel_room_type', function (Blueprint $table) {
             // создание полей таблицы
-            $table->unsignedInteger('rmtypeid')->nullable(false)->primary();
-            $table->string('name', 255)->nullable(false);
-            $table->string('shortname', 255)->nullable(false);
+            $table->unsignedInteger('rmtypeid')->nullable(false)->comment('Тип комнаты')->primary();
+            $table->string('name', 20)->nullable(false)->comment('Наименование');
+            $table->string('shortname', 20)->nullable(true)->comment('Краткое наименование');
             // настройки таблицы
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

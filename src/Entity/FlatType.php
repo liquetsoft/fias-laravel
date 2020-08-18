@@ -7,11 +7,11 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Перечень типов помещения или офиса.
+ * Тип помещения.
  *
- * @property int    $fltypeid
- * @property string $name
- * @property string $shortname
+ * @property int         $fltypeid  Тип помещения
+ * @property string      $name      Наименование
+ * @property string|null $shortname Краткое наименование
  */
 class FlatType extends Model
 {

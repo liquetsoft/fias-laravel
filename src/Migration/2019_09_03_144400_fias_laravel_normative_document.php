@@ -19,11 +19,12 @@ class FiasLaravelNormativeDocument extends Migration
         Schema::dropIfExists('fias_laravel_normative_document');
         Schema::create('fias_laravel_normative_document', function (Blueprint $table) {
             // создание полей таблицы
-            $table->uuid('normdocid')->nullable(false)->primary();
-            $table->text('docname')->nullable(true);
-            $table->datetime('docdate')->nullable(true);
-            $table->string('docnum', 255)->nullable(true);
-            $table->string('doctype', 255)->nullable(false);
+            $table->uuid('normdocid')->nullable(false)->comment('Идентификатор нормативного документа')->primary();
+            $table->text('docname')->nullable(true)->comment('Наименование документа');
+            $table->datetime('docdate')->nullable(true)->comment('Дата документа');
+            $table->string('docnum', 250)->nullable(true)->comment('Номер документа');
+            $table->unsignedInteger('doctype')->nullable(false)->comment('Тип документа');
+            $table->uuid('docimgid')->nullable(true)->comment('Идентификатор образа (внешний ключ)');
             // настройки таблицы
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

@@ -12,13 +12,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * Ресурс для сущности 'AddressObject'.
  *
  * @property string            $aoid
- * @property string|null       $aoguid
+ * @property string            $aoguid
  * @property string|null       $parentguid
  * @property string|null       $previd
  * @property string|null       $nextid
  * @property string|null       $code
  * @property string            $formalname
- * @property string            $offname
+ * @property string|null       $offname
  * @property string            $shortname
  * @property int               $aolevel
  * @property string            $regioncode
@@ -28,7 +28,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string            $ctarcode
  * @property string            $placecode
  * @property string            $plancode
- * @property string            $streetcode
+ * @property string|null       $streetcode
  * @property string            $extrcode
  * @property string            $sextcode
  * @property string|null       $plaincode
@@ -48,6 +48,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property DateTimeInterface $enddate
  * @property DateTimeInterface $updatedate
  * @property int               $divtype
+ * @property string|null       $normdoc
  */
 class AddressObject extends JsonResource
 {
@@ -98,6 +99,7 @@ class AddressObject extends JsonResource
             'enddate' => $this->enddate->format(DateTimeInterface::ATOM),
             'updatedate' => $this->updatedate->format(DateTimeInterface::ATOM),
             'divtype' => $this->divtype,
+            'normdoc' => $this->normdoc,
         ];
     }
 }

@@ -95,7 +95,7 @@ class MigrationGenerator extends AbstractGenerator
                 $migration .= '->nullable(false)';
             }
             if ($field->getDescription()) {
-                $migration .= "->comment('" . addcslashes($field->getDescription(), "'") . "')";
+                $migration .= "->comment('" . addcslashes(str_replace("\n", ' ', $field->getDescription()), "'") . "')";
             }
             if ($field->isPrimary()) {
                 $migration .= '->primary()';

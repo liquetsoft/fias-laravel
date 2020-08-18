@@ -7,11 +7,11 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Перечень типов комнат.
+ * Тип комнаты.
  *
- * @property int    $rmtypeid
- * @property string $name
- * @property string $shortname
+ * @property int         $rmtypeid  Тип комнаты
+ * @property string      $name      Наименование
+ * @property string|null $shortname Краткое наименование
  */
 class RoomType extends Model
 {
