@@ -154,7 +154,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         // объект с описаниями сущностей ФИАС
         $servicesList[EntityRegistry::class] = function (): EntityRegistry {
             return new PhpArrayFileRegistry(
-                $this->getOptionString('registry_path')
+                $this->getOptionString('registry_path') ?: null
             );
         };
 
