@@ -15,26 +15,12 @@ use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
  */
 class InstallCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'liquetsoft:fias:install';
 
-    /**
-     * @var string
-     */
     protected $description = 'Installs full version of FIAS from scratch.';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    protected Pipe $pipeline;
 
-    /**
-     * В конструкторе передаем ссылку на пайплайн установки.
-     *
-     * @param Application $app
-     */
     public function __construct(Application $app)
     {
         parent::__construct();

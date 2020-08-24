@@ -12,7 +12,7 @@ class CompositeTypeCaster implements TypeCaster
     /**
      * @var TypeCaster[]
      */
-    protected $casters = [];
+    protected array $casters = [];
 
     /**
      * @param TypeCaster[] $casters

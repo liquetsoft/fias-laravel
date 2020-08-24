@@ -16,14 +16,8 @@ use RuntimeException;
  */
 class EloquentVersionManager implements VersionManager
 {
-    /**
-     * @var string
-     */
-    protected $entityClassName;
+    protected string $entityClassName;
 
-    /**
-     * @param string $entityClassName
-     */
     public function __construct(string $entityClassName)
     {
         $this->entityClassName = $entityClassName;

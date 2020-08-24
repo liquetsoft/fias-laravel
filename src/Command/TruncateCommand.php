@@ -16,26 +16,12 @@ use Liquetsoft\Fias\Component\Pipeline\Task\Task;
  */
 class TruncateCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'liquetsoft:fias:truncate';
 
-    /**
-     * @var string
-     */
     protected $description = 'Truncates storage for binded entities.';
 
-    /**
-     * @var Task
-     */
-    protected $task;
+    protected Task $task;
 
-    /**
-     * В конструкторе передаем ссылку на пайплайн установки.
-     *
-     * @param Application $app
-     */
     public function __construct(Application $app)
     {
         parent::__construct();

@@ -20,17 +20,13 @@ class EloquentStorage implements Storage
 {
     /**
      * Размер стека для одномоментной вставки.
-     *
-     * @var int
      */
-    protected $insertBatch;
+    protected int $insertBatch;
 
     /**
      * Объект для логгирования данных.
-     *
-     * @var LoggerInterface|null
      */
-    protected $logger;
+    protected ?LoggerInterface $logger;
 
     /**
      * Сохраненные в памяти данные для множественной вставки.
@@ -39,27 +35,21 @@ class EloquentStorage implements Storage
      *
      * @var array<string, array>
      */
-    protected $insertData = [];
+    protected array $insertData = [];
 
     /**
      * Список колонок для классов моделей.
      *
      * @var array<string, array>
      */
-    protected $columnsLists = [];
+    protected array $columnsLists = [];
 
     /**
      * Флаг, который обозначает, что после завершения работы нужно включить
      * логгирование.
-     *
-     * @var bool
      */
-    protected $needToEnableLogging = false;
+    protected bool $needToEnableLogging = false;
 
-    /**
-     * @param int                  $insertBatch
-     * @param LoggerInterface|null $logger
-     */
     public function __construct(int $insertBatch = 1000, ?LoggerInterface $logger = null)
     {
         $this->insertBatch = $insertBatch;
@@ -330,7 +320,7 @@ class EloquentStorage implements Storage
      */
     protected function log(string $errorLevel, string $message, array $context = []): void
     {
-        if ($this->logger) {
+        if ($this->logger !== null) {
             $this->logger->log($errorLevel, $message, $context);
         }
     }

@@ -18,14 +18,8 @@ use Throwable;
  */
 class EloquentDenormalizer implements DenormalizerInterface
 {
-    /**
-     * @var TypeCaster|null
-     */
-    protected $typeCaster;
+    protected ?TypeCaster $typeCaster;
 
-    /**
-     * @param TypeCaster|null $typeCaster
-     */
     public function __construct(?TypeCaster $typeCaster = null)
     {
         if ($typeCaster === null) {

@@ -18,26 +18,12 @@ use RuntimeException;
  */
 class UpdateCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'liquetsoft:fias:update';
 
-    /**
-     * @var string
-     */
     protected $description = 'Updates FIAS to latest version.';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    protected Pipe $pipeline;
 
-    /**
-     * В конструкторе передаем ссылку на пайплайн установки.
-     *
-     * @param Application $app
-     */
     public function __construct(Application $app)
     {
         parent::__construct();

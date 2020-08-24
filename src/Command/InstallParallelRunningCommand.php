@@ -16,26 +16,12 @@ use Liquetsoft\Fias\Component\Pipeline\Task\Task;
  */
 class InstallParallelRunningCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'liquetsoft:fias:install_parallel_running {files_to_insert} {files_to_delete}';
 
-    /**
-     * @var string
-     */
     protected $description = 'Command for running parallel installation.';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    protected Pipe $pipeline;
 
-    /**
-     * В конструкторе передаем ссылку на пайплайн установки.
-     *
-     * @param Application $app
-     */
     public function __construct(Application $app)
     {
         parent::__construct();

@@ -18,26 +18,12 @@ use SplFileInfo;
  */
 class InstallFromFolder extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'liquetsoft:fias:install_from_folder {folder : Path to folder with extracted FIAS files}';
 
-    /**
-     * @var string
-     */
     protected $description = 'Installs full version of FIAS from downloaded file saved in folder.';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    protected Pipe $pipeline;
 
-    /**
-     * В конструкторе передаем ссылку на пайплайн установки.
-     *
-     * @param Application $app
-     */
     public function __construct(Application $app)
     {
         parent::__construct();

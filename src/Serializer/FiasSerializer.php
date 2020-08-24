@@ -15,10 +15,6 @@ use Symfony\Component\Serializer\Serializer;
  */
 class FiasSerializer extends Serializer
 {
-    /**
-     * @param array|null $normalizers
-     * @param array|null $encoders
-     */
     public function __construct(?array $normalizers = null, ?array $encoders = null)
     {
         if ($normalizers === null) {

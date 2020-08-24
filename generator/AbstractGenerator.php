@@ -16,10 +16,12 @@ use Throwable;
  */
 abstract class AbstractGenerator
 {
-    /**
-     * @var EntityRegistry
-     */
-    protected $registry;
+    protected EntityRegistry $registry;
+
+    public function __construct(EntityRegistry $registry)
+    {
+        $this->registry = $registry;
+    }
 
     /**
      * Создает php класс для указанного дескриптора.
@@ -31,14 +33,6 @@ abstract class AbstractGenerator
      * @throws Throwable
      */
     abstract protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace): void;
-
-    /**
-     * @param EntityRegistry $registry
-     */
-    public function __construct(EntityRegistry $registry)
-    {
-        $this->registry = $registry;
-    }
 
     /**
      * Создает классы сущностей в указанной папке с указанным пространством имен.
