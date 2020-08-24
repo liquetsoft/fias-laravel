@@ -10,6 +10,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\ModelGenerator;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\ModelTestGenerator;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\ResourceGenerator;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\ResourceTestGenerator;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator\SerializerGenerator;
 
 $root = dirname(__DIR__);
 $entitiesYaml = $root . '/vendor/liquetsoft/fias-component/resources/fias_entities.yaml';
@@ -95,4 +96,9 @@ mkdir($dir, 0777, true);
 $dirObject = new SplFileInfo($dir);
 $namespace = 'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Tests\\Resource';
 $generator = new ResourceTestGenerator($registry);
+$generator->run($dirObject, $namespace);
+
+$dirObject = new SplFileInfo($root . '/src/Serializer');
+$namespace = 'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Serializer';
+$generator = new SerializerGenerator($registry);
 $generator->run($dirObject, $namespace);

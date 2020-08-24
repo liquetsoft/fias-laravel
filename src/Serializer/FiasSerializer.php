@@ -23,6 +23,7 @@ class FiasSerializer extends Serializer
     {
         if ($normalizers === null) {
             $normalizers = [
+                new CompiledEntitesDenormalizer(),
                 new EloquentDenormalizer(),
                 new ObjectNormalizer(
                     null,
