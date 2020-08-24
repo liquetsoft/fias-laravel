@@ -146,8 +146,8 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'fltypeid' => isset($data['@FLTYPEID']) ? (int) $data['@FLTYPEID'] : null,
-            'name' => isset($data['@NAME']) ? $data['@NAME'] : null,
-            'shortname' => isset($data['@SHORTNAME']) ? $data['@SHORTNAME'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
         ];
     }
 
@@ -162,7 +162,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'actstatid' => isset($data['@ACTSTATID']) ? (int) $data['@ACTSTATID'] : null,
-            'name' => isset($data['@NAME']) ? $data['@NAME'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
         ];
     }
 
@@ -177,7 +177,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'operstatid' => isset($data['@OPERSTATID']) ? (int) $data['@OPERSTATID'] : null,
-            'name' => isset($data['@NAME']) ? $data['@NAME'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
         ];
     }
 
@@ -191,25 +191,25 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelRoomDataExtractor(array $data): array
     {
         return [
-            'roomid' => isset($data['@ROOMID']) ? $data['@ROOMID'] : null,
-            'roomguid' => isset($data['@ROOMGUID']) ? $data['@ROOMGUID'] : null,
-            'houseguid' => isset($data['@HOUSEGUID']) ? $data['@HOUSEGUID'] : null,
-            'regioncode' => isset($data['@REGIONCODE']) ? $data['@REGIONCODE'] : null,
-            'flatnumber' => isset($data['@FLATNUMBER']) ? $data['@FLATNUMBER'] : null,
+            'roomid' => isset($data['@ROOMID']) ? trim($data['@ROOMID']) : null,
+            'roomguid' => isset($data['@ROOMGUID']) ? trim($data['@ROOMGUID']) : null,
+            'houseguid' => isset($data['@HOUSEGUID']) ? trim($data['@HOUSEGUID']) : null,
+            'regioncode' => isset($data['@REGIONCODE']) ? trim($data['@REGIONCODE']) : null,
+            'flatnumber' => isset($data['@FLATNUMBER']) ? trim($data['@FLATNUMBER']) : null,
             'flattype' => isset($data['@FLATTYPE']) ? (int) $data['@FLATTYPE'] : null,
-            'postalcode' => isset($data['@POSTALCODE']) ? $data['@POSTALCODE'] : null,
-            'startdate' => isset($data['@STARTDATE']) ? Carbon::parse($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? Carbon::parse($data['@ENDDATE']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? Carbon::parse($data['@UPDATEDATE']) : null,
+            'postalcode' => isset($data['@POSTALCODE']) ? trim($data['@POSTALCODE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? Carbon::parse(trim($data['@STARTDATE'])) : null,
+            'enddate' => isset($data['@ENDDATE']) ? Carbon::parse(trim($data['@ENDDATE'])) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? Carbon::parse(trim($data['@UPDATEDATE'])) : null,
             'operstatus' => isset($data['@OPERSTATUS']) ? (int) $data['@OPERSTATUS'] : null,
             'livestatus' => isset($data['@LIVESTATUS']) ? (int) $data['@LIVESTATUS'] : null,
-            'normdoc' => isset($data['@NORMDOC']) ? $data['@NORMDOC'] : null,
-            'roomnumber' => isset($data['@ROOMNUMBER']) ? $data['@ROOMNUMBER'] : null,
+            'normdoc' => isset($data['@NORMDOC']) ? trim($data['@NORMDOC']) : null,
+            'roomnumber' => isset($data['@ROOMNUMBER']) ? trim($data['@ROOMNUMBER']) : null,
             'roomtype' => isset($data['@ROOMTYPE']) ? (int) $data['@ROOMTYPE'] : null,
-            'previd' => isset($data['@PREVID']) ? $data['@PREVID'] : null,
-            'nextid' => isset($data['@NEXTID']) ? $data['@NEXTID'] : null,
-            'cadnum' => isset($data['@CADNUM']) ? $data['@CADNUM'] : null,
-            'roomcadnum' => isset($data['@ROOMCADNUM']) ? $data['@ROOMCADNUM'] : null,
+            'previd' => isset($data['@PREVID']) ? trim($data['@PREVID']) : null,
+            'nextid' => isset($data['@NEXTID']) ? trim($data['@NEXTID']) : null,
+            'cadnum' => isset($data['@CADNUM']) ? trim($data['@CADNUM']) : null,
+            'roomcadnum' => isset($data['@ROOMCADNUM']) ? trim($data['@ROOMCADNUM']) : null,
         ];
     }
 
@@ -223,10 +223,10 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelAddressObjectTypeDataExtractor(array $data): array
     {
         return [
-            'kod_t_st' => isset($data['@KOD_T_ST']) ? $data['@KOD_T_ST'] : null,
+            'kod_t_st' => isset($data['@KOD_T_ST']) ? trim($data['@KOD_T_ST']) : null,
             'level' => isset($data['@LEVEL']) ? (int) $data['@LEVEL'] : null,
-            'socrname' => isset($data['@SOCRNAME']) ? $data['@SOCRNAME'] : null,
-            'scname' => isset($data['@SCNAME']) ? $data['@SCNAME'] : null,
+            'socrname' => isset($data['@SOCRNAME']) ? trim($data['@SOCRNAME']) : null,
+            'scname' => isset($data['@SCNAME']) ? trim($data['@SCNAME']) : null,
         ];
     }
 
@@ -241,8 +241,8 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'rmtypeid' => isset($data['@RMTYPEID']) ? (int) $data['@RMTYPEID'] : null,
-            'name' => isset($data['@NAME']) ? $data['@NAME'] : null,
-            'shortname' => isset($data['@SHORTNAME']) ? $data['@SHORTNAME'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
         ];
     }
 
@@ -256,28 +256,28 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelSteadDataExtractor(array $data): array
     {
         return [
-            'steadguid' => isset($data['@STEADGUID']) ? $data['@STEADGUID'] : null,
-            'number' => isset($data['@NUMBER']) ? $data['@NUMBER'] : null,
-            'regioncode' => isset($data['@REGIONCODE']) ? $data['@REGIONCODE'] : null,
-            'postalcode' => isset($data['@POSTALCODE']) ? $data['@POSTALCODE'] : null,
-            'ifnsfl' => isset($data['@IFNSFL']) ? $data['@IFNSFL'] : null,
-            'ifnsul' => isset($data['@IFNSUL']) ? $data['@IFNSUL'] : null,
-            'okato' => isset($data['@OKATO']) ? $data['@OKATO'] : null,
-            'oktmo' => isset($data['@OKTMO']) ? $data['@OKTMO'] : null,
-            'parentguid' => isset($data['@PARENTGUID']) ? $data['@PARENTGUID'] : null,
-            'steadid' => isset($data['@STEADID']) ? $data['@STEADID'] : null,
+            'steadguid' => isset($data['@STEADGUID']) ? trim($data['@STEADGUID']) : null,
+            'number' => isset($data['@NUMBER']) ? trim($data['@NUMBER']) : null,
+            'regioncode' => isset($data['@REGIONCODE']) ? trim($data['@REGIONCODE']) : null,
+            'postalcode' => isset($data['@POSTALCODE']) ? trim($data['@POSTALCODE']) : null,
+            'ifnsfl' => isset($data['@IFNSFL']) ? trim($data['@IFNSFL']) : null,
+            'ifnsul' => isset($data['@IFNSUL']) ? trim($data['@IFNSUL']) : null,
+            'okato' => isset($data['@OKATO']) ? trim($data['@OKATO']) : null,
+            'oktmo' => isset($data['@OKTMO']) ? trim($data['@OKTMO']) : null,
+            'parentguid' => isset($data['@PARENTGUID']) ? trim($data['@PARENTGUID']) : null,
+            'steadid' => isset($data['@STEADID']) ? trim($data['@STEADID']) : null,
             'operstatus' => isset($data['@OPERSTATUS']) ? (int) $data['@OPERSTATUS'] : null,
-            'startdate' => isset($data['@STARTDATE']) ? Carbon::parse($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? Carbon::parse($data['@ENDDATE']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? Carbon::parse($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? Carbon::parse(trim($data['@STARTDATE'])) : null,
+            'enddate' => isset($data['@ENDDATE']) ? Carbon::parse(trim($data['@ENDDATE'])) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? Carbon::parse(trim($data['@UPDATEDATE'])) : null,
             'livestatus' => isset($data['@LIVESTATUS']) ? (int) $data['@LIVESTATUS'] : null,
             'divtype' => isset($data['@DIVTYPE']) ? (int) $data['@DIVTYPE'] : null,
-            'normdoc' => isset($data['@NORMDOC']) ? $data['@NORMDOC'] : null,
-            'terrifnsfl' => isset($data['@TERRIFNSFL']) ? $data['@TERRIFNSFL'] : null,
-            'terrifnsul' => isset($data['@TERRIFNSUL']) ? $data['@TERRIFNSUL'] : null,
-            'previd' => isset($data['@PREVID']) ? $data['@PREVID'] : null,
-            'nextid' => isset($data['@NEXTID']) ? $data['@NEXTID'] : null,
-            'cadnum' => isset($data['@CADNUM']) ? $data['@CADNUM'] : null,
+            'normdoc' => isset($data['@NORMDOC']) ? trim($data['@NORMDOC']) : null,
+            'terrifnsfl' => isset($data['@TERRIFNSFL']) ? trim($data['@TERRIFNSFL']) : null,
+            'terrifnsul' => isset($data['@TERRIFNSUL']) ? trim($data['@TERRIFNSUL']) : null,
+            'previd' => isset($data['@PREVID']) ? trim($data['@PREVID']) : null,
+            'nextid' => isset($data['@NEXTID']) ? trim($data['@NEXTID']) : null,
+            'cadnum' => isset($data['@CADNUM']) ? trim($data['@CADNUM']) : null,
         ];
     }
 
@@ -292,7 +292,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'centerstid' => isset($data['@CENTERSTID']) ? (int) $data['@CENTERSTID'] : null,
-            'name' => isset($data['@NAME']) ? $data['@NAME'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
         ];
     }
 
@@ -306,12 +306,12 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelNormativeDocumentDataExtractor(array $data): array
     {
         return [
-            'normdocid' => isset($data['@NORMDOCID']) ? $data['@NORMDOCID'] : null,
-            'docname' => isset($data['@DOCNAME']) ? $data['@DOCNAME'] : null,
-            'docdate' => isset($data['@DOCDATE']) ? Carbon::parse($data['@DOCDATE']) : null,
-            'docnum' => isset($data['@DOCNUM']) ? $data['@DOCNUM'] : null,
+            'normdocid' => isset($data['@NORMDOCID']) ? trim($data['@NORMDOCID']) : null,
+            'docname' => isset($data['@DOCNAME']) ? trim($data['@DOCNAME']) : null,
+            'docdate' => isset($data['@DOCDATE']) ? Carbon::parse(trim($data['@DOCDATE'])) : null,
+            'docnum' => isset($data['@DOCNUM']) ? trim($data['@DOCNUM']) : null,
             'doctype' => isset($data['@DOCTYPE']) ? (int) $data['@DOCTYPE'] : null,
-            'docimgid' => isset($data['@DOCIMGID']) ? $data['@DOCIMGID'] : null,
+            'docimgid' => isset($data['@DOCIMGID']) ? trim($data['@DOCIMGID']) : null,
         ];
     }
 
@@ -326,7 +326,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'curentstid' => isset($data['@CURENTSTID']) ? (int) $data['@CURENTSTID'] : null,
-            'name' => isset($data['@NAME']) ? $data['@NAME'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
         ];
     }
 
@@ -341,7 +341,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'ndtypeid' => isset($data['@NDTYPEID']) ? (int) $data['@NDTYPEID'] : null,
-            'name' => isset($data['@NAME']) ? $data['@NAME'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
         ];
     }
 
@@ -356,8 +356,8 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'eststatid' => isset($data['@ESTSTATID']) ? (int) $data['@ESTSTATID'] : null,
-            'name' => isset($data['@NAME']) ? $data['@NAME'] : null,
-            'shortname' => isset($data['@SHORTNAME']) ? $data['@SHORTNAME'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
         ];
     }
 
@@ -371,44 +371,44 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelAddressObjectDataExtractor(array $data): array
     {
         return [
-            'aoid' => isset($data['@AOID']) ? $data['@AOID'] : null,
-            'aoguid' => isset($data['@AOGUID']) ? $data['@AOGUID'] : null,
-            'parentguid' => isset($data['@PARENTGUID']) ? $data['@PARENTGUID'] : null,
-            'previd' => isset($data['@PREVID']) ? $data['@PREVID'] : null,
-            'nextid' => isset($data['@NEXTID']) ? $data['@NEXTID'] : null,
-            'code' => isset($data['@CODE']) ? $data['@CODE'] : null,
-            'formalname' => isset($data['@FORMALNAME']) ? $data['@FORMALNAME'] : null,
-            'offname' => isset($data['@OFFNAME']) ? $data['@OFFNAME'] : null,
-            'shortname' => isset($data['@SHORTNAME']) ? $data['@SHORTNAME'] : null,
+            'aoid' => isset($data['@AOID']) ? trim($data['@AOID']) : null,
+            'aoguid' => isset($data['@AOGUID']) ? trim($data['@AOGUID']) : null,
+            'parentguid' => isset($data['@PARENTGUID']) ? trim($data['@PARENTGUID']) : null,
+            'previd' => isset($data['@PREVID']) ? trim($data['@PREVID']) : null,
+            'nextid' => isset($data['@NEXTID']) ? trim($data['@NEXTID']) : null,
+            'code' => isset($data['@CODE']) ? trim($data['@CODE']) : null,
+            'formalname' => isset($data['@FORMALNAME']) ? trim($data['@FORMALNAME']) : null,
+            'offname' => isset($data['@OFFNAME']) ? trim($data['@OFFNAME']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
             'aolevel' => isset($data['@AOLEVEL']) ? (int) $data['@AOLEVEL'] : null,
-            'regioncode' => isset($data['@REGIONCODE']) ? $data['@REGIONCODE'] : null,
-            'areacode' => isset($data['@AREACODE']) ? $data['@AREACODE'] : null,
-            'autocode' => isset($data['@AUTOCODE']) ? $data['@AUTOCODE'] : null,
-            'citycode' => isset($data['@CITYCODE']) ? $data['@CITYCODE'] : null,
-            'ctarcode' => isset($data['@CTARCODE']) ? $data['@CTARCODE'] : null,
-            'placecode' => isset($data['@PLACECODE']) ? $data['@PLACECODE'] : null,
-            'plancode' => isset($data['@PLANCODE']) ? $data['@PLANCODE'] : null,
-            'streetcode' => isset($data['@STREETCODE']) ? $data['@STREETCODE'] : null,
-            'extrcode' => isset($data['@EXTRCODE']) ? $data['@EXTRCODE'] : null,
-            'sextcode' => isset($data['@SEXTCODE']) ? $data['@SEXTCODE'] : null,
-            'plaincode' => isset($data['@PLAINCODE']) ? $data['@PLAINCODE'] : null,
+            'regioncode' => isset($data['@REGIONCODE']) ? trim($data['@REGIONCODE']) : null,
+            'areacode' => isset($data['@AREACODE']) ? trim($data['@AREACODE']) : null,
+            'autocode' => isset($data['@AUTOCODE']) ? trim($data['@AUTOCODE']) : null,
+            'citycode' => isset($data['@CITYCODE']) ? trim($data['@CITYCODE']) : null,
+            'ctarcode' => isset($data['@CTARCODE']) ? trim($data['@CTARCODE']) : null,
+            'placecode' => isset($data['@PLACECODE']) ? trim($data['@PLACECODE']) : null,
+            'plancode' => isset($data['@PLANCODE']) ? trim($data['@PLANCODE']) : null,
+            'streetcode' => isset($data['@STREETCODE']) ? trim($data['@STREETCODE']) : null,
+            'extrcode' => isset($data['@EXTRCODE']) ? trim($data['@EXTRCODE']) : null,
+            'sextcode' => isset($data['@SEXTCODE']) ? trim($data['@SEXTCODE']) : null,
+            'plaincode' => isset($data['@PLAINCODE']) ? trim($data['@PLAINCODE']) : null,
             'currstatus' => isset($data['@CURRSTATUS']) ? (int) $data['@CURRSTATUS'] : null,
             'actstatus' => isset($data['@ACTSTATUS']) ? (int) $data['@ACTSTATUS'] : null,
             'livestatus' => isset($data['@LIVESTATUS']) ? (int) $data['@LIVESTATUS'] : null,
             'centstatus' => isset($data['@CENTSTATUS']) ? (int) $data['@CENTSTATUS'] : null,
             'operstatus' => isset($data['@OPERSTATUS']) ? (int) $data['@OPERSTATUS'] : null,
-            'ifnsfl' => isset($data['@IFNSFL']) ? $data['@IFNSFL'] : null,
-            'ifnsul' => isset($data['@IFNSUL']) ? $data['@IFNSUL'] : null,
-            'terrifnsfl' => isset($data['@TERRIFNSFL']) ? $data['@TERRIFNSFL'] : null,
-            'terrifnsul' => isset($data['@TERRIFNSUL']) ? $data['@TERRIFNSUL'] : null,
-            'okato' => isset($data['@OKATO']) ? $data['@OKATO'] : null,
-            'oktmo' => isset($data['@OKTMO']) ? $data['@OKTMO'] : null,
-            'postalcode' => isset($data['@POSTALCODE']) ? $data['@POSTALCODE'] : null,
-            'startdate' => isset($data['@STARTDATE']) ? Carbon::parse($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? Carbon::parse($data['@ENDDATE']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? Carbon::parse($data['@UPDATEDATE']) : null,
+            'ifnsfl' => isset($data['@IFNSFL']) ? trim($data['@IFNSFL']) : null,
+            'ifnsul' => isset($data['@IFNSUL']) ? trim($data['@IFNSUL']) : null,
+            'terrifnsfl' => isset($data['@TERRIFNSFL']) ? trim($data['@TERRIFNSFL']) : null,
+            'terrifnsul' => isset($data['@TERRIFNSUL']) ? trim($data['@TERRIFNSUL']) : null,
+            'okato' => isset($data['@OKATO']) ? trim($data['@OKATO']) : null,
+            'oktmo' => isset($data['@OKTMO']) ? trim($data['@OKTMO']) : null,
+            'postalcode' => isset($data['@POSTALCODE']) ? trim($data['@POSTALCODE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? Carbon::parse(trim($data['@STARTDATE'])) : null,
+            'enddate' => isset($data['@ENDDATE']) ? Carbon::parse(trim($data['@ENDDATE'])) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? Carbon::parse(trim($data['@UPDATEDATE'])) : null,
             'divtype' => isset($data['@DIVTYPE']) ? (int) $data['@DIVTYPE'] : null,
-            'normdoc' => isset($data['@NORMDOC']) ? $data['@NORMDOC'] : null,
+            'normdoc' => isset($data['@NORMDOC']) ? trim($data['@NORMDOC']) : null,
         ];
     }
 
@@ -422,30 +422,30 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelHouseDataExtractor(array $data): array
     {
         return [
-            'houseid' => isset($data['@HOUSEID']) ? $data['@HOUSEID'] : null,
-            'houseguid' => isset($data['@HOUSEGUID']) ? $data['@HOUSEGUID'] : null,
-            'aoguid' => isset($data['@AOGUID']) ? $data['@AOGUID'] : null,
-            'housenum' => isset($data['@HOUSENUM']) ? $data['@HOUSENUM'] : null,
+            'houseid' => isset($data['@HOUSEID']) ? trim($data['@HOUSEID']) : null,
+            'houseguid' => isset($data['@HOUSEGUID']) ? trim($data['@HOUSEGUID']) : null,
+            'aoguid' => isset($data['@AOGUID']) ? trim($data['@AOGUID']) : null,
+            'housenum' => isset($data['@HOUSENUM']) ? trim($data['@HOUSENUM']) : null,
             'strstatus' => isset($data['@STRSTATUS']) ? (int) $data['@STRSTATUS'] : null,
             'eststatus' => isset($data['@ESTSTATUS']) ? (int) $data['@ESTSTATUS'] : null,
             'statstatus' => isset($data['@STATSTATUS']) ? (int) $data['@STATSTATUS'] : null,
-            'ifnsfl' => isset($data['@IFNSFL']) ? $data['@IFNSFL'] : null,
-            'ifnsul' => isset($data['@IFNSUL']) ? $data['@IFNSUL'] : null,
-            'okato' => isset($data['@OKATO']) ? $data['@OKATO'] : null,
-            'oktmo' => isset($data['@OKTMO']) ? $data['@OKTMO'] : null,
-            'postalcode' => isset($data['@POSTALCODE']) ? $data['@POSTALCODE'] : null,
-            'startdate' => isset($data['@STARTDATE']) ? Carbon::parse($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? Carbon::parse($data['@ENDDATE']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? Carbon::parse($data['@UPDATEDATE']) : null,
+            'ifnsfl' => isset($data['@IFNSFL']) ? trim($data['@IFNSFL']) : null,
+            'ifnsul' => isset($data['@IFNSUL']) ? trim($data['@IFNSUL']) : null,
+            'okato' => isset($data['@OKATO']) ? trim($data['@OKATO']) : null,
+            'oktmo' => isset($data['@OKTMO']) ? trim($data['@OKTMO']) : null,
+            'postalcode' => isset($data['@POSTALCODE']) ? trim($data['@POSTALCODE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? Carbon::parse(trim($data['@STARTDATE'])) : null,
+            'enddate' => isset($data['@ENDDATE']) ? Carbon::parse(trim($data['@ENDDATE'])) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? Carbon::parse(trim($data['@UPDATEDATE'])) : null,
             'counter' => isset($data['@COUNTER']) ? (int) $data['@COUNTER'] : null,
             'divtype' => isset($data['@DIVTYPE']) ? (int) $data['@DIVTYPE'] : null,
-            'regioncode' => isset($data['@REGIONCODE']) ? $data['@REGIONCODE'] : null,
-            'terrifnsfl' => isset($data['@TERRIFNSFL']) ? $data['@TERRIFNSFL'] : null,
-            'terrifnsul' => isset($data['@TERRIFNSUL']) ? $data['@TERRIFNSUL'] : null,
-            'buildnum' => isset($data['@BUILDNUM']) ? $data['@BUILDNUM'] : null,
-            'strucnum' => isset($data['@STRUCNUM']) ? $data['@STRUCNUM'] : null,
-            'normdoc' => isset($data['@NORMDOC']) ? $data['@NORMDOC'] : null,
-            'cadnum' => isset($data['@CADNUM']) ? $data['@CADNUM'] : null,
+            'regioncode' => isset($data['@REGIONCODE']) ? trim($data['@REGIONCODE']) : null,
+            'terrifnsfl' => isset($data['@TERRIFNSFL']) ? trim($data['@TERRIFNSFL']) : null,
+            'terrifnsul' => isset($data['@TERRIFNSUL']) ? trim($data['@TERRIFNSUL']) : null,
+            'buildnum' => isset($data['@BUILDNUM']) ? trim($data['@BUILDNUM']) : null,
+            'strucnum' => isset($data['@STRUCNUM']) ? trim($data['@STRUCNUM']) : null,
+            'normdoc' => isset($data['@NORMDOC']) ? trim($data['@NORMDOC']) : null,
+            'cadnum' => isset($data['@CADNUM']) ? trim($data['@CADNUM']) : null,
         ];
     }
 
@@ -460,8 +460,8 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'strstatid' => isset($data['@STRSTATID']) ? (int) $data['@STRSTATID'] : null,
-            'name' => isset($data['@NAME']) ? $data['@NAME'] : null,
-            'shortname' => isset($data['@SHORTNAME']) ? $data['@SHORTNAME'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
         ];
     }
 
@@ -476,8 +476,8 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'version' => isset($data['@VERSION']) ? (int) $data['@VERSION'] : null,
-            'url' => isset($data['@URL']) ? $data['@URL'] : null,
-            'created_at' => isset($data['@CREATED_AT']) ? Carbon::parse($data['@CREATED_AT']) : null,
+            'url' => isset($data['@URL']) ? trim($data['@URL']) : null,
+            'created_at' => isset($data['@CREATED_AT']) ? Carbon::parse(trim($data['@CREATED_AT'])) : null,
         ];
     }
 }

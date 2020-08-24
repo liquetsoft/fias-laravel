@@ -151,10 +151,10 @@ class SerializerGenerator extends AbstractGenerator
                     $varType = "(int) \$data['{$xmlAttribute}']";
                     break;
                 case 'string_date':
-                    $varType = "Carbon::parse(\$data['{$xmlAttribute}'])";
+                    $varType = "Carbon::parse(trim(\$data['{$xmlAttribute}']))";
                     break;
                 default:
-                    $varType = "\$data['{$xmlAttribute}']";
+                    $varType = "trim(\$data['{$xmlAttribute}'])";
                     break;
             }
             $body .= "    '{$column}' => isset(\$data['{$xmlAttribute}']) ? {$varType} : null,\n";
