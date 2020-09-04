@@ -35,6 +35,14 @@ return [
      */
     'temp_dir' => storage_path('liquetsoft_fias'),
     /*
+     * Путь по которому будет сохранен загруженный архив ФИАС после установки. null - удалять после установки.
+     */
+    'path_to_save_archive' => null,
+    /*
+     * Путь по которому будут сохранены распакованные файлы ФИАС после установки. null - удалять после установки.
+     */
+    'path_to_save_extracted_files' => null,
+    /*
      * Имя класса для сущности, которая хранит историю версий ФИАС.
      */
     'version_manager_entity' => FiasVersion::class,

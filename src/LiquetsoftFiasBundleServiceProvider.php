@@ -28,6 +28,7 @@ use Liquetsoft\Fias\Component\Pipeline\Task\InformDeltaTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\InformFullTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\PrepareFolderTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\ProcessSwitchTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\SaveFiasFilesTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\SelectFilesToProceedTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use Liquetsoft\Fias\Component\Pipeline\Task\TruncateTask;
@@ -274,6 +275,14 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                 $this->getOptionInt('number_of_parallel')
             );
         };
+
+        // задача для копирования файлов после установки
+        $servicesList[$this->prefixString('task.files_move')] = function (Application $app): Task {
+            return new SaveFiasFilesTask(
+                $this->getOptionString('path_to_save_archive') ?: null,
+                $this->getOptionString('path_to_save_extracted_files') ?: null
+            );
+        };
     }
 
     /**
@@ -309,6 +318,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     $app->get($this->prefixString('task.data.select_files')),
                     $app->get($this->prefixString('task.process_switcher')),
                     $app->get($this->prefixString('task.version.set')),
+                    $app->get($this->prefixString('task.files_move')),
                 ],
                 $app->get($this->prefixString('task.cleanup')),
                 $app->get(LoggerInterface::class)
