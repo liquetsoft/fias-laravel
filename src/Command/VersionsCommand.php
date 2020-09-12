@@ -13,13 +13,14 @@ use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\VersionManager\VersionManager;
+use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use RuntimeException;
 
 /**
  * Консольная команда, которая отображает текущую версию, полную версию
  * и список версий на обновление.
  */
-class VersionCommand extends Command
+class VersionsCommand extends Command
 {
     /**
      * @var string
@@ -53,6 +54,17 @@ class VersionCommand extends Command
      * Запуск команды на исполнение.
      */
     public function handle(): void
+    {
+
+    }
+
+    /**
+     * Отображает список версий в виде таблицы.
+     *
+     * @param string $header
+     * @param InformerResponse[] $headers
+     */
+    private function showTable(string $header, array $versions): void
     {
 
     }

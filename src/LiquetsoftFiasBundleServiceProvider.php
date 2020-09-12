@@ -44,6 +44,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallFromFolder;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallParallelRunningCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\TruncateCommand;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\VersionsCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage\EloquentStorage;
@@ -102,6 +103,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     UpdateCommand::class,
                     TruncateCommand::class,
                     InstallFromFolder::class,
+                    VersionsCommand::class,
                 ]
             );
         }
