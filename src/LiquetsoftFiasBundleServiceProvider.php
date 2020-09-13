@@ -42,10 +42,11 @@ use Liquetsoft\Fias\Component\XmlReader\BaseXmlReader;
 use Liquetsoft\Fias\Component\XmlReader\XmlReader;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\DownloadCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallCommand;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallFromFolder;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallFromFolderCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallParallelRunningCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\TruncateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateCommand;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateFromFolderCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\VersionsCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage\EloquentStorage;
@@ -103,9 +104,10 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     InstallParallelRunningCommand::class,
                     UpdateCommand::class,
                     TruncateCommand::class,
-                    InstallFromFolder::class,
+                    InstallFromFolderCommand::class,
                     VersionsCommand::class,
                     DownloadCommand::class,
+                    UpdateFromFolderCommand::class,
                 ]
             );
         }
@@ -347,6 +349,19 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     $app->get($this->prefixString('task.version.set')),
                 ],
                 $app->get($this->prefixString('task.cleanup')),
+                $app->get(LoggerInterface::class)
+            );
+        };
+
+        // процесс обновления версии ФИАС из загруженных на диск файлов
+        $servicesList[$this->prefixString('pipe.update_from_folder')] = function (Application $app): Pipe {
+            return new ArrayPipe(
+                [
+                    $app->get($this->prefixString('task.data.select_files')),
+                    $app->get($this->prefixString('task.data.upsert')),
+                    $app->get($this->prefixString('task.data.delete')),
+                ],
+                null,
                 $app->get(LoggerInterface::class)
             );
         };
