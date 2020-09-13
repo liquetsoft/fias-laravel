@@ -8,8 +8,8 @@
     "php": ">=7.2.0",
     "ext-soap": "*",
     "liquetsoft/fias-component": "^7.2",
-    "illuminate/database": "^5.8|^6.0|^7.0",
-    "laravel/framework": "^5.8|^6.0|^7.0"
+    "illuminate/database": "^5.8|^6.0|^7.0|^8.0",
+    "laravel/framework": "^5.8|^6.0|^7.0|^8.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.0|^9.0",
