@@ -14,19 +14,19 @@ use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use SplFileInfo;
 
 /**
- * Консольная команда для установки ФИАС с ноля из указанного каталога, в котором находятся файлы.
+ * Консольная команда для обновления ФИАС из указанного каталога, в котором находятся файлы.
  */
-class InstallFromFolderCommand extends Command
+class UpdateFromFolderCommand extends Command
 {
     /**
      * @var string
      */
-    protected $signature = 'liquetsoft:fias:install_from_folder {folder : Path to folder with extracted FIAS files}';
+    protected $signature = 'liquetsoft:fias:update_from_folder {folder : Path to folder with extracted FIAS files}';
 
     /**
      * @var string
      */
-    protected $description = 'Installs full version of FIAS from downloaded files saved in folder.';
+    protected $description = 'Updates FIAS version from downloaded files saved in folder.';
 
     /**
      * @var Pipe
@@ -36,7 +36,7 @@ class InstallFromFolderCommand extends Command
     public function __construct(Application $app)
     {
         parent::__construct();
-        $this->pipeline = $app->get('liquetsoft_fias.pipe.install_from_folder');
+        $this->pipeline = $app->get('liquetsoft_fias.pipe.update_from_folder');
     }
 
     /**
@@ -53,7 +53,7 @@ class InstallFromFolderCommand extends Command
             throw new InvalidArgumentException("Can't find '{$folder}' folder to read FIAS files.");
         }
 
-        $this->info("Installing full version of FIAS from '{$folder}' folder.");
+        $this->info("Updating FIAS version from '{$folder}' folder.");
         $start = microtime(true);
 
         $state = new ArrayState();
@@ -62,6 +62,6 @@ class InstallFromFolderCommand extends Command
         $this->pipeline->run($state);
 
         $total = round(microtime(true) - $start, 4);
-        $this->info("Full version of FIAS installed after {$total} s.");
+        $this->info("FIAS updated after {$total} s.");
     }
 }
