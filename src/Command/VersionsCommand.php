@@ -23,7 +23,7 @@ class VersionsCommand extends Command
     /**
      * @var string
      */
-    protected $description = 'Show information about current version, delta versions and full version.';
+    protected $description = 'Shows information about current version, delta versions and full version.';
 
     /**
      * @var FiasInformer

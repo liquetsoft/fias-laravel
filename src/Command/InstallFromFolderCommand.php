@@ -16,7 +16,7 @@ use SplFileInfo;
 /**
  * Консольная команда для установки ФИАС с ноля из указанного каталога, в котором находятся файлы.
  */
-class InstallFromFolder extends Command
+class InstallFromFolderCommand extends Command
 {
     /**
      * @var string
@@ -26,7 +26,7 @@ class InstallFromFolder extends Command
     /**
      * @var string
      */
-    protected $description = 'Installs full version of FIAS from downloaded file saved in folder.';
+    protected $description = 'Installs full version of FIAS from downloaded files saved in folder.';
 
     /**
      * @var Pipe
