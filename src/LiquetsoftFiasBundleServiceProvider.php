@@ -40,6 +40,7 @@ use Liquetsoft\Fias\Component\Unpacker\ZipUnpacker;
 use Liquetsoft\Fias\Component\VersionManager\VersionManager;
 use Liquetsoft\Fias\Component\XmlReader\BaseXmlReader;
 use Liquetsoft\Fias\Component\XmlReader\XmlReader;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\DownloadCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallFromFolder;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallParallelRunningCommand;
@@ -104,6 +105,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     TruncateCommand::class,
                     InstallFromFolder::class,
                     VersionsCommand::class,
+                    DownloadCommand::class,
                 ]
             );
         }
