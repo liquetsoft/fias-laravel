@@ -8,7 +8,6 @@ use Illuminate\Console\Command;
 use InvalidArgumentException;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
-use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\VersionManager\VersionManager;
 
 /**
