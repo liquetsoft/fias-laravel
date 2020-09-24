@@ -277,13 +277,11 @@ class EloquentStorage implements Storage
      * @param mixed[] $data
      *
      * @throws StorageException
+     *
+     * @psalm-suppress InvalidStringClass
      */
     protected function bulkInsert(string $className, array $data): void
     {
-        if (!class_exists($className)) {
-            throw new StorageException("'{$className}' is not a class name.");
-        }
-
         try {
             $className::insert($data);
         } catch (Throwable $e) {
@@ -298,13 +296,11 @@ class EloquentStorage implements Storage
      * @param mixed[] $data
      *
      * @throws StorageException
+     *
+     * @psalm-suppress InvalidStringClass
      */
     protected function bulkInsertFallback(string $className, array $data): void
     {
-        if (!class_exists($className)) {
-            throw new StorageException("'{$className}' is not a class name.");
-        }
-
         foreach ($data as $item) {
             try {
                 $className::insert([$item]);
