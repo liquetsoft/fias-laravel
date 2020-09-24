@@ -12,4 +12,12 @@
             <directory>./src</directory>
         </whitelist>
     </filter>
+
+    <php>
+        <env name="DB_DRIVER" value="pdo_sqlite" />
+        <env name="DB_PATH" value=":memory:" />
+        <env name="DB_USER" value="" />
+        <env name="DB_PASSWORD" value="" />
+        <env name="DB_NAME" value="" />
+    </php>
 </phpunit>
