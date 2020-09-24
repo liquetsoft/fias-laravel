@@ -117,10 +117,10 @@ abstract class EloquentTestCase extends BaseCase
         } elseif ($type === 'datetime') {
             $column = $table->datetime($name);
         } else {
-            $column = $table->string($name, (int) $description['type'] ?? 255);
+            $column = $table->string($name, intval($description['type'] ?? 255));
         }
 
-        $column->nullable((bool) $description['nullable'] ?? false);
+        $column->nullable(boolval($description['nullable'] ?? false));
 
         if (isset($description['default'])) {
             $column->default($description['default']);
