@@ -6,6 +6,7 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests;
 
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
 /**
@@ -35,6 +36,7 @@ abstract class EloquentTestCase extends BaseCase
         );
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
+        DB::swap($capsule);
     }
 
     /**
