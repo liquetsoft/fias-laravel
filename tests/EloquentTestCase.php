@@ -14,7 +14,10 @@ use InvalidArgumentException;
  */
 abstract class EloquentTestCase extends BaseCase
 {
-    private static ?Manager $capsule = null;
+    /**
+     * @var Manager|null
+     */
+    private static $capsule = null;
 
     /**
      * СОздает новое соединение с базой данных для eloquent.

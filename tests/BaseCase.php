@@ -16,9 +16,15 @@ use RuntimeException;
  */
 abstract class BaseCase extends TestCase
 {
-    private ?Generator $faker = null;
+    /**
+     * @var Generator|null
+     */
+    private $faker = null;
 
-    private ?string $tempDir = null;
+    /**
+     * @var string|null
+     */
+    private $tempDir = null;
 
     /**
      * Возвращает объект php faker для генерации случайных данных.
