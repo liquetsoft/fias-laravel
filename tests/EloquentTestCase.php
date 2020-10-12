@@ -100,7 +100,7 @@ abstract class EloquentTestCase extends BaseCase
     }
 
     /**
-     * Создает колонку в талице.
+     * Создает колонку в таблице.
      *
      * @param Blueprint $table
      * @param string    $name
