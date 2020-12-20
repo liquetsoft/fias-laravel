@@ -10,7 +10,7 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster;
 class BoolCaster implements TypeCaster
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function canCast(string $type, $value): bool
     {
@@ -18,7 +18,7 @@ class BoolCaster implements TypeCaster
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function cast(string $type, $value)
     {

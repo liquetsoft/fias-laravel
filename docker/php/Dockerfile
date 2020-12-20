@@ -1,6 +1,6 @@
 FROM php:7.4-cli-alpine
 
-# alpine components
+
 RUN set -xe && apk update && apk add --no-cache \
     libzip \
     bash \
@@ -8,7 +8,6 @@ RUN set -xe && apk update && apk add --no-cache \
     libmcrypt-dev \
     libxml2-dev \
     libzip-dev \
-    postgresql-dev \
     pcre-dev \
     git \
     autoconf \
@@ -16,19 +15,17 @@ RUN set -xe && apk update && apk add --no-cache \
     make
 
 
-# php pecl components
-RUN docker-php-ext-install pdo_pgsql zip pcntl sockets soap \
+RUN docker-php-ext-install zip soap \
     && docker-php-source extract \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && docker-php-source delete \
-    && echo 'date.timezone=Europe/London' >> /usr/local/etc/php/conf.d/php-date.ini
+    && echo 'date.timezone=Europe/London' >> /usr/local/etc/php/conf.d/php-date.ini \
+    && echo 'xdebug.mode=coverage' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 
-# composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && mkdir -p /.composer \
-    && chmod -Rf 777 /.composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer  --version=2.0.1 \
+    && mkdir -p /.composer && chmod -Rf 777 /.composer
 
 
 WORKDIR /var/app

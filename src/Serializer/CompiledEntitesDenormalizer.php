@@ -51,7 +51,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function supportsDenormalization($data, string $type, string $format = null)
     {

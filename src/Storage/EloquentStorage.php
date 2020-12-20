@@ -67,7 +67,7 @@ class EloquentStorage implements Storage
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function start(): void
     {
@@ -83,7 +83,7 @@ class EloquentStorage implements Storage
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function stop(): void
     {
@@ -103,7 +103,7 @@ class EloquentStorage implements Storage
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function supports(object $entity): bool
     {
@@ -111,7 +111,7 @@ class EloquentStorage implements Storage
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function supportsClass(string $class): bool
     {
@@ -119,7 +119,7 @@ class EloquentStorage implements Storage
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function insert(object $entity): void
     {
@@ -132,7 +132,7 @@ class EloquentStorage implements Storage
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function delete(object $entity): void
     {
@@ -151,7 +151,7 @@ class EloquentStorage implements Storage
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function upsert(object $entity): void
     {
@@ -169,7 +169,7 @@ class EloquentStorage implements Storage
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function truncate(string $entityClassName): void
     {
