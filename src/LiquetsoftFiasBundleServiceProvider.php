@@ -15,10 +15,13 @@ use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
 use Liquetsoft\Fias\Component\EntityRegistry\PhpArrayFileRegistry;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer;
+use Liquetsoft\Fias\Component\FiasStatusChecker\CurlStatusChecker;
+use Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusChecker;
 use Liquetsoft\Fias\Component\FilesDispatcher\EntityFileDispatcher;
 use Liquetsoft\Fias\Component\FilesDispatcher\FilesDispatcher;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
+use Liquetsoft\Fias\Component\Pipeline\Task\CheckStatusTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataDeleteTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataInsertTask;
@@ -44,6 +47,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\DownloadCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallFromFolderCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\InstallParallelRunningCommand;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\StatusCheckCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\TruncateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateFromFolderCommand;
@@ -110,6 +114,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     VersionsCommand::class,
                     VersionSetCommand::class,
                     DownloadCommand::class,
+                    StatusCheckCommand::class,
                 ]
             );
         }
@@ -143,6 +148,14 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         // объект, который получает ссылку на ФИАС через soap-клиент
         $servicesList[FiasInformer::class] = function (): FiasInformer {
             return new SoapFiasInformer($this->getOptionString('informer_wsdl'));
+        };
+
+        // объект, который проверяет статус ФИАС
+        $servicesList[FiasStatusChecker::class] = function (Application $app): FiasStatusChecker {
+            return new CurlStatusChecker(
+                $this->getOptionString('informer_wsdl'),
+                $app->get(FiasInformer::class)
+            );
         };
 
         // объект, который загружает файлы
@@ -216,6 +229,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                 $this->getOptionString('temp_dir')
             );
         };
+
+        // задача для проверки статуса ФИАС
+        $servicesList[$this->prefixString('task.status.check')] = CheckStatusTask::class;
 
         // задача для получения ссылки на полную версию
         $servicesList[$this->prefixString('task.inform.full')] = InformFullTask::class;
@@ -309,6 +325,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[$this->prefixString('pipe.install')] = function (Application $app): Pipe {
             return new ArrayPipe(
                 [
+                    $app->get($this->prefixString('task.status.check')),
                     $app->get($this->prefixString('task.prepare.folder')),
                     $app->get($this->prefixString('task.inform.full')),
                     $app->get($this->prefixString('task.download')),
@@ -340,6 +357,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[$this->prefixString('pipe.update')] = function (Application $app): Pipe {
             return new ArrayPipe(
                 [
+                    $app->get($this->prefixString('task.status.check')),
                     $app->get($this->prefixString('task.version.get')),
                     $app->get($this->prefixString('task.prepare.folder')),
                     $app->get($this->prefixString('task.inform.delta')),
