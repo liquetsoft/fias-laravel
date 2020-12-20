@@ -18,7 +18,7 @@ use SplFileInfo;
 class ModelTestGenerator extends AbstractGenerator
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace): void
     {

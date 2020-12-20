@@ -13,7 +13,7 @@ use Exception;
 class TimestampCaster implements TypeCaster
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function canCast(string $type, $value): bool
     {

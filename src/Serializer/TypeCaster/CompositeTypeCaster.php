@@ -23,7 +23,7 @@ class CompositeTypeCaster implements TypeCaster
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function canCast(string $type, $value): bool
     {
@@ -40,7 +40,7 @@ class CompositeTypeCaster implements TypeCaster
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function cast(string $type, $value)
     {

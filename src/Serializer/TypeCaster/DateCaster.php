@@ -13,7 +13,7 @@ use Exception;
 class DateCaster implements TypeCaster
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function canCast(string $type, $value): bool
     {
