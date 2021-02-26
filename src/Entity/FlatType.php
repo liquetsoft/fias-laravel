@@ -34,7 +34,7 @@ class FlatType extends Model
         'shortname',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'fltypeid' => 'integer',
         'name' => 'string',

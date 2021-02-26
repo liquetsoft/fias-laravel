@@ -21,7 +21,7 @@ class VersionsCommand extends Command
     protected $signature = 'liquetsoft:fias:versions';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $description = 'Shows information about current version, delta versions and full version.';
 

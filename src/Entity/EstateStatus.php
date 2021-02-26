@@ -34,7 +34,7 @@ class EstateStatus extends Model
         'shortname',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'eststatid' => 'integer',
         'name' => 'string',

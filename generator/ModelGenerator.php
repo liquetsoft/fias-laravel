@@ -120,7 +120,7 @@ class ModelGenerator extends AbstractGenerator
         $castValue = new PhpLiteral($this->createCastValue($descriptor));
         $class->addProperty('casts', $castValue)
             ->setVisibility('protected')
-            ->addComment('@var array<string, string>')
+            ->addComment('@var array')
         ;
     }
 

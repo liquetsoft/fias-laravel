@@ -7,8 +7,9 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 use Illuminate\Console\Command;
 use Liquetsoft\Fias\Component\Downloader\Downloader;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
-use Liquetsoft\Fias\Component\Helper\FileSystemHelper;
 use Liquetsoft\Fias\Component\Unpacker\Unpacker;
+use Marvin255\FileSystemHelper\FileSystemFactory;
+use Marvin255\FileSystemHelper\FileSystemHelperInterface;
 use RuntimeException;
 use SplFileInfo;
 
@@ -25,7 +26,7 @@ class DownloadCommand extends Command
     protected $signature = 'liquetsoft:fias:download {pathToDownload} {version=' . self::FULL_VERSION_NAME . '} {--X|extract}';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $description = 'Downloads set version of FIAS.';
 
@@ -44,6 +45,11 @@ class DownloadCommand extends Command
      */
     private $informer;
 
+    /**
+     * @var FileSystemHelperInterface
+     */
+    private $fs;
+
     public function __construct(
         Downloader $downloader,
         Unpacker $unpacker,
@@ -54,6 +60,7 @@ class DownloadCommand extends Command
         $this->downloader = $downloader;
         $this->unpacker = $unpacker;
         $this->informer = $informer;
+        $this->fs = FileSystemFactory::create();
     }
 
     /**
@@ -145,19 +152,13 @@ class DownloadCommand extends Command
         $extractTo = $archive->getPath() . DIRECTORY_SEPARATOR . $archive->getBasename('.zip');
         $extractTo = new SplFileInfo($extractTo);
 
-        if ($extractTo->isDir()) {
-            FileSystemHelper::remove($extractTo);
-        }
-
-        if (mkdir($extractTo->getPathname(), 0777, true) === false) {
-            $message = sprintf("Can't create die '%s' to extract an archive.", $extractTo->getPathname());
-            throw new RuntimeException($message);
-        }
+        $this->fs->mkdirIfNotExist($extractTo);
+        $this->fs->emptyDir($extractTo);
 
         $this->info("Extracting '{$archive->getPathname()}' to '{$extractTo->getPathname()}'.");
         $this->unpacker->unpack($archive, $extractTo);
 
         $this->info("Removing '{$archive->getPathname()}' after extraction.");
-        unlink($archive->getRealPath());
+        $this->fs->remove($archive);
     }
 }

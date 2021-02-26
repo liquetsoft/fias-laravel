@@ -24,7 +24,7 @@ class UpdateCommand extends Command
     protected $signature = 'liquetsoft:fias:update';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $description = 'Updates FIAS to latest version.';
 

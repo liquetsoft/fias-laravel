@@ -83,7 +83,7 @@ class House extends Model
         'cadnum',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'houseid' => 'string',
         'houseguid' => 'string',

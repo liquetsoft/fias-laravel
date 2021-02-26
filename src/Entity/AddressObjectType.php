@@ -39,7 +39,7 @@ class AddressObjectType extends Model
         'scname',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'kod_t_st' => 'string',
         'level' => 'integer',

@@ -32,7 +32,7 @@ class CurrentStatus extends Model
         'name',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'curentstid' => 'integer',
         'name' => 'string',

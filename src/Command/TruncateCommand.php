@@ -22,7 +22,7 @@ class TruncateCommand extends Command
     protected $signature = 'liquetsoft:fias:truncate';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $description = 'Truncates storage for binded entities.';
 
