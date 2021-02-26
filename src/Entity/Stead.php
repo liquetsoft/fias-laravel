@@ -93,7 +93,7 @@ class Stead extends Model
         'cadnum',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'steadguid' => 'string',
         'number' => 'string',

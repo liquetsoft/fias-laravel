@@ -6,9 +6,10 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests;
 
 use Faker\Factory;
 use Faker\Generator;
+use Marvin255\FileSystemHelper\FileSystemException;
+use Marvin255\FileSystemHelper\FileSystemFactory;
+use Marvin255\FileSystemHelper\FileSystemHelperInterface;
 use PHPUnit\Framework\TestCase;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
 use RuntimeException;
 
 /**
@@ -20,6 +21,11 @@ abstract class BaseCase extends TestCase
      * @var Generator|null
      */
     private $faker = null;
+
+    /**
+     * @var FileSystemHelperInterface|null
+     */
+    private $fs = null;
 
     /**
      * @var string|null
@@ -45,11 +51,26 @@ abstract class BaseCase extends TestCase
     }
 
     /**
+     * Возвращает объект для работы с файловой системой.
+     *
+     * @return FileSystemHelperInterface
+     */
+    public function fs(): FileSystemHelperInterface
+    {
+        if ($this->fs === null) {
+            $this->fs = FileSystemFactory::create();
+        }
+
+        return $this->fs;
+    }
+
+    /**
      * Возвращает путь до базовой папки для тестов.
      *
      * @return string
      *
      * @throws RuntimeException
+     * @throws FileSystemException
      */
     protected function getTempDir(): string
     {
@@ -61,12 +82,8 @@ abstract class BaseCase extends TestCase
                 );
             }
             $this->tempDir .= DIRECTORY_SEPARATOR . 'fias_component';
-            $this->removeDir($this->tempDir);
-            if (!mkdir($this->tempDir, 0777, true)) {
-                throw new RuntimeException(
-                    "Can't create temporary folder: {$this->tempDir}"
-                );
-            }
+            $this->fs()->mkdirIfNotExist($this->tempDir);
+            $this->fs()->emptyDir($this->tempDir);
         }
 
         return $this->tempDir;
@@ -80,6 +97,7 @@ abstract class BaseCase extends TestCase
      * @return string
      *
      * @throws RuntimeException
+     * @throws FileSystemException
      */
     protected function getPathToTestDir(string $name = ''): string
     {
@@ -88,9 +106,8 @@ abstract class BaseCase extends TestCase
         }
 
         $pathToFolder = $this->getTempDir() . DIRECTORY_SEPARATOR . $name;
-        if (!mkdir($pathToFolder, 0777, true)) {
-            throw new RuntimeException("Can't mkdir {$pathToFolder} folder");
-        }
+
+        $this->fs()->mkdir($pathToFolder);
 
         return $pathToFolder;
     }
@@ -119,39 +136,12 @@ abstract class BaseCase extends TestCase
     }
 
     /**
-     * Удаляет содержимое папки.
-     *
-     * @param string $folderPath
-     */
-    protected function removeDir(string $folderPath)
-    {
-        if (is_dir($folderPath)) {
-            $it = new RecursiveDirectoryIterator(
-                $folderPath,
-                RecursiveDirectoryIterator::SKIP_DOTS
-            );
-            $files = new RecursiveIteratorIterator(
-                $it,
-                RecursiveIteratorIterator::CHILD_FIRST
-            );
-            foreach ($files as $file) {
-                if ($file->isDir()) {
-                    rmdir($file->getRealPath());
-                } elseif ($file->isFile()) {
-                    unlink($file->getRealPath());
-                }
-            }
-            rmdir($folderPath);
-        }
-    }
-
-    /**
      * Удаляет тестовую директорию и все ее содержимое.
      */
     protected function tearDown(): void
     {
         if ($this->tempDir) {
-            $this->removeDir($this->tempDir);
+            $this->fs()->remove($this->tempDir);
         }
 
         parent::tearDown();

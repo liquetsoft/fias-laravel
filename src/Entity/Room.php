@@ -84,7 +84,7 @@ class Room extends Model
         'roomcadnum',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'roomid' => 'string',
         'roomguid' => 'string',

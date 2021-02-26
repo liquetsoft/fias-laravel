@@ -34,7 +34,7 @@ class ActualStatus extends Model
         'name',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'actstatid' => 'integer',
         'name' => 'string',

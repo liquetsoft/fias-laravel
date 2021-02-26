@@ -47,7 +47,7 @@ class OperationStatus extends Model
         'name',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'operstatid' => 'integer',
         'name' => 'string',

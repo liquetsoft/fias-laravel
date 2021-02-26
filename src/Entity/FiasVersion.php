@@ -35,7 +35,7 @@ class FiasVersion extends Model
         'created_at',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'version' => 'integer',
         'url' => 'string',

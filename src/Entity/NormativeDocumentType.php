@@ -32,7 +32,7 @@ class NormativeDocumentType extends Model
         'name',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'ndtypeid' => 'integer',
         'name' => 'string',

@@ -30,5 +30,5 @@ test: ## Run tests
 coverage: ## Run tests with coverage
 	$(php_container_bin) composer run-script coverage
 
-entites: ## Build entities from yaml file with description
-	$(php_container_bin) composer run-script entites
+entities: ## Build entities from yaml file with description
+	$(php_container_bin) composer run-script entities

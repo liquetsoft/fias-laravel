@@ -44,7 +44,7 @@ class NormativeDocument extends Model
         'docimgid',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'normdocid' => 'string',
         'docname' => 'string',

@@ -127,7 +127,7 @@ class AddressObject extends Model
         'normdoc',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'aoid' => 'string',
         'aoguid' => 'string',

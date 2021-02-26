@@ -32,7 +32,7 @@ class CenterStatus extends Model
         'name',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'centerstid' => 'integer',
         'name' => 'string',

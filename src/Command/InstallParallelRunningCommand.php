@@ -22,7 +22,7 @@ class InstallParallelRunningCommand extends Command
     protected $signature = 'liquetsoft:fias:install_parallel_running {files_to_insert} {files_to_delete}';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $description = 'Command for running parallel installation.';
 

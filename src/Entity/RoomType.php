@@ -34,7 +34,7 @@ class RoomType extends Model
         'shortname',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'rmtypeid' => 'integer',
         'name' => 'string',
