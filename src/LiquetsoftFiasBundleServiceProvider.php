@@ -37,6 +37,7 @@ use Liquetsoft\Fias\Component\Pipeline\Task\TruncateTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\UnpackTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\VersionGetTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\VersionSetTask;
+use Liquetsoft\Fias\Component\Storage\CompositeStorage;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Liquetsoft\Fias\Component\Unpacker\Unpacker;
 use Liquetsoft\Fias\Component\Unpacker\ZipUnpacker;
@@ -77,7 +78,15 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     {
         $descriptions = $this->getServicesDescriptions();
         foreach ($descriptions as $key => $description) {
+            if (strpos($key, '#') !== false) {
+                [$key, $tag] = explode('#', $key);
+            } else {
+                $tag = null;
+            }
             $this->app->singleton($key, $description);
+            if ($tag !== null) {
+                $this->app->tag([$key], $tag);
+            }
         }
 
         $this->mergeConfigFrom(
@@ -189,6 +198,14 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
         // объект для записи данных в БД
         $servicesList[Storage::class] = function (Application $app): Storage {
+            return new CompositeStorage(
+                $app->tagged($this->prefixString('storage'))
+            );
+        };
+
+        // объект для записи данных в Eloquent
+        $eloquentName = $this->prefixString('storage.eloquent') . '#' . $this->prefixString('storage');
+        $servicesList[$eloquentName] = function (Application $app): Storage {
             return new EloquentStorage(
                 $this->getOptionInt('insert_batch_count'),
                 $app->get(LoggerInterface::class)
