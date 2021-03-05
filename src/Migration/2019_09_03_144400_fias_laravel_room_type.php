@@ -16,8 +16,8 @@ class FiasLaravelRoomType extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('fias_laravel_room_type');
-        Schema::create('fias_laravel_room_type', function (Blueprint $table) {
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_room_type');
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_room_type', function (Blueprint $table) {
             // создание полей таблицы
             $table->unsignedInteger('rmtypeid')->nullable(false)->comment('Тип комнаты')->primary();
             $table->string('name', 20)->nullable(false)->comment('Наименование');
@@ -34,6 +34,6 @@ class FiasLaravelRoomType extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fias_laravel_room_type');
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_room_type');
     }
 }

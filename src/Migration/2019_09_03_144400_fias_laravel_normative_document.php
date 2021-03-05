@@ -16,8 +16,8 @@ class FiasLaravelNormativeDocument extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('fias_laravel_normative_document');
-        Schema::create('fias_laravel_normative_document', function (Blueprint $table) {
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_normative_document');
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_normative_document', function (Blueprint $table) {
             // создание полей таблицы
             $table->uuid('normdocid')->nullable(false)->comment('Идентификатор нормативного документа')->primary();
             $table->text('docname')->nullable(true)->comment('Наименование документа');
@@ -37,6 +37,6 @@ class FiasLaravelNormativeDocument extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fias_laravel_normative_document');
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_normative_document');
     }
 }

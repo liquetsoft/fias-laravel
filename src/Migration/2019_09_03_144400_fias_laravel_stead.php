@@ -16,8 +16,8 @@ class FiasLaravelStead extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('fias_laravel_stead');
-        Schema::create('fias_laravel_stead', function (Blueprint $table) {
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_stead');
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_stead', function (Blueprint $table) {
             // создание полей таблицы
             $table->uuid('steadguid')->nullable(false)->comment('Глобальный уникальный идентификатор адресного объекта (земельного участка)');
             $table->string('number', 120)->nullable(true)->comment('Номер земельного участка');
@@ -53,6 +53,6 @@ class FiasLaravelStead extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fias_laravel_stead');
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_stead');
     }
 }

@@ -16,8 +16,8 @@ class FiasLaravelActualStatus extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('fias_laravel_actual_status');
-        Schema::create('fias_laravel_actual_status', function (Blueprint $table) {
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_actual_status');
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_actual_status', function (Blueprint $table) {
             // создание полей таблицы
             $table->unsignedInteger('actstatid')->nullable(false)->comment('Идентификатор статуса (ключ)')->primary();
             $table->string('name', 100)->nullable(false)->comment('Наименование 0 – Не актуальный 1 – Актуальный (последняя запись по адресному объекту)');
@@ -33,6 +33,6 @@ class FiasLaravelActualStatus extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fias_laravel_actual_status');
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_actual_status');
     }
 }

@@ -16,8 +16,8 @@ class FiasLaravelCenterStatus extends Migration
      */
     public function up(): void
     {
-        Schema::dropIfExists('fias_laravel_center_status');
-        Schema::create('fias_laravel_center_status', function (Blueprint $table) {
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_center_status');
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_center_status', function (Blueprint $table) {
             // создание полей таблицы
             $table->unsignedInteger('centerstid')->nullable(false)->comment('Идентификатор статуса')->primary();
             $table->string('name', 100)->nullable(false)->comment('Наименование');
@@ -33,6 +33,6 @@ class FiasLaravelCenterStatus extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fias_laravel_center_status');
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_center_status');
     }
 }
