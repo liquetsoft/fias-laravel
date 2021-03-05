@@ -204,7 +204,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         };
 
         // объект для записи данных в Eloquent
-        $eloquentName = $this->prefixString('storage.eloquent') . '#' . $this->prefixString('storage.eloquent');
+        $eloquentName = $this->prefixString('storage.eloquent') . '#' . $this->prefixString('storage');
         $servicesList[$eloquentName] = function (Application $app): Storage {
             return new EloquentStorage(
                 $this->getOptionInt('insert_batch_count'),
