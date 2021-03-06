@@ -63,8 +63,8 @@ class MigrationGenerator extends AbstractGenerator
             ->setReturnType('void')
         ;
 
-        $method->addBody("Schema::dropIfExists('{$tableName}');");
-        $method->addBody("Schema::create('{$tableName}', function (Blueprint \$table) {");
+        $method->addBody("Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('{$tableName}');");
+        $method->addBody("Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('{$tableName}', function (Blueprint \$table) {");
         $method->addBody('    // создание полей таблицы');
         foreach ($descriptor->getFields() as $field) {
             $name = $this->unifyColumnName($field->getName());
@@ -167,7 +167,7 @@ class MigrationGenerator extends AbstractGenerator
             ->addComment("Удаление таблицы '{$tableName}'.")
             ->setVisibility('public')
             ->setReturnType('void')
-            ->addBody("Schema::dropIfExists('{$tableName}');")
+            ->addBody("Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('{$tableName}');")
         ;
     }
 }

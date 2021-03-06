@@ -122,6 +122,16 @@ class ModelGenerator extends AbstractGenerator
             ->setVisibility('protected')
             ->addComment('@var array')
         ;
+
+        $connectionMethod = "\$connection = \$this->connection;\n";
+        $connectionMethod .= "if (function_exists('app') && app()->has('config')) {\n";
+        $connectionMethod .= "    \$connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: \$this->connection;\n";
+        $connectionMethod .= "}\n\n";
+        $connectionMethod .= 'return $connection;';
+        $class->addMethod('getConnectionName')
+            ->addComment('@inheritDoc')
+            ->setBody($connectionMethod)
+        ;
     }
 
     /**
