@@ -140,15 +140,15 @@ class MigrationGenerator extends AbstractGenerator
             $partitionFields = implode(', ', $partitionFields);
             $method->addBody("\n");
             $method->addBody('//для mysql большие таблицы нужно разбивать на части');
-            $method->addBody('$connection = DB::connection();');
+            $method->addBody('$connection = DB::connection(config(\'liquetsoft_fias.eloquent_connection\'));');
             $method->addBody("if (\$connection instanceof Connection && \$connection->getDriverName() === 'mysql') {");
             if ($partitionFields) {
                 $method->addBody('    //поля для партицирования должны входить в каждый уникальный ключ, в т.ч. primary');
-                $method->addBody("    DB::connection()->unprepared('ALTER TABLE {$tableName} DROP PRIMARY KEY');");
-                $method->addBody("    DB::connection()->unprepared('ALTER TABLE {$tableName} ADD PRIMARY KEY({$partitioningPrimaries})');");
+                $method->addBody("    \$connection->unprepared('ALTER TABLE {$tableName} DROP PRIMARY KEY');");
+                $method->addBody("    \$connection->unprepared('ALTER TABLE {$tableName} ADD PRIMARY KEY({$partitioningPrimaries})');");
             }
             $method->addBody('    //разбиваем таблицу на части');
-            $method->addBody("    DB::connection()->unprepared('ALTER TABLE {$tableName} PARTITION BY KEY({$partitionFields}) PARTITIONS {$descriptor->getPartitionsCount()};');");
+            $method->addBody("    \$connection->unprepared('ALTER TABLE {$tableName} PARTITION BY KEY({$partitionFields}) PARTITIONS {$descriptor->getPartitionsCount()};');");
             $method->addBody('}');
         }
     }
