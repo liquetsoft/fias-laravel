@@ -47,10 +47,10 @@ class FiasLaravelRoom extends Migration
         });
 
         //для mysql большие таблицы нужно разбивать на части
-        $connection = DB::connection();
+        $connection = DB::connection(config('liquetsoft_fias.eloquent_connection'));
         if ($connection instanceof Connection && $connection->getDriverName() === 'mysql') {
             //разбиваем таблицу на части
-            DB::connection()->unprepared('ALTER TABLE fias_laravel_room PARTITION BY KEY() PARTITIONS 4;');
+            $connection->unprepared('ALTER TABLE fias_laravel_room PARTITION BY KEY() PARTITIONS 4;');
         }
     }
 

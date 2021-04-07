@@ -79,7 +79,7 @@ class ModelGenerator extends AbstractGenerator
                 $primaryName = $this->unifyColumnName($field->getName());
             }
             if ($field->isPrimary() && $field->getType() === 'string') {
-                $isPrimaryIsString = true;
+                $isPrimaryIsUuid = true;
             }
         }
 
@@ -104,7 +104,7 @@ class ModelGenerator extends AbstractGenerator
             ->addComment('@var string')
         ;
 
-        if ($isPrimaryIsString) {
+        if ($isPrimaryIsUuid) {
             $class->addProperty('keyType', 'string')
                 ->setVisibility('protected')
                 ->addComment('@var string')
