@@ -71,12 +71,13 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, dom, fileinfo, mysql
+          extensions: mbstring, dom, fileinfo, mysql, curl
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
-      - name: Install Laravel and fias-laravel
+      - name: Install Laravel
+        run: composer create-project laravel/laravel example-app
+      - name: Install FIAS
         run: |
-          composer create-project laravel/laravel example-app
           cd example-app
           composer req "liquetsoft/fias-laravel:dev-master"
           php artisan config:clear
