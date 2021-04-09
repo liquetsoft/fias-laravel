@@ -75,7 +75,10 @@ jobs:
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
       - name: Install Laravel
-        run: composer create-project laravel/laravel example-app
+        run: |
+          composer create-project laravel/laravel example-app
+          unzip ./tests/Pipeline/_fixtures/install.zip -d ./example-app/fias-data
+          ls ./example-app/fias-data
       - name: Install FIAS and check
         run: |
           cd example-app
