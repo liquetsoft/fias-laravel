@@ -7,29 +7,25 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
 
+
+  build:
     name: Liquetsoft FIAS (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
       matrix:
         php-versions: ['7.3', '7.4', '8.0']
-
     steps:
     - uses: actions/checkout@v2
-
     - name: Install PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-versions }}
-
     - name: Check PHP Version
       run: php -v
-
     - name: Validate composer.json and composer.lock
       run: composer validate
-
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v2
@@ -38,19 +34,53 @@ jobs:
         key: ${{ runner.os }}-php-${{ matrix.php-versions }}-${{ hashFiles('**/composer.json') }}
         restore-keys: |
           ${{ runner.os }}-php-
-
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
-
     - name: Run test suite
       run: composer run-script test
-
     - name: Run linters
       run: composer run-script linter
 
-    - name: Run laravel installation check
-      run: |
-        composer create-project laravel/laravel example-app
-        cd example-app
-        composer req "liquetsoft/fias-laravel: dev-master"
+
+  laravel:
+    name: Testing installation to laravel
+    runs-on: ubuntu-latest
+    env:
+      DB_DATABASE: laravel
+      DB_USERNAME: root
+      DB_PASSWORD: password
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: false
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: laravel
+        ports:
+          - 3306/tcp
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['7.3', '7.4', '8.0']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, dom, fileinfo, mysql
+      - name: Start mysql service
+        run: sudo /etc/init.d/mysql start
+      - name: Install Laravel and fias-laravel
+        run: |
+          composer create-project laravel/laravel example-app
+          cd example-app
+          composer req "liquetsoft/fias-laravel:dev-master"
+          php artisan config:clear
+          php artisan migrate -v
+        env:
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+          REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
