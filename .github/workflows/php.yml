@@ -85,6 +85,7 @@ jobs:
           php artisan config:clear
           php artisan migrate -v
           php artisan liquetsoft:fias:install_from_folder ./fias-data
+          php artisan liquetsoft:fias:version_set 202104
           php artisan liquetsoft:fias:status
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
