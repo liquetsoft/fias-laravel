@@ -76,7 +76,7 @@ jobs:
         run: sudo /etc/init.d/mysql start
       - name: Install Laravel
         run: composer create-project laravel/laravel example-app
-      - name: Install FIAS
+      - name: Install FIAS and check
         run: |
           cd example-app
           composer req "liquetsoft/fias-laravel:dev-master"
