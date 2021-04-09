@@ -83,7 +83,6 @@ jobs:
           php artisan config:clear
           php artisan migrate -v
           php artisan liquetsoft:fias:status
-          php artisan liquetsoft:fias:versions
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
