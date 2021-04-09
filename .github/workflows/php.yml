@@ -48,3 +48,9 @@ jobs:
 
     - name: Run linters
       run: composer run-script linter
+
+    - name: Run laravel installation check
+      run: |
+        composer create-project laravel/laravel example-app
+        cd example-app
+        composer req "liquetsoft/fias-laravel: dev-master"
