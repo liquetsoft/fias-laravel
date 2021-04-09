@@ -75,13 +75,18 @@ jobs:
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
       - name: Install Laravel
-        run: composer create-project laravel/laravel example-app
+        run: |
+          composer create-project laravel/laravel example-app
+          unzip ./tests/Pipeline/_fixtures/install.zip -d ./example-app/fias-data-install
+          unzip ./tests/Pipeline/_fixtures/update.zip -d ./example-app/fias-data-update
       - name: Install FIAS and check
         run: |
           cd example-app
           composer req "liquetsoft/fias-laravel:dev-master"
           php artisan config:clear
           php artisan migrate -v
+          php artisan liquetsoft:fias:install_from_folder ./fias-data-install
+          php artisan liquetsoft:fias:update_from_folder ./fias-data-update
           php artisan liquetsoft:fias:status
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
