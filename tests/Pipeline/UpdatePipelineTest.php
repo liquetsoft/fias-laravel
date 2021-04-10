@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
 
+use DateTimeImmutable;
 use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityManager\BaseEntityManager;
@@ -114,7 +115,7 @@ class UpdatePipelineTest extends EloquentTestCase
             [
                 'testId' => 555,
                 'testName' => 'to insert',
-                'startDate' => new \DateTimeImmutable('2019-11-11 11:11:11'),
+                'startDate' => new DateTimeImmutable('2019-11-11 11:11:11'),
                 'uuid' => '123e4567-e89b-12d3-a456-426655440005',
             ]
         );
