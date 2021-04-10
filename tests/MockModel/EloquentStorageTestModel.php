@@ -30,7 +30,7 @@ class EloquentStorageTestModel extends Model
         'test_date',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'id' => 'integer',
         'name' => 'string',

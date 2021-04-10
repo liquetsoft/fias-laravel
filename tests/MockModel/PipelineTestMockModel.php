@@ -31,7 +31,7 @@ class PipelineTestMockModel extends Model
         'uuid',
     ];
 
-    /** @var array<string, string> */
+    /** @var array */
     protected $casts = [
         'testId' => 'integer',
         'testName' => 'string',

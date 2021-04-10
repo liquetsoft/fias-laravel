@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Serializer;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\MockModel\FiasSerializerMock;
 use stdClass;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
@@ -130,42 +130,4 @@ EOT;
 
         $this->assertSame('', $model->getAttribute('name'));
     }
-}
-
-/**
- * Мок для проверки десериалищации.
- */
-class FiasSerializerMock extends Model
-{
-    /**
-     * @var string
-     */
-    protected $dateFormat = 'Y-m-d H:i';
-
-    /**
-     * @var array
-     */
-    protected $fillable = [
-        'ACTSTATID',
-        'name',
-        'floatNum',
-        'boolVal',
-        'test_date_val',
-        'timestamp',
-        'defaultItem',
-        'nullableCast',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $casts = [
-        'ACTSTATID' => 'integer',
-        'name' => 'string',
-        'floatNum' => 'double',
-        'boolVal' => 'boolean',
-        'test_date_val' => 'datetime',
-        'timestamp' => 'timestamp',
-        'nullableCast' => 'string',
-    ];
 }
