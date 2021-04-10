@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityRegistry\ArrayEntityRegistry;

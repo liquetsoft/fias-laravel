@@ -128,7 +128,7 @@ class EloquentDenormalizer implements DenormalizerInterface
         $fields = $entity->getFillable();
         foreach ($fields as $field) {
             $loweredField = strtolower($field);
-            if (in_array($loweredField, $nameVariants)) {
+            if (\in_array($loweredField, $nameVariants)) {
                 $mappedName = $field;
                 break;
             }

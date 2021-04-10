@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster;
 
-use DateTime;
 use Exception;
 
 /**
@@ -27,6 +26,6 @@ class DateCaster implements TypeCaster
      */
     public function cast(string $type, $value)
     {
-        return new DateTime($value);
+        return new \DateTimeImmutable($value);
     }
 }

@@ -17,7 +17,7 @@ class FiasLaravelStructureStatus extends Migration
     public function up(): void
     {
         Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_structure_status');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_structure_status', function (Blueprint $table) {
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_structure_status', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('strstatid')->nullable(false)->comment('Признак строения')->primary();
             $table->string('name', 20)->nullable(false)->comment('Наименование');

@@ -17,7 +17,7 @@ class ActualStatus extends BaseCase
     /**
      * Проверяет, что ресурс верно преобразует сущность в массив.
      */
-    public function testToArray()
+    public function testToArray(): void
     {
         $model = new stdClass();
         $model->actstatid = $this->createFakeData()->numberBetween(1, 1000000);

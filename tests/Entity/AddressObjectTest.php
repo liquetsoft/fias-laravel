@@ -9,13 +9,15 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 
 /**
  * Тест для модели 'AddressObject'.
+ *
+ * @internal
  */
 class AddressObjectTest extends BaseCase
 {
     /**
      * Проверяет, что модель привязана к правильной таблице в базе.
      */
-    public function testGetTable()
+    public function testGetTable(): void
     {
         $model = new AddressObject();
 
@@ -25,7 +27,7 @@ class AddressObjectTest extends BaseCase
     /**
      * Проверяет, что в модели доступны для заполнения все поля.
      */
-    public function testGetFillable()
+    public function testGetFillable(): void
     {
         $model = new AddressObject();
         $fields = $model->getFillable();
@@ -73,7 +75,7 @@ class AddressObjectTest extends BaseCase
     /**
      * Проверяет, что в модель не исрользует autoincrement.
      */
-    public function testGetIncrementing()
+    public function testGetIncrementing(): void
     {
         $model = new AddressObject();
 
@@ -83,10 +85,10 @@ class AddressObjectTest extends BaseCase
     /**
      * Проверяет, что в модели правильно задана обработка первичного ключа.
      */
-    public function testGetKeyType()
+    public function testGetKeyType(): void
     {
         $model = new AddressObject();
 
-        $this->assertEquals('string', $model->getKeyType());
+        $this->assertSame('string', $model->getKeyType());
     }
 }

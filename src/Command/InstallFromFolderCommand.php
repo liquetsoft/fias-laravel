@@ -48,7 +48,7 @@ class InstallFromFolderCommand extends Command
     public function handle(): void
     {
         $folder = $this->argument('folder');
-        $folder = realpath(is_array($folder) ? (string) reset($folder) : (string) $folder);
+        $folder = realpath(\is_array($folder) ? (string) reset($folder) : (string) $folder);
         if (!is_dir($folder)) {
             throw new InvalidArgumentException("Can't find '{$folder}' folder to read FIAS files.");
         }

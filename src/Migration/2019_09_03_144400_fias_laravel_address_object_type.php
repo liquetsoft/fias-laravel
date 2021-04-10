@@ -17,7 +17,7 @@ class FiasLaravelAddressObjectType extends Migration
     public function up(): void
     {
         Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_address_object_type');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_address_object_type', function (Blueprint $table) {
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_address_object_type', function (Blueprint $table): void {
             // создание полей таблицы
             $table->string('kod_t_st', 4)->nullable(false)->comment('Ключевое поле')->primary();
             $table->unsignedInteger('level')->nullable(false)->comment('Уровень адресного объекта');

@@ -50,13 +50,13 @@ class InstallParallelRunningCommand extends Command
     public function handle(): void
     {
         $filesToInsert = $this->argument('files_to_insert');
-        if (is_array($filesToInsert)) {
+        if (\is_array($filesToInsert)) {
             $filesToInsert = reset($filesToInsert);
         }
         $filesToInsert = json_decode((string) $filesToInsert, true);
 
         $filesToDelete = $this->argument('files_to_delete');
-        if (is_array($filesToDelete)) {
+        if (\is_array($filesToDelete)) {
             $filesToDelete = reset($filesToDelete);
         }
         $filesToDelete = json_decode((string) $filesToDelete, true);

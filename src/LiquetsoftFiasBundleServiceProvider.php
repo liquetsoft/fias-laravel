@@ -415,7 +415,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     {
         $option = $this->getOptionByName($name);
 
-        return is_string($option) ? $option : '';
+        return \is_string($option) ? $option : '';
     }
 
     /**
@@ -429,7 +429,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     {
         $option = $this->getOptionByName($name);
 
-        return is_int($option) ? $option : 0;
+        return \is_int($option) ? $option : 0;
     }
 
     /**
@@ -443,7 +443,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     {
         $option = $this->getOptionByName($name);
 
-        return is_array($option) ? $option : [];
+        return \is_array($option) ? $option : [];
     }
 
     /**

@@ -9,13 +9,15 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 
 /**
  * Тест для модели 'CenterStatus'.
+ *
+ * @internal
  */
 class CenterStatusTest extends BaseCase
 {
     /**
      * Проверяет, что модель привязана к правильной таблице в базе.
      */
-    public function testGetTable()
+    public function testGetTable(): void
     {
         $model = new CenterStatus();
 
@@ -25,7 +27,7 @@ class CenterStatusTest extends BaseCase
     /**
      * Проверяет, что в модели доступны для заполнения все поля.
      */
-    public function testGetFillable()
+    public function testGetFillable(): void
     {
         $model = new CenterStatus();
         $fields = $model->getFillable();
@@ -37,7 +39,7 @@ class CenterStatusTest extends BaseCase
     /**
      * Проверяет, что в модель не исрользует autoincrement.
      */
-    public function testGetIncrementing()
+    public function testGetIncrementing(): void
     {
         $model = new CenterStatus();
 

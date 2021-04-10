@@ -36,8 +36,11 @@ class MigrationGenerator extends AbstractGenerator
         $phpFile->addUse(Migration::class);
         $phpFile->addUse(Blueprint::class);
         $phpFile->addUse(Schema::class);
-        $phpFile->addUse(DB::class);
-        $phpFile->addUse(Connection::class);
+
+        if ($descriptor->getPartitionsCount() > 1) {
+            $phpFile->addUse(DB::class);
+            $phpFile->addUse(Connection::class);
+        }
 
         $class = $phpFile->addClass($className)->addExtend(Migration::class);
         $class->addComment("Миграция для создания сущности '{$descriptor->getName()}'.");
@@ -64,7 +67,7 @@ class MigrationGenerator extends AbstractGenerator
         ;
 
         $method->addBody("Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('{$tableName}');");
-        $method->addBody("Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('{$tableName}', function (Blueprint \$table) {");
+        $method->addBody("Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('{$tableName}', function (Blueprint \$table): void {");
         $method->addBody('    // создание полей таблицы');
         foreach ($descriptor->getFields() as $field) {
             $name = $this->unifyColumnName($field->getName());
@@ -138,7 +141,6 @@ class MigrationGenerator extends AbstractGenerator
             }
             $partitioningPrimaries = implode(', ', $partitioningPrimaries);
             $partitionFields = implode(', ', $partitionFields);
-            $method->addBody("\n");
             $method->addBody('//для mysql большие таблицы нужно разбивать на части');
             $method->addBody('$connection = DB::connection(config(\'liquetsoft_fias.eloquent_connection\'));');
             $method->addBody("if (\$connection instanceof Connection && \$connection->getDriverName() === 'mysql') {");

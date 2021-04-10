@@ -7,12 +7,17 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config file:///var/www/vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <directory name="./src" />
+        <directory name="./src"/>
+        <directory name="./tests"/>
         <ignoreFiles>
         </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
-        <PropertyNotSetInConstructor errorLevel="suppress" />
+        <PropertyNotSetInConstructor errorLevel="suppress"/>
     </issueHandlers>
+
+    <plugins>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+    </plugins>
 </psalm>

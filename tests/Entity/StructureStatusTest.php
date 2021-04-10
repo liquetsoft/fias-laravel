@@ -9,13 +9,15 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 
 /**
  * Тест для модели 'StructureStatus'.
+ *
+ * @internal
  */
 class StructureStatusTest extends BaseCase
 {
     /**
      * Проверяет, что модель привязана к правильной таблице в базе.
      */
-    public function testGetTable()
+    public function testGetTable(): void
     {
         $model = new StructureStatus();
 
@@ -25,7 +27,7 @@ class StructureStatusTest extends BaseCase
     /**
      * Проверяет, что в модели доступны для заполнения все поля.
      */
-    public function testGetFillable()
+    public function testGetFillable(): void
     {
         $model = new StructureStatus();
         $fields = $model->getFillable();
@@ -38,7 +40,7 @@ class StructureStatusTest extends BaseCase
     /**
      * Проверяет, что в модель не исрользует autoincrement.
      */
-    public function testGetIncrementing()
+    public function testGetIncrementing(): void
     {
         $model = new StructureStatus();
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Storage;
 
-use DateTime;
+use DateTimeImmutable;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage\EloquentStorage;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\EloquentTestCase;
@@ -12,6 +12,8 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\MockModel\EloquentStorage
 
 /**
  * Класс для проверки хранилища, которое использует eloquent.
+ *
+ * @internal
  */
 class EloquentStorageTest extends EloquentTestCase
 {
@@ -40,7 +42,7 @@ class EloquentStorageTest extends EloquentTestCase
     /**
      * Проверяет, что хранилище правильно распознает объект для обработки.
      */
-    public function testSupports()
+    public function testSupports(): void
     {
         $model = new EloquentStorageTestModel();
 
@@ -52,7 +54,7 @@ class EloquentStorageTest extends EloquentTestCase
     /**
      * Проверяет, что хранилище правильно распознает объект для обработки.
      */
-    public function testNotSupports()
+    public function testNotSupports(): void
     {
         $storage = new EloquentStorage();
 
@@ -62,7 +64,7 @@ class EloquentStorageTest extends EloquentTestCase
     /**
      * Проверяет, что хранилище правильно распознает класс для обработки.
      */
-    public function testSupportsClass()
+    public function testSupportsClass(): void
     {
         $storage = new EloquentStorage();
 
@@ -72,7 +74,7 @@ class EloquentStorageTest extends EloquentTestCase
     /**
      * Проверяет, что хранилище правильно распознает класс для обработки.
      */
-    public function testNotSupportsClass()
+    public function testNotSupportsClass(): void
     {
         $storage = new EloquentStorage();
 
@@ -82,11 +84,11 @@ class EloquentStorageTest extends EloquentTestCase
     /**
      * Проверяет, что объект верно вставит данные в хранилище.
      */
-    public function testInsert()
+    public function testInsert(): void
     {
         $id = $this->createFakeData()->numberBetween(1, 1000);
         $name = $this->createFakeData()->word;
-        $date = new DateTime();
+        $date = new DateTimeImmutable();
         $model = new EloquentStorageTestModel(
             [
                 'id' => $id,
@@ -97,7 +99,7 @@ class EloquentStorageTest extends EloquentTestCase
 
         $id1 = $id + 1;
         $name1 = $this->createFakeData()->word;
-        $date1 = new DateTime();
+        $date1 = new DateTimeImmutable();
         $model1 = new EloquentStorageTestModel(
             [
                 'id' => $id1,
@@ -133,11 +135,11 @@ class EloquentStorageTest extends EloquentTestCase
     /**
      * Проверяет, что объект верно обработает ситуацию, когда один из объектов нельзя вставить.
      */
-    public function testInsertFallback()
+    public function testInsertFallback(): void
     {
         $id = $this->createFakeData()->numberBetween(1002, 2000);
         $name = $this->createFakeData()->word;
-        $date = new DateTime();
+        $date = new DateTimeImmutable();
         $model = new EloquentStorageTestModel(
             [
                 'id' => $id,
@@ -173,7 +175,7 @@ class EloquentStorageTest extends EloquentTestCase
     /**
      * Проверяет, что объект выбросит исключение, если неверно указана модель для вставки.
      */
-    public function testInsertWrongObjectException()
+    public function testInsertWrongObjectException(): void
     {
         $storage = new EloquentStorage();
 
@@ -187,11 +189,11 @@ class EloquentStorageTest extends EloquentTestCase
     /**
      * Проверяет, что объект верно вставит или обновит данные в хранилище.
      */
-    public function testUpsert()
+    public function testUpsert(): void
     {
         $id = $this->createFakeData()->numberBetween(2002, 3000);
         $name = $this->createFakeData()->word;
-        $date = new DateTime('2020-10-10');
+        $date = new DateTimeImmutable('2020-10-10');
         $model = new EloquentStorageTestModel(
             [
                 'id' => $id,
@@ -201,7 +203,7 @@ class EloquentStorageTest extends EloquentTestCase
         );
 
         $name1 = $name . ' ' . $this->createFakeData()->word;
-        $date1 = new DateTime('2020-10-09');
+        $date1 = new DateTimeImmutable('2020-10-09');
         $model1 = new EloquentStorageTestModel(
             [
                 'id' => $id,
@@ -236,7 +238,7 @@ class EloquentStorageTest extends EloquentTestCase
     /**
      * Проверяет, что объект выбросит исключение, если неверно указана модель для обновления.
      */
-    public function testUpsertWrongObjectException()
+    public function testUpsertWrongObjectException(): void
     {
         $storage = new EloquentStorage();
 
@@ -250,14 +252,14 @@ class EloquentStorageTest extends EloquentTestCase
     /**
      * Проверяет, что объект верно вставит данные в хранилище.
      */
-    public function testTruncate()
+    public function testTruncate(): void
     {
         $id = $this->createFakeData()->numberBetween(3002, 4000);
         $model = new EloquentStorageTestModel(
             [
                 'id' => $id,
                 'name' => $this->createFakeData()->word,
-                'test_date' => new DateTime(),
+                'test_date' => new DateTimeImmutable(),
             ]
         );
 
@@ -266,7 +268,7 @@ class EloquentStorageTest extends EloquentTestCase
             [
                 'id' => $id1,
                 'name' => $this->createFakeData()->word,
-                'test_date' => new DateTime(),
+                'test_date' => new DateTimeImmutable(),
             ]
         );
 
@@ -295,7 +297,7 @@ class EloquentStorageTest extends EloquentTestCase
     /**
      * Проверяет, что объект выбросит исключение, если неверно указан класс для очистки таблицы.
      */
-    public function testTruncateWrongClassException()
+    public function testTruncateWrongClassException(): void
     {
         $storage = new EloquentStorage();
 
@@ -307,14 +309,14 @@ class EloquentStorageTest extends EloquentTestCase
     /**
      * Проверяет, что объект удалит данные из хранилища.
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $id = $this->createFakeData()->numberBetween(4002, 5000);
         $model = new EloquentStorageTestModel(
             [
                 'id' => $id,
                 'name' => $this->createFakeData()->word,
-                'test_date' => new DateTime(),
+                'test_date' => new DateTimeImmutable(),
             ]
         );
 
@@ -336,7 +338,7 @@ class EloquentStorageTest extends EloquentTestCase
     /**
      * Проверяет, что объект выбросит исключение, если неверно указан объект для удаления.
      */
-    public function testDeleteWrongClassException()
+    public function testDeleteWrongClassException(): void
     {
         $storage = new EloquentStorage();
 
