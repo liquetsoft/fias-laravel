@@ -124,12 +124,12 @@ class ModelGenerator extends AbstractGenerator
         ;
 
         $connectionMethod = "\$connection = \$this->connection;\n";
-        $connectionMethod .= "if (function_exists('app') && app()->has('config')) {\n";
+        $connectionMethod .= "if (\\function_exists('app') && app()->has('config')) {\n";
         $connectionMethod .= "    \$connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: \$this->connection;\n";
         $connectionMethod .= "}\n\n";
         $connectionMethod .= 'return $connection;';
         $class->addMethod('getConnectionName')
-            ->addComment('@inheritDoc')
+            ->addComment('{@inheritDoc}')
             ->setBody($connectionMethod)
         ;
     }

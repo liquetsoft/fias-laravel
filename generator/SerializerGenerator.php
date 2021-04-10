@@ -76,7 +76,7 @@ class SerializerGenerator extends AbstractGenerator
     {
         $constants = [];
 
-        $denormalizeBody = '$data = is_array($data) ? $data : [];' . "\n";
+        $denormalizeBody = '$data = \\is_array($data) ? $data : [];' . "\n";
         $denormalizeBody .= '$type = trim($type, " \t\n\r\0\x0B\\\\/");' . "\n\n";
         $denormalizeBody .= "\$entity = \$context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new \$type();\n\n";
         $denormalizeBody .= "if (!(\$entity instanceof Model)) {\n";
@@ -107,9 +107,9 @@ class SerializerGenerator extends AbstractGenerator
         $class->addConstant('ALLOWED_ENTITIES', $constants)->setPrivate();
 
         $supports = $class->addMethod('supportsDenormalization')
-            ->addComment("@inheritDoc\n")
+            ->addComment("{@inheritDoc}\n")
             ->setVisibility('public')
-            ->setBody('return in_array(trim($type, " \t\n\r\0\x0B\\\\/"), self::ALLOWED_ENTITIES);');
+            ->setBody('return \\in_array(trim($type, " \t\n\r\0\x0B\\\\/"), self::ALLOWED_ENTITIES);');
         $supports->addParameter('data');
         $supports->addParameter('type')->setType('string');
         $supports->addParameter('format', new PhpLiteral('null'))->setType('string');

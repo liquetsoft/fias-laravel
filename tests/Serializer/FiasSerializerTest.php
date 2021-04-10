@@ -14,13 +14,15 @@ use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 
 /**
  * Тест для проверки совместимости сериализатора и моделей eloquent.
+ *
+ * @internal
  */
 class FiasSerializerTest extends BaseCase
 {
     /**
      * Проверяет, что xml верно конвертируется в модель.
      */
-    public function testDenormalize()
+    public function testDenormalize(): void
     {
         $data = <<<EOT
 <ActualStatus
@@ -42,7 +44,7 @@ EOT;
         $this->assertSame(10, $model->ACTSTATID);
         $this->assertSame('test', $model->name);
         $this->assertSame(10.1, $model->floatNum);
-        $this->assertSame(true, $model->boolVal);
+        $this->assertTrue($model->boolVal);
         $this->assertInstanceOf(Carbon::class, $model->test_date_val);
         $this->assertSame('2019-10-10 10:10', $model->test_date_val->format('Y-m-d H:i'));
         $this->assertSame(10101010, $model->timestamp);
@@ -53,7 +55,7 @@ EOT;
     /**
      * Проверяет, что xml верно конвертируется в указанный объект.
      */
-    public function testDenormalizeToObject()
+    public function testDenormalizeToObject(): void
     {
         $data = <<<EOT
 <ActualStatus
@@ -77,7 +79,7 @@ EOT;
         $this->assertSame(10, $model->ACTSTATID);
         $this->assertSame('test', $model->name);
         $this->assertSame(10.1, $model->floatNum);
-        $this->assertSame(true, $model->boolVal);
+        $this->assertTrue($model->boolVal);
         $this->assertInstanceOf(Carbon::class, $model->test_date_val);
         $this->assertSame('2019-10-10 10:10', $model->test_date_val->format('Y-m-d H:i'));
         $this->assertSame(10101010, $model->timestamp);
@@ -88,7 +90,7 @@ EOT;
     /**
      * Проверяет, что объект перехватит исключение в процессе приведения типов.
      */
-    public function testDenormalizeConvertException()
+    public function testDenormalizeConvertException(): void
     {
         $data = '<ActualStatus testDateVal="test"/>';
         $type = FiasSerializerMock::class;
@@ -102,7 +104,7 @@ EOT;
     /**
      * Проверяет, что объект выбросит исключение, если указан неверный объект для наполнения.
      */
-    public function testDenormalizeWrongObjectToPopulate()
+    public function testDenormalizeWrongObjectToPopulate(): void
     {
         $data = '<ActualStatus defaultItem="test"/>';
         $type = FiasSerializerMock::class;
@@ -118,7 +120,7 @@ EOT;
     /**
      * Проверяет, что пустая строка вернется как пустая строка, а не null.
      */
-    public function testDenormalizeEmptyString()
+    public function testDenormalizeEmptyString(): void
     {
         $data = '<ActualStatus name=""/>';
         $type = FiasSerializerMock::class;

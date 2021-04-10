@@ -61,13 +61,14 @@ class ModelTestGenerator extends AbstractGenerator
         $modelName = $this->unifyClassName($descriptor->getName());
         $tableName = $this->convertClassnameToTableName($descriptor->getName());
 
-        $class->addComment("Тест для модели '{$modelName}'.\n");
+        $class->addComment("Тест для модели '{$modelName}'.\n\n@internal\n");
 
         $class->addMethod('testGetTable')
             ->setVisibility('public')
             ->addComment('Проверяет, что модель привязана к правильной таблице в базе.')
             ->addBody("\$model = new {$modelName}();\n")
             ->addBody("\$this->assertSame('{$tableName}', \$model->getTable());")
+            ->setReturnType('void')
         ;
 
         $fillable = [];
@@ -83,13 +84,15 @@ class ModelTestGenerator extends AbstractGenerator
         $class->addMethod('testGetFillable')
             ->setVisibility('public')
             ->addComment('Проверяет, что в модели доступны для заполнения все поля.')
+            ->setReturnType('void')
             ->addBody("\$model = new {$modelName}();")
             ->addBody("\$fields = \$model->getFillable();\n")
-            ->addBody(implode(";\n", $fillable))
+            ->addBody(implode("\n", $fillable))
         ;
 
         $class->addMethod('testGetIncrementing')
             ->setVisibility('public')
+            ->setReturnType('void')
             ->addComment('Проверяет, что в модель не исрользует autoincrement.')
             ->addBody("\$model = new {$modelName}();\n")
             ->addBody('$this->assertFalse($model->getIncrementing());')
@@ -98,9 +101,10 @@ class ModelTestGenerator extends AbstractGenerator
         if ($isPrimaryIsUuid) {
             $class->addMethod('testGetKeyType')
                 ->setVisibility('public')
+                ->setReturnType('void')
                 ->addComment('Проверяет, что в модели правильно задана обработка первичного ключа.')
                 ->addBody("\$model = new {$modelName}();\n")
-                ->addBody('$this->assertEquals(\'string\', $model->getKeyType());')
+                ->addBody('$this->assertSame(\'string\', $model->getKeyType());')
             ;
         }
     }

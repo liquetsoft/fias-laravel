@@ -4,7 +4,7 @@ user_id := $(shell id -u)
 docker_compose_bin := $(shell command -v docker-compose 2> /dev/null) --file "docker/docker-compose.yml"
 php_container_bin := $(docker_compose_bin) run --rm -u "$(user_id)" "php"
 
-.PHONY : help build install shell fixer test coverage entites
+.PHONY : help build install shell fixer test coverage entities
 .DEFAULT_GOAL := build
 
 # --- [ Development tasks ] -------------------------------------------------------------------------------------------

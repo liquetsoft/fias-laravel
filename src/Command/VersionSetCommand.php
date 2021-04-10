@@ -91,7 +91,7 @@ class VersionSetCommand extends Command
     private function getNumber(): int
     {
         $number = $this->argument('number');
-        $number = is_array($number) ? (int) reset($number) : (int) $number;
+        $number = \is_array($number) ? (int) reset($number) : (int) $number;
         if ($number <= 0) {
             throw new InvalidArgumentException('Version number must integer instance more than 0.');
         }

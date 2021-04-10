@@ -9,13 +9,15 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 
 /**
  * Тест для модели 'NormativeDocument'.
+ *
+ * @internal
  */
 class NormativeDocumentTest extends BaseCase
 {
     /**
      * Проверяет, что модель привязана к правильной таблице в базе.
      */
-    public function testGetTable()
+    public function testGetTable(): void
     {
         $model = new NormativeDocument();
 
@@ -25,7 +27,7 @@ class NormativeDocumentTest extends BaseCase
     /**
      * Проверяет, что в модели доступны для заполнения все поля.
      */
-    public function testGetFillable()
+    public function testGetFillable(): void
     {
         $model = new NormativeDocument();
         $fields = $model->getFillable();
@@ -41,7 +43,7 @@ class NormativeDocumentTest extends BaseCase
     /**
      * Проверяет, что в модель не исрользует autoincrement.
      */
-    public function testGetIncrementing()
+    public function testGetIncrementing(): void
     {
         $model = new NormativeDocument();
 
@@ -51,10 +53,10 @@ class NormativeDocumentTest extends BaseCase
     /**
      * Проверяет, что в модели правильно задана обработка первичного ключа.
      */
-    public function testGetKeyType()
+    public function testGetKeyType(): void
     {
         $model = new NormativeDocument();
 
-        $this->assertEquals('string', $model->getKeyType());
+        $this->assertSame('string', $model->getKeyType());
     }
 }

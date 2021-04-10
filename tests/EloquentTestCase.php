@@ -52,7 +52,7 @@ abstract class EloquentTestCase extends BaseCase
     {
         $message = sprintf(
             "Can't find '%s' row in '%s' table.",
-            json_encode($fields, JSON_UNESCAPED_UNICODE),
+            json_encode($fields, \JSON_UNESCAPED_UNICODE),
             $table
         );
 
@@ -71,7 +71,7 @@ abstract class EloquentTestCase extends BaseCase
     {
         $message = sprintf(
             "Row '%s' exists in '%s' table.",
-            json_encode($fields, JSON_UNESCAPED_UNICODE),
+            json_encode($fields, \JSON_UNESCAPED_UNICODE),
             $table
         );
 
@@ -91,7 +91,7 @@ abstract class EloquentTestCase extends BaseCase
         Manager::schema()->dropIfExists($tableName);
         Manager::schema()->create(
             $tableName,
-            function (Blueprint $table) use ($columns) {
+            function (Blueprint $table) use ($columns): void {
                 foreach ($columns as $columnName => $columnDescription) {
                     $this->createColumn($table, $columnName, $columnDescription);
                 }
@@ -117,10 +117,10 @@ abstract class EloquentTestCase extends BaseCase
         } elseif ($type === 'datetime') {
             $column = $table->datetime($name);
         } else {
-            $column = $table->string($name, intval($description['type'] ?? 255));
+            $column = $table->string($name, (int) ($description['type'] ?? 255));
         }
 
-        $column->nullable(boolval($description['nullable'] ?? false));
+        $column->nullable((bool) ($description['nullable'] ?? false));
 
         if (isset($description['default'])) {
             $column->default($description['default']);

@@ -90,7 +90,7 @@ class DownloadCommand extends Command
     private function getVersion(): string
     {
         $version = $this->argument('version');
-        $version = (string) (is_array($version) ? reset($version) : $version);
+        $version = (string) (\is_array($version) ? reset($version) : $version);
 
         return $version;
     }
@@ -104,8 +104,8 @@ class DownloadCommand extends Command
     {
         $version = $this->getVersion();
         $target = $this->argument('pathToDownload');
-        $target = (string) (is_array($target) ? reset($target) : $target);
-        $target = rtrim($target, '/\\') . DIRECTORY_SEPARATOR . 'fias_' . $version . '.zip';
+        $target = (string) (\is_array($target) ? reset($target) : $target);
+        $target = rtrim($target, '/\\') . \DIRECTORY_SEPARATOR . 'fias_' . $version . '.zip';
 
         return new SplFileInfo($target);
     }
@@ -149,7 +149,7 @@ class DownloadCommand extends Command
      */
     private function extract(SplFileInfo $archive): void
     {
-        $extractTo = $archive->getPath() . DIRECTORY_SEPARATOR . $archive->getBasename('.zip');
+        $extractTo = $archive->getPath() . \DIRECTORY_SEPARATOR . $archive->getBasename('.zip');
         $extractTo = new SplFileInfo($extractTo);
 
         $this->fs->mkdirIfNotExist($extractTo);

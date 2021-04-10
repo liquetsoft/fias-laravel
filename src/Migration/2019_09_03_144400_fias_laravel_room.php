@@ -19,7 +19,7 @@ class FiasLaravelRoom extends Migration
     public function up(): void
     {
         Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_room');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_room', function (Blueprint $table) {
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_room', function (Blueprint $table): void {
             // создание полей таблицы
             $table->uuid('roomid')->nullable(false)->comment('Уникальный идентификатор записи. Ключевое поле.')->primary();
             $table->uuid('roomguid')->nullable(false)->comment('Глобальный уникальный идентификатор адресного объекта (помещения)');
@@ -45,7 +45,6 @@ class FiasLaravelRoom extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
         });
-
         //для mysql большие таблицы нужно разбивать на части
         $connection = DB::connection(config('liquetsoft_fias.eloquent_connection'));
         if ($connection instanceof Connection && $connection->getDriverName() === 'mysql') {

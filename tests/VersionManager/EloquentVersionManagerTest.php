@@ -12,6 +12,8 @@ use RuntimeException;
 
 /**
  * Класс для проверки менеджера версий ФИАС.
+ *
+ * @internal
  */
 class EloquentVersionManagerTest extends EloquentTestCase
 {
@@ -40,7 +42,7 @@ class EloquentVersionManagerTest extends EloquentTestCase
     /**
      * Проверяет, что объект верно задает текущую версию ФИАС.
      */
-    public function testSetCurrentVersion()
+    public function testSetCurrentVersion(): void
     {
         $version = $this->createFakeData()->numberBetween(1, 1000);
         $url = $this->createFakeData()->url;
@@ -64,7 +66,7 @@ class EloquentVersionManagerTest extends EloquentTestCase
     /**
      * Проверяет, что объект выбросит исключение, если задан неверный класс сущности.
      */
-    public function testSetCurrentVersionWrongEntityException()
+    public function testSetCurrentVersionWrongEntityException(): void
     {
         $info = $this->getMockBuilder(InformerResponse::class)->getMock();
 
@@ -77,7 +79,7 @@ class EloquentVersionManagerTest extends EloquentTestCase
     /**
      * Проверяет, что объект правильно получает текущую версию.
      */
-    public function testGetCurrentVersion()
+    public function testGetCurrentVersion(): void
     {
         $version = $this->createFakeData()->numberBetween(1, 1000);
         $url = $this->createFakeData()->url;
@@ -98,7 +100,7 @@ class EloquentVersionManagerTest extends EloquentTestCase
     /**
      * Проверяет, что объект выбросит исключение, если задан неверный класс сущности.
      */
-    public function testGetCurrentVersionWrongEntityException()
+    public function testGetCurrentVersionWrongEntityException(): void
     {
         $versionManager = new EloquentVersionManager('test');
 

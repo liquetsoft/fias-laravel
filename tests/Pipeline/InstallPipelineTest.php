@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
 
-use DateTime;
 use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityManager\BaseEntityManager;
@@ -33,6 +32,8 @@ use SplFileInfo;
 
 /**
  * Тест для объекта папйлайна для установки базы данных.
+ *
+ * @internal
  */
 class InstallPipelineTest extends EloquentTestCase
 {
@@ -80,7 +81,7 @@ class InstallPipelineTest extends EloquentTestCase
     /**
      * Тест для проверки пайплайна с установкой ФИАС с ноля.
      */
-    public function testInstall()
+    public function testInstall(): void
     {
         $testDir = $this->getPathToTestDir();
         $testArchive = "{$testDir}/install.zip";
@@ -114,7 +115,7 @@ class InstallPipelineTest extends EloquentTestCase
             [
                 'testId' => 321,
                 'testName' => 'to insert',
-                'startDate' => new DateTime('2019-11-11 11:11:11'),
+                'startDate' => new \DateTimeImmutable('2019-11-11 11:11:11'),
                 'uuid' => '123e4567-e89b-12d3-a456-426655440001',
             ]
         );

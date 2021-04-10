@@ -66,13 +66,13 @@ class ResourceGenerator extends AbstractGenerator
     protected function decorateClass(ClassType $class, EntityDescriptor $descriptor): void
     {
         $entityName = $this->unifyClassName($descriptor->getName());
-        $class->addComment("Ресурс для сущности '{$entityName}'.");
+        $class->addComment("Ресурс для сущности '{$entityName}'.\n");
 
         $toArray = [];
         foreach ($descriptor->getFields() as $field) {
             $toArray[] = $this->decorateProperty($class, $field);
         }
-        $methodBody = "return [\n    " . implode(",\n    ", $toArray) . "\n];";
+        $methodBody = "return [\n    " . implode(",\n    ", $toArray) . ",\n];";
 
         $method = $class->addMethod('toArray')
             ->addComment("Преобразует сущность '{$entityName}' в массив.\n")

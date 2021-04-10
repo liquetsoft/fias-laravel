@@ -46,7 +46,7 @@ class ActualStatus extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config')) {
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }
 

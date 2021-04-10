@@ -17,7 +17,7 @@ class AddressObjectType extends BaseCase
     /**
      * Проверяет, что ресурс верно преобразует сущность в массив.
      */
-    public function testToArray()
+    public function testToArray(): void
     {
         $model = new stdClass();
         $model->kod_t_st = $this->createFakeData()->word;

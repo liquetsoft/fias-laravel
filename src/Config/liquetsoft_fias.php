@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ActualStatus;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddressObject;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddressObjectType;

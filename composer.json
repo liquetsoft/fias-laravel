@@ -6,7 +6,7 @@
   "license": "MIT",
   "require": {
     "php": ">=7.3",
-    "liquetsoft/fias-component": "^8.0",
+    "liquetsoft/fias-component": "^9.0",
     "illuminate/database": "^6.0|^7.0|^8.0",
     "laravel/framework": "^6.0|^7.0|^8.0"
   },
@@ -38,9 +38,16 @@
   "scripts": {
     "test": "vendor/bin/phpunit --configuration phpunit.xml.dist",
     "coverage": "vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-html=tests/coverage",
-    "fixer": "vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v",
-    "linter": "vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --stop-on-violation && vendor/bin/phpcpd ./ --exclude vendor --exclude src/Model --exclude tests && vendor/bin/psalm --show-info=true",
-    "entities": "php -f generator/generate_entities.php && vendor/bin/php-cs-fixer fix --config=.php_cs.dist -q"
+    "fixer": "vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --allow-risky=yes",
+    "linter": [
+        "vendor/bin/php-cs-fixer fix --config=.php_cs.dist -v --dry-run --stop-on-violation --allow-risky=yes",
+        "vendor/bin/phpcpd ./ --exclude vendor --exclude src/Model --exclude tests",
+        "vendor/bin/psalm --show-info=true"
+    ],
+    "entities": [
+        "php -f generator/generate_entities.php",
+        "vendor/bin/php-cs-fixer fix --config=.php_cs.dist --allow-risky=yes -q"
+    ]
   },
   "extra": {
     "laravel": {

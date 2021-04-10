@@ -17,7 +17,7 @@ class FiasLaravelCenterStatus extends Migration
     public function up(): void
     {
         Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_center_status');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_center_status', function (Blueprint $table) {
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_center_status', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('centerstid')->nullable(false)->comment('Идентификатор статуса')->primary();
             $table->string('name', 100)->nullable(false)->comment('Наименование');

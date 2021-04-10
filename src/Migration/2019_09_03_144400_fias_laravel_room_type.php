@@ -17,7 +17,7 @@ class FiasLaravelRoomType extends Migration
     public function up(): void
     {
         Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_room_type');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_room_type', function (Blueprint $table) {
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_room_type', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('rmtypeid')->nullable(false)->comment('Тип комнаты')->primary();
             $table->string('name', 20)->nullable(false)->comment('Наименование');

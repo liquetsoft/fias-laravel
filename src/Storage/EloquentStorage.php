@@ -107,7 +107,7 @@ class EloquentStorage implements Storage
      */
     public function supports(object $entity): bool
     {
-        return $this->supportsClass(get_class($entity));
+        return $this->supportsClass(\get_class($entity));
     }
 
     /**
@@ -125,7 +125,7 @@ class EloquentStorage implements Storage
     {
         $model = $this->checkIsEntityAllowedForEloquent($entity);
 
-        $class = get_class($model);
+        $class = \get_class($model);
         $this->insertData[$class][] = $this->collectValuesFromModel($model);
 
         $this->checkAndFlushInsert(false);
@@ -201,7 +201,7 @@ class EloquentStorage implements Storage
         if (!($entity instanceof Model)) {
             throw new StorageException(
                 "Entity must be instance of '" . Model::class
-                . "', got '" . get_class($entity) . "'."
+                . "', got '" . \get_class($entity) . "'."
             );
         }
 
@@ -240,7 +240,7 @@ class EloquentStorage implements Storage
      */
     protected function getColumnsListForModel(Model $model): array
     {
-        $class = get_class($model);
+        $class = \get_class($model);
 
         if (!isset($this->columnsLists[$class])) {
             $this->columnsLists[$class] = $model->getConnection()
@@ -263,7 +263,7 @@ class EloquentStorage implements Storage
     protected function checkAndFlushInsert(bool $forceInsert = false): void
     {
         foreach ($this->insertData as $className => $insertData) {
-            if ($forceInsert || count($insertData) >= $this->insertBatch) {
+            if ($forceInsert || \count($insertData) >= $this->insertBatch) {
                 $this->bulkInsert($className, $insertData);
                 unset($this->insertData[$className]);
             }

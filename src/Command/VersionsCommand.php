@@ -63,7 +63,7 @@ class VersionsCommand extends Command
         }
 
         $deltaVersions = $this->informer->getDeltaList();
-        $this->showTable('Delta versions of FIAS', array_slice($deltaVersions, 0, 15));
+        $this->showTable('Delta versions of FIAS', \array_slice($deltaVersions, 0, 15));
 
         $this->line('');
     }

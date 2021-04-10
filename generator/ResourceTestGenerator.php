@@ -48,14 +48,25 @@ class ResourceTestGenerator extends AbstractGenerator
      */
     protected function decorateNamespace(PhpNamespace $namespace, EntityDescriptor $descriptor): void
     {
+        $hasDateTime = false;
+        foreach ($descriptor->getFields() as $field) {
+            if ($field->getSubType() === 'date') {
+                $hasDateTime = true;
+                break;
+            }
+        }
+
         $namespace->addUse(BaseCase::class);
-        $namespace->addUse(stdClass::class);
         $namespace->addUse(Request::class);
-        $namespace->addUse(DateTimeInterface::class);
+        $namespace->addUse(stdClass::class);
         $namespace->addUse(
             'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Resource\\' . $this->unifyClassName($descriptor->getName()),
             'Resource'
         );
+
+        if ($hasDateTime) {
+            $namespace->addUse(DateTimeInterface::class);
+        }
     }
 
     /**
@@ -97,13 +108,14 @@ class ResourceTestGenerator extends AbstractGenerator
 
             $toArray[] = "\$model->{$name} = {$fake};";
         }
-        $methodBody = "\$model = new stdClass;\n" . implode("\n", $toArray);
+        $methodBody = "\$model = new stdClass();\n" . implode("\n", $toArray);
         $methodBody .= "\n\n\$resource = new Resource(\$model);";
         $methodBody .= "\n\$request = \$this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();";
         $methodBody .= "\n\$array = \$resource->toArray(\$request);";
         $methodBody .= "\n\n" . implode("\n", $toAssert);
 
         $method = $class->addMethod('testToArray')
+            ->setReturnType('void')
             ->addComment("Проверяет, что ресурс верно преобразует сущность в массив.\n")
             ->setVisibility('public')
             ->setBody($methodBody);

@@ -17,7 +17,7 @@ class FiasLaravelNormativeDocumentType extends Migration
     public function up(): void
     {
         Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_normative_document_type');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_normative_document_type', function (Blueprint $table) {
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_normative_document_type', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('ndtypeid')->nullable(false)->comment('Идентификатор записи (ключ)')->primary();
             $table->string('name', 250)->nullable(false)->comment('Наименование типа нормативного документа');

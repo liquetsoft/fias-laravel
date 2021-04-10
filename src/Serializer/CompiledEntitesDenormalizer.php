@@ -55,7 +55,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
      */
     public function supportsDenormalization($data, string $type, string $format = null)
     {
-        return in_array(trim($type, " \t\n\r\0\x0B\\/"), self::ALLOWED_ENTITIES);
+        return \in_array(trim($type, " \t\n\r\0\x0B\\/"), self::ALLOWED_ENTITIES);
     }
 
     /**
@@ -65,7 +65,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
      */
     public function denormalize($data, string $type, string $format = null, array $context = [])
     {
-        $data = is_array($data) ? $data : [];
+        $data = \is_array($data) ? $data : [];
         $type = trim($type, " \t\n\r\0\x0B\\/");
 
         $entity = $context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new $type();

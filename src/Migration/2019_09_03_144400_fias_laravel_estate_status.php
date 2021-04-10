@@ -17,7 +17,7 @@ class FiasLaravelEstateStatus extends Migration
     public function up(): void
     {
         Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_estate_status');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_estate_status', function (Blueprint $table) {
+        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_estate_status', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('eststatid')->nullable(false)->comment('Признак владения')->primary();
             $table->string('name', 20)->nullable(false)->comment('Наименование');
