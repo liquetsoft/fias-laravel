@@ -1,11 +1,12 @@
 <?php
 
+use PhpCsFixer\Config;
+
 $finder = PhpCsFixer\Finder::create()->in(__DIR__);
 
 $rules = [
     '@Symfony' => true,
     'new_with_braces' => true,
-    'phpdoc_inline_tag' => false,
     'concat_space' => ['spacing' => 'one'],
     'array_syntax' => ['syntax' => 'short'],
     'yoda_style' => false,
@@ -31,4 +32,4 @@ $rules = [
     'strict_comparison' => true,
 ];
 
-return PhpCsFixer\Config::create()->setRules($rules)->setFinder($finder);
+return (new Config())->setRules($rules)->setFinder($finder);
