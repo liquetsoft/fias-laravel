@@ -26,7 +26,7 @@ class DownloadCommand extends Command
     protected $signature = 'liquetsoft:fias:download {pathToDownload} {version=' . self::FULL_VERSION_NAME . '} {--X|extract}';
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $description = 'Downloads set version of FIAS.';
 

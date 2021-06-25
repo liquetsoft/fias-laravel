@@ -21,7 +21,7 @@ class InstallCommand extends Command
     protected $signature = 'liquetsoft:fias:install';
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $description = 'Installs full version of FIAS from scratch.';
 

@@ -18,7 +18,7 @@ class StatusCheckCommand extends Command
     protected $signature = 'liquetsoft:fias:status';
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $description = 'Shows information about current status of FIAS services.';
 

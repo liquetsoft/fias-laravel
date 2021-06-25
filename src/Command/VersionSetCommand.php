@@ -21,7 +21,7 @@ class VersionSetCommand extends Command
     protected $signature = 'liquetsoft:fias:version_set {number : Number of new version}';
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $description = 'Sets number of current version of FIAS.';
 

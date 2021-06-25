@@ -24,7 +24,7 @@ class InstallFromFolderCommand extends Command
     protected $signature = 'liquetsoft:fias:install_from_folder {folder : Path to folder with extracted FIAS files}';
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $description = 'Installs full version of FIAS from downloaded files saved in folder.';
 
