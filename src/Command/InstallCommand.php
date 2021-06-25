@@ -9,6 +9,7 @@ use Illuminate\Foundation\Application;
 use Liquetsoft\Fias\Component\Exception\PipeException;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
+use Throwable;
 
 /**
  * Консольная команда для установки ФИАС с ноля.
@@ -21,7 +22,7 @@ class InstallCommand extends Command
     protected $signature = 'liquetsoft:fias:install';
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $description = 'Installs full version of FIAS from scratch.';
 
@@ -52,7 +53,13 @@ class InstallCommand extends Command
         $start = microtime(true);
 
         $state = new ArrayState();
-        $this->pipeline->run($state);
+
+        try {
+            $this->pipeline->run($state);
+        } catch (Throwable $e) {
+            $massage = "Somethig went wrong during the installation. Please check the Laravel's log to get more information.";
+            throw new FiasConsoleException($massage, 0, $e);
+        }
 
         $total = round(microtime(true) - $start, 4);
         $this->info("Full version of FIAS installed after {$total} s.");

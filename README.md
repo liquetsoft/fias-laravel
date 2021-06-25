@@ -108,7 +108,7 @@
 Использование
 -------------
 
-Бандл определяет две значимых команды консоли:
+Бандл предоставляет несколько значимых команды консоли:
 
 1. Установка ФИАС с ноля
 
@@ -116,13 +116,47 @@
     php artisan liquetsoft:fias:install
     ```
 
-2. Обновление ФИАС через дельту
+2. Обновление ФИАС через дельту (установка запускается только в первый раз, а обновление следует поставить в качестве задачи для `cron`)
 
     ```bash
     php artisan liquetsoft:fias:update
     ```
 
-Соответственно, установка запускается только в первый раз, а обновление следует поставить в качестве задачи для `cron`.
+3. Текущий статус серверов ФИАС (сервис информирования или сервер с файлами могут быть недоступны по тем или иным причинам)
+
+    ```bash
+    php artisan liquetsoft:fias:status
+    ```
+
+4. Список доступных для установки и обновления версий ФИАС
+
+    ```bash
+    php artisan liquetsoft:fias:versions
+    ```
+
+5. Загрузка и распаковка архива с полной версией ФИАС
+
+    ```bash
+    php artisan liquetsoft:fias:download /path/to/download full --extract
+    ```
+
+6. Установка ФИАС из указанного каталога
+
+    ```bash
+    php artisan liquetsoft:fias:install_from_folder /path/to/extracted/fias
+    ```
+
+7. Обновление ФИАС из указанного каталога
+
+    ```bash
+    php artisan liquetsoft:fias:update_from_folder /path/to/extracted/fias
+    ```
+
+8. Принудительная установка номера текущей версии ФИАС
+
+    ```bash
+    php artisan liquetsoft:fias:version_set 20160101
+    ```
 
 
 

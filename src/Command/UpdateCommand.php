@@ -12,6 +12,7 @@ use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use RuntimeException;
+use Throwable;
 
 /**
  * Консольная команда для обновления ФИАС с текущей версии до самой новой.
@@ -24,7 +25,7 @@ class UpdateCommand extends Command
     protected $signature = 'liquetsoft:fias:update';
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $description = 'Updates FIAS to latest version.';
 
@@ -56,7 +57,12 @@ class UpdateCommand extends Command
 
         do {
             $state = new ArrayState();
-            $this->pipeline->run($state);
+            try {
+                $this->pipeline->run($state);
+            } catch (Throwable $e) {
+                $massage = "Somethig went wrong during the updating. Please check the Laravel's log to get more information.";
+                throw new FiasConsoleException($massage, 0, $e);
+            }
             $info = $state->getParameter(Task::FIAS_INFO_PARAM);
             if (!($info instanceof InformerResponse)) {
                 throw new RuntimeException(
