@@ -12,6 +12,7 @@ use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use SplFileInfo;
+use Throwable;
 
 /**
  * Консольная команда для установки ФИАС с ноля из указанного каталога, в котором находятся файлы.
@@ -59,7 +60,12 @@ class InstallFromFolderCommand extends Command
         $state = new ArrayState();
         $state->setAndLockParameter(Task::EXTRACT_TO_FOLDER_PARAM, new SplFileInfo($folder));
 
-        $this->pipeline->run($state);
+        try {
+            $this->pipeline->run($state);
+        } catch (Throwable $e) {
+            $massage = "Somethig went wrong during the installation from folder. Please check the Laravel's log to get more information.";
+            throw new FiasConsoleException($massage, 0, $e);
+        }
 
         $total = round(microtime(true) - $start, 4);
         $this->info("Full version of FIAS installed after {$total} s.");
