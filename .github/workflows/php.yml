@@ -78,8 +78,8 @@ jobs:
       - name: Install Laravel
         run: |
           composer create-project laravel/laravel example-app ${{ matrix.laravel-versions }}
-          unzip ./tests/Pipeline/_fixtures/install.zip -d ./example-app/fias-data-install
-          unzip ./tests/Pipeline/_fixtures/update.zip -d ./example-app/fias-data-update
+          unzip ./tests/Pipeline/_fixtures/install_AddressObject.zip -d ./example-app/fias-data-install
+          unzip ./tests/Pipeline/_fixtures/update_AddressObject.zip -d ./example-app/fias-data-update
       - name: Install FIAS and check
         run: |
           cd example-app
