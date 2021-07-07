@@ -108,7 +108,7 @@ class EloquentStorageTest extends EloquentTestCase
             ]
         );
 
-        $id2 = $id + 2;
+        $id2 = (string) ($id + 2);
         $name2 = $this->createFakeData()->word();
         $date2 = '2021-10-10 10:10:10';
         $model2 = new EloquentStorageTestModel(
