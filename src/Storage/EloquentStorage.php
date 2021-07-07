@@ -220,8 +220,9 @@ class EloquentStorage implements Storage
         $columns = $this->getColumnsListForModel($entity);
 
         $item = [];
+        $entityAttributes = $entity->getAttributes();
         foreach ($columns as $column) {
-            $columnValue = $entity->getAttribute($column);
+            $columnValue = $entityAttributes[$column] ?? null;
             if ($columnValue instanceof DateTimeInterface) {
                 $columnValue = $columnValue->format('Y-m-d H:i:s');
             }

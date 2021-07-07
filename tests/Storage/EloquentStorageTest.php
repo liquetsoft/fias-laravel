@@ -108,10 +108,22 @@ class EloquentStorageTest extends EloquentTestCase
             ]
         );
 
+        $id2 = $id + 2;
+        $name2 = $this->createFakeData()->word();
+        $date2 = '2021-10-10 10:10:10';
+        $model2 = new EloquentStorageTestModel(
+            [
+                'id' => $id2,
+                'name' => $name2,
+                'test_date' => $date2,
+            ]
+        );
+
         $storage = new EloquentStorage(1);
         $storage->start();
         $storage->insert($model);
         $storage->insert($model1);
+        $storage->insert($model2);
         $storage->stop();
 
         $this->assertDatabaseHasRow(
@@ -128,6 +140,14 @@ class EloquentStorageTest extends EloquentTestCase
                 'id' => $id1,
                 'name' => $name1,
                 'test_date' => $date1,
+            ]
+        );
+        $this->assertDatabaseHasRow(
+            'eloquent_storage_test_model',
+            [
+                'id' => $id2,
+                'name' => $name2,
+                'test_date' => $date2,
             ]
         );
     }
