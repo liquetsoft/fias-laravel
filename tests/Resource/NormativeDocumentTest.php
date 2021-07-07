@@ -21,12 +21,12 @@ class NormativeDocument extends BaseCase
     public function testToArray(): void
     {
         $model = new stdClass();
-        $model->normdocid = $this->createFakeData()->uuid;
-        $model->docname = $this->createFakeData()->word;
+        $model->normdocid = $this->createFakeData()->uuid();
+        $model->docname = $this->createFakeData()->word();
         $model->docdate = $this->createFakeData()->dateTime();
-        $model->docnum = $this->createFakeData()->word;
+        $model->docnum = $this->createFakeData()->word();
         $model->doctype = $this->createFakeData()->numberBetween(1, 1000000);
-        $model->docimgid = $this->createFakeData()->uuid;
+        $model->docimgid = $this->createFakeData()->uuid();
 
         $resource = new Resource($model);
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();

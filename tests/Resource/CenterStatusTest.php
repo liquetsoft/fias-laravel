@@ -21,7 +21,7 @@ class CenterStatus extends BaseCase
     {
         $model = new stdClass();
         $model->centerstid = $this->createFakeData()->numberBetween(1, 1000000);
-        $model->name = $this->createFakeData()->word;
+        $model->name = $this->createFakeData()->word();
 
         $resource = new Resource($model);
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();

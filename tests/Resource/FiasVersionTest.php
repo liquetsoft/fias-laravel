@@ -22,7 +22,7 @@ class FiasVersion extends BaseCase
     {
         $model = new stdClass();
         $model->version = $this->createFakeData()->numberBetween(1, 1000000);
-        $model->url = $this->createFakeData()->word;
+        $model->url = $this->createFakeData()->word();
         $model->created_at = $this->createFakeData()->dateTime();
 
         $resource = new Resource($model);

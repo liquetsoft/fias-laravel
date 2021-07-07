@@ -47,7 +47,7 @@
     ],
     "entities": [
         "php -f generator/generate_entities.php",
-        "vendor/bin/php-cs-fixer fix --config=.php_cs.dist --allow-risky=yes -q"
+        "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes -q"
     ]
   },
   "extra": {

@@ -45,7 +45,7 @@ class EloquentVersionManagerTest extends EloquentTestCase
     public function testSetCurrentVersion(): void
     {
         $version = $this->createFakeData()->numberBetween(1, 1000);
-        $url = $this->createFakeData()->url;
+        $url = $this->createFakeData()->url();
 
         $info = $this->getMockBuilder(InformerResponse::class)->getMock();
         $info->method('getVersion')->willReturn($version);
@@ -82,7 +82,7 @@ class EloquentVersionManagerTest extends EloquentTestCase
     public function testGetCurrentVersion(): void
     {
         $version = $this->createFakeData()->numberBetween(1, 1000);
-        $url = $this->createFakeData()->url;
+        $url = $this->createFakeData()->url();
 
         $info = $this->getMockBuilder(InformerResponse::class)->getMock();
         $info->method('getVersion')->willReturn($version);

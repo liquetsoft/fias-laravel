@@ -21,28 +21,28 @@ class Stead extends BaseCase
     public function testToArray(): void
     {
         $model = new stdClass();
-        $model->steadguid = $this->createFakeData()->uuid;
-        $model->number = $this->createFakeData()->word;
-        $model->regioncode = $this->createFakeData()->word;
-        $model->postalcode = $this->createFakeData()->word;
-        $model->ifnsfl = $this->createFakeData()->word;
-        $model->ifnsul = $this->createFakeData()->word;
-        $model->okato = $this->createFakeData()->word;
-        $model->oktmo = $this->createFakeData()->word;
-        $model->parentguid = $this->createFakeData()->uuid;
-        $model->steadid = $this->createFakeData()->uuid;
+        $model->steadguid = $this->createFakeData()->uuid();
+        $model->number = $this->createFakeData()->word();
+        $model->regioncode = $this->createFakeData()->word();
+        $model->postalcode = $this->createFakeData()->word();
+        $model->ifnsfl = $this->createFakeData()->word();
+        $model->ifnsul = $this->createFakeData()->word();
+        $model->okato = $this->createFakeData()->word();
+        $model->oktmo = $this->createFakeData()->word();
+        $model->parentguid = $this->createFakeData()->uuid();
+        $model->steadid = $this->createFakeData()->uuid();
         $model->operstatus = $this->createFakeData()->numberBetween(1, 1000000);
         $model->startdate = $this->createFakeData()->dateTime();
         $model->enddate = $this->createFakeData()->dateTime();
         $model->updatedate = $this->createFakeData()->dateTime();
         $model->livestatus = $this->createFakeData()->numberBetween(1, 1000000);
         $model->divtype = $this->createFakeData()->numberBetween(1, 1000000);
-        $model->normdoc = $this->createFakeData()->uuid;
-        $model->terrifnsfl = $this->createFakeData()->word;
-        $model->terrifnsul = $this->createFakeData()->word;
-        $model->previd = $this->createFakeData()->uuid;
-        $model->nextid = $this->createFakeData()->uuid;
-        $model->cadnum = $this->createFakeData()->word;
+        $model->normdoc = $this->createFakeData()->uuid();
+        $model->terrifnsfl = $this->createFakeData()->word();
+        $model->terrifnsul = $this->createFakeData()->word();
+        $model->previd = $this->createFakeData()->uuid();
+        $model->nextid = $this->createFakeData()->uuid();
+        $model->cadnum = $this->createFakeData()->word();
 
         $resource = new Resource($model);
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();

@@ -88,7 +88,7 @@ class UpdatePipelineTest extends EloquentTestCase
         copy(__DIR__ . '/_fixtures/update.zip', $testArchive);
 
         $version = $this->createFakeData()->numberBetween(1, 1000);
-        $versionUrl = $this->createFakeData()->url;
+        $versionUrl = $this->createFakeData()->url();
         $versionInfo = $this->getMockBuilder(InformerResponse::class)->getMock();
         $versionInfo->method('getVersion')->willReturn($version);
         $versionInfo->method('getUrl')->willReturn($versionUrl);
