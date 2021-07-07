@@ -93,7 +93,7 @@ class ResourceTestGenerator extends AbstractGenerator
                     $toAssert[] = "\$this->assertSame(\$model->{$name}, \$array['{$name}']);";
                     break;
                 case 'string_uuid':
-                    $fake = '$this->createFakeData()->uuid';
+                    $fake = '$this->createFakeData()->uuid()';
                     $toAssert[] = "\$this->assertSame(\$model->{$name}, \$array['{$name}']);";
                     break;
                 case 'string_date':
@@ -101,7 +101,7 @@ class ResourceTestGenerator extends AbstractGenerator
                     $toAssert[] = "\$this->assertSame(\$model->{$name}->format(DateTimeInterface::ATOM), \$array['{$name}']);";
                     break;
                 default:
-                    $fake = '$this->createFakeData()->word';
+                    $fake = '$this->createFakeData()->word()';
                     $toAssert[] = "\$this->assertSame(\$model->{$name}, \$array['{$name}']);";
                     break;
             }

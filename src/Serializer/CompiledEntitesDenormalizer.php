@@ -130,7 +130,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
                 break;
         }
 
-        $entity->fill($extractedData);
+        $entity->setRawAttributes($extractedData);
 
         return $entity;
     }

@@ -99,7 +99,7 @@ class SerializerGenerator extends AbstractGenerator
         $denormalizeBody .= "        throw new InvalidArgumentException(\$message);\n";
         $denormalizeBody .= "        break;\n";
         $denormalizeBody .= "}\n\n";
-        $denormalizeBody .= "\$entity->fill(\$extractedData);\n";
+        $denormalizeBody .= "\$entity->setRawAttributes(\$extractedData);\n";
         $denormalizeBody .= "\n";
         $denormalizeBody .= 'return $entity;';
 

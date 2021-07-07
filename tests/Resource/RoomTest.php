@@ -21,25 +21,25 @@ class Room extends BaseCase
     public function testToArray(): void
     {
         $model = new stdClass();
-        $model->roomid = $this->createFakeData()->uuid;
-        $model->roomguid = $this->createFakeData()->uuid;
-        $model->houseguid = $this->createFakeData()->uuid;
-        $model->regioncode = $this->createFakeData()->word;
-        $model->flatnumber = $this->createFakeData()->word;
+        $model->roomid = $this->createFakeData()->uuid();
+        $model->roomguid = $this->createFakeData()->uuid();
+        $model->houseguid = $this->createFakeData()->uuid();
+        $model->regioncode = $this->createFakeData()->word();
+        $model->flatnumber = $this->createFakeData()->word();
         $model->flattype = $this->createFakeData()->numberBetween(1, 1000000);
-        $model->postalcode = $this->createFakeData()->word;
+        $model->postalcode = $this->createFakeData()->word();
         $model->startdate = $this->createFakeData()->dateTime();
         $model->enddate = $this->createFakeData()->dateTime();
         $model->updatedate = $this->createFakeData()->dateTime();
         $model->operstatus = $this->createFakeData()->numberBetween(1, 1000000);
         $model->livestatus = $this->createFakeData()->numberBetween(1, 1000000);
-        $model->normdoc = $this->createFakeData()->uuid;
-        $model->roomnumber = $this->createFakeData()->word;
+        $model->normdoc = $this->createFakeData()->uuid();
+        $model->roomnumber = $this->createFakeData()->word();
         $model->roomtype = $this->createFakeData()->numberBetween(1, 1000000);
-        $model->previd = $this->createFakeData()->uuid;
-        $model->nextid = $this->createFakeData()->uuid;
-        $model->cadnum = $this->createFakeData()->word;
-        $model->roomcadnum = $this->createFakeData()->word;
+        $model->previd = $this->createFakeData()->uuid();
+        $model->nextid = $this->createFakeData()->uuid();
+        $model->cadnum = $this->createFakeData()->word();
+        $model->roomcadnum = $this->createFakeData()->word();
 
         $resource = new Resource($model);
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
