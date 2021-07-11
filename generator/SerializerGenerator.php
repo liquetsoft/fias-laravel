@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 
-use Carbon\Carbon;
+use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Nette\PhpGenerator\ClassType;
@@ -60,7 +60,7 @@ class SerializerGenerator extends AbstractGenerator
             $namespace->addUse($this->createModelClass($descriptor));
             foreach ($descriptor->getFields() as $field) {
                 if ($field->getSubType() === 'date') {
-                    $namespace->addUse(Carbon::class);
+                    $namespace->addUse(DateTimeImmutable::class);
                     break;
                 }
             }
@@ -151,7 +151,7 @@ class SerializerGenerator extends AbstractGenerator
                     $varType = "(int) \$data['{$xmlAttribute}']";
                     break;
                 case 'string_date':
-                    $varType = "Carbon::parse(trim(\$data['{$xmlAttribute}']))";
+                    $varType = "new DateTimeImmutable(\$data['{$xmlAttribute}'])";
                     break;
                 default:
                     $varType = "trim(\$data['{$xmlAttribute}'])";

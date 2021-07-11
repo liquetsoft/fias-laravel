@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer;
 
-use Carbon\Carbon;
+use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ActualStatus;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddressObject;
@@ -198,9 +198,9 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
             'flatnumber' => isset($data['@FLATNUMBER']) ? trim($data['@FLATNUMBER']) : null,
             'flattype' => isset($data['@FLATTYPE']) ? (int) $data['@FLATTYPE'] : null,
             'postalcode' => isset($data['@POSTALCODE']) ? trim($data['@POSTALCODE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? Carbon::parse(trim($data['@STARTDATE'])) : null,
-            'enddate' => isset($data['@ENDDATE']) ? Carbon::parse(trim($data['@ENDDATE'])) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? Carbon::parse(trim($data['@UPDATEDATE'])) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
             'operstatus' => isset($data['@OPERSTATUS']) ? (int) $data['@OPERSTATUS'] : null,
             'livestatus' => isset($data['@LIVESTATUS']) ? (int) $data['@LIVESTATUS'] : null,
             'normdoc' => isset($data['@NORMDOC']) ? trim($data['@NORMDOC']) : null,
@@ -267,9 +267,9 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
             'parentguid' => isset($data['@PARENTGUID']) ? trim($data['@PARENTGUID']) : null,
             'steadid' => isset($data['@STEADID']) ? trim($data['@STEADID']) : null,
             'operstatus' => isset($data['@OPERSTATUS']) ? (int) $data['@OPERSTATUS'] : null,
-            'startdate' => isset($data['@STARTDATE']) ? Carbon::parse(trim($data['@STARTDATE'])) : null,
-            'enddate' => isset($data['@ENDDATE']) ? Carbon::parse(trim($data['@ENDDATE'])) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? Carbon::parse(trim($data['@UPDATEDATE'])) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
             'livestatus' => isset($data['@LIVESTATUS']) ? (int) $data['@LIVESTATUS'] : null,
             'divtype' => isset($data['@DIVTYPE']) ? (int) $data['@DIVTYPE'] : null,
             'normdoc' => isset($data['@NORMDOC']) ? trim($data['@NORMDOC']) : null,
@@ -308,7 +308,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
         return [
             'normdocid' => isset($data['@NORMDOCID']) ? trim($data['@NORMDOCID']) : null,
             'docname' => isset($data['@DOCNAME']) ? trim($data['@DOCNAME']) : null,
-            'docdate' => isset($data['@DOCDATE']) ? Carbon::parse(trim($data['@DOCDATE'])) : null,
+            'docdate' => isset($data['@DOCDATE']) ? new DateTimeImmutable($data['@DOCDATE']) : null,
             'docnum' => isset($data['@DOCNUM']) ? trim($data['@DOCNUM']) : null,
             'doctype' => isset($data['@DOCTYPE']) ? (int) $data['@DOCTYPE'] : null,
             'docimgid' => isset($data['@DOCIMGID']) ? trim($data['@DOCIMGID']) : null,
@@ -404,9 +404,9 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
             'okato' => isset($data['@OKATO']) ? trim($data['@OKATO']) : null,
             'oktmo' => isset($data['@OKTMO']) ? trim($data['@OKTMO']) : null,
             'postalcode' => isset($data['@POSTALCODE']) ? trim($data['@POSTALCODE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? Carbon::parse(trim($data['@STARTDATE'])) : null,
-            'enddate' => isset($data['@ENDDATE']) ? Carbon::parse(trim($data['@ENDDATE'])) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? Carbon::parse(trim($data['@UPDATEDATE'])) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
             'divtype' => isset($data['@DIVTYPE']) ? (int) $data['@DIVTYPE'] : null,
             'normdoc' => isset($data['@NORMDOC']) ? trim($data['@NORMDOC']) : null,
         ];
@@ -434,9 +434,9 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
             'okato' => isset($data['@OKATO']) ? trim($data['@OKATO']) : null,
             'oktmo' => isset($data['@OKTMO']) ? trim($data['@OKTMO']) : null,
             'postalcode' => isset($data['@POSTALCODE']) ? trim($data['@POSTALCODE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? Carbon::parse(trim($data['@STARTDATE'])) : null,
-            'enddate' => isset($data['@ENDDATE']) ? Carbon::parse(trim($data['@ENDDATE'])) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? Carbon::parse(trim($data['@UPDATEDATE'])) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
             'counter' => isset($data['@COUNTER']) ? (int) $data['@COUNTER'] : null,
             'divtype' => isset($data['@DIVTYPE']) ? (int) $data['@DIVTYPE'] : null,
             'regioncode' => isset($data['@REGIONCODE']) ? trim($data['@REGIONCODE']) : null,
@@ -477,7 +477,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
         return [
             'version' => isset($data['@VERSION']) ? (int) $data['@VERSION'] : null,
             'url' => isset($data['@URL']) ? trim($data['@URL']) : null,
-            'created_at' => isset($data['@CREATED_AT']) ? Carbon::parse(trim($data['@CREATED_AT'])) : null,
+            'created_at' => isset($data['@CREATED_AT']) ? new DateTimeImmutable($data['@CREATED_AT']) : null,
         ];
     }
 }
