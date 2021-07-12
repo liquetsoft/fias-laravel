@@ -4,39 +4,39 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
-use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Сведения по номерам домов улиц городов и населенных пунктов.
  *
- * @property string      $houseid    Уникальный идентификатор записи дома
- * @property string      $houseguid  Глобальный уникальный идентификатор дома
- * @property string      $aoguid     Guid записи родительского объекта (улицы, города, населенного пункта и т.п.)
- * @property string|null $housenum   Номер дома
- * @property int|null    $strstatus  Признак строения
- * @property int         $eststatus  Признак владения
- * @property int         $statstatus Состояние дома
- * @property string|null $ifnsfl     Код ИФНС ФЛ
- * @property string|null $ifnsul     Код ИФНС ЮЛ
- * @property string|null $okato      OKATO
- * @property string|null $oktmo      OKTMO
- * @property string|null $postalcode Почтовый индекс
- * @property Carbon      $startdate  Начало действия записи
- * @property Carbon      $enddate    Окончание действия записи
- * @property Carbon      $updatedate Дата время внесения записи
- * @property int         $counter    Счетчик записей домов для КЛАДР 4
- * @property int         $divtype    Тип адресации:
- *                                   0 - не определено
- *                                   1 - муниципальный;
- *                                   2 - административно-территориальный
- * @property string|null $regioncode Код региона
- * @property string|null $terrifnsfl Код территориального участка ИФНС ФЛ
- * @property string|null $terrifnsul Код территориального участка ИФНС ЮЛ
- * @property string|null $buildnum   Номер корпуса
- * @property string|null $strucnum   Номер строения
- * @property string|null $normdoc    Внешний ключ на нормативный документ
- * @property string|null $cadnum     Кадастровый номер
+ * @property string            $houseid    Уникальный идентификатор записи дома
+ * @property string            $houseguid  Глобальный уникальный идентификатор дома
+ * @property string            $aoguid     Guid записи родительского объекта (улицы, города, населенного пункта и т.п.)
+ * @property string|null       $housenum   Номер дома
+ * @property int|null          $strstatus  Признак строения
+ * @property int               $eststatus  Признак владения
+ * @property int               $statstatus Состояние дома
+ * @property string|null       $ifnsfl     Код ИФНС ФЛ
+ * @property string|null       $ifnsul     Код ИФНС ЮЛ
+ * @property string|null       $okato      OKATO
+ * @property string|null       $oktmo      OKTMO
+ * @property string|null       $postalcode Почтовый индекс
+ * @property DateTimeInterface $startdate  Начало действия записи
+ * @property DateTimeInterface $enddate    Окончание действия записи
+ * @property DateTimeInterface $updatedate Дата время внесения записи
+ * @property int               $counter    Счетчик записей домов для КЛАДР 4
+ * @property int               $divtype    Тип адресации:
+ *                                         0 - не определено
+ *                                         1 - муниципальный;
+ *                                         2 - административно-территориальный
+ * @property string|null       $regioncode Код региона
+ * @property string|null       $terrifnsfl Код территориального участка ИФНС ФЛ
+ * @property string|null       $terrifnsul Код территориального участка ИФНС ЮЛ
+ * @property string|null       $buildnum   Номер корпуса
+ * @property string|null       $strucnum   Номер строения
+ * @property string|null       $normdoc    Внешний ключ на нормативный документ
+ * @property string|null       $cadnum     Кадастровый номер
  */
 class House extends Model
 {
