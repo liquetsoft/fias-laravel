@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 
-use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\EntityField;
@@ -51,7 +51,7 @@ class ModelGenerator extends AbstractGenerator
         $namespace->addUse(Model::class);
         foreach ($descriptor->getFields() as $field) {
             if ($field->getSubType() === 'date') {
-                $namespace->addUse(Carbon::class);
+                $namespace->addUse(DateTimeInterface::class);
             }
         }
     }
@@ -150,7 +150,7 @@ class ModelGenerator extends AbstractGenerator
                 $varType = 'int' . ($field->isNullable() ? '|null' : '');
                 break;
             case 'string_date':
-                $varType = 'Carbon' . ($field->isNullable() ? '|null' : '');
+                $varType = 'DateTimeInterface' . ($field->isNullable() ? '|null' : '');
                 break;
             default:
                 $varType = 'string' . ($field->isNullable() ? '|null' : '');
