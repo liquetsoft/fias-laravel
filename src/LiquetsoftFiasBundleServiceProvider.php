@@ -225,8 +225,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         // сервис, который разбивает обрабатываемые файлы между потоками
         $servicesList[FilesDispatcher::class] = function (Application $app): FilesDispatcher {
             return new EntityFileDispatcher(
-                $app->get(EntityManager::class),
-                $this->getOptionArray('entities_to_parallel')
+                $app->get(EntityManager::class)
             );
         };
     }

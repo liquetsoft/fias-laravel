@@ -49,21 +49,14 @@ class InstallParallelRunningCommand extends Command
      */
     public function handle(): void
     {
-        $filesToInsert = $this->argument('files_to_insert');
-        if (\is_array($filesToInsert)) {
-            $filesToInsert = reset($filesToInsert);
+        $files = $this->argument('files');
+        if (\is_array($files)) {
+            $files = reset($files);
         }
-        $filesToInsert = json_decode((string) $filesToInsert, true);
-
-        $filesToDelete = $this->argument('files_to_delete');
-        if (\is_array($filesToDelete)) {
-            $filesToDelete = reset($filesToDelete);
-        }
-        $filesToDelete = json_decode((string) $filesToDelete, true);
+        $files = json_decode((string) $files, true);
 
         $state = new ArrayState();
-        $state->setAndLockParameter(Task::FILES_TO_INSERT_PARAM, $filesToInsert);
-        $state->setAndLockParameter(Task::FILES_TO_DELETE_PARAM, $filesToDelete);
+        $state->setAndLockParameter(Task::FILES_TO_PROCEED, $files);
         $this->pipeline->run($state);
     }
 }

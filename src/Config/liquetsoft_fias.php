@@ -69,16 +69,6 @@ return [
         'StructureStatus' => StructureStatus::class,
     ],
     /*
-     * Список сущностей, которые должны обрабатываться в разных потоках.
-     */
-    'entities_to_parallel' => [
-        'AddressObject',
-        'House',
-        'Stead',
-        'Room',
-        'NormativeDocument',
-    ],
-    /*
      * Путь для запуска artisan.
      */
     'path_to_bin' => base_path('artisan'),
