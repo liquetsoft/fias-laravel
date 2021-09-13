@@ -57,7 +57,7 @@ class UpdateParallelRunningCommand extends Command
         if (!empty($files)) {
             $files = json_decode((string) $files, true);
         } else {
-            $stdIn = file_get_contents("php://stdin");
+            $stdIn = file_get_contents('php://stdin');
             if (!empty($stdIn)) {
                 $files = json_decode($stdIn, true);
             }
