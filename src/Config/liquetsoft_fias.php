@@ -67,7 +67,6 @@ return [
         'APARTMENT_TYPES' => ApartmentTypes::class,
         'CARPLACES' => Carplaces::class,
         'CHANGE_HISTORY' => ChangeHistory::class,
-        'FIAS_VERSION' => FiasVersion::class,
         'HOUSES' => Houses::class,
         'HOUSE_TYPES' => HouseTypes::class,
         'MUN_HIERARCHY' => MunHierarchy::class,
