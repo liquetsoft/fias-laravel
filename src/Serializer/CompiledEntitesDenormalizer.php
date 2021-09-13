@@ -6,22 +6,29 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer;
 
 use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Model;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ActualStatus;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddressObject;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddressObjectType;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\CenterStatus;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\CurrentStatus;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\EstateStatus;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddrObj;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddrObjDivision;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddrObjTypes;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AdmHierarchy;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Apartments;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ApartmentTypes;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Carplaces;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ChangeHistory;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FiasVersion;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FlatType;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\House;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\NormativeDocument;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\NormativeDocumentType;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\OperationStatus;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Room;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\RoomType;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Stead;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\StructureStatus;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Houses;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\HouseTypes;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\MunHierarchy;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\NormativeDocs;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\NormativeDocsKinds;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\NormativeDocsTypes;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ObjectLevels;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\OperationTypes;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Param;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ParamTypes;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ReestrObjects;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Rooms;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\RoomTypes;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Steads;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -32,21 +39,28 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 class CompiledEntitesDenormalizer implements DenormalizerInterface
 {
     private const ALLOWED_ENTITIES = [
-        FlatType::class,
-        ActualStatus::class,
-        OperationStatus::class,
-        Room::class,
-        AddressObjectType::class,
-        RoomType::class,
-        Stead::class,
-        CenterStatus::class,
-        NormativeDocument::class,
-        CurrentStatus::class,
-        NormativeDocumentType::class,
-        EstateStatus::class,
-        AddressObject::class,
-        House::class,
-        StructureStatus::class,
+        Rooms::class,
+        AddrObjTypes::class,
+        Param::class,
+        Steads::class,
+        Carplaces::class,
+        MunHierarchy::class,
+        NormativeDocsTypes::class,
+        ApartmentTypes::class,
+        OperationTypes::class,
+        Houses::class,
+        ChangeHistory::class,
+        Apartments::class,
+        HouseTypes::class,
+        NormativeDocsKinds::class,
+        ParamTypes::class,
+        RoomTypes::class,
+        NormativeDocs::class,
+        ObjectLevels::class,
+        AdmHierarchy::class,
+        AddrObjDivision::class,
+        ReestrObjects::class,
+        AddrObj::class,
         FiasVersion::class,
     ];
 
@@ -76,50 +90,71 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
         }
 
         switch ($type) {
-            case FlatType::class:
-                $extractedData = $this->modelFlatTypeDataExtractor($data);
+            case Rooms::class:
+                $extractedData = $this->modelRoomsDataExtractor($data);
                 break;
-            case ActualStatus::class:
-                $extractedData = $this->modelActualStatusDataExtractor($data);
+            case AddrObjTypes::class:
+                $extractedData = $this->modelAddrObjTypesDataExtractor($data);
                 break;
-            case OperationStatus::class:
-                $extractedData = $this->modelOperationStatusDataExtractor($data);
+            case Param::class:
+                $extractedData = $this->modelParamDataExtractor($data);
                 break;
-            case Room::class:
-                $extractedData = $this->modelRoomDataExtractor($data);
+            case Steads::class:
+                $extractedData = $this->modelSteadsDataExtractor($data);
                 break;
-            case AddressObjectType::class:
-                $extractedData = $this->modelAddressObjectTypeDataExtractor($data);
+            case Carplaces::class:
+                $extractedData = $this->modelCarplacesDataExtractor($data);
                 break;
-            case RoomType::class:
-                $extractedData = $this->modelRoomTypeDataExtractor($data);
+            case MunHierarchy::class:
+                $extractedData = $this->modelMunHierarchyDataExtractor($data);
                 break;
-            case Stead::class:
-                $extractedData = $this->modelSteadDataExtractor($data);
+            case NormativeDocsTypes::class:
+                $extractedData = $this->modelNormativeDocsTypesDataExtractor($data);
                 break;
-            case CenterStatus::class:
-                $extractedData = $this->modelCenterStatusDataExtractor($data);
+            case ApartmentTypes::class:
+                $extractedData = $this->modelApartmentTypesDataExtractor($data);
                 break;
-            case NormativeDocument::class:
-                $extractedData = $this->modelNormativeDocumentDataExtractor($data);
+            case OperationTypes::class:
+                $extractedData = $this->modelOperationTypesDataExtractor($data);
                 break;
-            case CurrentStatus::class:
-                $extractedData = $this->modelCurrentStatusDataExtractor($data);
+            case Houses::class:
+                $extractedData = $this->modelHousesDataExtractor($data);
                 break;
-            case NormativeDocumentType::class:
-                $extractedData = $this->modelNormativeDocumentTypeDataExtractor($data);
+            case ChangeHistory::class:
+                $extractedData = $this->modelChangeHistoryDataExtractor($data);
                 break;
-            case EstateStatus::class:
-                $extractedData = $this->modelEstateStatusDataExtractor($data);
+            case Apartments::class:
+                $extractedData = $this->modelApartmentsDataExtractor($data);
                 break;
-            case AddressObject::class:
-                $extractedData = $this->modelAddressObjectDataExtractor($data);
+            case HouseTypes::class:
+                $extractedData = $this->modelHouseTypesDataExtractor($data);
                 break;
-            case House::class:
-                $extractedData = $this->modelHouseDataExtractor($data);
+            case NormativeDocsKinds::class:
+                $extractedData = $this->modelNormativeDocsKindsDataExtractor($data);
                 break;
-            case StructureStatus::class:
-                $extractedData = $this->modelStructureStatusDataExtractor($data);
+            case ParamTypes::class:
+                $extractedData = $this->modelParamTypesDataExtractor($data);
+                break;
+            case RoomTypes::class:
+                $extractedData = $this->modelRoomTypesDataExtractor($data);
+                break;
+            case NormativeDocs::class:
+                $extractedData = $this->modelNormativeDocsDataExtractor($data);
+                break;
+            case ObjectLevels::class:
+                $extractedData = $this->modelObjectLevelsDataExtractor($data);
+                break;
+            case AdmHierarchy::class:
+                $extractedData = $this->modelAdmHierarchyDataExtractor($data);
+                break;
+            case AddrObjDivision::class:
+                $extractedData = $this->modelAddrObjDivisionDataExtractor($data);
+                break;
+            case ReestrObjects::class:
+                $extractedData = $this->modelReestrObjectsDataExtractor($data);
+                break;
+            case AddrObj::class:
+                $extractedData = $this->modelAddrObjDataExtractor($data);
                 break;
             case FiasVersion::class:
                 $extractedData = $this->modelFiasVersionDataExtractor($data);
@@ -136,332 +171,502 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     }
 
     /**
-     * Получает правильный массив данных для модели 'FlatType'.
+     * Получает правильный массив данных для модели 'Rooms'.
      *
      * @param array $data
      *
      * @return array
      */
-    private function modelFlatTypeDataExtractor(array $data): array
+    private function modelRoomsDataExtractor(array $data): array
     {
         return [
-            'fltypeid' => isset($data['@FLTYPEID']) ? (int) $data['@FLTYPEID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
-        ];
-    }
-
-    /**
-     * Получает правильный массив данных для модели 'ActualStatus'.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    private function modelActualStatusDataExtractor(array $data): array
-    {
-        return [
-            'actstatid' => isset($data['@ACTSTATID']) ? (int) $data['@ACTSTATID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-        ];
-    }
-
-    /**
-     * Получает правильный массив данных для модели 'OperationStatus'.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    private function modelOperationStatusDataExtractor(array $data): array
-    {
-        return [
-            'operstatid' => isset($data['@OPERSTATID']) ? (int) $data['@OPERSTATID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-        ];
-    }
-
-    /**
-     * Получает правильный массив данных для модели 'Room'.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    private function modelRoomDataExtractor(array $data): array
-    {
-        return [
-            'roomid' => isset($data['@ROOMID']) ? trim($data['@ROOMID']) : null,
-            'roomguid' => isset($data['@ROOMGUID']) ? trim($data['@ROOMGUID']) : null,
-            'houseguid' => isset($data['@HOUSEGUID']) ? trim($data['@HOUSEGUID']) : null,
-            'regioncode' => isset($data['@REGIONCODE']) ? trim($data['@REGIONCODE']) : null,
-            'flatnumber' => isset($data['@FLATNUMBER']) ? trim($data['@FLATNUMBER']) : null,
-            'flattype' => isset($data['@FLATTYPE']) ? (int) $data['@FLATTYPE'] : null,
-            'postalcode' => isset($data['@POSTALCODE']) ? trim($data['@POSTALCODE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'operstatus' => isset($data['@OPERSTATUS']) ? (int) $data['@OPERSTATUS'] : null,
-            'livestatus' => isset($data['@LIVESTATUS']) ? (int) $data['@LIVESTATUS'] : null,
-            'normdoc' => isset($data['@NORMDOC']) ? trim($data['@NORMDOC']) : null,
-            'roomnumber' => isset($data['@ROOMNUMBER']) ? trim($data['@ROOMNUMBER']) : null,
-            'roomtype' => isset($data['@ROOMTYPE']) ? (int) $data['@ROOMTYPE'] : null,
-            'previd' => isset($data['@PREVID']) ? trim($data['@PREVID']) : null,
-            'nextid' => isset($data['@NEXTID']) ? trim($data['@NEXTID']) : null,
-            'cadnum' => isset($data['@CADNUM']) ? trim($data['@CADNUM']) : null,
-            'roomcadnum' => isset($data['@ROOMCADNUM']) ? trim($data['@ROOMCADNUM']) : null,
-        ];
-    }
-
-    /**
-     * Получает правильный массив данных для модели 'AddressObjectType'.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    private function modelAddressObjectTypeDataExtractor(array $data): array
-    {
-        return [
-            'kod_t_st' => isset($data['@KOD_T_ST']) ? trim($data['@KOD_T_ST']) : null,
-            'level' => isset($data['@LEVEL']) ? (int) $data['@LEVEL'] : null,
-            'socrname' => isset($data['@SOCRNAME']) ? trim($data['@SOCRNAME']) : null,
-            'scname' => isset($data['@SCNAME']) ? trim($data['@SCNAME']) : null,
-        ];
-    }
-
-    /**
-     * Получает правильный массив данных для модели 'RoomType'.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    private function modelRoomTypeDataExtractor(array $data): array
-    {
-        return [
-            'rmtypeid' => isset($data['@RMTYPEID']) ? (int) $data['@RMTYPEID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
-        ];
-    }
-
-    /**
-     * Получает правильный массив данных для модели 'Stead'.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    private function modelSteadDataExtractor(array $data): array
-    {
-        return [
-            'steadguid' => isset($data['@STEADGUID']) ? trim($data['@STEADGUID']) : null,
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
             'number' => isset($data['@NUMBER']) ? trim($data['@NUMBER']) : null,
-            'regioncode' => isset($data['@REGIONCODE']) ? trim($data['@REGIONCODE']) : null,
-            'postalcode' => isset($data['@POSTALCODE']) ? trim($data['@POSTALCODE']) : null,
-            'ifnsfl' => isset($data['@IFNSFL']) ? trim($data['@IFNSFL']) : null,
-            'ifnsul' => isset($data['@IFNSUL']) ? trim($data['@IFNSUL']) : null,
-            'okato' => isset($data['@OKATO']) ? trim($data['@OKATO']) : null,
-            'oktmo' => isset($data['@OKTMO']) ? trim($data['@OKTMO']) : null,
-            'parentguid' => isset($data['@PARENTGUID']) ? trim($data['@PARENTGUID']) : null,
-            'steadid' => isset($data['@STEADID']) ? trim($data['@STEADID']) : null,
-            'operstatus' => isset($data['@OPERSTATUS']) ? (int) $data['@OPERSTATUS'] : null,
+            'roomtype' => isset($data['@ROOMTYPE']) ? (int) $data['@ROOMTYPE'] : null,
+            'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
+            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
+            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
             'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
             'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
+            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'AddrObjTypes'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelAddrObjTypesDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'level' => isset($data['@LEVEL']) ? (int) $data['@LEVEL'] : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
+            'desc' => isset($data['@DESC']) ? trim($data['@DESC']) : null,
             'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'livestatus' => isset($data['@LIVESTATUS']) ? (int) $data['@LIVESTATUS'] : null,
-            'divtype' => isset($data['@DIVTYPE']) ? (int) $data['@DIVTYPE'] : null,
-            'normdoc' => isset($data['@NORMDOC']) ? trim($data['@NORMDOC']) : null,
-            'terrifnsfl' => isset($data['@TERRIFNSFL']) ? trim($data['@TERRIFNSFL']) : null,
-            'terrifnsul' => isset($data['@TERRIFNSUL']) ? trim($data['@TERRIFNSUL']) : null,
-            'previd' => isset($data['@PREVID']) ? trim($data['@PREVID']) : null,
-            'nextid' => isset($data['@NEXTID']) ? trim($data['@NEXTID']) : null,
-            'cadnum' => isset($data['@CADNUM']) ? trim($data['@CADNUM']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
         ];
     }
 
     /**
-     * Получает правильный массив данных для модели 'CenterStatus'.
+     * Получает правильный массив данных для модели 'Param'.
      *
      * @param array $data
      *
      * @return array
      */
-    private function modelCenterStatusDataExtractor(array $data): array
+    private function modelParamDataExtractor(array $data): array
     {
         return [
-            'centerstid' => isset($data['@CENTERSTID']) ? (int) $data['@CENTERSTID'] : null,
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
+            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
+            'changeidend' => isset($data['@CHANGEIDEND']) ? (int) $data['@CHANGEIDEND'] : null,
+            'typeid' => isset($data['@TYPEID']) ? (int) $data['@TYPEID'] : null,
+            'value' => isset($data['@VALUE']) ? trim($data['@VALUE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'Steads'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelSteadsDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
+            'number' => isset($data['@NUMBER']) ? trim($data['@NUMBER']) : null,
+            'opertypeid' => isset($data['@OPERTYPEID']) ? trim($data['@OPERTYPEID']) : null,
+            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
+            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
+            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'Carplaces'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelCarplacesDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
+            'number' => isset($data['@NUMBER']) ? trim($data['@NUMBER']) : null,
+            'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
+            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
+            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
+            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'MunHierarchy'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelMunHierarchyDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
+            'parentobjid' => isset($data['@PARENTOBJID']) ? (int) $data['@PARENTOBJID'] : null,
+            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
+            'oktmo' => isset($data['@OKTMO']) ? trim($data['@OKTMO']) : null,
+            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
+            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'NormativeDocsTypes'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelNormativeDocsTypesDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
             'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
         ];
     }
 
     /**
-     * Получает правильный массив данных для модели 'NormativeDocument'.
+     * Получает правильный массив данных для модели 'ApartmentTypes'.
      *
      * @param array $data
      *
      * @return array
      */
-    private function modelNormativeDocumentDataExtractor(array $data): array
+    private function modelApartmentTypesDataExtractor(array $data): array
     {
         return [
-            'normdocid' => isset($data['@NORMDOCID']) ? trim($data['@NORMDOCID']) : null,
-            'docname' => isset($data['@DOCNAME']) ? trim($data['@DOCNAME']) : null,
-            'docdate' => isset($data['@DOCDATE']) ? new DateTimeImmutable($data['@DOCDATE']) : null,
-            'docnum' => isset($data['@DOCNUM']) ? trim($data['@DOCNUM']) : null,
-            'doctype' => isset($data['@DOCTYPE']) ? (int) $data['@DOCTYPE'] : null,
-            'docimgid' => isset($data['@DOCIMGID']) ? trim($data['@DOCIMGID']) : null,
-        ];
-    }
-
-    /**
-     * Получает правильный массив данных для модели 'CurrentStatus'.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    private function modelCurrentStatusDataExtractor(array $data): array
-    {
-        return [
-            'curentstid' => isset($data['@CURENTSTID']) ? (int) $data['@CURENTSTID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-        ];
-    }
-
-    /**
-     * Получает правильный массив данных для модели 'NormativeDocumentType'.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    private function modelNormativeDocumentTypeDataExtractor(array $data): array
-    {
-        return [
-            'ndtypeid' => isset($data['@NDTYPEID']) ? (int) $data['@NDTYPEID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-        ];
-    }
-
-    /**
-     * Получает правильный массив данных для модели 'EstateStatus'.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    private function modelEstateStatusDataExtractor(array $data): array
-    {
-        return [
-            'eststatid' => isset($data['@ESTSTATID']) ? (int) $data['@ESTSTATID'] : null,
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
             'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
             'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
+            'desc' => isset($data['@DESC']) ? trim($data['@DESC']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
         ];
     }
 
     /**
-     * Получает правильный массив данных для модели 'AddressObject'.
+     * Получает правильный массив данных для модели 'OperationTypes'.
      *
      * @param array $data
      *
      * @return array
      */
-    private function modelAddressObjectDataExtractor(array $data): array
+    private function modelOperationTypesDataExtractor(array $data): array
     {
         return [
-            'aoid' => isset($data['@AOID']) ? trim($data['@AOID']) : null,
-            'aoguid' => isset($data['@AOGUID']) ? trim($data['@AOGUID']) : null,
-            'parentguid' => isset($data['@PARENTGUID']) ? trim($data['@PARENTGUID']) : null,
-            'previd' => isset($data['@PREVID']) ? trim($data['@PREVID']) : null,
-            'nextid' => isset($data['@NEXTID']) ? trim($data['@NEXTID']) : null,
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
+            'desc' => isset($data['@DESC']) ? trim($data['@DESC']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'Houses'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelHousesDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
+            'housenum' => isset($data['@HOUSENUM']) ? trim($data['@HOUSENUM']) : null,
+            'addnum1' => isset($data['@ADDNUM1']) ? trim($data['@ADDNUM1']) : null,
+            'addnum2' => isset($data['@ADDNUM2']) ? trim($data['@ADDNUM2']) : null,
+            'housetype' => isset($data['@HOUSETYPE']) ? (int) $data['@HOUSETYPE'] : null,
+            'addtype1' => isset($data['@ADDTYPE1']) ? (int) $data['@ADDTYPE1'] : null,
+            'addtype2' => isset($data['@ADDTYPE2']) ? (int) $data['@ADDTYPE2'] : null,
+            'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
+            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
+            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
+            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'ChangeHistory'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelChangeHistoryDataExtractor(array $data): array
+    {
+        return [
+            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
+            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
+            'adrobjectid' => isset($data['@ADROBJECTID']) ? trim($data['@ADROBJECTID']) : null,
+            'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
+            'ndocid' => isset($data['@NDOCID']) ? (int) $data['@NDOCID'] : null,
+            'changedate' => isset($data['@CHANGEDATE']) ? new DateTimeImmutable($data['@CHANGEDATE']) : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'Apartments'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelApartmentsDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
+            'number' => isset($data['@NUMBER']) ? trim($data['@NUMBER']) : null,
+            'aparttype' => isset($data['@APARTTYPE']) ? (int) $data['@APARTTYPE'] : null,
+            'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
+            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
+            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
+            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'HouseTypes'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelHouseTypesDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
+            'desc' => isset($data['@DESC']) ? trim($data['@DESC']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'NormativeDocsKinds'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelNormativeDocsKindsDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'ParamTypes'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelParamTypesDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
             'code' => isset($data['@CODE']) ? trim($data['@CODE']) : null,
-            'formalname' => isset($data['@FORMALNAME']) ? trim($data['@FORMALNAME']) : null,
-            'offname' => isset($data['@OFFNAME']) ? trim($data['@OFFNAME']) : null,
+            'desc' => isset($data['@DESC']) ? trim($data['@DESC']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'RoomTypes'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelRoomTypesDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
             'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
-            'aolevel' => isset($data['@AOLEVEL']) ? (int) $data['@AOLEVEL'] : null,
+            'desc' => isset($data['@DESC']) ? trim($data['@DESC']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'NormativeDocs'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelNormativeDocsDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
+            'date' => isset($data['@DATE']) ? new DateTimeImmutable($data['@DATE']) : null,
+            'number' => isset($data['@NUMBER']) ? trim($data['@NUMBER']) : null,
+            'type' => isset($data['@TYPE']) ? (int) $data['@TYPE'] : null,
+            'kind' => isset($data['@KIND']) ? (int) $data['@KIND'] : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'orgname' => isset($data['@ORGNAME']) ? trim($data['@ORGNAME']) : null,
+            'regnum' => isset($data['@REGNUM']) ? trim($data['@REGNUM']) : null,
+            'regdate' => isset($data['@REGDATE']) ? new DateTimeImmutable($data['@REGDATE']) : null,
+            'accdate' => isset($data['@ACCDATE']) ? new DateTimeImmutable($data['@ACCDATE']) : null,
+            'comment' => isset($data['@COMMENT']) ? trim($data['@COMMENT']) : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'ObjectLevels'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelObjectLevelsDataExtractor(array $data): array
+    {
+        return [
+            'level' => isset($data['@LEVEL']) ? (int) $data['@LEVEL'] : null,
+            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'AdmHierarchy'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelAdmHierarchyDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
+            'parentobjid' => isset($data['@PARENTOBJID']) ? (int) $data['@PARENTOBJID'] : null,
+            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
             'regioncode' => isset($data['@REGIONCODE']) ? trim($data['@REGIONCODE']) : null,
             'areacode' => isset($data['@AREACODE']) ? trim($data['@AREACODE']) : null,
-            'autocode' => isset($data['@AUTOCODE']) ? trim($data['@AUTOCODE']) : null,
             'citycode' => isset($data['@CITYCODE']) ? trim($data['@CITYCODE']) : null,
-            'ctarcode' => isset($data['@CTARCODE']) ? trim($data['@CTARCODE']) : null,
             'placecode' => isset($data['@PLACECODE']) ? trim($data['@PLACECODE']) : null,
             'plancode' => isset($data['@PLANCODE']) ? trim($data['@PLANCODE']) : null,
             'streetcode' => isset($data['@STREETCODE']) ? trim($data['@STREETCODE']) : null,
-            'extrcode' => isset($data['@EXTRCODE']) ? trim($data['@EXTRCODE']) : null,
-            'sextcode' => isset($data['@SEXTCODE']) ? trim($data['@SEXTCODE']) : null,
-            'plaincode' => isset($data['@PLAINCODE']) ? trim($data['@PLAINCODE']) : null,
-            'currstatus' => isset($data['@CURRSTATUS']) ? (int) $data['@CURRSTATUS'] : null,
-            'actstatus' => isset($data['@ACTSTATUS']) ? (int) $data['@ACTSTATUS'] : null,
-            'livestatus' => isset($data['@LIVESTATUS']) ? (int) $data['@LIVESTATUS'] : null,
-            'centstatus' => isset($data['@CENTSTATUS']) ? (int) $data['@CENTSTATUS'] : null,
-            'operstatus' => isset($data['@OPERSTATUS']) ? (int) $data['@OPERSTATUS'] : null,
-            'ifnsfl' => isset($data['@IFNSFL']) ? trim($data['@IFNSFL']) : null,
-            'ifnsul' => isset($data['@IFNSUL']) ? trim($data['@IFNSUL']) : null,
-            'terrifnsfl' => isset($data['@TERRIFNSFL']) ? trim($data['@TERRIFNSFL']) : null,
-            'terrifnsul' => isset($data['@TERRIFNSUL']) ? trim($data['@TERRIFNSUL']) : null,
-            'okato' => isset($data['@OKATO']) ? trim($data['@OKATO']) : null,
-            'oktmo' => isset($data['@OKTMO']) ? trim($data['@OKTMO']) : null,
-            'postalcode' => isset($data['@POSTALCODE']) ? trim($data['@POSTALCODE']) : null,
+            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
+            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
             'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
             'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'divtype' => isset($data['@DIVTYPE']) ? (int) $data['@DIVTYPE'] : null,
-            'normdoc' => isset($data['@NORMDOC']) ? trim($data['@NORMDOC']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
         ];
     }
 
     /**
-     * Получает правильный массив данных для модели 'House'.
+     * Получает правильный массив данных для модели 'AddrObjDivision'.
      *
      * @param array $data
      *
      * @return array
      */
-    private function modelHouseDataExtractor(array $data): array
+    private function modelAddrObjDivisionDataExtractor(array $data): array
     {
         return [
-            'houseid' => isset($data['@HOUSEID']) ? trim($data['@HOUSEID']) : null,
-            'houseguid' => isset($data['@HOUSEGUID']) ? trim($data['@HOUSEGUID']) : null,
-            'aoguid' => isset($data['@AOGUID']) ? trim($data['@AOGUID']) : null,
-            'housenum' => isset($data['@HOUSENUM']) ? trim($data['@HOUSENUM']) : null,
-            'strstatus' => isset($data['@STRSTATUS']) ? (int) $data['@STRSTATUS'] : null,
-            'eststatus' => isset($data['@ESTSTATUS']) ? (int) $data['@ESTSTATUS'] : null,
-            'statstatus' => isset($data['@STATSTATUS']) ? (int) $data['@STATSTATUS'] : null,
-            'ifnsfl' => isset($data['@IFNSFL']) ? trim($data['@IFNSFL']) : null,
-            'ifnsul' => isset($data['@IFNSUL']) ? trim($data['@IFNSUL']) : null,
-            'okato' => isset($data['@OKATO']) ? trim($data['@OKATO']) : null,
-            'oktmo' => isset($data['@OKTMO']) ? trim($data['@OKTMO']) : null,
-            'postalcode' => isset($data['@POSTALCODE']) ? trim($data['@POSTALCODE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'counter' => isset($data['@COUNTER']) ? (int) $data['@COUNTER'] : null,
-            'divtype' => isset($data['@DIVTYPE']) ? (int) $data['@DIVTYPE'] : null,
-            'regioncode' => isset($data['@REGIONCODE']) ? trim($data['@REGIONCODE']) : null,
-            'terrifnsfl' => isset($data['@TERRIFNSFL']) ? trim($data['@TERRIFNSFL']) : null,
-            'terrifnsul' => isset($data['@TERRIFNSUL']) ? trim($data['@TERRIFNSUL']) : null,
-            'buildnum' => isset($data['@BUILDNUM']) ? trim($data['@BUILDNUM']) : null,
-            'strucnum' => isset($data['@STRUCNUM']) ? trim($data['@STRUCNUM']) : null,
-            'normdoc' => isset($data['@NORMDOC']) ? trim($data['@NORMDOC']) : null,
-            'cadnum' => isset($data['@CADNUM']) ? trim($data['@CADNUM']) : null,
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'parentid' => isset($data['@PARENTID']) ? (int) $data['@PARENTID'] : null,
+            'childid' => isset($data['@CHILDID']) ? (int) $data['@CHILDID'] : null,
+            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
         ];
     }
 
     /**
-     * Получает правильный массив данных для модели 'StructureStatus'.
+     * Получает правильный массив данных для модели 'ReestrObjects'.
      *
      * @param array $data
      *
      * @return array
      */
-    private function modelStructureStatusDataExtractor(array $data): array
+    private function modelReestrObjectsDataExtractor(array $data): array
     {
         return [
-            'strstatid' => isset($data['@STRSTATID']) ? (int) $data['@STRSTATID'] : null,
+            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
+            'createdate' => isset($data['@CREATEDATE']) ? new DateTimeImmutable($data['@CREATEDATE']) : null,
+            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
+            'levelid' => isset($data['@LEVELID']) ? (int) $data['@LEVELID'] : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+        ];
+    }
+
+    /**
+     * Получает правильный массив данных для модели 'AddrObj'.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function modelAddrObjDataExtractor(array $data): array
+    {
+        return [
+            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
+            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
             'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
+            'typename' => isset($data['@TYPENAME']) ? trim($data['@TYPENAME']) : null,
+            'level' => isset($data['@LEVEL']) ? trim($data['@LEVEL']) : null,
+            'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
+            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
+            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
+            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
         ];
     }
 

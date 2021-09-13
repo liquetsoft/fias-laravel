@@ -23,7 +23,7 @@ $fs = FileSystemFactory::create();
 $defaultRegistry = new PhpArrayFileRegistry();
 $registry = new ArrayEntityRegistry(array_merge($defaultRegistry->getDescriptors(), [
     new BaseEntityDescriptor([
-        'name' => 'FiasVersion',
+        'name' => 'FIAS_VERSION',
         'description' => 'Модель, которая хранит историю версий ФИАС',
         'xmlPath' => '//',
         'fields' => [

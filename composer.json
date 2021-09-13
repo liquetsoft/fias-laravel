@@ -6,7 +6,7 @@
   "license": "MIT",
   "require": {
     "php": ">=7.3",
-    "liquetsoft/fias-component": "10.0.0-alpha",
+    "liquetsoft/fias-component": "10.0.0-alpha3",
     "illuminate/database": "^6.0|^7.0|^8.0",
     "laravel/framework": "^6.0|^7.0|^8.0"
   },
@@ -42,7 +42,7 @@
     "fixer": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --allow-risky=yes",
     "linter": [
         "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php -v --dry-run --stop-on-violation --allow-risky=yes",
-        "vendor/bin/phpcpd ./ --exclude vendor --exclude src/Model --exclude tests",
+        "vendor/bin/phpcpd ./ --exclude vendor --exclude src/Entity --exclude src/Resource --exclude src/Migration --exclude src/Serializer/CompiledEntitesDenormalizer.php --exclude tests",
         "vendor/bin/psalm --show-info=true"
     ],
     "entities": [

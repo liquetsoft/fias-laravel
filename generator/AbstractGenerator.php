@@ -103,7 +103,10 @@ abstract class AbstractGenerator
      */
     protected function unifyClassName(string $namespace): string
     {
-        return ucfirst(trim($namespace, " \t\n\r\0\x0B\\"));
+        $name = strtolower(trim($namespace, " \t\n\r\0\x0B\\"));
+        $arName = array_map('ucfirst', explode('_', $name));
+
+        return implode('', $arName);
     }
 
     /**
@@ -139,6 +142,7 @@ abstract class AbstractGenerator
      */
     protected function convertClassnameToTableName(string $name): string
     {
+        $name = $this->unifyClassName($name);
         $tableName = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $name));
 
         if (strpos($tableName, 'fias_laravel_') !== 0) {
