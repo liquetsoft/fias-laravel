@@ -236,7 +236,11 @@ class EloquentStorage implements Storage
                 if (isset($existedModelsByPrimary[$key])) {
                     $persistedModel = $existedModelsByPrimary[$key];
                     $persistedModel->fill($upsertItem);
-                    $persistedModel->save();
+                    try {
+                        $persistedModel->save();
+                    } catch (Throwable $e) {
+                        throw new StorageException("Can't update item in storage.", 0, $e);
+                    }
                 } else {
                     $toInsert[] = $upsertItem;
                 }
