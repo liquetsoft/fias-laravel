@@ -42,6 +42,15 @@ class EloquentStorage implements Storage
     protected $insertData = [];
 
     /**
+     * Сохраненные в памяти данные для множественного обновления.
+     *
+     * Массив вида 'класс сущности => 'массив массивов данных для обновления'.
+     *
+     * @var array<string, array>
+     */
+    protected $upsertData = [];
+
+    /**
      * Список колонок для классов моделей.
      *
      * @var array<string, array>
@@ -88,8 +97,7 @@ class EloquentStorage implements Storage
     public function stop(): void
     {
         $this->checkAndFlushInsert(true);
-
-        $this->insertData = [];
+        $this->checkAndFlushUpsert(true);
         $this->columnsLists = [];
 
         $connection = DB::connection();
@@ -157,15 +165,10 @@ class EloquentStorage implements Storage
     {
         $model = $this->checkIsEntityAllowedForEloquent($entity);
 
-        try {
-            /** @var Model $persistedModel */
-            $persistedModel = $model->query()->findOrNew($model->getKey());
-            $persistedModel->fill($model->getAttributes());
-            $persistedModel->save();
-            unset($persistedModel);
-        } catch (Throwable $e) {
-            throw new StorageException("Can't update or insert entity in storage.", 0, $e);
-        }
+        $class = \get_class($model);
+        $this->upsertData[$class][$model->getKey()] = $this->collectValuesFromModel($model);
+
+        $this->checkAndFlushUpsert(false);
     }
 
     /**
@@ -184,6 +187,66 @@ class EloquentStorage implements Storage
             $entityClassName::query()->delete();
         } catch (Throwable $e) {
             throw new StorageException("Can't truncate storage.", 0, $e);
+        }
+    }
+
+    /**
+     * Проверяет нужно ли отправлять запросы на множественные вставки элементов,
+     * сохраненых в памяти.
+     *
+     * @param bool $forceInsert
+     *
+     * @throws StorageException
+     */
+    protected function checkAndFlushInsert(bool $forceInsert = false): void
+    {
+        foreach ($this->insertData as $className => $insertData) {
+            if ($forceInsert || \count($insertData) >= $this->insertBatch) {
+                $this->bulkInsert($className, $insertData);
+                unset($this->insertData[$className]);
+            }
+        }
+    }
+
+    /**
+     * Проверяет нужно ли отправлять запросы на множественные вставки элементов,
+     * сохраненых в памяти.
+     *
+     * @param bool $forceUpsert
+     *
+     * @throws StorageException
+     *
+     * @psalm-suppress InvalidStringClass
+     */
+    protected function checkAndFlushUpsert(bool $forceUpsert = false): void
+    {
+        foreach ($this->upsertData as $className => $upsertData) {
+            if (!$forceUpsert && \count($upsertData) < $this->insertBatch) {
+                continue;
+            }
+
+            $existedModels = $className::findMany(array_keys($upsertData));
+            $existedModelsByPrimary = [];
+            foreach ($existedModels as $model) {
+                $existedModelsByPrimary[$model->getKey()] = $model;
+            }
+
+            $toInsert = [];
+            foreach ($upsertData as $key => $upsertItem) {
+                if (isset($existedModelsByPrimary[$key])) {
+                    $persistedModel = $existedModelsByPrimary[$key];
+                    $persistedModel->fill($upsertItem);
+                    $persistedModel->save();
+                } else {
+                    $toInsert[] = $upsertItem;
+                }
+            }
+
+            if (!empty($toInsert)) {
+                $this->bulkInsert($className, $toInsert);
+            }
+
+            unset($this->upsertData[$className]);
         }
     }
 
@@ -251,24 +314,6 @@ class EloquentStorage implements Storage
         }
 
         return $this->columnsLists[$class];
-    }
-
-    /**
-     * Проверяет нужно ли отправлять запросы на множественные вставки элементов,
-     * сохраненых в памяти.
-     *
-     * @param bool $forceInsert
-     *
-     * @throws StorageException
-     */
-    protected function checkAndFlushInsert(bool $forceInsert = false): void
-    {
-        foreach ($this->insertData as $className => $insertData) {
-            if ($forceInsert || \count($insertData) >= $this->insertBatch) {
-                $this->bulkInsert($className, $insertData);
-                unset($this->insertData[$className]);
-            }
-        }
     }
 
     /**

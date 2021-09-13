@@ -37,6 +37,14 @@ class EloquentStorageTest extends EloquentTestCase
                 ],
             ]
         );
+
+        $this->prepareDataForTesting(
+            'eloquent_storage_test_model',
+            [
+                ['id' => 1, 'name' => 'test 1', 'test_date' => '2010-10-10 10:10:10'],
+                ['id' => 2, 'name' => 'test 2', 'test_date' => '2012-12-12 12:12:12'],
+            ]
+        );
     }
 
     /**
@@ -86,7 +94,7 @@ class EloquentStorageTest extends EloquentTestCase
      */
     public function testInsert(): void
     {
-        $id = $this->createFakeData()->numberBetween(1, 1000);
+        $id = $this->createFakeData()->numberBetween(10, 1000);
         $name = $this->createFakeData()->word();
         $date = new DateTimeImmutable();
         $model = new EloquentStorageTestModel(
@@ -157,7 +165,7 @@ class EloquentStorageTest extends EloquentTestCase
      */
     public function testInsertFallback(): void
     {
-        $id = $this->createFakeData()->numberBetween(1002, 2000);
+        $id = $this->createFakeData()->numberBetween(1050, 2000);
         $name = $this->createFakeData()->word();
         $date = new DateTimeImmutable();
         $model = new EloquentStorageTestModel(
@@ -211,7 +219,98 @@ class EloquentStorageTest extends EloquentTestCase
      */
     public function testUpsert(): void
     {
-        $id = $this->createFakeData()->numberBetween(2002, 3000);
+        $id = $this->createFakeData()->numberBetween(2050, 3000);
+        $name = $this->createFakeData()->word();
+        $date = new DateTimeImmutable('2020-10-10');
+        $model = new EloquentStorageTestModel(
+            [
+                'id' => $id,
+                'name' => $name,
+                'test_date' => $date,
+            ]
+        );
+
+        $id1 = $this->createFakeData()->numberBetween(3050, 4000);
+        $name1 = $name . ' ' . $this->createFakeData()->word();
+        $date1 = new DateTimeImmutable('2020-10-09');
+        $model1 = new EloquentStorageTestModel(
+            [
+                'id' => $id1,
+                'name' => $name1,
+                'test_date' => $date1,
+            ]
+        );
+
+        $id2 = 1;
+        $name2 = $name . ' ' . $this->createFakeData()->word();
+        $date2 = new DateTimeImmutable('2020-10-09');
+        $model2 = new EloquentStorageTestModel(
+            [
+                'id' => $id2,
+                'name' => $name2,
+                'test_date' => $date2,
+            ]
+        );
+
+        $id3 = 2;
+        $name3 = $name . ' ' . $this->createFakeData()->word();
+        $date3 = new DateTimeImmutable('2020-10-09');
+        $model3 = new EloquentStorageTestModel(
+            [
+                'id' => $id3,
+                'name' => $name3,
+                'test_date' => $date3,
+            ]
+        );
+
+        $storage = new EloquentStorage(3);
+        $storage->start();
+        $storage->upsert($model);
+        $storage->upsert($model2);
+        $storage->upsert($model1);
+        $storage->upsert($model3);
+        $storage->stop();
+
+        $this->assertDatabaseHasRow(
+            'eloquent_storage_test_model',
+            [
+                'id' => $id,
+                'name' => $name,
+                'test_date' => $date,
+            ]
+        );
+        $this->assertDatabaseHasRow(
+            'eloquent_storage_test_model',
+            [
+                'id' => $id1,
+                'name' => $name1,
+                'test_date' => $date1,
+            ]
+        );
+        $this->assertDatabaseHasRow(
+            'eloquent_storage_test_model',
+            [
+                'id' => $id2,
+                'name' => $name2,
+                'test_date' => $date2,
+            ]
+        );
+        $this->assertDatabaseHasRow(
+            'eloquent_storage_test_model',
+            [
+                'id' => $id3,
+                'name' => $name3,
+                'test_date' => $date3,
+            ]
+        );
+    }
+
+    /**
+     * Проверяет, что объект верно обработает дубликаты при вставке и обновлении.
+     */
+    public function testUpsertDoubles(): void
+    {
+        $id = $this->createFakeData()->numberBetween(4050, 5000);
         $name = $this->createFakeData()->word();
         $date = new DateTimeImmutable('2020-10-10');
         $model = new EloquentStorageTestModel(
@@ -274,7 +373,7 @@ class EloquentStorageTest extends EloquentTestCase
      */
     public function testTruncate(): void
     {
-        $id = $this->createFakeData()->numberBetween(3002, 4000);
+        $id = $this->createFakeData()->numberBetween(5050, 6000);
         $model = new EloquentStorageTestModel(
             [
                 'id' => $id,
@@ -331,7 +430,7 @@ class EloquentStorageTest extends EloquentTestCase
      */
     public function testDelete(): void
     {
-        $id = $this->createFakeData()->numberBetween(4002, 5000);
+        $id = $this->createFakeData()->numberBetween(6050, 7000);
         $model = new EloquentStorageTestModel(
             [
                 'id' => $id,
