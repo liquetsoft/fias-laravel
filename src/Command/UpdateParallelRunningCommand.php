@@ -19,7 +19,7 @@ class UpdateParallelRunningCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'liquetsoft:fias:update_parallel_running {files}';
+    protected $signature = 'liquetsoft:fias:update_parallel_running {files?}';
 
     /**
      * @var string
@@ -53,7 +53,15 @@ class UpdateParallelRunningCommand extends Command
         if (\is_array($files)) {
             $files = reset($files);
         }
-        $files = json_decode((string) $files, true);
+
+        if (!empty($files)) {
+            $files = json_decode((string) $files, true);
+        } else {
+            $stdIn = file_get_contents("php://stdin");
+            if (!empty($stdIn)) {
+                $files = json_decode($stdIn, true);
+            }
+        }
 
         $state = new ArrayState();
         $state->setAndLockParameter(Task::FILES_TO_PROCEED, $files);
