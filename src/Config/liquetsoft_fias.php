@@ -89,11 +89,15 @@ return [
     /*
      * Имя команды для запуска параллельных процессов установки.
      */
-    'command_name' => 'liquetsoft:fias:install_parallel_running',
+    'command_name_install' => 'liquetsoft:fias:install_parallel_running',
+    /*
+     * Имя команды для запуска параллельных процессов обновления.
+     */
+    'command_name_update' => 'liquetsoft:fias:update_parallel_running',
     /*
      * Максимальное число параллельных процессов установки.
      */
-    'number_of_parallel' => 5,
+    'number_of_parallel' => 10,
     /*
      * Максимальное число ошибок во время загрузки файлов, после которого она будет прекращена.
      */

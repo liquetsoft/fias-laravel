@@ -12,19 +12,19 @@ use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 
 /**
- * Консольная команда, которая является одним из параллельных процессов установки ФИАС.
+ * Консольная команда, которая является одним из параллельных процессов обновления ФИАС.
  */
-class InstallParallelRunningCommand extends Command
+class UpdateParallelRunningCommand extends Command
 {
     /**
      * @var string
      */
-    protected $signature = 'liquetsoft:fias:install_parallel_running {files}';
+    protected $signature = 'liquetsoft:fias:update_parallel_running {files}';
 
     /**
      * @var string
      */
-    protected $description = 'Command for running parallel installation.';
+    protected $description = 'Command for running parallel update.';
 
     /**
      * @var Pipe
@@ -39,7 +39,7 @@ class InstallParallelRunningCommand extends Command
     public function __construct(Application $app)
     {
         parent::__construct();
-        $this->pipeline = $app->get('liquetsoft_fias.pipe.install_parallel_running');
+        $this->pipeline = $app->get('liquetsoft_fias.pipe.update_parallel_running');
     }
 
     /**
