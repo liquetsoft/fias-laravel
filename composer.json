@@ -6,7 +6,7 @@
   "license": "MIT",
   "require": {
     "php": ">=7.3",
-    "liquetsoft/fias-component": "10.0.0-alpha6",
+    "liquetsoft/fias-component": "^10.0",
     "illuminate/database": "^6.0|^7.0|^8.0",
     "laravel/framework": "^6.0|^7.0|^8.0"
   },
