@@ -19,7 +19,7 @@ class InstallParallelRunningCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'liquetsoft:fias:install_parallel_running {files_to_insert} {files_to_delete}';
+    protected $signature = 'liquetsoft:fias:install_parallel_running {files?}';
 
     /**
      * @var string
@@ -49,21 +49,22 @@ class InstallParallelRunningCommand extends Command
      */
     public function handle(): void
     {
-        $filesToInsert = $this->argument('files_to_insert');
-        if (\is_array($filesToInsert)) {
-            $filesToInsert = reset($filesToInsert);
+        $files = $this->argument('files');
+        if (\is_array($files)) {
+            $files = reset($files);
         }
-        $filesToInsert = json_decode((string) $filesToInsert, true);
 
-        $filesToDelete = $this->argument('files_to_delete');
-        if (\is_array($filesToDelete)) {
-            $filesToDelete = reset($filesToDelete);
+        if (!empty($files)) {
+            $files = json_decode((string) $files, true);
+        } else {
+            $stdIn = file_get_contents('php://stdin');
+            if (!empty($stdIn)) {
+                $files = json_decode($stdIn, true);
+            }
         }
-        $filesToDelete = json_decode((string) $filesToDelete, true);
 
         $state = new ArrayState();
-        $state->setAndLockParameter(Task::FILES_TO_INSERT_PARAM, $filesToInsert);
-        $state->setAndLockParameter(Task::FILES_TO_DELETE_PARAM, $filesToDelete);
+        $state->setAndLockParameter(Task::FILES_TO_PROCEED, $files);
         $this->pipeline->run($state);
     }
 }

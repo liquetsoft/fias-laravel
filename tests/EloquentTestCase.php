@@ -100,6 +100,17 @@ abstract class EloquentTestCase extends BaseCase
     }
 
     /**
+     * Создает тестовые данные в таблице.
+     *
+     * @param string  $tableName
+     * @param array[] $rows
+     */
+    public function prepareDataForTesting(string $tableName, array $rows): void
+    {
+        Manager::table($tableName)->insert($rows);
+    }
+
+    /**
      * Создает колонку в таблице.
      *
      * @param Blueprint $table

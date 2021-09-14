@@ -19,6 +19,8 @@ use Liquetsoft\Fias\Component\FiasStatusChecker\CurlStatusChecker;
 use Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusChecker;
 use Liquetsoft\Fias\Component\FilesDispatcher\EntityFileDispatcher;
 use Liquetsoft\Fias\Component\FilesDispatcher\FilesDispatcher;
+use Liquetsoft\Fias\Component\Filter\Filter;
+use Liquetsoft\Fias\Component\Filter\RegexpFilter;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\Task\CheckStatusTask;
@@ -52,6 +54,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\StatusCheckCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\TruncateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateFromFolderCommand;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateParallelRunningCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\VersionsCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\VersionSetCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
@@ -115,11 +118,12 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
             $this->commands(
                 [
                     InstallCommand::class,
+                    InstallFromFolderCommand::class,
                     InstallParallelRunningCommand::class,
                     UpdateCommand::class,
                     UpdateFromFolderCommand::class,
+                    UpdateParallelRunningCommand::class,
                     TruncateCommand::class,
-                    InstallFromFolderCommand::class,
                     VersionsCommand::class,
                     VersionSetCommand::class,
                     DownloadCommand::class,
@@ -225,8 +229,14 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         // сервис, который разбивает обрабатываемые файлы между потоками
         $servicesList[FilesDispatcher::class] = function (Application $app): FilesDispatcher {
             return new EntityFileDispatcher(
-                $app->get(EntityManager::class),
-                $this->getOptionArray('entities_to_parallel')
+                $app->get(EntityManager::class)
+            );
+        };
+
+        // фильтр для файлов
+        $servicesList[$this->prefixString('filter.files_filter')] = function (): Filter {
+            return new RegexpFilter(
+                $this->getOptionArray('files_filter')
             );
         };
     }
@@ -270,7 +280,10 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
         // задача для получения списка файлов для обработки
         $servicesList[$this->prefixString('task.data.select_files')] = function (Application $app): Task {
-            return new SelectFilesToProceedTask($app->get(EntityManager::class));
+            return new SelectFilesToProceedTask(
+                $app->get(EntityManager::class),
+                $app->get($this->prefixString('filter.files_filter'))
+            );
         };
 
         // задача для вставки данных в хранилище
@@ -310,11 +323,21 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[$this->prefixString('task.version.set')] = VersionSetTask::class;
 
         // задача, которая запускает установку в параллельных процессах
-        $servicesList[$this->prefixString('task.process_switcher')] = function (Application $app): Task {
+        $servicesList[$this->prefixString('task.process_switcher_install')] = function (Application $app): Task {
             return new ProcessSwitchTask(
                 $app->get(FilesDispatcher::class),
                 $this->getOptionString('path_to_bin'),
-                $this->getOptionString('command_name'),
+                $this->getOptionString('command_name_install'),
+                $this->getOptionInt('number_of_parallel')
+            );
+        };
+
+        // задача, которая запускает обновление в параллельных процессах
+        $servicesList[$this->prefixString('task.process_switcher_update')] = function (Application $app): Task {
+            return new ProcessSwitchTask(
+                $app->get(FilesDispatcher::class),
+                $this->getOptionString('path_to_bin'),
+                $this->getOptionString('command_name_update'),
                 $this->getOptionInt('number_of_parallel')
             );
         };
@@ -352,7 +375,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     $app->get($this->prefixString('task.unpack')),
                     $app->get($this->prefixString('task.data.truncate')),
                     $app->get($this->prefixString('task.data.select_files')),
-                    $app->get($this->prefixString('task.process_switcher')),
+                    $app->get($this->prefixString('task.process_switcher_install')),
                     $app->get($this->prefixString('task.version.set')),
                 ],
                 $app->get($this->prefixString('task.cleanup')),
@@ -366,7 +389,19 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                 [
                     $app->get($this->prefixString('task.data.truncate')),
                     $app->get($this->prefixString('task.data.select_files')),
-                    $app->get($this->prefixString('task.process_switcher')),
+                    $app->get($this->prefixString('task.process_switcher_install')),
+                ],
+                null,
+                $app->get(LoggerInterface::class)
+            );
+        };
+
+        // процесс для параллельного обновения ФИАС в нескольких потоках
+        $servicesList[$this->prefixString('pipe.update_parallel_running')] = function (Application $app): Pipe {
+            return new ArrayPipe(
+                [
+                    $app->get($this->prefixString('task.data.upsert')),
+                    $app->get($this->prefixString('task.data.delete')),
                 ],
                 null,
                 $app->get(LoggerInterface::class)
@@ -384,8 +419,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                     $app->get($this->prefixString('task.download')),
                     $app->get($this->prefixString('task.unpack')),
                     $app->get($this->prefixString('task.data.select_files')),
-                    $app->get($this->prefixString('task.data.upsert')),
-                    $app->get($this->prefixString('task.data.delete')),
+                    $app->get($this->prefixString('task.process_switcher_update')),
                     $app->get($this->prefixString('task.version.set')),
                 ],
                 $app->get($this->prefixString('task.cleanup')),
@@ -398,8 +432,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
             return new ArrayPipe(
                 [
                     $app->get($this->prefixString('task.data.select_files')),
-                    $app->get($this->prefixString('task.data.upsert')),
-                    $app->get($this->prefixString('task.data.delete')),
+                    $app->get($this->prefixString('task.process_switcher_update')),
                 ],
                 null,
                 $app->get(LoggerInterface::class)

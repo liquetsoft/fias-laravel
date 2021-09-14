@@ -66,42 +66,57 @@
      * Связка между сущностями ФИАС и моделями в проекте.
      */
     'entity_bindings' => [
-        'ActualStatus' => ActualStatus::class,
-        'AddressObject' => AddressObject::class,
-        'AddressObjectType' => AddressObjectType::class,
-        'CenterStatus' => CenterStatus::class,
-        'CurrentStatus' => CurrentStatus::class,
-        'EstateStatus' => EstateStatus::class,
-        'FlatType' => FlatType::class,
-        'House' => House::class,
-        'NormativeDocument' => NormativeDocument::class,
-        'NormativeDocumentType' => NormativeDocumentType::class,
-        'OperationStatus' => OperationStatus::class,
-        'Room' => Room::class,
-        'RoomType' => RoomType::class,
-        'Stead' => Stead::class,
-        'StructureStatus' => StructureStatus::class,
+        'ADDR_OBJ' => AddrObj::class,
+        'ADDR_OBJ_DIVISION' => AddrObjDivision::class,
+        'ADDR_OBJ_TYPES' => AddrObjTypes::class,
+        'ADM_HIERARCHY' => AdmHierarchy::class,
+        'APARTMENTS' => Apartments::class,
+        'APARTMENT_TYPES' => ApartmentTypes::class,
+        'CARPLACES' => Carplaces::class,
+        'CHANGE_HISTORY' => ChangeHistory::class,
+        'FIAS_VERSION' => FiasVersion::class,
+        'HOUSES' => Houses::class,
+        'HOUSE_TYPES' => HouseTypes::class,
+        'MUN_HIERARCHY' => MunHierarchy::class,
+        'NORMATIVE_DOCS' => NormativeDocs::class,
+        'NORMATIVE_DOCS_KINDS' => NormativeDocsKinds::class,
+        'NORMATIVE_DOCS_TYPES' => NormativeDocsTypes::class,
+        'OBJECT_LEVELS' => ObjectLevels::class,
+        'OPERATION_TYPES' => OperationTypes::class,
+        'PARAM' => Param::class,
+        'PARAM_TYPES' => ParamTypes::class,
+        'REESTR_OBJECTS' => ReestrObjects::class,
+        'ROOMS' => Rooms::class,
+        'ROOM_TYPES' => RoomTypes::class,
+        'STEADS' => Steads::class,
     ],
     ```
 
     В составе бандла поставляются так же соответствующие eloquent-модели и ресурсные классы:
 
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ActualStatus`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddressObject`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddressObjectType`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\CenterStatus`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\CurrentStatus`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\EstateStatus`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FlatType`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\House`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\NormativeDocument`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\NormativeDocumentType`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\OperationStatus`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Room`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\RoomType`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Stead`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\StructureStatus`,
-    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FiasVersion`.
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddrObj`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddrObjDivision`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddrObjTypes`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AdmHierarchy`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Apartments`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ApartmentTypes`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Carplaces`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ChangeHistory`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FiasVersion`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Houses`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\HouseTypes`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\MunHierarchy`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\NormativeDocs`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\NormativeDocsKinds`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\NormativeDocsTypes`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ObjectLevels`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\OperationTypes`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Param`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ParamTypes`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\ReestrObjects`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Rooms`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\RoomTypes`,
+    * `Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Steads`.
 
 
 
@@ -156,6 +171,33 @@
 
     ```bash
     php artisan liquetsoft:fias:version_set 20160101
+    ```
+
+
+
+Производительность
+------------------
+
+Есть несколько возможностей ускорить импорт, используя настройки бандла:
+
+1. убрать неиспользуемые сущности; к примеру, если информация о парковочных местах не требуется, то можно отключить соответствие для `CARPLACES`
+
+    ```php
+    // config/liquetsoft_fias.php
+    'entity_bindings' => [
+        // 'CARPLACES' => Carplaces::class,
+    ],
+    ```
+
+2. поскольку в формате ГАР все данные разделены по папкам регионов, то можно исключить обработку файлов для неиспользуемых регионов
+
+    ```php
+    // config/liquetsoft_fias.php
+    'files_filter' => [
+        "#^.+/extracted/30/AS_.+$#", // разрешает все данные для региона
+        "#^.+/extracted/AS_.+$#",    // разрешает общие словари
+        // все остальные файлы будут проигнорированы
+    ],
     ```
 
 

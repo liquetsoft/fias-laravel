@@ -71,10 +71,7 @@ class EloquentDenormalizer implements DenormalizerInterface
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        $eloquentClass = trim(Model::class, '\\');
-        $dataClass = trim($type, '\\');
-
-        return is_subclass_of($dataClass, $eloquentClass);
+        return is_subclass_of($type, Model::class);
     }
 
     /**
