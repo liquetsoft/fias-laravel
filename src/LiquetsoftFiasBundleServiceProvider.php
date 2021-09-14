@@ -19,6 +19,8 @@ use Liquetsoft\Fias\Component\FiasStatusChecker\CurlStatusChecker;
 use Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusChecker;
 use Liquetsoft\Fias\Component\FilesDispatcher\EntityFileDispatcher;
 use Liquetsoft\Fias\Component\FilesDispatcher\FilesDispatcher;
+use Liquetsoft\Fias\Component\Filter\Filter;
+use Liquetsoft\Fias\Component\Filter\RegexpFilter;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\Task\CheckStatusTask;
@@ -230,6 +232,13 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
                 $app->get(EntityManager::class)
             );
         };
+
+        // фильтр для файлов
+        $servicesList[$this->prefixString('filter.files_filter')] = function (): Filter {
+            return new RegexpFilter(
+                $this->getOptionArray('files_filter')
+            );
+        };
     }
 
     /**
@@ -271,7 +280,10 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
         // задача для получения списка файлов для обработки
         $servicesList[$this->prefixString('task.data.select_files')] = function (Application $app): Task {
-            return new SelectFilesToProceedTask($app->get(EntityManager::class));
+            return new SelectFilesToProceedTask(
+                $app->get(EntityManager::class),
+                $app->get($this->prefixString('filter.files_filter'))
+            );
         };
 
         // задача для вставки данных в хранилище
