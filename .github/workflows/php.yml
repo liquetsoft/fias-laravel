@@ -86,7 +86,7 @@ jobs:
       - name: Install FIAS
         run: |
           cd example-app
-          composer req "liquetsoft/fias-laravel:dev-${{ steps.extract_branch.outputs.branch }}" -W
+          composer req "liquetsoft/fias-laravel:dev-${{ github.ref }}" -W
           php artisan config:clear
           php artisan migrate -v
         env:
