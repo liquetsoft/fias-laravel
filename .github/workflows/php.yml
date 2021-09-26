@@ -80,12 +80,18 @@ jobs:
           composer create-project laravel/laravel example-app ${{ matrix.laravel-versions }}
           unzip ./tests/Pipeline/_fixtures/install_AddressObject.zip -d ./example-app/fias-data-install
           unzip ./tests/Pipeline/_fixtures/update_AddressObject.zip -d ./example-app/fias-data-update
-      - name: Install FIAS and check
+      - name: Install FIAS
         run: |
           cd example-app
-          composer req "liquetsoft/fias-laravel:dev-master"
+          composer req "liquetsoft/fias-laravel:dev-${{ github.head_ref }}"
           php artisan config:clear
           php artisan migrate -v
+        env:
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+          REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+      - name: Test FIAS
+        run: |
+          cd example-app
           php artisan liquetsoft:fias:truncate
           php artisan liquetsoft:fias:install_from_folder ./fias-data-install
           php artisan liquetsoft:fias:update_from_folder ./fias-data-update
