@@ -80,10 +80,13 @@ jobs:
           composer create-project laravel/laravel example-app ${{ matrix.laravel-versions }}
           unzip ./tests/Pipeline/_fixtures/install_AddressObject.zip -d ./example-app/fias-data-install
           unzip ./tests/Pipeline/_fixtures/update_AddressObject.zip -d ./example-app/fias-data-update
+      - name: Extract branch name
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       - name: Install FIAS
         run: |
           cd example-app
-          composer req "liquetsoft/fias-laravel:dev-${{ github.head_ref }}" -W
+          composer req "liquetsoft/fias-laravel:dev-${{ steps.extract_branch.outputs.branch }}" -W
           php artisan config:clear
           php artisan migrate -v
         env:
