@@ -152,7 +152,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     /**
      * Регистрирует сервисы бандла.
      *
-     * @param array $servicesList
+     * @param array<string, Closure|string> $servicesList
      *
      * @return void
      */
@@ -199,7 +199,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[EntityManager::class] = function (Application $app): EntityManager {
             return new BaseEntityManager(
                 $app->get(EntityRegistry::class),
-                $this->getOptionArray('entity_bindings')
+                $this->getOptionArrayStrings('entity_bindings')
             );
         };
 
@@ -236,7 +236,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         // фильтр для файлов
         $servicesList[$this->prefixString('filter.files_filter')] = function (): Filter {
             return new RegexpFilter(
-                $this->getOptionArray('files_filter')
+                $this->getOptionArrayStrings('files_filter')
             );
         };
     }
@@ -244,7 +244,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     /**
      * Регистрирует задачи бандла.
      *
-     * @param array $servicesList
+     * @param array<string, Closure|string> $servicesList
      *
      * @return void
      */
@@ -346,7 +346,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     /**
      * Регистрирует пайплайны бандла.
      *
-     * @param array $servicesList
+     * @param array<string, Closure|string> $servicesList
      *
      * @return void
      */
@@ -480,6 +480,24 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $option = $this->getOptionByName($name);
 
         return \is_array($option) ? $option : [];
+    }
+
+    /**
+     * Возвращает значение указанной опции в виде массива строк.
+     *
+     * @param string $name
+     *
+     * @return array<string, string>
+     */
+    private function getOptionArrayStrings(string $name): array
+    {
+        $raw = $this->getOptionArray($name);
+        $result = [];
+        foreach ($raw as $key => $value) {
+            $result[(string) $key] = (string) $value;
+        }
+
+        return $result;
     }
 
     /**

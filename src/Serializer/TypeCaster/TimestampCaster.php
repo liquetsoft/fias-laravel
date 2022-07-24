@@ -26,6 +26,6 @@ class TimestampCaster implements TypeCaster
      */
     public function cast(string $type, $value)
     {
-        return is_numeric($value) ? (int) $value : (new \DateTimeImmutable($value))->getTimestamp();
+        return is_numeric($value) ? (int) $value : (new \DateTimeImmutable((string) $value))->getTimestamp();
     }
 }

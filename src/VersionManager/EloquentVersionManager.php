@@ -39,6 +39,7 @@ class EloquentVersionManager implements VersionManager
     public function setCurrentVersion(InformerResponse $info): VersionManager
     {
         $entityClassName = $this->getEntityClassName();
+        /** @var FiasVersion */
         $entity = new $entityClassName();
 
         $entity->version = $info->getVersion();
@@ -55,12 +56,14 @@ class EloquentVersionManager implements VersionManager
      * @throws RuntimeException
      *
      * @psalm-suppress InvalidStringClass
+     * @psalm-suppress MixedMethodCall
      */
     public function getCurrentVersion(): InformerResponse
     {
         $response = new InformerResponseBase();
 
         $entityClassName = $this->getEntityClassName();
+        /** @var FiasVersion|null */
         $entity = $entityClassName::query()->orderBy('created_at', 'desc')->first();
         if ($entity) {
             $response->setVersion($entity->version);

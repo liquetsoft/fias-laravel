@@ -16,8 +16,11 @@ class Fiaslaraveloperationtypes extends Migration
      */
     public function up(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_operation_types');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_operation_types', function (Blueprint $table): void {
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_operation_types');
+        Schema::connection($connectionName)->create('fias_laravel_operation_types', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('id')->nullable(false)->comment('Идентификатор статуса (ключ)')->primary();
             $table->string('name', 100)->nullable(false)->comment('Наименование');
@@ -39,6 +42,9 @@ class Fiaslaraveloperationtypes extends Migration
      */
     public function down(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_operation_types');
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_operation_types');
     }
 }

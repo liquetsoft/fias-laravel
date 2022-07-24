@@ -16,8 +16,11 @@ class Fiaslaravelobjectlevels extends Migration
      */
     public function up(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_object_levels');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_object_levels', function (Blueprint $table): void {
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_object_levels');
+        Schema::connection($connectionName)->create('fias_laravel_object_levels', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('level')->nullable(false)->comment('Уникальный идентификатор записи. Ключевое поле. Номер уровня объекта')->primary();
             $table->string('name', 250)->nullable(false)->comment('Наименование');
@@ -38,6 +41,9 @@ class Fiaslaravelobjectlevels extends Migration
      */
     public function down(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_object_levels');
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_object_levels');
     }
 }

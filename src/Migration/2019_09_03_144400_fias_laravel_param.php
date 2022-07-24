@@ -16,8 +16,11 @@ class Fiaslaravelparam extends Migration
      */
     public function up(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_param');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_param', function (Blueprint $table): void {
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_param');
+        Schema::connection($connectionName)->create('fias_laravel_param', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('id')->nullable(false)->comment('Идентификатор записи')->primary();
             $table->unsignedInteger('objectid')->nullable(false)->comment('Глобальный уникальный идентификатор адресного объекта');
@@ -40,6 +43,9 @@ class Fiaslaravelparam extends Migration
      */
     public function down(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_param');
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_param');
     }
 }

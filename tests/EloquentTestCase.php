@@ -93,7 +93,7 @@ abstract class EloquentTestCase extends BaseCase
             $tableName,
             function (Blueprint $table) use ($columns): void {
                 foreach ($columns as $columnName => $columnDescription) {
-                    $this->createColumn($table, $columnName, $columnDescription);
+                    $this->createColumn($table, (string) $columnName, $columnDescription);
                 }
             }
         );

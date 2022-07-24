@@ -26,6 +26,6 @@ class DateCaster implements TypeCaster
      */
     public function cast(string $type, $value)
     {
-        return new \DateTimeImmutable($value);
+        return new \DateTimeImmutable((string) $value);
     }
 }
