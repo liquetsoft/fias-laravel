@@ -487,14 +487,14 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      *
      * @param string $name
      *
-     * @return string[]
+     * @return array<string, string>
      */
     private function getOptionArrayStrings(string $name): array
     {
         $raw = $this->getOptionArray($name);
         $result = [];
         foreach ($raw as $key => $value) {
-            $result[$key] = (string) $value;
+            $result[(string) $key] = (string) $value;
         }
 
         return $result;

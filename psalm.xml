@@ -20,6 +20,11 @@
                 <file name="./src/LiquetsoftFiasBundleServiceProvider.php" />
             </errorLevel>
         </MixedArgument>
+        <DeprecatedInterface>
+            <errorLevel type="suppress">
+                <file name="./src/Serializer/FiasSerializer.php" />
+            </errorLevel>
+        </DeprecatedInterface>
     </issueHandlers>
 
     <plugins>
