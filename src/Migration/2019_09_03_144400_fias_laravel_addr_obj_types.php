@@ -16,8 +16,11 @@ class Fiaslaraveladdrobjtypes extends Migration
      */
     public function up(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_addr_obj_types');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_addr_obj_types', function (Blueprint $table): void {
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_addr_obj_types');
+        Schema::connection($connectionName)->create('fias_laravel_addr_obj_types', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('id')->nullable(false)->comment('Идентификатор записи')->primary();
             $table->unsignedInteger('level')->nullable(false)->comment('Уровень адресного объекта');
@@ -40,6 +43,9 @@ class Fiaslaraveladdrobjtypes extends Migration
      */
     public function down(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_addr_obj_types');
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_addr_obj_types');
     }
 }

@@ -16,8 +16,11 @@ class Fiaslaravelchangehistory extends Migration
      */
     public function up(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_change_history');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_change_history', function (Blueprint $table): void {
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_change_history');
+        Schema::connection($connectionName)->create('fias_laravel_change_history', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('changeid')->nullable(false)->comment('ID изменившей транзакции')->primary();
             $table->unsignedInteger('objectid')->nullable(false)->comment('Уникальный ID объекта');
@@ -37,6 +40,9 @@ class Fiaslaravelchangehistory extends Migration
      */
     public function down(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_change_history');
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_change_history');
     }
 }

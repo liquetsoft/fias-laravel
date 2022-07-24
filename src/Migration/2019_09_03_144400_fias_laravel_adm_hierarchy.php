@@ -16,8 +16,11 @@ class Fiaslaraveladmhierarchy extends Migration
      */
     public function up(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_adm_hierarchy');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_adm_hierarchy', function (Blueprint $table): void {
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_adm_hierarchy');
+        Schema::connection($connectionName)->create('fias_laravel_adm_hierarchy', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('id')->nullable(false)->comment('Уникальный идентификатор записи. Ключевое поле')->primary();
             $table->unsignedInteger('objectid')->nullable(false)->comment('Глобальный уникальный идентификатор объекта');
@@ -47,6 +50,9 @@ class Fiaslaraveladmhierarchy extends Migration
      */
     public function down(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_adm_hierarchy');
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_adm_hierarchy');
     }
 }

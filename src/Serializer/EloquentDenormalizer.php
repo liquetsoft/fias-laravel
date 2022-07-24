@@ -44,6 +44,10 @@ class EloquentDenormalizer implements DenormalizerInterface
      */
     public function denormalize($data, $type, $format = null, array $context = [])
     {
+        if (!\is_array($data)) {
+            throw new InvalidArgumentException('Data for denormalization must be an array instance.');
+        }
+
         $entity = !empty($context['object_to_populate']) ? $context['object_to_populate'] : new $type();
 
         if (!($entity instanceof Model)) {
@@ -77,8 +81,8 @@ class EloquentDenormalizer implements DenormalizerInterface
     /**
      * Создает массив данных для вставки в модель на основании полей модели.
      *
-     * @param array $data
-     * @param Model $entity
+     * @param mixed[] $data
+     * @param Model   $entity
      *
      * @return array
      *
@@ -89,7 +93,7 @@ class EloquentDenormalizer implements DenormalizerInterface
         $dataArray = [];
 
         foreach ($data as $propertyName => $propertyValue) {
-            $modelAttribute = $this->mapParameterNameToModelAttributeName($propertyName, $entity);
+            $modelAttribute = $this->mapParameterNameToModelAttributeName((string) $propertyName, $entity);
             if ($modelAttribute === null) {
                 continue;
             }
@@ -122,6 +126,7 @@ class EloquentDenormalizer implements DenormalizerInterface
             strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $name)),
         ];
 
+        /** @var string[] */
         $fields = $entity->getFillable();
         foreach ($fields as $field) {
             $loweredField = strtolower($field);
@@ -147,6 +152,7 @@ class EloquentDenormalizer implements DenormalizerInterface
      */
     protected function castValueForModel($value, string $attributeName, Model $entity)
     {
+        /** @var array<string, string> */
         $casts = $entity->getCasts();
         $type = $casts[$attributeName] ?? '';
 

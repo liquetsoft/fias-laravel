@@ -151,10 +151,10 @@ class SerializerGenerator extends AbstractGenerator
                     $varType = "(int) \$data['{$xmlAttribute}']";
                     break;
                 case 'string_date':
-                    $varType = "new DateTimeImmutable(\$data['{$xmlAttribute}'])";
+                    $varType = "new DateTimeImmutable((string) \$data['{$xmlAttribute}'])";
                     break;
                 default:
-                    $varType = "trim(\$data['{$xmlAttribute}'])";
+                    $varType = "trim((string) \$data['{$xmlAttribute}'])";
                     break;
             }
             $body .= "    '{$column}' => isset(\$data['{$xmlAttribute}']) ? {$varType} : null,\n";

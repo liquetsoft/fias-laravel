@@ -128,6 +128,7 @@ EOT;
         $normalizer = new FiasSerializer();
         $model = $normalizer->deserialize($data, $type, 'xml');
 
+        $this->assertInstanceOf(FiasSerializerMock::class, $model);
         $this->assertSame('', $model->getAttribute('name'));
     }
 }

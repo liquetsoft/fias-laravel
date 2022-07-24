@@ -16,8 +16,11 @@ class Fiaslaravelfiasversion extends Migration
      */
     public function up(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_fias_version');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_fias_version', function (Blueprint $table): void {
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_fias_version');
+        Schema::connection($connectionName)->create('fias_laravel_fias_version', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('version')->nullable(false)->comment('Номер версии ФИАС')->primary();
             $table->string('url', 255)->nullable(false)->comment('Ссылка для загрузки указанной версии ФИАС');
@@ -34,6 +37,9 @@ class Fiaslaravelfiasversion extends Migration
      */
     public function down(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_fias_version');
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_fias_version');
     }
 }

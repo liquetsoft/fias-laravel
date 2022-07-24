@@ -16,8 +16,11 @@ class Fiaslaravelreestrobjects extends Migration
      */
     public function up(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_reestr_objects');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_reestr_objects', function (Blueprint $table): void {
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_reestr_objects');
+        Schema::connection($connectionName)->create('fias_laravel_reestr_objects', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('objectid')->nullable(false)->comment('Уникальный идентификатор объекта')->primary();
             $table->datetime('createdate')->nullable(false)->comment('Дата создания');
@@ -38,6 +41,9 @@ class Fiaslaravelreestrobjects extends Migration
      */
     public function down(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_reestr_objects');
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_reestr_objects');
     }
 }

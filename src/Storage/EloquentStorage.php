@@ -37,7 +37,7 @@ class EloquentStorage implements Storage
      *
      * Массив вида 'класс сущности => 'массив массивов данных для вставки'.
      *
-     * @var array<string, array>
+     * @var array<string, array<int, array<string, mixed>>>
      */
     protected $insertData = [];
 
@@ -46,14 +46,14 @@ class EloquentStorage implements Storage
      *
      * Массив вида 'класс сущности => 'массив массивов данных для обновления'.
      *
-     * @var array<string, array>
+     * @var array<string, array<string, array<string, mixed>>>
      */
     protected $upsertData = [];
 
     /**
      * Список колонок для классов моделей.
      *
-     * @var array<string, array>
+     * @var array<string, string[]>
      */
     protected $columnsLists = [];
 
@@ -166,7 +166,8 @@ class EloquentStorage implements Storage
         $model = $this->checkIsEntityAllowedForEloquent($entity);
 
         $class = \get_class($model);
-        $this->upsertData[$class][$model->getKey()] = $this->collectValuesFromModel($model);
+        $key = (string) $model->getKey();
+        $this->upsertData[$class][$key] = $this->collectValuesFromModel($model);
 
         $this->checkAndFlushUpsert(false);
     }
@@ -225,10 +226,11 @@ class EloquentStorage implements Storage
                 continue;
             }
 
+            /** @var iterable<Model> */
             $existedModels = $className::findMany(array_keys($upsertData));
             $existedModelsByPrimary = [];
             foreach ($existedModels as $model) {
-                $existedModelsByPrimary[$model->getKey()] = $model;
+                $existedModelsByPrimary[(string) $model->getKey()] = $model;
             }
 
             $toInsert = [];
@@ -280,7 +282,7 @@ class EloquentStorage implements Storage
      *
      * @param Model $entity
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function collectValuesFromModel(Model $entity): array
     {
@@ -311,10 +313,9 @@ class EloquentStorage implements Storage
         $class = \get_class($model);
 
         if (!isset($this->columnsLists[$class])) {
-            $this->columnsLists[$class] = $model->getConnection()
-                ->getSchemaBuilder()
-                ->getColumnListing($model->getTable())
-            ;
+            /** @var string[] */
+            $columns = $model->getConnection()->getSchemaBuilder()->getColumnListing($model->getTable());
+            $this->columnsLists[$class] = $columns;
         }
 
         return $this->columnsLists[$class];

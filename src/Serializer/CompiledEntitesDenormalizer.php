@@ -182,16 +182,16 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
             'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
             'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'number' => isset($data['@NUMBER']) ? trim($data['@NUMBER']) : null,
+            'number' => isset($data['@NUMBER']) ? trim((string) $data['@NUMBER']) : null,
             'roomtype' => isset($data['@ROOMTYPE']) ? (int) $data['@ROOMTYPE'] : null,
             'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
             'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
             'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
             'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
             'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
         ];
@@ -209,13 +209,13 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
             'level' => isset($data['@LEVEL']) ? (int) $data['@LEVEL'] : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-            'desc' => isset($data['@DESC']) ? trim($data['@DESC']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim((string) $data['@SHORTNAME']) : null,
+            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
+            'desc' => isset($data['@DESC']) ? trim((string) $data['@DESC']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
         ];
     }
 
@@ -234,10 +234,10 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
             'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
             'changeidend' => isset($data['@CHANGEIDEND']) ? (int) $data['@CHANGEIDEND'] : null,
             'typeid' => isset($data['@TYPEID']) ? (int) $data['@TYPEID'] : null,
-            'value' => isset($data['@VALUE']) ? trim($data['@VALUE']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'value' => isset($data['@VALUE']) ? trim((string) $data['@VALUE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
         ];
     }
 
@@ -253,15 +253,15 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
             'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
             'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'number' => isset($data['@NUMBER']) ? trim($data['@NUMBER']) : null,
-            'opertypeid' => isset($data['@OPERTYPEID']) ? trim($data['@OPERTYPEID']) : null,
+            'number' => isset($data['@NUMBER']) ? trim((string) $data['@NUMBER']) : null,
+            'opertypeid' => isset($data['@OPERTYPEID']) ? trim((string) $data['@OPERTYPEID']) : null,
             'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
             'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
             'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
             'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
         ];
@@ -279,15 +279,15 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
             'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
             'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'number' => isset($data['@NUMBER']) ? trim($data['@NUMBER']) : null,
+            'number' => isset($data['@NUMBER']) ? trim((string) $data['@NUMBER']) : null,
             'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
             'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
             'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
             'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
             'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
         ];
@@ -307,12 +307,12 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
             'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
             'parentobjid' => isset($data['@PARENTOBJID']) ? (int) $data['@PARENTOBJID'] : null,
             'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'oktmo' => isset($data['@OKTMO']) ? trim($data['@OKTMO']) : null,
+            'oktmo' => isset($data['@OKTMO']) ? trim((string) $data['@OKTMO']) : null,
             'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
             'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
             'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
         ];
     }
@@ -328,9 +328,9 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
         ];
     }
 
@@ -345,13 +345,13 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
-            'desc' => isset($data['@DESC']) ? trim($data['@DESC']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
+            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim((string) $data['@SHORTNAME']) : null,
+            'desc' => isset($data['@DESC']) ? trim((string) $data['@DESC']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
         ];
     }
 
@@ -366,13 +366,13 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
-            'desc' => isset($data['@DESC']) ? trim($data['@DESC']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
+            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim((string) $data['@SHORTNAME']) : null,
+            'desc' => isset($data['@DESC']) ? trim((string) $data['@DESC']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
         ];
     }
 
@@ -388,20 +388,20 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
             'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
             'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'housenum' => isset($data['@HOUSENUM']) ? trim($data['@HOUSENUM']) : null,
-            'addnum1' => isset($data['@ADDNUM1']) ? trim($data['@ADDNUM1']) : null,
-            'addnum2' => isset($data['@ADDNUM2']) ? trim($data['@ADDNUM2']) : null,
+            'housenum' => isset($data['@HOUSENUM']) ? trim((string) $data['@HOUSENUM']) : null,
+            'addnum1' => isset($data['@ADDNUM1']) ? trim((string) $data['@ADDNUM1']) : null,
+            'addnum2' => isset($data['@ADDNUM2']) ? trim((string) $data['@ADDNUM2']) : null,
             'housetype' => isset($data['@HOUSETYPE']) ? (int) $data['@HOUSETYPE'] : null,
             'addtype1' => isset($data['@ADDTYPE1']) ? (int) $data['@ADDTYPE1'] : null,
             'addtype2' => isset($data['@ADDTYPE2']) ? (int) $data['@ADDTYPE2'] : null,
             'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
             'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
             'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
             'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
             'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
         ];
@@ -419,10 +419,10 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
         return [
             'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
             'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'adrobjectid' => isset($data['@ADROBJECTID']) ? trim($data['@ADROBJECTID']) : null,
+            'adrobjectid' => isset($data['@ADROBJECTID']) ? trim((string) $data['@ADROBJECTID']) : null,
             'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
             'ndocid' => isset($data['@NDOCID']) ? (int) $data['@NDOCID'] : null,
-            'changedate' => isset($data['@CHANGEDATE']) ? new DateTimeImmutable($data['@CHANGEDATE']) : null,
+            'changedate' => isset($data['@CHANGEDATE']) ? new DateTimeImmutable((string) $data['@CHANGEDATE']) : null,
         ];
     }
 
@@ -438,16 +438,16 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
             'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
             'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'number' => isset($data['@NUMBER']) ? trim($data['@NUMBER']) : null,
+            'number' => isset($data['@NUMBER']) ? trim((string) $data['@NUMBER']) : null,
             'aparttype' => isset($data['@APARTTYPE']) ? (int) $data['@APARTTYPE'] : null,
             'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
             'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
             'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
             'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
             'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
         ];
@@ -464,13 +464,13 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
-            'desc' => isset($data['@DESC']) ? trim($data['@DESC']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
+            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim((string) $data['@SHORTNAME']) : null,
+            'desc' => isset($data['@DESC']) ? trim((string) $data['@DESC']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
         ];
     }
 
@@ -485,7 +485,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
+            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
         ];
     }
 
@@ -500,13 +500,13 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-            'code' => isset($data['@CODE']) ? trim($data['@CODE']) : null,
-            'desc' => isset($data['@DESC']) ? trim($data['@DESC']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
+            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
+            'code' => isset($data['@CODE']) ? trim((string) $data['@CODE']) : null,
+            'desc' => isset($data['@DESC']) ? trim((string) $data['@DESC']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
         ];
     }
 
@@ -521,13 +521,13 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
-            'desc' => isset($data['@DESC']) ? trim($data['@DESC']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
+            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim((string) $data['@SHORTNAME']) : null,
+            'desc' => isset($data['@DESC']) ? trim((string) $data['@DESC']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
         ];
     }
 
@@ -542,17 +542,17 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-            'date' => isset($data['@DATE']) ? new DateTimeImmutable($data['@DATE']) : null,
-            'number' => isset($data['@NUMBER']) ? trim($data['@NUMBER']) : null,
+            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
+            'date' => isset($data['@DATE']) ? new DateTimeImmutable((string) $data['@DATE']) : null,
+            'number' => isset($data['@NUMBER']) ? trim((string) $data['@NUMBER']) : null,
             'type' => isset($data['@TYPE']) ? (int) $data['@TYPE'] : null,
             'kind' => isset($data['@KIND']) ? (int) $data['@KIND'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'orgname' => isset($data['@ORGNAME']) ? trim($data['@ORGNAME']) : null,
-            'regnum' => isset($data['@REGNUM']) ? trim($data['@REGNUM']) : null,
-            'regdate' => isset($data['@REGDATE']) ? new DateTimeImmutable($data['@REGDATE']) : null,
-            'accdate' => isset($data['@ACCDATE']) ? new DateTimeImmutable($data['@ACCDATE']) : null,
-            'comment' => isset($data['@COMMENT']) ? trim($data['@COMMENT']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'orgname' => isset($data['@ORGNAME']) ? trim((string) $data['@ORGNAME']) : null,
+            'regnum' => isset($data['@REGNUM']) ? trim((string) $data['@REGNUM']) : null,
+            'regdate' => isset($data['@REGDATE']) ? new DateTimeImmutable((string) $data['@REGDATE']) : null,
+            'accdate' => isset($data['@ACCDATE']) ? new DateTimeImmutable((string) $data['@ACCDATE']) : null,
+            'comment' => isset($data['@COMMENT']) ? trim((string) $data['@COMMENT']) : null,
         ];
     }
 
@@ -567,12 +567,12 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'level' => isset($data['@LEVEL']) ? (int) $data['@LEVEL'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim($data['@SHORTNAME']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim($data['@ISACTIVE']) : null,
+            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
+            'shortname' => isset($data['@SHORTNAME']) ? trim((string) $data['@SHORTNAME']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
+            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
         ];
     }
 
@@ -590,17 +590,17 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
             'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
             'parentobjid' => isset($data['@PARENTOBJID']) ? (int) $data['@PARENTOBJID'] : null,
             'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'regioncode' => isset($data['@REGIONCODE']) ? trim($data['@REGIONCODE']) : null,
-            'areacode' => isset($data['@AREACODE']) ? trim($data['@AREACODE']) : null,
-            'citycode' => isset($data['@CITYCODE']) ? trim($data['@CITYCODE']) : null,
-            'placecode' => isset($data['@PLACECODE']) ? trim($data['@PLACECODE']) : null,
-            'plancode' => isset($data['@PLANCODE']) ? trim($data['@PLANCODE']) : null,
-            'streetcode' => isset($data['@STREETCODE']) ? trim($data['@STREETCODE']) : null,
+            'regioncode' => isset($data['@REGIONCODE']) ? trim((string) $data['@REGIONCODE']) : null,
+            'areacode' => isset($data['@AREACODE']) ? trim((string) $data['@AREACODE']) : null,
+            'citycode' => isset($data['@CITYCODE']) ? trim((string) $data['@CITYCODE']) : null,
+            'placecode' => isset($data['@PLACECODE']) ? trim((string) $data['@PLACECODE']) : null,
+            'plancode' => isset($data['@PLANCODE']) ? trim((string) $data['@PLANCODE']) : null,
+            'streetcode' => isset($data['@STREETCODE']) ? trim((string) $data['@STREETCODE']) : null,
             'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
             'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
             'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
         ];
     }
@@ -633,11 +633,11 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'createdate' => isset($data['@CREATEDATE']) ? new DateTimeImmutable($data['@CREATEDATE']) : null,
+            'createdate' => isset($data['@CREATEDATE']) ? new DateTimeImmutable((string) $data['@CREATEDATE']) : null,
             'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
             'levelid' => isset($data['@LEVELID']) ? (int) $data['@LEVELID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
             'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
         ];
     }
@@ -654,17 +654,17 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
         return [
             'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
             'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim($data['@OBJECTGUID']) : null,
+            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
             'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'name' => isset($data['@NAME']) ? trim($data['@NAME']) : null,
-            'typename' => isset($data['@TYPENAME']) ? trim($data['@TYPENAME']) : null,
-            'level' => isset($data['@LEVEL']) ? trim($data['@LEVEL']) : null,
+            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
+            'typename' => isset($data['@TYPENAME']) ? trim((string) $data['@TYPENAME']) : null,
+            'level' => isset($data['@LEVEL']) ? trim((string) $data['@LEVEL']) : null,
             'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
             'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
             'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable($data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable($data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable($data['@ENDDATE']) : null,
+            'updatedate' => isset($data['@UPDATEDATE']) ? new DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
+            'startdate' => isset($data['@STARTDATE']) ? new DateTimeImmutable((string) $data['@STARTDATE']) : null,
+            'enddate' => isset($data['@ENDDATE']) ? new DateTimeImmutable((string) $data['@ENDDATE']) : null,
             'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
             'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
         ];
@@ -681,8 +681,8 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     {
         return [
             'version' => isset($data['@VERSION']) ? (int) $data['@VERSION'] : null,
-            'url' => isset($data['@URL']) ? trim($data['@URL']) : null,
-            'created_at' => isset($data['@CREATED_AT']) ? new DateTimeImmutable($data['@CREATED_AT']) : null,
+            'url' => isset($data['@URL']) ? trim((string) $data['@URL']) : null,
+            'created_at' => isset($data['@CREATED_AT']) ? new DateTimeImmutable((string) $data['@CREATED_AT']) : null,
         ];
     }
 }

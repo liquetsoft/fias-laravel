@@ -66,8 +66,11 @@ class MigrationGenerator extends AbstractGenerator
             ->setReturnType('void')
         ;
 
-        $method->addBody("Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('{$tableName}');");
-        $method->addBody("Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('{$tableName}', function (Blueprint \$table): void {");
+        $method->addBody('/** @var string|null */');
+        $method->addBody("\$connectionName = config('liquetsoft_fias.eloquent_connection');\n");
+
+        $method->addBody("Schema::connection(\$connectionName)->dropIfExists('{$tableName}');");
+        $method->addBody("Schema::connection(\$connectionName)->create('{$tableName}', function (Blueprint \$table): void {");
         $method->addBody('    // создание полей таблицы');
         foreach ($descriptor->getFields() as $field) {
             $name = $this->unifyColumnName($field->getName());
@@ -142,7 +145,7 @@ class MigrationGenerator extends AbstractGenerator
             $partitioningPrimaries = implode(', ', $partitioningPrimaries);
             $partitionFields = implode(', ', $partitionFields);
             $method->addBody('//для mysql большие таблицы нужно разбивать на части');
-            $method->addBody('$connection = DB::connection(config(\'liquetsoft_fias.eloquent_connection\'));');
+            $method->addBody('$connection = DB::connection(\$connectionName);');
             $method->addBody("if (\$connection instanceof Connection && \$connection->getDriverName() === 'mysql') {");
             if ($partitionFields) {
                 $method->addBody('    //поля для партицирования должны входить в каждый уникальный ключ, в т.ч. primary');
@@ -169,7 +172,9 @@ class MigrationGenerator extends AbstractGenerator
             ->addComment("Удаление таблицы '{$tableName}'.")
             ->setVisibility('public')
             ->setReturnType('void')
-            ->addBody("Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('{$tableName}');")
+            ->addBody('/** @var string|null */')
+            ->addBody("\$connectionName = config('liquetsoft_fias.eloquent_connection');\n")
+            ->addBody("Schema::connection(\$connectionName)->dropIfExists('{$tableName}');")
         ;
     }
 }

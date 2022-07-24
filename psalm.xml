@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <psalm
-    totallyTyped="false"
     cacheDirectory="/tmp"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
@@ -15,6 +14,12 @@
 
     <issueHandlers>
         <PropertyNotSetInConstructor errorLevel="suppress"/>
+        <MixedAssignment errorLevel="suppress"/>
+        <MixedArgument>
+            <errorLevel type="suppress">
+                <file name="./src/LiquetsoftFiasBundleServiceProvider.php" />
+            </errorLevel>
+        </MixedArgument>
     </issueHandlers>
 
     <plugins>

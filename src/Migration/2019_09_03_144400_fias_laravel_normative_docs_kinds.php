@@ -16,8 +16,11 @@ class Fiaslaravelnormativedocskinds extends Migration
      */
     public function up(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_normative_docs_kinds');
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->create('fias_laravel_normative_docs_kinds', function (Blueprint $table): void {
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_normative_docs_kinds');
+        Schema::connection($connectionName)->create('fias_laravel_normative_docs_kinds', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('id')->nullable(false)->comment('Идентификатор записи')->primary();
             $table->text('name')->nullable(false)->comment('Наименование');
@@ -33,6 +36,9 @@ class Fiaslaravelnormativedocskinds extends Migration
      */
     public function down(): void
     {
-        Schema::connection(config('liquetsoft_fias.eloquent_connection'))->dropIfExists('fias_laravel_normative_docs_kinds');
+        /** @var string|null */
+        $connectionName = config('liquetsoft_fias.eloquent_connection');
+
+        Schema::connection($connectionName)->dropIfExists('fias_laravel_normative_docs_kinds');
     }
 }
