@@ -44,7 +44,7 @@ jobs:
 
 
   laravel:
-    name: Testing installation to laravel (PHP ${{ matrix.php-versions }}, Laravel ${{ matrix.laravel-versions }})
+    name: Testing installation to laravel (PHP ${{ matrix.php-version }}, Laravel ${{ matrix.laravel-version }})
     runs-on: ubuntu-latest
     env:
       DB_DATABASE: laravel
