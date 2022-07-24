@@ -76,7 +76,7 @@ jobs:
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php-version }}
           extensions: mbstring, dom, fileinfo, mysql, curl
       - name: Start mysql service
         run: sudo /etc/init.d/mysql start
@@ -92,7 +92,7 @@ jobs:
           fi
       - name: Install Laravel
         run: |
-          composer create-project laravel/laravel example-app ${{ matrix.laravel-versions }}
+          composer create-project laravel/laravel example-app ${{ matrix.laravel-version }}
           unzip ./tests/Pipeline/_fixtures/install_AddressObject.zip -d ./example-app/fias-data-install
           unzip ./tests/Pipeline/_fixtures/update_AddressObject.zip -d ./example-app/fias-data-update
       - name: Install FIAS
