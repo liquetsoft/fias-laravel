@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Сведения по типам адресных объектов.
  *
- * @property int               $id         Идентификатор записи
- * @property int               $level      Уровень адресного объекта
- * @property string            $shortname  Краткое наименование типа объекта
- * @property string            $name       Полное наименование типа объекта
- * @property string|null       $desc       Описание
- * @property DateTimeInterface $updatedate Дата внесения (обновления) записи
- * @property DateTimeInterface $startdate  Начало действия записи
- * @property DateTimeInterface $enddate    Окончание действия записи
- * @property string            $isactive   Статус активности
+ * @property int                $id         Идентификатор записи
+ * @property int                $level      Уровень адресного объекта
+ * @property string             $shortname  Краткое наименование типа объекта
+ * @property string             $name       Полное наименование типа объекта
+ * @property string|null        $desc       Описание
+ * @property \DateTimeInterface $updatedate Дата внесения (обновления) записи
+ * @property \DateTimeInterface $startdate  Начало действия записи
+ * @property \DateTimeInterface $enddate    Окончание действия записи
+ * @property string             $isactive   Статус активности
  */
 class AddrObjTypes extends Model
 {

@@ -4,27 +4,26 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Сведения классификатора адресообразующих элементов.
  *
- * @property int               $id         Уникальный идентификатор записи. Ключевое поле
- * @property int               $objectid   Глобальный уникальный идентификатор адресного объекта типа INTEGER
- * @property string            $objectguid Глобальный уникальный идентификатор адресного объекта типа UUID
- * @property int               $changeid   ID изменившей транзакции
- * @property string            $name       Наименование
- * @property string            $typename   Краткое наименование типа объекта
- * @property string            $level      Уровень адресного объекта
- * @property int               $opertypeid Статус действия над записью – причина появления записи
- * @property int|null          $previd     Идентификатор записи связывания с предыдущей исторической записью
- * @property int|null          $nextid     Идентификатор записи связывания с последующей исторической записью
- * @property DateTimeInterface $updatedate Дата внесения (обновления) записи
- * @property DateTimeInterface $startdate  Начало действия записи
- * @property DateTimeInterface $enddate    Окончание действия записи
- * @property int               $isactual   Статус актуальности адресного объекта ФИАС
- * @property int               $isactive   Признак действующего адресного объекта
+ * @property int                $id         Уникальный идентификатор записи. Ключевое поле
+ * @property int                $objectid   Глобальный уникальный идентификатор адресного объекта типа INTEGER
+ * @property string             $objectguid Глобальный уникальный идентификатор адресного объекта типа UUID
+ * @property int                $changeid   ID изменившей транзакции
+ * @property string             $name       Наименование
+ * @property string             $typename   Краткое наименование типа объекта
+ * @property string             $level      Уровень адресного объекта
+ * @property int                $opertypeid Статус действия над записью – причина появления записи
+ * @property int|null           $previd     Идентификатор записи связывания с предыдущей исторической записью
+ * @property int|null           $nextid     Идентификатор записи связывания с последующей исторической записью
+ * @property \DateTimeInterface $updatedate Дата внесения (обновления) записи
+ * @property \DateTimeInterface $startdate  Начало действия записи
+ * @property \DateTimeInterface $enddate    Окончание действия записи
+ * @property int                $isactual   Статус актуальности адресного объекта ФИАС
+ * @property int                $isactive   Признак действующего адресного объекта
  */
 class AddrObj extends Model
 {

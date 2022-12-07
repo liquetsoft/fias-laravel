@@ -9,7 +9,6 @@ use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\FiasInformer\InformerResponseBase;
 use Liquetsoft\Fias\Component\VersionManager\VersionManager;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FiasVersion;
-use RuntimeException;
 
 /**
  * Объект, который сохраняет текущую версию ФИАС с помощью eloquent.
@@ -32,7 +31,7 @@ class EloquentVersionManager implements VersionManager
     /**
      * {@inheritdoc}
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      *
      * @psalm-suppress InvalidStringClass
      */
@@ -53,7 +52,7 @@ class EloquentVersionManager implements VersionManager
     /**
      * {@inheritdoc}
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      *
      * @psalm-suppress InvalidStringClass
      * @psalm-suppress MixedMethodCall
@@ -78,14 +77,14 @@ class EloquentVersionManager implements VersionManager
      *
      * @return string
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     protected function getEntityClassName(): string
     {
         $trimmedEntityClassName = trim($this->entityClassName, " \t\n\r\0\x0B\\");
 
         if ($trimmedEntityClassName !== FiasVersion::class && !is_subclass_of($trimmedEntityClassName, FiasVersion::class)) {
-            throw new RuntimeException(
+            throw new \RuntimeException(
                 "Entity class must be a '" . FiasVersion::class . "' instance or it's successor class, got '{$trimmedEntityClassName}'."
                 . " Please check that 'liquetsoft_fias.version_manager_entity' parameter is properly configured."
             );

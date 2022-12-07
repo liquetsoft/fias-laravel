@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Модель, которая хранит историю версий ФИАС.
  *
- * @property int               $version    Номер версии ФИАС
- * @property string            $url        Ссылка для загрузки указанной версии ФИАС
- * @property DateTimeInterface $created_at Дата создания записи
+ * @property int                $version    Номер версии ФИАС
+ * @property string             $url        Ссылка для загрузки указанной версии ФИАС
+ * @property \DateTimeInterface $created_at Дата создания записи
  */
 class FiasVersion extends Model
 {

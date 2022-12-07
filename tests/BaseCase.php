@@ -10,7 +10,6 @@ use Marvin255\FileSystemHelper\FileSystemException;
 use Marvin255\FileSystemHelper\FileSystemFactory;
 use Marvin255\FileSystemHelper\FileSystemHelperInterface;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 
 /**
  * Базовый класс для всех тестов.
@@ -69,7 +68,7 @@ abstract class BaseCase extends TestCase
      *
      * @return string
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      * @throws FileSystemException
      */
     protected function getTempDir(): string
@@ -77,7 +76,7 @@ abstract class BaseCase extends TestCase
         if ($this->tempDir === null) {
             $this->tempDir = sys_get_temp_dir();
             if (!$this->tempDir || !is_writable($this->tempDir)) {
-                throw new RuntimeException(
+                throw new \RuntimeException(
                     "Can't find or write temporary folder: {$this->tempDir}"
                 );
             }
@@ -96,7 +95,7 @@ abstract class BaseCase extends TestCase
      *
      * @return string
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      * @throws FileSystemException
      */
     protected function getPathToTestDir(string $name = ''): string
@@ -129,7 +128,7 @@ abstract class BaseCase extends TestCase
         $pathToFile = $this->getTempDir() . \DIRECTORY_SEPARATOR . $name;
         $content = $content === null ? $this->createFakeData()->word() : $content;
         if (file_put_contents($pathToFile, $content) === false) {
-            throw new RuntimeException("Can't create file {$pathToFile}");
+            throw new \RuntimeException("Can't create file {$pathToFile}");
         }
 
         return $pathToFile;

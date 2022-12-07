@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Сведения о классификаторе параметров адресообразующих элементов и объектов недвижимости.
  *
- * @property int               $id          Идентификатор записи
- * @property int               $objectid    Глобальный уникальный идентификатор адресного объекта
- * @property int|null          $changeid    ID изменившей транзакции
- * @property int               $changeidend ID завершившей транзакции
- * @property int               $typeid      Тип параметра
- * @property string            $value       Значение параметра
- * @property DateTimeInterface $updatedate  Дата внесения (обновления) записи
- * @property DateTimeInterface $startdate   Дата начала действия записи
- * @property DateTimeInterface $enddate     Дата окончания действия записи
+ * @property int                $id          Идентификатор записи
+ * @property int                $objectid    Глобальный уникальный идентификатор адресного объекта
+ * @property int|null           $changeid    ID изменившей транзакции
+ * @property int                $changeidend ID завершившей транзакции
+ * @property int                $typeid      Тип параметра
+ * @property string             $value       Значение параметра
+ * @property \DateTimeInterface $updatedate  Дата внесения (обновления) записи
+ * @property \DateTimeInterface $startdate   Дата начала действия записи
+ * @property \DateTimeInterface $enddate     Дата окончания действия записи
  */
 class Param extends Model
 {

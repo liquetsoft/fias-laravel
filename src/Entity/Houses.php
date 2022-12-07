@@ -4,30 +4,29 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Сведения по номерам домов улиц городов и населенных пунктов.
  *
- * @property int               $id         Уникальный идентификатор записи. Ключевое поле
- * @property int               $objectid   Глобальный уникальный идентификатор объекта типа INTEGER
- * @property string            $objectguid Глобальный уникальный идентификатор адресного объекта типа UUID
- * @property int               $changeid   ID изменившей транзакции
- * @property string|null       $housenum   Основной номер дома
- * @property string|null       $addnum1    Дополнительный номер дома 1
- * @property string|null       $addnum2    Дополнительный номер дома 1
- * @property int|null          $housetype  Основной тип дома
- * @property int|null          $addtype1   Дополнительный тип дома 1
- * @property int|null          $addtype2   Дополнительный тип дома 2
- * @property int               $opertypeid Статус действия над записью – причина появления записи
- * @property int|null          $previd     Идентификатор записи связывания с предыдущей исторической записью
- * @property int|null          $nextid     Идентификатор записи связывания с последующей исторической записью
- * @property DateTimeInterface $updatedate Дата внесения (обновления) записи
- * @property DateTimeInterface $startdate  Начало действия записи
- * @property DateTimeInterface $enddate    Окончание действия записи
- * @property int               $isactual   Статус актуальности адресного объекта ФИАС
- * @property int               $isactive   Признак действующего адресного объекта
+ * @property int                $id         Уникальный идентификатор записи. Ключевое поле
+ * @property int                $objectid   Глобальный уникальный идентификатор объекта типа INTEGER
+ * @property string             $objectguid Глобальный уникальный идентификатор адресного объекта типа UUID
+ * @property int                $changeid   ID изменившей транзакции
+ * @property string|null        $housenum   Основной номер дома
+ * @property string|null        $addnum1    Дополнительный номер дома 1
+ * @property string|null        $addnum2    Дополнительный номер дома 1
+ * @property int|null           $housetype  Основной тип дома
+ * @property int|null           $addtype1   Дополнительный тип дома 1
+ * @property int|null           $addtype2   Дополнительный тип дома 2
+ * @property int                $opertypeid Статус действия над записью – причина появления записи
+ * @property int|null           $previd     Идентификатор записи связывания с предыдущей исторической записью
+ * @property int|null           $nextid     Идентификатор записи связывания с последующей исторической записью
+ * @property \DateTimeInterface $updatedate Дата внесения (обновления) записи
+ * @property \DateTimeInterface $startdate  Начало действия записи
+ * @property \DateTimeInterface $enddate    Окончание действия записи
+ * @property int                $isactual   Статус актуальности адресного объекта ФИАС
+ * @property int                $isactive   Признак действующего адресного объекта
  */
 class Houses extends Model
 {

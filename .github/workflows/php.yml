@@ -108,8 +108,6 @@ jobs:
           php artisan liquetsoft:fias:truncate
           php artisan liquetsoft:fias:install_from_folder ./fias-data-install
           php artisan liquetsoft:fias:update_from_folder ./fias-data-update
-          php artisan liquetsoft:fias:status
-          php artisan liquetsoft:fias:versions
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}

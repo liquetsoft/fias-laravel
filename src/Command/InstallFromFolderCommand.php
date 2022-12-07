@@ -6,13 +6,10 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;
-use InvalidArgumentException;
 use Liquetsoft\Fias\Component\Exception\PipeException;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
-use Liquetsoft\Fias\Component\Pipeline\Task\Task;
-use SplFileInfo;
-use Throwable;
+use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
 
 /**
  * Консольная команда для установки ФИАС с ноля из указанного каталога, в котором находятся файлы.
@@ -44,25 +41,25 @@ class InstallFromFolderCommand extends Command
      * Запуск команды на исполнение.
      *
      * @throws PipeException
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function handle(): void
     {
         $folder = $this->argument('folder');
         $folder = realpath(\is_array($folder) ? (string) reset($folder) : (string) $folder);
         if (!is_dir($folder)) {
-            throw new InvalidArgumentException("Can't find '{$folder}' folder to read FIAS files.");
+            throw new \InvalidArgumentException("Can't find '{$folder}' folder to read FIAS files.");
         }
 
         $this->info("Installing full version of FIAS from '{$folder}' folder.");
         $start = microtime(true);
 
         $state = new ArrayState();
-        $state->setAndLockParameter(Task::EXTRACT_TO_FOLDER_PARAM, new SplFileInfo($folder));
+        $state->setAndLockParameter(StateParameter::EXTRACT_TO_FOLDER, new \SplFileInfo($folder));
 
         try {
             $this->pipeline->run($state);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             $message = "Something went wrong during the installation from folder. Please check the Laravel's log to get more information.";
             throw new FiasConsoleException($message, 0, $e);
         }

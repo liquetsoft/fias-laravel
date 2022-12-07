@@ -9,7 +9,6 @@ use Illuminate\Foundation\Application;
 use Liquetsoft\Fias\Component\Exception\PipeException;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
-use Throwable;
 
 /**
  * Консольная команда для установки ФИАС с ноля.
@@ -56,7 +55,7 @@ class InstallCommand extends Command
 
         try {
             $this->pipeline->run($state);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             $message = "Something went wrong during the installation. Please check the Laravel's log to get more information.";
             throw new FiasConsoleException($message, 0, $e);
         }

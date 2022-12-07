@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Storage;
 
-use DateTimeImmutable;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage\EloquentStorage;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\EloquentTestCase;
@@ -96,7 +95,7 @@ class EloquentStorageTest extends EloquentTestCase
     {
         $id = $this->createFakeData()->numberBetween(10, 1000);
         $name = $this->createFakeData()->word();
-        $date = new DateTimeImmutable();
+        $date = new \DateTimeImmutable();
         $model = new EloquentStorageTestModel(
             [
                 'id' => $id,
@@ -107,7 +106,7 @@ class EloquentStorageTest extends EloquentTestCase
 
         $id1 = $id + 1;
         $name1 = $this->createFakeData()->word();
-        $date1 = new DateTimeImmutable();
+        $date1 = new \DateTimeImmutable();
         $model1 = new EloquentStorageTestModel(
             [
                 'id' => $id1,
@@ -167,7 +166,7 @@ class EloquentStorageTest extends EloquentTestCase
     {
         $id = $this->createFakeData()->numberBetween(1050, 2000);
         $name = $this->createFakeData()->word();
-        $date = new DateTimeImmutable();
+        $date = new \DateTimeImmutable();
         $model = new EloquentStorageTestModel(
             [
                 'id' => $id,
@@ -221,7 +220,7 @@ class EloquentStorageTest extends EloquentTestCase
     {
         $id = $this->createFakeData()->numberBetween(2050, 3000);
         $name = $this->createFakeData()->word();
-        $date = new DateTimeImmutable('2020-10-10');
+        $date = new \DateTimeImmutable('2020-10-10');
         $model = new EloquentStorageTestModel(
             [
                 'id' => $id,
@@ -232,7 +231,7 @@ class EloquentStorageTest extends EloquentTestCase
 
         $id1 = $this->createFakeData()->numberBetween(3050, 4000);
         $name1 = $name . ' ' . $this->createFakeData()->word();
-        $date1 = new DateTimeImmutable('2020-10-09');
+        $date1 = new \DateTimeImmutable('2020-10-09');
         $model1 = new EloquentStorageTestModel(
             [
                 'id' => $id1,
@@ -243,7 +242,7 @@ class EloquentStorageTest extends EloquentTestCase
 
         $id2 = 1;
         $name2 = $name . ' ' . $this->createFakeData()->word();
-        $date2 = new DateTimeImmutable('2020-10-09');
+        $date2 = new \DateTimeImmutable('2020-10-09');
         $model2 = new EloquentStorageTestModel(
             [
                 'id' => $id2,
@@ -254,7 +253,7 @@ class EloquentStorageTest extends EloquentTestCase
 
         $id3 = 2;
         $name3 = $name . ' ' . $this->createFakeData()->word();
-        $date3 = new DateTimeImmutable('2020-10-09');
+        $date3 = new \DateTimeImmutable('2020-10-09');
         $model3 = new EloquentStorageTestModel(
             [
                 'id' => $id3,
@@ -312,7 +311,7 @@ class EloquentStorageTest extends EloquentTestCase
     {
         $id = $this->createFakeData()->numberBetween(4050, 5000);
         $name = $this->createFakeData()->word();
-        $date = new DateTimeImmutable('2020-10-10');
+        $date = new \DateTimeImmutable('2020-10-10');
         $model = new EloquentStorageTestModel(
             [
                 'id' => $id,
@@ -322,7 +321,7 @@ class EloquentStorageTest extends EloquentTestCase
         );
 
         $name1 = $name . ' ' . $this->createFakeData()->word();
-        $date1 = new DateTimeImmutable('2020-10-09');
+        $date1 = new \DateTimeImmutable('2020-10-09');
         $model1 = new EloquentStorageTestModel(
             [
                 'id' => $id,
@@ -378,7 +377,7 @@ class EloquentStorageTest extends EloquentTestCase
             [
                 'id' => $id,
                 'name' => $this->createFakeData()->word(),
-                'test_date' => new DateTimeImmutable(),
+                'test_date' => new \DateTimeImmutable(),
             ]
         );
 
@@ -387,7 +386,7 @@ class EloquentStorageTest extends EloquentTestCase
             [
                 'id' => $id1,
                 'name' => $this->createFakeData()->word(),
-                'test_date' => new DateTimeImmutable(),
+                'test_date' => new \DateTimeImmutable(),
             ]
         );
 
@@ -435,7 +434,7 @@ class EloquentStorageTest extends EloquentTestCase
             [
                 'id' => $id,
                 'name' => $this->createFakeData()->word(),
-                'test_date' => new DateTimeImmutable(),
+                'test_date' => new \DateTimeImmutable(),
             ]
         );
 

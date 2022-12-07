@@ -10,8 +10,6 @@ use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\Unpacker\Unpacker;
 use Marvin255\FileSystemHelper\FileSystemFactory;
 use Marvin255\FileSystemHelper\FileSystemHelperInterface;
-use RuntimeException;
-use SplFileInfo;
 
 /**
  * Консольная команда, которая загружает указанную версию ФИАС в указанную папку.
@@ -98,16 +96,16 @@ class DownloadCommand extends Command
     /**
      * Возвращает объект с путем для загрузки файла в локальную файловую систему.
      *
-     * @return SplFileInfo
+     * @return \SplFileInfo
      */
-    private function getPathToDownload(): SplFileInfo
+    private function getPathToDownload(): \SplFileInfo
     {
         $version = $this->getVersion();
         $target = $this->argument('pathToDownload');
         $target = (string) (\is_array($target) ? reset($target) : $target);
         $target = rtrim($target, '/\\') . \DIRECTORY_SEPARATOR . 'fias_' . $version . '.zip';
 
-        return new SplFileInfo($target);
+        return new \SplFileInfo($target);
     }
 
     /**
@@ -136,7 +134,7 @@ class DownloadCommand extends Command
 
         if (empty($url)) {
             $message = sprintf("Can't find url for '%s' version.", $version);
-            throw new RuntimeException($message);
+            throw new \RuntimeException($message);
         }
 
         return $url;
@@ -145,12 +143,12 @@ class DownloadCommand extends Command
     /**
      * Распаковывает загруженный архив.
      *
-     * @param SplFileInfo $archive
+     * @param \SplFileInfo $archive
      */
-    private function extract(SplFileInfo $archive): void
+    private function extract(\SplFileInfo $archive): void
     {
         $extractTo = $archive->getPath() . \DIRECTORY_SEPARATOR . $archive->getBasename('.zip');
-        $extractTo = new SplFileInfo($extractTo);
+        $extractTo = new \SplFileInfo($extractTo);
 
         $this->fs->mkdirIfNotExist($extractTo);
         $this->fs->emptyDir($extractTo);

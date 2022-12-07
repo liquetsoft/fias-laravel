@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 
-use DateTimeInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
@@ -13,7 +12,6 @@ use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
-use SplFileInfo;
 
 /**
  * Объект, который создает классы для ресурсов моделей.
@@ -23,7 +21,7 @@ class ResourceGenerator extends AbstractGenerator
     /**
      * {@inheritDoc}
      */
-    protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace): void
+    protected function generateClassByDescriptor(EntityDescriptor $descriptor, \SplFileInfo $dir, string $namespace): void
     {
         $name = $this->unifyClassName($descriptor->getName());
         $fullPath = "{$dir->getPathname()}/{$name}.php";
@@ -52,7 +50,7 @@ class ResourceGenerator extends AbstractGenerator
         $namespace->addUse(Request::class);
         foreach ($descriptor->getFields() as $field) {
             if ($field->getSubType() === 'date') {
-                $namespace->addUse(DateTimeInterface::class);
+                $namespace->addUse(\DateTimeInterface::class);
             }
         }
     }

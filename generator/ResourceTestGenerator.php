@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 
-use DateTimeInterface;
 use Illuminate\Http\Request;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
@@ -12,8 +11,6 @@ use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
-use SplFileInfo;
-use stdClass;
 
 /**
  * Объект, который создает классы тестов для ресурсов моделей.
@@ -23,7 +20,7 @@ class ResourceTestGenerator extends AbstractGenerator
     /**
      * {@inheritDoc}
      */
-    protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace): void
+    protected function generateClassByDescriptor(EntityDescriptor $descriptor, \SplFileInfo $dir, string $namespace): void
     {
         $name = $this->unifyClassName($descriptor->getName());
         $fullPath = "{$dir->getPathname()}/{$name}Test.php";
@@ -58,14 +55,14 @@ class ResourceTestGenerator extends AbstractGenerator
 
         $namespace->addUse(BaseCase::class);
         $namespace->addUse(Request::class);
-        $namespace->addUse(stdClass::class);
+        $namespace->addUse(\stdClass::class);
         $namespace->addUse(
             'Liquetsoft\\Fias\\Laravel\\LiquetsoftFiasBundle\\Resource\\' . $this->unifyClassName($descriptor->getName()),
             'Resource'
         );
 
         if ($hasDateTime) {
-            $namespace->addUse(DateTimeInterface::class);
+            $namespace->addUse(\DateTimeInterface::class);
         }
     }
 

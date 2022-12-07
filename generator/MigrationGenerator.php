@@ -13,7 +13,6 @@ use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PsrPrinter;
-use SplFileInfo;
 
 /**
  * Объект, который создает классы миграций из описания моделей в yaml.
@@ -23,7 +22,7 @@ class MigrationGenerator extends AbstractGenerator
     /**
      * {@inheritDoc}
      */
-    protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace): void
+    protected function generateClassByDescriptor(EntityDescriptor $descriptor, \SplFileInfo $dir, string $namespace): void
     {
         $fileName = '2019_09_03_144400_' . $this->convertClassnameToTableName($descriptor->getName());
         $fullPath = "{$dir->getPathname()}/{$fileName}.php";

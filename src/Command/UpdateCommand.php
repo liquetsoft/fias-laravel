@@ -10,9 +10,7 @@ use Liquetsoft\Fias\Component\Exception\PipeException;
 use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
-use Liquetsoft\Fias\Component\Pipeline\Task\Task;
-use RuntimeException;
-use Throwable;
+use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
 
 /**
  * Консольная команда для обновления ФИАС с текущей версии до самой новой.
@@ -59,14 +57,14 @@ class UpdateCommand extends Command
             $state = new ArrayState();
             try {
                 $this->pipeline->run($state);
-            } catch (Throwable $e) {
+            } catch (\Throwable $e) {
                 $message = "Something went wrong during the updating. Please check the Laravel's log to get more information.";
                 throw new FiasConsoleException($message, 0, $e);
             }
-            $info = $state->getParameter(Task::FIAS_INFO_PARAM);
+            $info = $state->getParameter(StateParameter::FIAS_INFO);
             if (!($info instanceof InformerResponse)) {
-                throw new RuntimeException(
-                    "There is no '" . Task::FIAS_INFO_PARAM . "' parameter in state."
+                throw new \RuntimeException(
+                    "There is no '" . StateParameter::FIAS_INFO . "' parameter in state."
                 );
             }
             if ($info->hasResult()) {

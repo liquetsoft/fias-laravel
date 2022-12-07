@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Resource;
 
-use DateTimeInterface;
 use Illuminate\Http\Request;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Resource\FiasVersion as Resource;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
-use stdClass;
 
 /**
  * Тест ресурса для сущности 'FiasVersion'.
@@ -20,7 +18,7 @@ class FiasVersion extends BaseCase
      */
     public function testToArray(): void
     {
-        $model = new stdClass();
+        $model = new \stdClass();
         $model->version = $this->createFakeData()->numberBetween(1, 1000000);
         $model->url = $this->createFakeData()->word();
         $model->created_at = $this->createFakeData()->dateTime();
@@ -34,6 +32,6 @@ class FiasVersion extends BaseCase
         $this->assertArrayHasKey('url', $array);
         $this->assertSame($model->url, $array['url']);
         $this->assertArrayHasKey('created_at', $array);
-        $this->assertSame($model->created_at->format(DateTimeInterface::ATOM), $array['created_at']);
+        $this->assertSame($model->created_at->format(\DateTimeInterface::ATOM), $array['created_at']);
     }
 }

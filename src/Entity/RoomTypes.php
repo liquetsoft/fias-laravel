@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Сведения по типам комнат.
  *
- * @property int               $id         Идентификатор типа (ключ)
- * @property string            $name       Наименование
- * @property string|null       $shortname  Краткое наименование
- * @property string|null       $desc       Описание
- * @property DateTimeInterface $updatedate Дата внесения (обновления) записи
- * @property DateTimeInterface $startdate  Начало действия записи
- * @property DateTimeInterface $enddate    Окончание действия записи
- * @property string            $isactive   Статус активности
+ * @property int                $id         Идентификатор типа (ключ)
+ * @property string             $name       Наименование
+ * @property string|null        $shortname  Краткое наименование
+ * @property string|null        $desc       Описание
+ * @property \DateTimeInterface $updatedate Дата внесения (обновления) записи
+ * @property \DateTimeInterface $startdate  Начало действия записи
+ * @property \DateTimeInterface $enddate    Окончание действия записи
+ * @property string             $isactive   Статус активности
  */
 class RoomTypes extends Model
 {

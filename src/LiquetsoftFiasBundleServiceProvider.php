@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle;
 
-use Closure;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Liquetsoft\Fias\Component\Downloader\CurlDownloader;
@@ -136,7 +135,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     /**
      * Возвращает массив сервисов с их определениями.
      *
-     * @return array<string, Closure|string>
+     * @return array<string, \Closure|string>
      */
     private function getServicesDescriptions(): array
     {
@@ -152,7 +151,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     /**
      * Регистрирует сервисы бандла.
      *
-     * @param array<string, Closure|string> $servicesList
+     * @param array<string, \Closure|string> $servicesList
      *
      * @return void
      */
@@ -244,7 +243,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     /**
      * Регистрирует задачи бандла.
      *
-     * @param array<string, Closure|string> $servicesList
+     * @param array<string, \Closure|string> $servicesList
      *
      * @return void
      */
@@ -346,7 +345,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     /**
      * Регистрирует пайплайны бандла.
      *
-     * @param array<string, Closure|string> $servicesList
+     * @param array<string, \Closure|string> $servicesList
      *
      * @return void
      */

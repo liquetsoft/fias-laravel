@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Сведения по типу параметра.
  *
- * @property int               $id         Идентификатор типа параметра (ключ)
- * @property string            $name       Наименование
- * @property string            $code       Краткое наименование
- * @property string|null       $desc       Описание
- * @property DateTimeInterface $updatedate Дата внесения (обновления) записи
- * @property DateTimeInterface $startdate  Начало действия записи
- * @property DateTimeInterface $enddate    Окончание действия записи
- * @property string            $isactive   Статус активности
+ * @property int                $id         Идентификатор типа параметра (ключ)
+ * @property string             $name       Наименование
+ * @property string             $code       Краткое наименование
+ * @property string|null        $desc       Описание
+ * @property \DateTimeInterface $updatedate Дата внесения (обновления) записи
+ * @property \DateTimeInterface $startdate  Начало действия записи
+ * @property \DateTimeInterface $enddate    Окончание действия записи
+ * @property string             $isactive   Статус активности
  */
 class ParamTypes extends Model
 {

@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Сведения об адресном элементе в части его идентификаторов.
  *
- * @property int               $objectid   Уникальный идентификатор объекта
- * @property DateTimeInterface $createdate Дата создания
- * @property int               $changeid   ID изменившей транзакции
- * @property int               $levelid    Уровень объекта
- * @property DateTimeInterface $updatedate Дата обновления
- * @property string            $objectguid GUID объекта
- * @property int               $isactive   Признак действующего объекта (1 - действующий, 0 - не действующий)
+ * @property int                $objectid   Уникальный идентификатор объекта
+ * @property \DateTimeInterface $createdate Дата создания
+ * @property int                $changeid   ID изменившей транзакции
+ * @property int                $levelid    Уровень объекта
+ * @property \DateTimeInterface $updatedate Дата обновления
+ * @property string             $objectguid GUID объекта
+ * @property int                $isactive   Признак действующего объекта (1 - действующий, 0 - не действующий)
  */
 class ReestrObjects extends Model
 {

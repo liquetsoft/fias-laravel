@@ -9,7 +9,7 @@ use Illuminate\Foundation\Application;
 use Liquetsoft\Fias\Component\Exception\PipeException;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
-use Liquetsoft\Fias\Component\Pipeline\Task\Task;
+use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
 
 /**
  * Консольная команда, которая является одним из параллельных процессов обновления ФИАС.
@@ -64,7 +64,7 @@ class UpdateParallelRunningCommand extends Command
         }
 
         $state = new ArrayState();
-        $state->setAndLockParameter(Task::FILES_TO_PROCEED, $files);
+        $state->setAndLockParameter(StateParameter::FILES_TO_PROCEED, $files);
         $this->pipeline->run($state);
     }
 }

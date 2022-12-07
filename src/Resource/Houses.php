@@ -4,31 +4,30 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Resource;
 
-use DateTimeInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'Houses'.
  *
- * @property int               $id
- * @property int               $objectid
- * @property string            $objectguid
- * @property int               $changeid
- * @property string|null       $housenum
- * @property string|null       $addnum1
- * @property string|null       $addnum2
- * @property int|null          $housetype
- * @property int|null          $addtype1
- * @property int|null          $addtype2
- * @property int               $opertypeid
- * @property int|null          $previd
- * @property int|null          $nextid
- * @property DateTimeInterface $updatedate
- * @property DateTimeInterface $startdate
- * @property DateTimeInterface $enddate
- * @property int               $isactual
- * @property int               $isactive
+ * @property int                $id
+ * @property int                $objectid
+ * @property string             $objectguid
+ * @property int                $changeid
+ * @property string|null        $housenum
+ * @property string|null        $addnum1
+ * @property string|null        $addnum2
+ * @property int|null           $housetype
+ * @property int|null           $addtype1
+ * @property int|null           $addtype2
+ * @property int                $opertypeid
+ * @property int|null           $previd
+ * @property int|null           $nextid
+ * @property \DateTimeInterface $updatedate
+ * @property \DateTimeInterface $startdate
+ * @property \DateTimeInterface $enddate
+ * @property int                $isactual
+ * @property int                $isactive
  */
 class Houses extends JsonResource
 {
@@ -55,9 +54,9 @@ class Houses extends JsonResource
             'opertypeid' => $this->opertypeid,
             'previd' => $this->previd,
             'nextid' => $this->nextid,
-            'updatedate' => $this->updatedate->format(DateTimeInterface::ATOM),
-            'startdate' => $this->startdate->format(DateTimeInterface::ATOM),
-            'enddate' => $this->enddate->format(DateTimeInterface::ATOM),
+            'updatedate' => $this->updatedate->format(\DateTimeInterface::ATOM),
+            'startdate' => $this->startdate->format(\DateTimeInterface::ATOM),
+            'enddate' => $this->enddate->format(\DateTimeInterface::ATOM),
             'isactual' => $this->isactual,
             'isactive' => $this->isactive,
         ];

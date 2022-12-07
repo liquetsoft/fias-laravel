@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Resource;
 
-use DateTimeInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Ресурс для сущности 'ChangeHistory'.
  *
- * @property int               $changeid
- * @property int               $objectid
- * @property string            $adrobjectid
- * @property int               $opertypeid
- * @property int|null          $ndocid
- * @property DateTimeInterface $changedate
+ * @property int                $changeid
+ * @property int                $objectid
+ * @property string             $adrobjectid
+ * @property int                $opertypeid
+ * @property int|null           $ndocid
+ * @property \DateTimeInterface $changedate
  */
 class ChangeHistory extends JsonResource
 {
@@ -35,7 +34,7 @@ class ChangeHistory extends JsonResource
             'adrobjectid' => $this->adrobjectid,
             'opertypeid' => $this->opertypeid,
             'ndocid' => $this->ndocid,
-            'changedate' => $this->changedate->format(DateTimeInterface::ATOM),
+            'changedate' => $this->changedate->format(\DateTimeInterface::ATOM),
         ];
     }
 }

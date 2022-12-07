@@ -4,24 +4,23 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Сведения о нормативном документе, являющемся основанием присвоения адресному элементу наименования.
  *
- * @property int                    $id         Уникальный идентификатор документа
- * @property string                 $name       Наименование документа
- * @property DateTimeInterface      $date       Дата документа
- * @property string                 $number     Номер документа
- * @property int                    $type       Тип документа
- * @property int                    $kind       Вид документа
- * @property DateTimeInterface      $updatedate Дата обновления
- * @property string|null            $orgname    Наименование органа создвшего нормативный документ
- * @property string|null            $regnum     Номер государственной регистрации
- * @property DateTimeInterface|null $regdate    Дата государственной регистрации
- * @property DateTimeInterface|null $accdate    Дата вступления в силу нормативного документа
- * @property string|null            $comment    Комментарий
+ * @property int                     $id         Уникальный идентификатор документа
+ * @property string                  $name       Наименование документа
+ * @property \DateTimeInterface      $date       Дата документа
+ * @property string                  $number     Номер документа
+ * @property int                     $type       Тип документа
+ * @property int                     $kind       Вид документа
+ * @property \DateTimeInterface      $updatedate Дата обновления
+ * @property string|null             $orgname    Наименование органа создвшего нормативный документ
+ * @property string|null             $regnum     Номер государственной регистрации
+ * @property \DateTimeInterface|null $regdate    Дата государственной регистрации
+ * @property \DateTimeInterface|null $accdate    Дата вступления в силу нормативного документа
+ * @property string|null             $comment    Комментарий
  */
 class NormativeDocs extends Model
 {

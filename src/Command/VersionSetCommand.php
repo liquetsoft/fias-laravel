@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 
 use Illuminate\Console\Command;
-use InvalidArgumentException;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\VersionManager\VersionManager;
@@ -77,7 +76,7 @@ class VersionSetCommand extends Command
 
         if ($version === null) {
             $message = sprintf("Can't find '%s' version in list of deltas.", $number);
-            throw new InvalidArgumentException($message);
+            throw new \InvalidArgumentException($message);
         }
 
         return $version;
@@ -93,7 +92,7 @@ class VersionSetCommand extends Command
         $number = $this->argument('number');
         $number = \is_array($number) ? (int) reset($number) : (int) $number;
         if ($number <= 0) {
-            throw new InvalidArgumentException('Version number must integer instance more than 0.');
+            throw new \InvalidArgumentException('Version number must integer instance more than 0.');
         }
 
         return $number;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 
-use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Nette\PhpGenerator\ClassType;
@@ -13,7 +12,6 @@ use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpLiteral;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
-use SplFileInfo;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -26,7 +24,7 @@ class SerializerGenerator extends AbstractGenerator
     /**
      * {@inheritDoc}
      */
-    protected function generate(SplFileInfo $dir, string $namespace): void
+    protected function generate(\SplFileInfo $dir, string $namespace): void
     {
         $name = 'CompiledEntitesDenormalizer';
         $fullPath = "{$dir->getPathname()}/{$name}.php";
@@ -60,7 +58,7 @@ class SerializerGenerator extends AbstractGenerator
             $namespace->addUse($this->createModelClass($descriptor));
             foreach ($descriptor->getFields() as $field) {
                 if ($field->getSubType() === 'date') {
-                    $namespace->addUse(DateTimeImmutable::class);
+                    $namespace->addUse(\DateTimeImmutable::class);
                     break;
                 }
             }
@@ -186,7 +184,7 @@ class SerializerGenerator extends AbstractGenerator
     /**
      * {@inheritDoc}
      */
-    protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace): void
+    protected function generateClassByDescriptor(EntityDescriptor $descriptor, \SplFileInfo $dir, string $namespace): void
     {
     }
 }

@@ -8,7 +8,6 @@ use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FiasVersion;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\EloquentTestCase;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
-use RuntimeException;
 
 /**
  * Класс для проверки менеджера версий ФИАС.
@@ -72,7 +71,7 @@ class EloquentVersionManagerTest extends EloquentTestCase
 
         $versionManager = new EloquentVersionManager('test');
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(\RuntimeException::class);
         $versionManager->setCurrentVersion($info);
     }
 
@@ -104,7 +103,7 @@ class EloquentVersionManagerTest extends EloquentTestCase
     {
         $versionManager = new EloquentVersionManager('test');
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(\RuntimeException::class);
         $versionResponse = $versionManager->getCurrentVersion();
     }
 }
