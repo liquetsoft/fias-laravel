@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Resource;
 
-use DateTimeInterface;
 use Illuminate\Http\Request;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Resource\ReestrObjects as Resource;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
-use stdClass;
 
 /**
  * Тест ресурса для сущности 'ReestrObjects'.
@@ -20,7 +18,7 @@ class ReestrObjects extends BaseCase
      */
     public function testToArray(): void
     {
-        $model = new stdClass();
+        $model = new \stdClass();
         $model->objectid = $this->createFakeData()->numberBetween(1, 1000000);
         $model->createdate = $this->createFakeData()->dateTime();
         $model->changeid = $this->createFakeData()->numberBetween(1, 1000000);
@@ -36,13 +34,13 @@ class ReestrObjects extends BaseCase
         $this->assertArrayHasKey('objectid', $array);
         $this->assertSame($model->objectid, $array['objectid']);
         $this->assertArrayHasKey('createdate', $array);
-        $this->assertSame($model->createdate->format(DateTimeInterface::ATOM), $array['createdate']);
+        $this->assertSame($model->createdate->format(\DateTimeInterface::ATOM), $array['createdate']);
         $this->assertArrayHasKey('changeid', $array);
         $this->assertSame($model->changeid, $array['changeid']);
         $this->assertArrayHasKey('levelid', $array);
         $this->assertSame($model->levelid, $array['levelid']);
         $this->assertArrayHasKey('updatedate', $array);
-        $this->assertSame($model->updatedate->format(DateTimeInterface::ATOM), $array['updatedate']);
+        $this->assertSame($model->updatedate->format(\DateTimeInterface::ATOM), $array['updatedate']);
         $this->assertArrayHasKey('objectguid', $array);
         $this->assertSame($model->objectguid, $array['objectguid']);
         $this->assertArrayHasKey('isactive', $array);

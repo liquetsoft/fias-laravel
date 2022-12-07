@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 
-use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
@@ -45,7 +44,7 @@ class TruncateCommand extends Command
     /**
      * Запуск команды на исполнение.
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function handle(): void
     {

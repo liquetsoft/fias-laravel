@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Сведения по типам нормативных документов.
  *
- * @property int               $id        Идентификатор записи
- * @property string            $name      Наименование
- * @property DateTimeInterface $startdate Дата начала действия записи
- * @property DateTimeInterface $enddate   Дата окончания действия записи
+ * @property int                $id        Идентификатор записи
+ * @property string             $name      Наименование
+ * @property \DateTimeInterface $startdate Дата начала действия записи
+ * @property \DateTimeInterface $enddate   Дата окончания действия записи
  */
 class NormativeDocsTypes extends Model
 {

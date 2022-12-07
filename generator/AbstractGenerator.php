@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 
-use InvalidArgumentException;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
-use RuntimeException;
-use SplFileInfo;
-use Throwable;
 
 /**
  * Абстрактный класс для генераторов сущностей.
@@ -25,12 +21,12 @@ abstract class AbstractGenerator
      * Создает php класс для указанного дескриптора.
      *
      * @param EntityDescriptor $descriptor
-     * @param SplFileInfo      $dir
+     * @param \SplFileInfo     $dir
      * @param string           $namespace
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
-    abstract protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace): void;
+    abstract protected function generateClassByDescriptor(EntityDescriptor $descriptor, \SplFileInfo $dir, string $namespace): void;
 
     /**
      * @param EntityRegistry $registry
@@ -43,34 +39,34 @@ abstract class AbstractGenerator
     /**
      * Создает классы сущностей в указанной папке с указанным пространством имен.
      *
-     * @param SplFileInfo $dir
-     * @param string      $namespace
+     * @param \SplFileInfo $dir
+     * @param string       $namespace
      *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
-    public function run(SplFileInfo $dir, string $namespace = ''): void
+    public function run(\SplFileInfo $dir, string $namespace = ''): void
     {
         $this->checkDir($dir);
         $unifiedNamespace = $this->unifyNamespace($namespace);
 
         try {
             $this->generate($dir, $unifiedNamespace);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             $message = 'Error while class generation.';
-            throw new RuntimeException($message, 0, $e);
+            throw new \RuntimeException($message, 0, $e);
         }
     }
 
     /**
      * Процесс генерации классов.
      *
-     * @param SplFileInfo $dir
-     * @param string      $namespace
+     * @param \SplFileInfo $dir
+     * @param string       $namespace
      *
-     * @throws Throwable
+     * @throws \Throwable
      */
-    protected function generate(SplFileInfo $dir, string $namespace): void
+    protected function generate(\SplFileInfo $dir, string $namespace): void
     {
         $descriptors = $this->registry->getDescriptors();
         foreach ($descriptors as $descriptor) {
@@ -81,14 +77,14 @@ abstract class AbstractGenerator
     /**
      * Проверяет, что каталог существует и доступен на запись.
      *
-     * @param SplFileInfo $dir
+     * @param \SplFileInfo $dir
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
-    protected function checkDir(SplFileInfo $dir): void
+    protected function checkDir(\SplFileInfo $dir): void
     {
         if (!$dir->isDir() || !$dir->isWritable()) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 "Destination folder '" . $dir->getPathname() . "' isn't writable or doesn't exist."
             );
         }

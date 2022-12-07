@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Сведения по уровням адресных объектов.
  *
- * @property int               $level      Уникальный идентификатор записи. Ключевое поле. Номер уровня объекта
- * @property string            $name       Наименование
- * @property string|null       $shortname  Краткое наименование
- * @property DateTimeInterface $updatedate Дата внесения (обновления) записи
- * @property DateTimeInterface $startdate  Начало действия записи
- * @property DateTimeInterface $enddate    Окончание действия записи
- * @property string            $isactive   Признак действующего адресного объекта
+ * @property int                $level      Уникальный идентификатор записи. Ключевое поле. Номер уровня объекта
+ * @property string             $name       Наименование
+ * @property string|null        $shortname  Краткое наименование
+ * @property \DateTimeInterface $updatedate Дата внесения (обновления) записи
+ * @property \DateTimeInterface $startdate  Начало действия записи
+ * @property \DateTimeInterface $enddate    Окончание действия записи
+ * @property string             $isactive   Признак действующего адресного объекта
  */
 class ObjectLevels extends Model
 {

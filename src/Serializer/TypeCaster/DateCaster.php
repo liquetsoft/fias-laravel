@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster;
 
-use Exception;
-
 /**
  * Преобразует данные в дату.
  */
@@ -22,7 +20,7 @@ class DateCaster implements TypeCaster
     /**
      * {@inheritDoc}
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function cast(string $type, $value)
     {

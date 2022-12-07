@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Resource;
 
-use DateTimeInterface;
 use Illuminate\Http\Request;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Resource\ChangeHistory as Resource;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
-use stdClass;
 
 /**
  * Тест ресурса для сущности 'ChangeHistory'.
@@ -20,7 +18,7 @@ class ChangeHistory extends BaseCase
      */
     public function testToArray(): void
     {
-        $model = new stdClass();
+        $model = new \stdClass();
         $model->changeid = $this->createFakeData()->numberBetween(1, 1000000);
         $model->objectid = $this->createFakeData()->numberBetween(1, 1000000);
         $model->adrobjectid = $this->createFakeData()->uuid();
@@ -43,6 +41,6 @@ class ChangeHistory extends BaseCase
         $this->assertArrayHasKey('ndocid', $array);
         $this->assertSame($model->ndocid, $array['ndocid']);
         $this->assertArrayHasKey('changedate', $array);
-        $this->assertSame($model->changedate->format(DateTimeInterface::ATOM), $array['changedate']);
+        $this->assertSame($model->changedate->format(\DateTimeInterface::ATOM), $array['changedate']);
     }
 }

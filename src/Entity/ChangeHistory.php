@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Сведения по истории изменений.
  *
- * @property int               $changeid    ID изменившей транзакции
- * @property int               $objectid    Уникальный ID объекта
- * @property string            $adrobjectid Уникальный ID изменившей транзакции (GUID)
- * @property int               $opertypeid  Тип операции
- * @property int|null          $ndocid      ID документа
- * @property DateTimeInterface $changedate  Дата изменения
+ * @property int                $changeid    ID изменившей транзакции
+ * @property int                $objectid    Уникальный ID объекта
+ * @property string             $adrobjectid Уникальный ID изменившей транзакции (GUID)
+ * @property int                $opertypeid  Тип операции
+ * @property int|null           $ndocid      ID документа
+ * @property \DateTimeInterface $changedate  Дата изменения
  */
 class ChangeHistory extends Model
 {

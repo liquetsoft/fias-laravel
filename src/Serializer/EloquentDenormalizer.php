@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer;
 
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster\EloquentTypeCaster;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster\TypeCaster;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Throwable;
 
 /**
  * Нормализатор для объектов eloquent.
@@ -59,7 +57,7 @@ class EloquentDenormalizer implements DenormalizerInterface
         try {
             $dataArray = $this->createDataArrayForModel($data, $entity);
             $entity->fill($dataArray);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             throw new NotNormalizableValueException(
                 "Can't denormalize data to eloquent model.",
                 0,
@@ -86,7 +84,7 @@ class EloquentDenormalizer implements DenormalizerInterface
      *
      * @return array
      *
-     * @throws Exception
+     * @throws \Exception
      */
     protected function createDataArrayForModel(array $data, Model $entity): array
     {
@@ -148,7 +146,7 @@ class EloquentDenormalizer implements DenormalizerInterface
      *
      * @return mixed
      *
-     * @throws Exception
+     * @throws \Exception
      */
     protected function castValueForModel($value, string $attributeName, Model $entity)
     {

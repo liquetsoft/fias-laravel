@@ -8,7 +8,6 @@ use Illuminate\Support\Carbon;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\MockModel\FiasSerializerMock;
-use stdClass;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 
@@ -113,7 +112,7 @@ EOT;
 
         $this->expectException(InvalidArgumentException::class);
         $normalizer->deserialize($data, $type, 'xml', [
-            'object_to_populate' => new stdClass(),
+            'object_to_populate' => new \stdClass(),
         ]);
     }
 

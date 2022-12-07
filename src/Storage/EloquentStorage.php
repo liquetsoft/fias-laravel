@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Liquetsoft\Fias\Component\Exception\StorageException;
 use Liquetsoft\Fias\Component\Storage\Storage;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use Throwable;
 
 /**
  * Объект, который сохраняет данные ФИАС с помощью Eloquent.
@@ -153,7 +151,7 @@ class EloquentStorage implements Storage
                 $persistedModel->delete();
             }
             unset($persistedModel);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             throw new StorageException("Can't delete entity from storage.", 0, $e);
         }
     }
@@ -186,7 +184,7 @@ class EloquentStorage implements Storage
 
         try {
             $entityClassName::query()->delete();
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             throw new StorageException("Can't truncate storage.", 0, $e);
         }
     }
@@ -240,7 +238,7 @@ class EloquentStorage implements Storage
                     $persistedModel->fill($upsertItem);
                     try {
                         $persistedModel->save();
-                    } catch (Throwable $e) {
+                    } catch (\Throwable $e) {
                         throw new StorageException("Can't update item in storage.", 0, $e);
                     }
                 } else {
@@ -292,7 +290,7 @@ class EloquentStorage implements Storage
         $entityAttributes = $entity->getAttributes();
         foreach ($columns as $column) {
             $columnValue = $entityAttributes[$column] ?? null;
-            if ($columnValue instanceof DateTimeInterface) {
+            if ($columnValue instanceof \DateTimeInterface) {
                 $columnValue = $columnValue->format('Y-m-d H:i:s');
             }
             $item[$column] = $columnValue;
@@ -335,7 +333,7 @@ class EloquentStorage implements Storage
     {
         try {
             $className::insert($data);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             $this->bulkInsertFallback($className, $data);
         }
     }
@@ -355,7 +353,7 @@ class EloquentStorage implements Storage
         foreach ($data as $item) {
             try {
                 $className::insert([$item]);
-            } catch (Throwable $e) {
+            } catch (\Throwable $e) {
                 $this->log(
                     LogLevel::ERROR,
                     "Error while inserting item of class '{$className}' to eloquent storage. Item wasn't proceed.",

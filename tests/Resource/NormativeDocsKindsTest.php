@@ -7,7 +7,6 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Resource;
 use Illuminate\Http\Request;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Resource\NormativeDocsKinds as Resource;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
-use stdClass;
 
 /**
  * Тест ресурса для сущности 'NormativeDocsKinds'.
@@ -19,7 +18,7 @@ class NormativeDocsKinds extends BaseCase
      */
     public function testToArray(): void
     {
-        $model = new stdClass();
+        $model = new \stdClass();
         $model->id = $this->createFakeData()->numberBetween(1, 1000000);
         $model->name = $this->createFakeData()->word();
 

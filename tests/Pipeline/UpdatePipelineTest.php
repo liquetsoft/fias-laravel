@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Symfony\LiquetsoftFiasBundle\Tests\Serializer;
 
-use DateTimeImmutable;
 use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityManager\BaseEntityManager;
@@ -13,11 +12,11 @@ use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
+use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
 use Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataDeleteTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataUpsertTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\SelectFilesToProceedTask;
-use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use Liquetsoft\Fias\Component\Pipeline\Task\UnpackTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\VersionSetTask;
 use Liquetsoft\Fias\Component\Unpacker\ZipUnpacker;
@@ -28,7 +27,6 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage\EloquentStorage;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\EloquentTestCase;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\MockModel\PipelineTestMockModel;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
-use SplFileInfo;
 
 /**
  * Тест для объекта папйлайна для обновления базы данных.
@@ -95,9 +93,9 @@ class UpdatePipelineTest extends EloquentTestCase
         $versionInfo->method('hasResult')->willReturn(true);
 
         $state = new ArrayState();
-        $state->setAndLockParameter(Task::DOWNLOAD_TO_FILE_PARAM, new SplFileInfo($testArchive));
-        $state->setAndLockParameter(Task::EXTRACT_TO_FOLDER_PARAM, new SplFileInfo($testDir));
-        $state->setAndLockParameter(Task::FIAS_INFO_PARAM, $versionInfo);
+        $state->setAndLockParameter(StateParameter::DOWNLOAD_TO_FILE, new \SplFileInfo($testArchive));
+        $state->setAndLockParameter(StateParameter::EXTRACT_TO_FOLDER, new \SplFileInfo($testDir));
+        $state->setAndLockParameter(StateParameter::FIAS_INFO, $versionInfo);
 
         $pipeline = $this->createPipeLine();
         $pipeline->run($state);
@@ -115,7 +113,7 @@ class UpdatePipelineTest extends EloquentTestCase
             [
                 'testId' => 555,
                 'testName' => 'to insert',
-                'startDate' => new DateTimeImmutable('2019-11-11 11:11:11'),
+                'startDate' => new \DateTimeImmutable('2019-11-11 11:11:11'),
                 'uuid' => '123e4567-e89b-12d3-a456-426655440005',
             ]
         );

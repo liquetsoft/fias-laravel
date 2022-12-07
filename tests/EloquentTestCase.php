@@ -7,7 +7,6 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
-use InvalidArgumentException;
 
 /**
  * Базовый класс для всех тестов, которые используют базу данных.
@@ -117,7 +116,7 @@ abstract class EloquentTestCase extends BaseCase
      * @param string    $name
      * @param array     $description
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     private function createColumn(Blueprint $table, string $name, array $description): void
     {

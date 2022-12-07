@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 
-use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\EntityField;
@@ -13,7 +12,6 @@ use Nette\PhpGenerator\PhpFile;
 use Nette\PhpGenerator\PhpLiteral;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
-use SplFileInfo;
 
 /**
  * Объект, который создает классы моделей из описания моделей в yaml.
@@ -23,7 +21,7 @@ class ModelGenerator extends AbstractGenerator
     /**
      * {@inheritDoc}
      */
-    protected function generateClassByDescriptor(EntityDescriptor $descriptor, SplFileInfo $dir, string $namespace): void
+    protected function generateClassByDescriptor(EntityDescriptor $descriptor, \SplFileInfo $dir, string $namespace): void
     {
         $name = $this->unifyClassName($descriptor->getName());
         $fullPath = "{$dir->getPathname()}/{$name}.php";
@@ -51,7 +49,7 @@ class ModelGenerator extends AbstractGenerator
         $namespace->addUse(Model::class);
         foreach ($descriptor->getFields() as $field) {
             if ($field->getSubType() === 'date') {
-                $namespace->addUse(DateTimeInterface::class);
+                $namespace->addUse(\DateTimeInterface::class);
             }
         }
     }

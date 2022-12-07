@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Resource;
 
-use DateTimeInterface;
 use Illuminate\Http\Request;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Resource\Param as Resource;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
-use stdClass;
 
 /**
  * Тест ресурса для сущности 'Param'.
@@ -20,7 +18,7 @@ class Param extends BaseCase
      */
     public function testToArray(): void
     {
-        $model = new stdClass();
+        $model = new \stdClass();
         $model->id = $this->createFakeData()->numberBetween(1, 1000000);
         $model->objectid = $this->createFakeData()->numberBetween(1, 1000000);
         $model->changeid = $this->createFakeData()->numberBetween(1, 1000000);
@@ -48,10 +46,10 @@ class Param extends BaseCase
         $this->assertArrayHasKey('value', $array);
         $this->assertSame($model->value, $array['value']);
         $this->assertArrayHasKey('updatedate', $array);
-        $this->assertSame($model->updatedate->format(DateTimeInterface::ATOM), $array['updatedate']);
+        $this->assertSame($model->updatedate->format(\DateTimeInterface::ATOM), $array['updatedate']);
         $this->assertArrayHasKey('startdate', $array);
-        $this->assertSame($model->startdate->format(DateTimeInterface::ATOM), $array['startdate']);
+        $this->assertSame($model->startdate->format(\DateTimeInterface::ATOM), $array['startdate']);
         $this->assertArrayHasKey('enddate', $array);
-        $this->assertSame($model->enddate->format(DateTimeInterface::ATOM), $array['enddate']);
+        $this->assertSame($model->enddate->format(\DateTimeInterface::ATOM), $array['enddate']);
     }
 }

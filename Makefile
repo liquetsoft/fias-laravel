@@ -3,6 +3,7 @@
 user_id := $(shell id -u)
 docker_compose_bin := $(shell command -v docker-compose 2> /dev/null) --file "docker/docker-compose.yml"
 php_container_bin := $(docker_compose_bin) run --rm -u "$(user_id)" "php"
+php_composer_script := $(php_container_bin) composer run-script
 
 .PHONY : help build install shell fixer test coverage entities
 .DEFAULT_GOAL := build
@@ -19,16 +20,21 @@ shell: ## Runs shell in container
 	$(php_container_bin) bash
 
 fixer: ## Run fixer to fix code style
-	$(php_container_bin) composer run-script fixer
+	$(php_composer_script) fixer
 
 linter: ## Run linter to check project
-	$(php_container_bin) composer run-script linter
+	$(php_composer_script) linter
 
 test: ## Run tests
-	$(php_container_bin) composer run-script test
+	$(php_composer_script) test
 
 coverage: ## Run tests with coverage
-	$(php_container_bin) composer run-script coverage
+	$(php_composer_script) coverage
+
+release: ## Run all tests and linters before release
+	$(php_composer_script) fixer
+	$(php_composer_script) linter
+	$(php_composer_script) test
 
 entities: ## Build entities from yaml file with description
-	$(php_container_bin) composer run-script entities
+	$(php_composer_script) entities
