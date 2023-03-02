@@ -28,7 +28,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Steads;
 
 return [
     /*
-     * Исрользовать или нет миграции из состава бандла.
+     * Использовать или нет миграции из состава бандла.
      */
     'allow_bundle_migrations' => true,
     /*
@@ -48,7 +48,7 @@ return [
      */
     'version_manager_entity' => FiasVersion::class,
     /*
-     * Количество записей для вставки с помошью bulk insert.
+     * Количество записей для вставки с помощью bulk insert.
      */
     'insert_batch_count' => 800,
     /*
@@ -103,7 +103,7 @@ return [
      */
     'download_retry_attempts' => 10,
     /*
-     * Фильтры для выбора файлов. Заются в формате регулярного выражения, например #^.+/extracted/30/AS_.+$#
+     * Фильтры для выбора файлов. Задаются в формате регулярного выражения, например #^.+/extracted/30/AS_.+$#
      */
     'files_filter' => [],
 ];
