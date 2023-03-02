@@ -22,7 +22,7 @@ class UpdateParallelRunningCommand extends Command
     protected $signature = 'liquetsoft:fias:update_parallel_running {files?}';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $description = 'Command for running parallel update.';
 

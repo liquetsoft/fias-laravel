@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <psalm
     cacheDirectory="/tmp"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="false"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config file:///var/www/vendor/vimeo/psalm/config.xsd"
@@ -25,9 +27,16 @@
                 <file name="./src/Serializer/FiasSerializer.php" />
             </errorLevel>
         </DeprecatedInterface>
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <directory name="./src"/>
+                <directory name="./tests"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+        <MethodSignatureMustProvideReturnType>
+            <errorLevel type="suppress">
+                <directory name="./vendor"/>
+            </errorLevel>
+        </MethodSignatureMustProvideReturnType>
     </issueHandlers>
-
-    <plugins>
-        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
-    </plugins>
 </psalm>

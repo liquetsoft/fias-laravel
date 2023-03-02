@@ -22,7 +22,7 @@ class UpdateFromFolderCommand extends Command
     protected $signature = 'liquetsoft:fias:update_from_folder {folder : Path to folder with extracted FIAS files}';
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $description = 'Updates FIAS version from downloaded files saved in folder.';
 
