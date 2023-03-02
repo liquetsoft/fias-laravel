@@ -28,7 +28,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\Steads;
 
 return [
     /*
-     * Исрользовать или нет миграции из состава бандла.
+     * Использовать или нет миграции из состава бандла.
      */
     'allow_bundle_migrations' => true,
     /*
