@@ -32,7 +32,7 @@ class ResourceGenerator extends AbstractGenerator
         $namespace = $phpFile->addNamespace($namespace);
         $this->decorateNamespace($namespace, $descriptor);
 
-        $class = $namespace->addClass($name)->addExtend(JsonResource::class);
+        $class = $namespace->addClass($name)->setExtends(JsonResource::class);
         $this->decorateClass($class, $descriptor);
 
         file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));

@@ -48,6 +48,7 @@ class AdmHierarchyTest extends BaseCase
         $this->assertContains('startdate', $fields);
         $this->assertContains('enddate', $fields);
         $this->assertContains('isactive', $fields);
+        $this->assertContains('path', $fields);
     }
 
     /**

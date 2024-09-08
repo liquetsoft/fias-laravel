@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\EntityField;
 use Nette\PhpGenerator\ClassType;
+use Nette\PhpGenerator\Literal;
 use Nette\PhpGenerator\PhpFile;
-use Nette\PhpGenerator\PhpLiteral;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
 
@@ -32,7 +32,7 @@ class ModelGenerator extends AbstractGenerator
         $namespace = $phpFile->addNamespace($namespace);
         $this->decorateNamespace($namespace, $descriptor);
 
-        $class = $namespace->addClass($name)->addExtend(Model::class);
+        $class = $namespace->addClass($name)->setExtends(Model::class);
         $this->decorateClass($class, $descriptor);
 
         file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));
@@ -75,12 +75,12 @@ class ModelGenerator extends AbstractGenerator
             }
         }
 
-        $class->addProperty('timestamps', new PhpLiteral('false'))
+        $class->addProperty('timestamps', new Literal('false'))
             ->setVisibility('public')
             ->addComment('@var bool')
         ;
 
-        $class->addProperty('incrementing', new PhpLiteral('false'))
+        $class->addProperty('incrementing', new Literal('false'))
             ->setVisibility('public')
             ->addComment('@var bool')
         ;
@@ -103,13 +103,13 @@ class ModelGenerator extends AbstractGenerator
             ;
         }
 
-        $fillableValue = new PhpLiteral("[\n    '" . implode("',\n    '", $fill) . "',\n]");
+        $fillableValue = new Literal("[\n    '" . implode("',\n    '", $fill) . "',\n]");
         $class->addProperty('fillable', $fillableValue)
             ->setVisibility('protected')
             ->addComment('@var string[]')
         ;
 
-        $castValue = new PhpLiteral($this->createCastValue($descriptor));
+        $castValue = new Literal($this->createCastValue($descriptor));
         $class->addProperty('casts', $castValue)
             ->setVisibility('protected')
             ->addComment('@var array')

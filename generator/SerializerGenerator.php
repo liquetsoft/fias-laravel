@@ -7,9 +7,9 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Nette\PhpGenerator\ClassType;
+use Nette\PhpGenerator\Literal;
 use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\PhpFile;
-use Nette\PhpGenerator\PhpLiteral;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
@@ -69,6 +69,7 @@ class SerializerGenerator extends AbstractGenerator
     protected function decorateClass(ClassType $class): void
     {
         $constants = [];
+        $supportedTypes = '';
 
         $denormalizeBody = '$data = \\is_array($data) ? $data : [];' . "\n";
         $denormalizeBody .= '$type = trim($type, " \t\n\r\0\x0B\\\\/");' . "\n\n";
@@ -82,7 +83,8 @@ class SerializerGenerator extends AbstractGenerator
         $descriptors = $this->registry->getDescriptors();
         foreach ($descriptors as $descriptor) {
             $className = $this->unifyClassName($descriptor->getName());
-            $constants[] = new PhpLiteral("{$className}::class");
+            $constants[] = new Literal("{$className}::class");
+            $supportedTypes .= "\n    {$className}::class => true,";
             $denormalizeBody .= "    case {$className}::class:\n";
             $denormalizeBody .= "        \$extractedData = \$this->model{$className}DataExtractor(\$data);\n";
             $denormalizeBody .= "        break;\n";
@@ -106,7 +108,7 @@ class SerializerGenerator extends AbstractGenerator
             ->setBody('return \\in_array(trim($type, " \t\n\r\0\x0B\\\\/"), self::ALLOWED_ENTITIES);');
         $supports->addParameter('data');
         $supports->addParameter('type')->setType('string');
-        $supports->addParameter('format', new PhpLiteral('null'))->setType('string');
+        $supports->addParameter('format', new Literal('null'))->setType('string');
 
         $denormalize = $class->addMethod('denormalize')
             ->addComment("{@inheritDoc}\n")
@@ -115,8 +117,14 @@ class SerializerGenerator extends AbstractGenerator
             ->setBody($denormalizeBody);
         $denormalize->addParameter('data');
         $denormalize->addParameter('type')->setType('string');
-        $denormalize->addParameter('format', new PhpLiteral('null'))->setType('string');
-        $denormalize->addParameter('context', new PhpLiteral('[]'))->setType('array');
+        $denormalize->addParameter('format', new Literal('null'))->setType('string');
+        $denormalize->addParameter('context', new Literal('[]'))->setType('array');
+
+        $getSupportedTypes = $class->addMethod('getSupportedTypes')
+            ->addComment("{@inheritDoc}\n")
+            ->setVisibility('public')
+            ->setBody("return [\n{$supportedTypes}\n];");
+        $getSupportedTypes->addParameter('format')->setType('string')->setNullable(true);
 
         foreach ($descriptors as $descriptor) {
             $className = $this->unifyClassName($descriptor->getName());

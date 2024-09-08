@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \DateTimeInterface $startdate   Начало действия записи
  * @property \DateTimeInterface $enddate     Окончание действия записи
  * @property int                $isactive    Признак действующего адресного объекта
+ * @property string             $path        Материализованный путь к объекту (полная иерархия)
  */
 class MunHierarchy extends Model
 {
@@ -48,6 +49,7 @@ class MunHierarchy extends Model
         'startdate',
         'enddate',
         'isactive',
+        'path',
     ];
 
     /** @var array */
@@ -63,6 +65,7 @@ class MunHierarchy extends Model
         'startdate' => 'datetime',
         'enddate' => 'datetime',
         'isactive' => 'integer',
+        'path' => 'string',
     ];
 
     /**

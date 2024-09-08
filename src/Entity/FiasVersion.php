@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  * Модель, которая хранит историю версий ФИАС.
  *
  * @property int                $version    Номер версии ФИАС
- * @property string             $url        Ссылка для загрузки указанной версии ФИАС
+ * @property string             $fullurl    Ссылка для загрузки полной версии ФИАС
+ * @property string             $deltaurl   Ссылка для загрузки обновления до версии ФИАС
  * @property \DateTimeInterface $created_at Дата создания записи
  */
 class FiasVersion extends Model
@@ -30,14 +31,16 @@ class FiasVersion extends Model
     /** @var string[] */
     protected $fillable = [
         'version',
-        'url',
+        'fullurl',
+        'deltaurl',
         'created_at',
     ];
 
     /** @var array */
     protected $casts = [
         'version' => 'integer',
-        'url' => 'string',
+        'fullurl' => 'string',
+        'deltaurl' => 'string',
         'created_at' => 'datetime',
     ];
 

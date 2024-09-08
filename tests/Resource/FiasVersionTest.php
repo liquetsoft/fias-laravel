@@ -20,7 +20,8 @@ class FiasVersion extends BaseCase
     {
         $model = new \stdClass();
         $model->version = $this->createFakeData()->numberBetween(1, 1000000);
-        $model->url = $this->createFakeData()->word();
+        $model->fullurl = $this->createFakeData()->word();
+        $model->deltaurl = $this->createFakeData()->word();
         $model->created_at = $this->createFakeData()->dateTime();
 
         $resource = new Resource($model);
@@ -29,8 +30,10 @@ class FiasVersion extends BaseCase
 
         $this->assertArrayHasKey('version', $array);
         $this->assertSame($model->version, $array['version']);
-        $this->assertArrayHasKey('url', $array);
-        $this->assertSame($model->url, $array['url']);
+        $this->assertArrayHasKey('fullurl', $array);
+        $this->assertSame($model->fullurl, $array['fullurl']);
+        $this->assertArrayHasKey('deltaurl', $array);
+        $this->assertSame($model->deltaurl, $array['deltaurl']);
         $this->assertArrayHasKey('created_at', $array);
         $this->assertSame($model->created_at->format(\DateTimeInterface::ATOM), $array['created_at']);
     }

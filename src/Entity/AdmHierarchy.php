@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \DateTimeInterface $startdate   Начало действия записи
  * @property \DateTimeInterface $enddate     Окончание действия записи
  * @property int                $isactive    Признак действующего адресного объекта
+ * @property string             $path        Материализованный путь к объекту (полная иерархия)
  */
 class AdmHierarchy extends Model
 {
@@ -58,6 +59,7 @@ class AdmHierarchy extends Model
         'startdate',
         'enddate',
         'isactive',
+        'path',
     ];
 
     /** @var array */
@@ -78,6 +80,7 @@ class AdmHierarchy extends Model
         'startdate' => 'datetime',
         'enddate' => 'datetime',
         'isactive' => 'integer',
+        'path' => 'string',
     ];
 
     /**

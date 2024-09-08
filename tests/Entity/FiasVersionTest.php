@@ -33,7 +33,8 @@ class FiasVersionTest extends BaseCase
         $fields = $model->getFillable();
 
         $this->assertContains('version', $fields);
-        $this->assertContains('url', $fields);
+        $this->assertContains('fullurl', $fields);
+        $this->assertContains('deltaurl', $fields);
         $this->assertContains('created_at', $fields);
     }
 

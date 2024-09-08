@@ -11,7 +11,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * Ресурс для сущности 'FiasVersion'.
  *
  * @property int                $version
- * @property string             $url
+ * @property string             $fullurl
+ * @property string             $deltaurl
  * @property \DateTimeInterface $created_at
  */
 class FiasVersion extends JsonResource
@@ -25,7 +26,8 @@ class FiasVersion extends JsonResource
     {
         return [
             'version' => $this->version,
-            'url' => $this->url,
+            'fullurl' => $this->fullurl,
+            'deltaurl' => $this->deltaurl,
             'created_at' => $this->created_at->format(\DateTimeInterface::ATOM),
         ];
     }

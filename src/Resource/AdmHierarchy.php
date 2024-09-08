@@ -26,6 +26,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property \DateTimeInterface $startdate
  * @property \DateTimeInterface $enddate
  * @property int                $isactive
+ * @property string             $path
  */
 class AdmHierarchy extends JsonResource
 {
@@ -53,6 +54,7 @@ class AdmHierarchy extends JsonResource
             'startdate' => $this->startdate->format(\DateTimeInterface::ATOM),
             'enddate' => $this->enddate->format(\DateTimeInterface::ATOM),
             'isactive' => $this->isactive,
+            'path' => $this->path,
         ];
     }
 }

@@ -43,7 +43,7 @@ abstract class AbstractGenerator
         try {
             $this->generate($dir, $unifiedNamespace);
         } catch (\Throwable $e) {
-            $message = 'Error while class generation.';
+            $message = 'Error while class generation';
             throw new \RuntimeException($message, 0, $e);
         }
     }
@@ -70,7 +70,7 @@ abstract class AbstractGenerator
     {
         if (!$dir->isDir() || !$dir->isWritable()) {
             throw new \InvalidArgumentException(
-                "Destination folder '" . $dir->getPathname() . "' isn't writable or doesn't exist."
+                "Destination folder '" . $dir->getPathname() . "' isn't writable or doesn't exist"
             );
         }
     }

@@ -23,7 +23,8 @@ class Fiaslaravelfiasversion extends Migration
         Schema::connection($connectionName)->create('fias_laravel_fias_version', function (Blueprint $table): void {
             // создание полей таблицы
             $table->unsignedInteger('version')->nullable(false)->comment('Номер версии ФИАС')->primary();
-            $table->string('url', 255)->nullable(false)->comment('Ссылка для загрузки указанной версии ФИАС');
+            $table->string('fullurl', 255)->nullable(false)->comment('Ссылка для загрузки полной версии ФИАС');
+            $table->string('deltaurl', 255)->nullable(false)->comment('Ссылка для загрузки обновления до версии ФИАС');
             $table->datetime('created_at')->nullable(false)->comment('Дата создания записи');
             // настройки таблицы
             $table->engine = 'InnoDB';
