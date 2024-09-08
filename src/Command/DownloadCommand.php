@@ -51,7 +51,7 @@ class DownloadCommand extends Command
     public function __construct(
         Downloader $downloader,
         Unpacker $unpacker,
-        FiasInformer $informer
+        FiasInformer $informer,
     ) {
         parent::__construct();
 
@@ -82,8 +82,6 @@ class DownloadCommand extends Command
 
     /**
      * Забирает значение агрумента с версией для загрузки.
-     *
-     * @return string
      */
     private function getVersion(): string
     {
@@ -95,8 +93,6 @@ class DownloadCommand extends Command
 
     /**
      * Возвращает объект с путем для загрузки файла в локальную файловую систему.
-     *
-     * @return \SplFileInfo
      */
     private function getPathToDownload(): \SplFileInfo
     {
@@ -110,10 +106,6 @@ class DownloadCommand extends Command
 
     /**
      * Получает url для указанной версии.
-     *
-     * @param string $version
-     *
-     * @return string
      */
     private function findUrlForVersion(string $version): string
     {
@@ -133,7 +125,7 @@ class DownloadCommand extends Command
         }
 
         if (empty($url)) {
-            $message = sprintf("Can't find url for '%s' version.", $version);
+            $message = \sprintf("Can't find url for '%s' version.", $version);
             throw new \RuntimeException($message);
         }
 
@@ -142,8 +134,6 @@ class DownloadCommand extends Command
 
     /**
      * Распаковывает загруженный архив.
-     *
-     * @param \SplFileInfo $archive
      */
     private function extract(\SplFileInfo $archive): void
     {

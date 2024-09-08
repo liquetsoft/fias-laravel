@@ -20,8 +20,6 @@ class FiasVersion extends JsonResource
      * Преобразует сущность 'FiasVersion' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

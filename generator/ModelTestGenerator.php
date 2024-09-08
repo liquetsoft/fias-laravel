@@ -38,9 +38,6 @@ class ModelTestGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые импорты в пространство имен.
-     *
-     * @param PhpNamespace     $namespace
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateNamespace(PhpNamespace $namespace, EntityDescriptor $descriptor): void
     {
@@ -51,9 +48,6 @@ class ModelTestGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые для класса комментарии.
-     *
-     * @param ClassType        $class
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateClass(ClassType $class, EntityDescriptor $descriptor): void
     {

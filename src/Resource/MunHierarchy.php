@@ -28,8 +28,6 @@ class MunHierarchy extends JsonResource
      * Преобразует сущность 'MunHierarchy' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

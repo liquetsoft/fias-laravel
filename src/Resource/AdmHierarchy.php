@@ -33,8 +33,6 @@ class AdmHierarchy extends JsonResource
      * Преобразует сущность 'AdmHierarchy' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

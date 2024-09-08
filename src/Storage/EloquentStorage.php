@@ -63,10 +63,6 @@ class EloquentStorage implements Storage
      */
     protected $needToEnableLogging = false;
 
-    /**
-     * @param int                  $insertBatch
-     * @param LoggerInterface|null $logger
-     */
     public function __construct(int $insertBatch = 1000, ?LoggerInterface $logger = null)
     {
         $this->insertBatch = $insertBatch;
@@ -193,8 +189,6 @@ class EloquentStorage implements Storage
      * Проверяет нужно ли отправлять запросы на множественные вставки элементов,
      * сохраненых в памяти.
      *
-     * @param bool $forceInsert
-     *
      * @throws StorageException
      */
     protected function checkAndFlushInsert(bool $forceInsert = false): void
@@ -210,8 +204,6 @@ class EloquentStorage implements Storage
     /**
      * Проверяет нужно ли отправлять запросы на множественные вставки элементов,
      * сохраненых в памяти.
-     *
-     * @param bool $forceUpsert
      *
      * @throws StorageException
      *
@@ -257,10 +249,6 @@ class EloquentStorage implements Storage
     /**
      * Проверяет, что объект является моделью eloquent.
      *
-     * @param object $entity
-     *
-     * @return Model
-     *
      * @throws StorageException
      */
     protected function checkIsEntityAllowedForEloquent(object $entity): Model
@@ -277,8 +265,6 @@ class EloquentStorage implements Storage
 
     /**
      * Возвращает массив значений модели для вставки в таблицу.
-     *
-     * @param Model $entity
      *
      * @return array<string, mixed>
      */
@@ -302,8 +288,6 @@ class EloquentStorage implements Storage
     /**
      * Возвращает список колонок для таблицы, которой соответствует указанная модель.
      *
-     * @param Model $model
-     *
      * @return string[]
      */
     protected function getColumnsListForModel(Model $model): array
@@ -322,7 +306,6 @@ class EloquentStorage implements Storage
     /**
      * Отправляет запрос на массовую вставку данных в таблицу.
      *
-     * @param string  $className
      * @param mixed[] $data
      *
      * @throws StorageException
@@ -341,7 +324,6 @@ class EloquentStorage implements Storage
     /**
      * Фоллбэк на случай, если при записи бандла произошла ошибка. Пробуем сохранить все записи по одной.
      *
-     * @param string  $className
      * @param mixed[] $data
      *
      * @throws StorageException
@@ -368,10 +350,6 @@ class EloquentStorage implements Storage
 
     /**
      * Запись сообщения в лог.
-     *
-     * @param string $errorLevel
-     * @param string $message
-     * @param array  $context
      */
     protected function log(string $errorLevel, string $message, array $context = []): void
     {

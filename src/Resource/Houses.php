@@ -35,8 +35,6 @@ class Houses extends JsonResource
      * Преобразует сущность 'Houses' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

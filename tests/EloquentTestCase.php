@@ -16,7 +16,7 @@ abstract class EloquentTestCase extends BaseCase
     /**
      * @var Manager|null
      */
-    private static $capsule = null;
+    private static $capsule;
 
     /**
      * СОздает новое соединение с базой данных для eloquent.
@@ -43,13 +43,10 @@ abstract class EloquentTestCase extends BaseCase
 
     /**
      * Проверяет, что в указанной таблице есть строка с указанными колонками.
-     *
-     * @param string $table
-     * @param array  $fields
      */
     public function assertDatabaseHasRow(string $table, array $fields): void
     {
-        $message = sprintf(
+        $message = \sprintf(
             "Can't find '%s' row in '%s' table.",
             json_encode($fields, \JSON_UNESCAPED_UNICODE),
             $table
@@ -62,13 +59,10 @@ abstract class EloquentTestCase extends BaseCase
 
     /**
      * Проверяет, что в указанной таблице нет строки с указанными колонками.
-     *
-     * @param string $table
-     * @param array  $fields
      */
     public function assertDatabaseDoesNotHaveRow(string $table, array $fields): void
     {
-        $message = sprintf(
+        $message = \sprintf(
             "Row '%s' exists in '%s' table.",
             json_encode($fields, \JSON_UNESCAPED_UNICODE),
             $table
@@ -82,7 +76,6 @@ abstract class EloquentTestCase extends BaseCase
     /**
      * Создает таблицу по указанным полям и имени.
      *
-     * @param string  $tableName
      * @param array[] $columns
      */
     public function prepareTableForTesting(string $tableName, array $columns): void
@@ -101,7 +94,6 @@ abstract class EloquentTestCase extends BaseCase
     /**
      * Создает тестовые данные в таблице.
      *
-     * @param string  $tableName
      * @param array[] $rows
      */
     public function prepareDataForTesting(string $tableName, array $rows): void
@@ -111,10 +103,6 @@ abstract class EloquentTestCase extends BaseCase
 
     /**
      * Создает колонку в таблице.
-     *
-     * @param Blueprint $table
-     * @param string    $name
-     * @param array     $description
      *
      * @throws \InvalidArgumentException
      */

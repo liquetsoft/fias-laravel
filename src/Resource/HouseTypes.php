@@ -25,8 +25,6 @@ class HouseTypes extends JsonResource
      * Преобразует сущность 'HouseTypes' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

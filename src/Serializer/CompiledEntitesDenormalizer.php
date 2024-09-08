@@ -66,7 +66,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     /**
      * {@inheritDoc}
      */
-    public function supportsDenormalization($data, string $type, string $format = null)
+    public function supportsDenormalization($data, string $type, ?string $format = null)
     {
         return \in_array(trim($type, " \t\n\r\0\x0B\\/"), self::ALLOWED_ENTITIES);
     }
@@ -76,7 +76,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
      *
      * @psalm-suppress InvalidStringClass
      */
-    public function denormalize($data, string $type, string $format = null, array $context = [])
+    public function denormalize($data, string $type, ?string $format = null, array $context = [])
     {
         $data = \is_array($data) ? $data : [];
         $type = trim($type, " \t\n\r\0\x0B\\/");
@@ -84,7 +84,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
         $entity = $context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new $type();
 
         if (!($entity instanceof Model)) {
-            $message = sprintf("Bad class for populating entity, need '%s' instance.", Model::class);
+            $message = \sprintf("Bad class for populating entity, need '%s' instance.", Model::class);
             throw new InvalidArgumentException($message);
         }
 
@@ -159,7 +159,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
                 $extractedData = $this->modelFiasVersionDataExtractor($data);
                 break;
             default:
-                $message = sprintf("Can't find data extractor for '%s' type.", $type);
+                $message = \sprintf("Can't find data extractor for '%s' type.", $type);
                 throw new InvalidArgumentException($message);
                 break;
         }
@@ -171,10 +171,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'Rooms'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelRoomsDataExtractor(array $data): array
     {
@@ -198,10 +194,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'AddrObjTypes'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelAddrObjTypesDataExtractor(array $data): array
     {
@@ -220,10 +212,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'Param'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelParamDataExtractor(array $data): array
     {
@@ -242,10 +230,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'Steads'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelSteadsDataExtractor(array $data): array
     {
@@ -268,10 +252,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'Carplaces'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelCarplacesDataExtractor(array $data): array
     {
@@ -294,10 +274,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'MunHierarchy'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelMunHierarchyDataExtractor(array $data): array
     {
@@ -318,10 +294,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'NormativeDocsTypes'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelNormativeDocsTypesDataExtractor(array $data): array
     {
@@ -335,10 +307,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'ApartmentTypes'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelApartmentTypesDataExtractor(array $data): array
     {
@@ -356,10 +324,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'OperationTypes'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelOperationTypesDataExtractor(array $data): array
     {
@@ -377,10 +341,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'Houses'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelHousesDataExtractor(array $data): array
     {
@@ -408,10 +368,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'ChangeHistory'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelChangeHistoryDataExtractor(array $data): array
     {
@@ -427,10 +383,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'Apartments'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelApartmentsDataExtractor(array $data): array
     {
@@ -454,10 +406,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'HouseTypes'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelHouseTypesDataExtractor(array $data): array
     {
@@ -475,10 +423,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'NormativeDocsKinds'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelNormativeDocsKindsDataExtractor(array $data): array
     {
@@ -490,10 +434,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'ParamTypes'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelParamTypesDataExtractor(array $data): array
     {
@@ -511,10 +451,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'RoomTypes'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelRoomTypesDataExtractor(array $data): array
     {
@@ -532,10 +468,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'NormativeDocs'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelNormativeDocsDataExtractor(array $data): array
     {
@@ -557,10 +489,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'ObjectLevels'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelObjectLevelsDataExtractor(array $data): array
     {
@@ -577,10 +505,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'AdmHierarchy'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelAdmHierarchyDataExtractor(array $data): array
     {
@@ -606,10 +530,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'AddrObjDivision'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelAddrObjDivisionDataExtractor(array $data): array
     {
@@ -623,10 +543,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'ReestrObjects'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelReestrObjectsDataExtractor(array $data): array
     {
@@ -643,10 +559,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'AddrObj'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelAddrObjDataExtractor(array $data): array
     {
@@ -671,10 +583,6 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
 
     /**
      * Получает правильный массив данных для модели 'FiasVersion'.
-     *
-     * @param array $data
-     *
-     * @return array
      */
     private function modelFiasVersionDataExtractor(array $data): array
     {

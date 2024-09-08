@@ -73,8 +73,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Регистрирует сервисы модуля в приложении.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -98,8 +96,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Загружает данныем модуля в приложение.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -152,8 +148,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      * Регистрирует сервисы бандла.
      *
      * @param array<string, \Closure|string> $servicesList
-     *
-     * @return void
      */
     private function registerServices(array &$servicesList): void
     {
@@ -244,8 +238,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      * Регистрирует задачи бандла.
      *
      * @param array<string, \Closure|string> $servicesList
-     *
-     * @return void
      */
     private function registerTasks(array &$servicesList): void
     {
@@ -346,8 +338,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      * Регистрирует пайплайны бандла.
      *
      * @param array<string, \Closure|string> $servicesList
-     *
-     * @return void
      */
     private function registerPipelines(array &$servicesList): void
     {
@@ -441,10 +431,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Возвращает значение указанной опции в виде строки.
-     *
-     * @param string $name
-     *
-     * @return string
      */
     private function getOptionString(string $name): string
     {
@@ -455,10 +441,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Возвращает значение указанной опции в виде целого числа.
-     *
-     * @param string $name
-     *
-     * @return int
      */
     private function getOptionInt(string $name): int
     {
@@ -469,10 +451,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Возвращает значение указанной опции в виде массива.
-     *
-     * @param string $name
-     *
-     * @return array
      */
     private function getOptionArray(string $name): array
     {
@@ -483,8 +461,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Возвращает значение указанной опции в виде массива строк.
-     *
-     * @param string $name
      *
      * @return array<string, string>
      */
@@ -501,10 +477,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Возвращает значение указанной опции в виде bool.
-     *
-     * @param string $name
-     *
-     * @return bool
      */
     private function getOptionBool(string $name): bool
     {
@@ -513,10 +485,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Возвращает значение опции по ее названию.
-     *
-     * @param string $name
-     *
-     * @return mixed
      */
     private function getOptionByName(string $name)
     {
@@ -525,10 +493,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Добавляет префикс модуля к строке.
-     *
-     * @param string $string
-     *
-     * @return string
      */
     private function prefixString(string $string): string
     {

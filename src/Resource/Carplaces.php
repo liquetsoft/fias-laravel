@@ -30,8 +30,6 @@ class Carplaces extends JsonResource
      * Преобразует сущность 'Carplaces' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

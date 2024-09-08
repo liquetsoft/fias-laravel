@@ -25,8 +25,6 @@ class OperationTypes extends JsonResource
      * Преобразует сущность 'OperationTypes' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

@@ -51,9 +51,6 @@ class MigrationGenerator extends AbstractGenerator
 
     /**
      * Добавляет создание таблицы в класс миграции.
-     *
-     * @param ClassType        $class
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateClassWithUpMethodByDescription(ClassType $class, EntityDescriptor $descriptor): void
     {
@@ -159,9 +156,6 @@ class MigrationGenerator extends AbstractGenerator
 
     /**
      * Добавляет удаление таблицы в класс миграции.
-     *
-     * @param ClassType        $class
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateClassWithDownMethodByDescription(ClassType $class, EntityDescriptor $descriptor): void
     {

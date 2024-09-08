@@ -71,7 +71,6 @@ class VersionsCommand extends Command
     /**
      * Отображает список версий в виде таблицы.
      *
-     * @param string             $header
      * @param InformerResponse[] $versions
      */
     private function showTable(string $header, array $versions): void
@@ -91,9 +90,6 @@ class VersionsCommand extends Command
 
     /**
      * Отображает пустую таблицу.
-     *
-     * @param string $header
-     * @param string $message
      */
     private function showEmptyResponse(string $header, string $message = 'No data provided'): void
     {

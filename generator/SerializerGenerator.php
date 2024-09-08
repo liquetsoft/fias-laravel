@@ -43,8 +43,6 @@ class SerializerGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые импорты в пространство имен.
-     *
-     * @param PhpNamespace $namespace
      */
     protected function decorateNamespace(PhpNamespace $namespace): void
     {
@@ -67,8 +65,6 @@ class SerializerGenerator extends AbstractGenerator
 
     /**
      * Добавляет в класс все необходимые методы и константы.
-     *
-     * @param ClassType $class
      */
     protected function decorateClass(ClassType $class): void
     {
@@ -131,9 +127,6 @@ class SerializerGenerator extends AbstractGenerator
 
     /**
      * Создает метод для денормализации одной конкретной модели.
-     *
-     * @param Method           $method
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateModelDataExtractor(Method $method, EntityDescriptor $descriptor): void
     {
@@ -170,10 +163,6 @@ class SerializerGenerator extends AbstractGenerator
 
     /**
      * Создает имя класса для модели дескриптора.
-     *
-     * @param EntityDescriptor $descriptor
-     *
-     * @return string
      */
     protected function createModelClass(EntityDescriptor $descriptor): string
     {

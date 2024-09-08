@@ -24,8 +24,6 @@ class ObjectLevels extends JsonResource
      * Преобразует сущность 'ObjectLevels' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

@@ -31,8 +31,6 @@ class Apartments extends JsonResource
      * Преобразует сущность 'Apartments' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

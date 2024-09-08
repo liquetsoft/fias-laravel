@@ -20,9 +20,6 @@ class EloquentVersionManager implements VersionManager
      */
     protected $entityClassName;
 
-    /**
-     * @param string $entityClassName
-     */
     public function __construct(string $entityClassName)
     {
         $this->entityClassName = $entityClassName;
@@ -74,8 +71,6 @@ class EloquentVersionManager implements VersionManager
 
     /**
      * Возвращает класс сущности для обращения к Eloquent.
-     *
-     * @return string
      *
      * @throws \RuntimeException
      */

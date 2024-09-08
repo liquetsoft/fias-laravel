@@ -24,8 +24,6 @@ class ReestrObjects extends JsonResource
      * Преобразует сущность 'ReestrObjects' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

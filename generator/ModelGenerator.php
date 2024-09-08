@@ -40,9 +40,6 @@ class ModelGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые импорты в пространство имен.
-     *
-     * @param PhpNamespace     $namespace
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateNamespace(PhpNamespace $namespace, EntityDescriptor $descriptor): void
     {
@@ -56,9 +53,6 @@ class ModelGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые для класса комментарии.
-     *
-     * @param ClassType        $class
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateClass(ClassType $class, EntityDescriptor $descriptor): void
     {
@@ -135,9 +129,6 @@ class ModelGenerator extends AbstractGenerator
 
     /**
      * Добавляет все свойства в формате phpDoc, поскольку в laravel они используют магию.
-     *
-     * @param ClassType   $class
-     * @param EntityField $field
      */
     protected function decorateProperty(ClassType $class, EntityField $field): void
     {

@@ -21,9 +21,6 @@ class EloquentDenormalizer implements DenormalizerInterface
      */
     protected $typeCaster;
 
-    /**
-     * @param TypeCaster|null $typeCaster
-     */
     public function __construct(?TypeCaster $typeCaster = null)
     {
         if ($typeCaster === null) {
@@ -80,9 +77,6 @@ class EloquentDenormalizer implements DenormalizerInterface
      * Создает массив данных для вставки в модель на основании полей модели.
      *
      * @param mixed[] $data
-     * @param Model   $entity
-     *
-     * @return array
      *
      * @throws \Exception
      */
@@ -104,11 +98,6 @@ class EloquentDenormalizer implements DenormalizerInterface
 
     /**
      * Пробует преобразовать имя параметра так, чтобы получить соответствие из модели.
-     *
-     * @param string $name
-     * @param Model  $entity
-     *
-     * @return string|null
      */
     protected function mapParameterNameToModelAttributeName(string $name, Model $entity): ?string
     {
@@ -139,12 +128,6 @@ class EloquentDenormalizer implements DenormalizerInterface
 
     /**
      * Преобразует значение атрибута к тому типу, который указан в модели.
-     *
-     * @param mixed  $value
-     * @param string $attributeName
-     * @param Model  $entity
-     *
-     * @return mixed
      *
      * @throws \Exception
      */

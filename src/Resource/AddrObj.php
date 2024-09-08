@@ -32,8 +32,6 @@ class AddrObj extends JsonResource
      * Преобразует сущность 'AddrObj' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

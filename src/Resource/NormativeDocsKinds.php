@@ -19,8 +19,6 @@ class NormativeDocsKinds extends JsonResource
      * Преобразует сущность 'NormativeDocsKinds' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

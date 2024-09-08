@@ -26,8 +26,6 @@ class Param extends JsonResource
      * Преобразует сущность 'Param' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

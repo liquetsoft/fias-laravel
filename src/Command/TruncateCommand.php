@@ -32,8 +32,6 @@ class TruncateCommand extends Command
 
     /**
      * В конструкторе передаем ссылку на пайплайн установки.
-     *
-     * @param Application $app
      */
     public function __construct(Application $app)
     {
