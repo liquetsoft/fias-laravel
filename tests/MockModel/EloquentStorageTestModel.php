@@ -23,7 +23,7 @@ class EloquentStorageTestModel extends Model
     /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
         'id',
         'name',

@@ -172,7 +172,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
     /**
      * {@inheritDoc}
      */
-    public function getSupportedTypes(?string $format)
+    public function getSupportedTypes(?string $format): array
     {
         return [
             Apartments::class => true,

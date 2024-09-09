@@ -486,7 +486,7 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     /**
      * Возвращает значение опции по ее названию.
      */
-    private function getOptionByName(string $name)
+    private function getOptionByName(string $name): mixed
     {
         return config($this->prefixString($name));
     }

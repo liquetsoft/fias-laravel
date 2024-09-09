@@ -28,7 +28,6 @@ class FiasSerializer extends Serializer
         if ($normalizers === null) {
             $normalizers = [
                 new CompiledEntitesDenormalizer(),
-                new EloquentDenormalizer(),
                 new ObjectNormalizer(
                     null,
                     new FiasNameConverter(),
@@ -36,7 +35,9 @@ class FiasSerializer extends Serializer
                     new ReflectionExtractor(),
                     null,
                     null,
-                    [ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true]
+                    [
+                        ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true,
+                    ]
                 ),
             ];
         }

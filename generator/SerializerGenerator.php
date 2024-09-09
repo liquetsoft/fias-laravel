@@ -123,6 +123,7 @@ class SerializerGenerator extends AbstractGenerator
         $getSupportedTypes = $class->addMethod('getSupportedTypes')
             ->addComment("{@inheritDoc}\n")
             ->setVisibility('public')
+            ->setReturnType('array')
             ->setBody("return [\n{$supportedTypes}\n];");
         $getSupportedTypes->addParameter('format')->setType('string')->setNullable(true);
 

@@ -17,20 +17,11 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class BaseCase extends TestCase
 {
-    /**
-     * @var Generator|null
-     */
-    private $faker;
+    private ?Generator $faker;
 
-    /**
-     * @var FileSystemHelperInterface|null
-     */
-    private $fs;
+    private ?FileSystemHelperInterface $fs;
 
-    /**
-     * @var string|null
-     */
-    private $tempDir;
+    private ?string $tempDir;
 
     /**
      * Возвращает объект php faker для генерации случайных данных.
@@ -125,7 +116,7 @@ abstract class BaseCase extends TestCase
      */
     protected function tearDown(): void
     {
-        if ($this->tempDir) {
+        if ($this->tempDir !== null) {
             $this->fs()->remove($this->tempDir);
         }
 

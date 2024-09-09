@@ -86,6 +86,7 @@ final class EloquentVersionManagerTest extends EloquentTestCase
         $versionManager->setCurrentVersion($info);
         $versionResponse = $versionManager->getCurrentVersion();
 
+        $this->assertNotNull($versionResponse);
         $this->assertSame($version, $versionResponse->getVersion());
         $this->assertSame($fullUrl, $versionResponse->getFullUrl());
         $this->assertSame($deltaUrl, $versionResponse->getDeltaUrl());

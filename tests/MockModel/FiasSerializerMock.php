@@ -16,9 +16,7 @@ class FiasSerializerMock extends Model
      */
     protected $dateFormat = 'Y-m-d H:i';
 
-    /**
-     * @var array<array-key, string>
-     */
+    /** @var array<int, string> */
     protected $fillable = [
         'ACTSTATID',
         'name',

@@ -23,7 +23,7 @@ class PipelineTestMockModel extends Model
     /** @var string */
     protected $primaryKey = 'testId';
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
         'testId',
         'testName',
