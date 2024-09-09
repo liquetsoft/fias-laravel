@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения по типам домов.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int                $id         Идентификатор
  * @property string             $name       Наименование
  * @property string|null        $shortname  Краткое наименование
@@ -32,7 +34,7 @@ class HouseTypes extends Model
     /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
         'id',
         'name',
@@ -64,7 +66,7 @@ class HouseTypes extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }

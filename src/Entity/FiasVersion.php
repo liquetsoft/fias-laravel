@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Модель, которая хранит историю версий ФИАС.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int                $version    Номер версии ФИАС
  * @property string             $fullurl    Ссылка для загрузки полной версии ФИАС
  * @property string             $deltaurl   Ссылка для загрузки обновления до версии ФИАС
@@ -28,7 +30,7 @@ class FiasVersion extends Model
     /** @var string */
     protected $primaryKey = 'version';
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
         'version',
         'fullurl',
@@ -52,7 +54,7 @@ class FiasVersion extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }

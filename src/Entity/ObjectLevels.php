@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения по уровням адресных объектов.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int                $level      Уникальный идентификатор записи. Ключевое поле. Номер уровня объекта
  * @property string             $name       Наименование
  * @property string|null        $shortname  Краткое наименование
@@ -31,7 +33,7 @@ class ObjectLevels extends Model
     /** @var string */
     protected $primaryKey = 'level';
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
         'level',
         'name',
@@ -61,7 +63,7 @@ class ObjectLevels extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }

@@ -61,6 +61,8 @@ class ModelGenerator extends AbstractGenerator
             $class->addComment("{$description}.\n");
         }
 
+        $class->addComment('@psalm-consistent-constructor');
+
         $isPrimaryIsUuid = false;
         $primaryName = null;
         $fill = [];
@@ -106,7 +108,7 @@ class ModelGenerator extends AbstractGenerator
         $fillableValue = new Literal("[\n    '" . implode("',\n    '", $fill) . "',\n]");
         $class->addProperty('fillable', $fillableValue)
             ->setVisibility('protected')
-            ->addComment('@var string[]')
+            ->addComment('@var array<int, string>')
         ;
 
         $castValue = new Literal($this->createCastValue($descriptor));
@@ -116,7 +118,7 @@ class ModelGenerator extends AbstractGenerator
         ;
 
         $connectionMethod = "\$connection = \$this->connection;\n";
-        $connectionMethod .= "if (\\function_exists('app') && app()->has('config')) {\n";
+        $connectionMethod .= "if (\\function_exists('app') && app()->has('config') === true) {\n";
         $connectionMethod .= "    /** @var string|null */\n";
         $connectionMethod .= "    \$connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: \$this->connection;\n";
         $connectionMethod .= "}\n\n";

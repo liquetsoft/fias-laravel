@@ -9,6 +9,7 @@ use Faker\Generator;
 use Marvin255\FileSystemHelper\FileSystemException;
 use Marvin255\FileSystemHelper\FileSystemFactory;
 use Marvin255\FileSystemHelper\FileSystemHelperInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -129,5 +130,21 @@ abstract class BaseCase extends TestCase
         }
 
         parent::tearDown();
+    }
+
+    /**
+     * @template T
+     *
+     * @param class-string<T> $className
+     *
+     * @return MockObject&T
+     */
+    protected function mock(string $className): MockObject
+    {
+        $mock = $this->getMockBuilder($className)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return $mock;
     }
 }

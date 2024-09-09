@@ -5,45 +5,37 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager;
 
 use Carbon\Carbon;
-use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
-use Liquetsoft\Fias\Component\FiasInformer\InformerResponseBase;
+use Liquetsoft\Fias\Component\FiasInformer\FiasInformerResponse;
+use Liquetsoft\Fias\Component\FiasInformer\FiasInformerResponseFactory;
 use Liquetsoft\Fias\Component\VersionManager\VersionManager;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FiasVersion;
 
 /**
  * Объект, который сохраняет текущую версию ФИАС с помощью eloquent.
  */
-class EloquentVersionManager implements VersionManager
+final class EloquentVersionManager implements VersionManager
 {
-    /**
-     * @var string
-     */
-    protected $entityClassName;
-
-    public function __construct(string $entityClassName)
+    public function __construct(private readonly string $entityClassName)
     {
-        $this->entityClassName = $entityClassName;
     }
 
     /**
      * {@inheritdoc}
      *
      * @throws \RuntimeException
-     *
-     * @psalm-suppress InvalidStringClass
      */
-    public function setCurrentVersion(InformerResponse $info): VersionManager
+    public function setCurrentVersion(FiasInformerResponse $info): void
     {
         $entityClassName = $this->getEntityClassName();
+
         /** @var FiasVersion */
         $entity = new $entityClassName();
 
         $entity->version = $info->getVersion();
-        $entity->url = $info->getUrl();
+        $entity->fullurl = $info->getFullUrl();
+        $entity->deltaurl = $info->getDeltaUrl();
         $entity->created_at = Carbon::now();
         $entity->save();
-
-        return $this;
     }
 
     /**
@@ -51,26 +43,30 @@ class EloquentVersionManager implements VersionManager
      *
      * @throws \RuntimeException
      *
-     * @psalm-suppress InvalidStringClass
      * @psalm-suppress MixedMethodCall
      */
-    public function getCurrentVersion(): InformerResponse
+    public function getCurrentVersion(): ?FiasInformerResponse
     {
-        $response = new InformerResponseBase();
-
         $entityClassName = $this->getEntityClassName();
+
         /** @var FiasVersion|null */
         $entity = $entityClassName::query()->orderBy('created_at', 'desc')->first();
+
         if ($entity) {
-            $response->setVersion($entity->version);
-            $response->setUrl($entity->url);
+            return FiasInformerResponseFactory::create(
+                $entity->version,
+                $entity->fullurl,
+                $entity->deltaurl
+            );
         }
 
-        return $response;
+        return null;
     }
 
     /**
      * Возвращает класс сущности для обращения к Eloquent.
+     *
+     * @psalm-return class-string<FiasVersion>
      *
      * @throws \RuntimeException
      */

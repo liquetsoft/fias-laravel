@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения по типам адресных объектов.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int                $id         Идентификатор записи
  * @property int                $level      Уровень адресного объекта
  * @property string             $shortname  Краткое наименование типа объекта
@@ -33,7 +35,7 @@ class AddrObjTypes extends Model
     /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
         'id',
         'level',
@@ -67,7 +69,7 @@ class AddrObjTypes extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }

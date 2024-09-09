@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения об адресном элементе в части его идентификаторов.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int                $objectid   Уникальный идентификатор объекта
  * @property \DateTimeInterface $createdate Дата создания
  * @property int                $changeid   ID изменившей транзакции
@@ -31,7 +33,7 @@ class ReestrObjects extends Model
     /** @var string */
     protected $primaryKey = 'objectid';
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
         'objectid',
         'createdate',
@@ -61,7 +63,7 @@ class ReestrObjects extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }

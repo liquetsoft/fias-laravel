@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения по видам нормативных документов.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int    $id   Идентификатор записи
  * @property string $name Наименование
  */
@@ -26,7 +28,7 @@ class NormativeDocsKinds extends Model
     /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
         'id',
         'name',
@@ -46,7 +48,7 @@ class NormativeDocsKinds extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }

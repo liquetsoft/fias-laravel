@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения о нормативном документе, являющемся основанием присвоения адресному элементу наименования.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int                     $id         Уникальный идентификатор документа
  * @property string                  $name       Наименование документа
  * @property \DateTimeInterface      $date       Дата документа
@@ -36,7 +38,7 @@ class NormativeDocs extends Model
     /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
         'id',
         'name',
@@ -76,7 +78,7 @@ class NormativeDocs extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }
