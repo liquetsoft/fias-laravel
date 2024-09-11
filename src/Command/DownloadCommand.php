@@ -7,58 +7,28 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 use Illuminate\Console\Command;
 use Liquetsoft\Fias\Component\Downloader\Downloader;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
+use Liquetsoft\Fias\Component\FiasInformer\FiasInformerResponse;
 use Liquetsoft\Fias\Component\Unpacker\Unpacker;
-use Marvin255\FileSystemHelper\FileSystemFactory;
 use Marvin255\FileSystemHelper\FileSystemHelperInterface;
 
 /**
  * Консольная команда, которая загружает указанную версию ФИАС в указанную папку.
  */
-class DownloadCommand extends Command
+final class DownloadCommand extends Command
 {
-    private const FULL_VERSION_NAME = 'full';
+    private const LATEST_VERSION_NAME = 'latest';
 
-    /**
-     * @var string
-     */
-    protected $signature = 'liquetsoft:fias:download {pathToDownload} {version=' . self::FULL_VERSION_NAME . '} {--X|extract}';
+    protected $signature = 'liquetsoft:fias:download {pathToDownload} {version=' . self::LATEST_VERSION_NAME . '} {--X|extract} {--D|delta}';
 
-    /**
-     * @var string|null
-     */
     protected $description = 'Downloads set version of FIAS.';
 
-    /**
-     * @var Downloader
-     */
-    private $downloader;
-
-    /**
-     * @var Unpacker
-     */
-    private $unpacker;
-
-    /**
-     * @var FiasInformer
-     */
-    private $informer;
-
-    /**
-     * @var FileSystemHelperInterface
-     */
-    private $fs;
-
     public function __construct(
-        Downloader $downloader,
-        Unpacker $unpacker,
-        FiasInformer $informer,
+        private readonly Downloader $downloader,
+        private readonly Unpacker $unpacker,
+        private readonly FiasInformer $informer,
+        private readonly FileSystemHelperInterface $fs,
     ) {
         parent::__construct();
-
-        $this->downloader = $downloader;
-        $this->unpacker = $unpacker;
-        $this->informer = $informer;
-        $this->fs = FileSystemFactory::create();
     }
 
     /**
@@ -69,10 +39,12 @@ class DownloadCommand extends Command
         $version = $this->getVersion();
         $pathToDownload = $this->getPathToDownload();
         $needExtraction = (bool) $this->option('extract');
+        $needDelta = (bool) $this->option('delta');
 
-        $url = $this->findUrlForVersion($version);
+        $fiasVersion = $this->findVersion($version);
+        $url = $needDelta ? $fiasVersion->getDeltaUrl() : $fiasVersion->getFullUrl();
 
-        $this->info("Downloading '{$url}' to '{$pathToDownload->getPathname()}'.");
+        $this->info("Downloading '{$url}' to '{$pathToDownload->getPathname()}'");
         $this->downloader->download($url, $pathToDownload);
 
         if ($needExtraction) {
@@ -107,29 +79,28 @@ class DownloadCommand extends Command
     /**
      * Получает url для указанной версии.
      */
-    private function findUrlForVersion(string $version): string
+    private function findVersion(string $version): FiasInformerResponse
     {
-        $url = '';
+        $fiasVersion = null;
 
-        if ($version === self::FULL_VERSION_NAME) {
-            $url = $this->informer->getCompleteInfo()->getUrl();
+        if ($version === self::LATEST_VERSION_NAME) {
+            $fiasVersion = $this->informer->getLatestVersion();
         } else {
-            $allVersions = $this->informer->getDeltaList();
+            $allVersions = $this->informer->getAllVersions();
             $version = (int) $version;
             foreach ($allVersions as $deltaVervion) {
                 if ($deltaVervion->getVersion() === $version) {
-                    $url = $deltaVervion->getUrl();
+                    $fiasVersion = $deltaVervion;
                     break;
                 }
             }
         }
 
-        if (empty($url)) {
-            $message = \sprintf("Can't find url for '%s' version.", $version);
-            throw new \RuntimeException($message);
+        if ($fiasVersion === null) {
+            throw new \RuntimeException("Can't find FIAS response for '{$version}' version");
         }
 
-        return $url;
+        return $fiasVersion;
     }
 
     /**

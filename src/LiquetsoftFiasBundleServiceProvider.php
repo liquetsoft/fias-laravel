@@ -61,6 +61,8 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\VersionSetCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage\EloquentStorage;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
+use Marvin255\FileSystemHelper\FileSystemFactory;
+use Marvin255\FileSystemHelper\FileSystemHelperInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -153,6 +155,9 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      */
     private function registerServices(array &$servicesList): void
     {
+        // Объект для работы с файловой системой
+        $servicesList[FileSystemHelperInterface::class] = fn (): FileSystemHelperInterface => FileSystemFactory::create();
+
         // http клиент
         $servicesList[HttpTransport::class] = HttpTransportCurl::class;
 
