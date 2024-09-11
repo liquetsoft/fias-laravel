@@ -14,22 +14,13 @@ use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
 /**
  * Консольная команда для установки ФИАС с ноля из указанного каталога, в котором находятся файлы.
  */
-class InstallFromFolderCommand extends Command
+final class InstallFromFolderCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'liquetsoft:fias:install_from_folder {folder : Path to folder with extracted FIAS files}';
 
-    /**
-     * @var string|null
-     */
     protected $description = 'Installs full version of FIAS from downloaded files saved in folder.';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    private readonly Pipe $pipeline;
 
     public function __construct(Application $app)
     {
@@ -48,23 +39,25 @@ class InstallFromFolderCommand extends Command
         $folder = $this->argument('folder');
         $folder = realpath(\is_array($folder) ? (string) reset($folder) : (string) $folder);
         if (!is_dir($folder)) {
-            throw new \InvalidArgumentException("Can't find '{$folder}' folder to read FIAS files.");
+            throw new \InvalidArgumentException("Can't find '{$folder}' folder to read FIAS files");
         }
 
-        $this->info("Installing full version of FIAS from '{$folder}' folder.");
+        $this->info("Installing full version of FIAS from '{$folder}' folder");
         $start = microtime(true);
 
         $state = new ArrayState();
-        $state->setAndLockParameter(StateParameter::EXTRACT_TO_FOLDER, new \SplFileInfo($folder));
+        $state->setAndLockParameter(StateParameter::PATH_TO_EXTRACT_FOLDER, $folder);
 
         try {
             $this->pipeline->run($state);
         } catch (\Throwable $e) {
-            $message = "Something went wrong during the installation from folder. Please check the Laravel's log to get more information.";
-            throw new FiasConsoleException($message, 0, $e);
+            throw new FiasConsoleException(
+                message: "Something went wrong during the installation from folder. Please check the Laravel's log to get more information",
+                previous: $e
+            );
         }
 
         $total = round(microtime(true) - $start, 4);
-        $this->info("Full version of FIAS installed after {$total} s.");
+        $this->info("Full version of FIAS installed after {$total} s");
     }
 }

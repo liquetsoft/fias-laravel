@@ -44,9 +44,8 @@ final class InstallCommand extends Command
             $this->pipeline->run(new ArrayState());
         } catch (\Throwable $e) {
             throw new FiasConsoleException(
-                "Something went wrong during the installation. Please check the Laravel's log to get more information",
-                0,
-                $e
+                message: "Something went wrong during the installation. Please check the Laravel's log to get more information",
+                previous: $e
             );
         }
 
