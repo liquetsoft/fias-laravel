@@ -10,8 +10,10 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 
 /**
  * Тест ресурса для сущности 'AddrObjTypes'.
+ *
+ * @internal
  */
-class AddrObjTypes extends BaseCase
+class AddrObjTypesTest extends BaseCase
 {
     /**
      * Проверяет, что ресурс верно преобразует сущность в массив.

@@ -8,7 +8,6 @@ use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityManager\BaseEntityManager;
 use Liquetsoft\Fias\Component\EntityRegistry\ArrayEntityRegistry;
-use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
@@ -66,7 +65,10 @@ class UpdatePipelineTest extends EloquentTestCase
                     'type' => 'integer',
                     'primary' => true,
                 ],
-                'url' => [
+                'fullurl' => [
+                    'type' => 'string',
+                ],
+                'deltaurl' => [
                     'type' => 'string',
                 ],
                 'created_at' => [
@@ -85,17 +87,14 @@ class UpdatePipelineTest extends EloquentTestCase
         $testArchive = "{$testDir}/update.zip";
         copy(__DIR__ . '/_fixtures/update.zip', $testArchive);
 
-        $version = $this->createFakeData()->numberBetween(1, 1000);
-        $versionUrl = $this->createFakeData()->url();
-        $versionInfo = $this->getMockBuilder(InformerResponse::class)->getMock();
-        $versionInfo->method('getVersion')->willReturn($version);
-        $versionInfo->method('getUrl')->willReturn($versionUrl);
-        $versionInfo->method('hasResult')->willReturn(true);
+        $version = 123;
+        $versionUrl = 'https://test.test/full';
 
         $state = new ArrayState();
-        $state->setAndLockParameter(StateParameter::DOWNLOAD_TO_FILE, new \SplFileInfo($testArchive));
-        $state->setAndLockParameter(StateParameter::EXTRACT_TO_FOLDER, new \SplFileInfo($testDir));
-        $state->setAndLockParameter(StateParameter::FIAS_INFO, $versionInfo);
+        $state->setAndLockParameter(StateParameter::PATH_TO_DOWNLOAD_FILE, $testArchive);
+        $state->setAndLockParameter(StateParameter::PATH_TO_EXTRACT_FOLDER, $testDir);
+        $state->setAndLockParameter(StateParameter::FIAS_NEXT_VERSION_NUMBER, $version);
+        $state->setAndLockParameter(StateParameter::FIAS_VERSION_ARCHIVE_URL, $versionUrl);
 
         $pipeline = $this->createPipeLine();
         $pipeline->run($state);
@@ -105,7 +104,6 @@ class UpdatePipelineTest extends EloquentTestCase
             'fias_laravel_fias_version',
             [
                 'version' => $version,
-                'url' => $versionUrl,
             ]
         );
         $this->assertDatabaseHasRow(

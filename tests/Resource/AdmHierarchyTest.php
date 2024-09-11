@@ -10,8 +10,10 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 
 /**
  * Тест ресурса для сущности 'AdmHierarchy'.
+ *
+ * @internal
  */
-class AdmHierarchy extends BaseCase
+class AdmHierarchyTest extends BaseCase
 {
     /**
      * Проверяет, что ресурс верно преобразует сущность в массив.

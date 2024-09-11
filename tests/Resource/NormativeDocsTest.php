@@ -10,8 +10,10 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 
 /**
  * Тест ресурса для сущности 'NormativeDocs'.
+ *
+ * @internal
  */
-class NormativeDocs extends BaseCase
+class NormativeDocsTest extends BaseCase
 {
     /**
      * Проверяет, что ресурс верно преобразует сущность в массив.

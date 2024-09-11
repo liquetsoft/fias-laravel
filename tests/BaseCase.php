@@ -17,11 +17,11 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class BaseCase extends TestCase
 {
-    private ?Generator $faker;
+    private ?Generator $faker = null;
 
-    private ?FileSystemHelperInterface $fs;
+    private ?FileSystemHelperInterface $fs = null;
 
-    private ?string $tempDir;
+    private ?string $tempDir = null;
 
     /**
      * Возвращает объект php faker для генерации случайных данных.
