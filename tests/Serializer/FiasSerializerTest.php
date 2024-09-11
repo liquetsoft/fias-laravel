@@ -6,6 +6,7 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Serializer;
 
 use Illuminate\Support\Carbon;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\CompiledEntitesDenormalizer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\MockModel\FiasSerializerMock;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
@@ -94,10 +95,10 @@ EOT;
         $data = '<ActualStatus testDateVal="test"/>';
         $type = FiasSerializerMock::class;
 
-        $normalizer = new FiasSerializer();
+        $normalizer = new CompiledEntitesDenormalizer();
 
         $this->expectException(NotNormalizableValueException::class);
-        $normalizer->deserialize($data, $type, 'xml');
+        $normalizer->denormalize($data, $type, 'xml');
     }
 
     /**
@@ -108,10 +109,10 @@ EOT;
         $data = '<ActualStatus defaultItem="test"/>';
         $type = FiasSerializerMock::class;
 
-        $normalizer = new FiasSerializer();
+        $normalizer = new CompiledEntitesDenormalizer();
 
         $this->expectException(InvalidArgumentException::class);
-        $normalizer->deserialize($data, $type, 'xml', [
+        $normalizer->denormalize($data, $type, 'xml', [
             'object_to_populate' => new \stdClass(),
         ]);
     }

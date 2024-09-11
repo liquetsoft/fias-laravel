@@ -49,7 +49,9 @@ final class UpdateCommand extends Command
                 );
             }
             $newVersion = $state->getParameterString(StateParameter::FIAS_NEXT_VERSION_NUMBER);
-            $this->info("Updated to version '{$newVersion}'");
+            if ($newVersion !== '') {
+                $this->info("Updated to version '{$newVersion}'");
+            }
         } while ($newVersion !== '');
 
         $total = round(microtime(true) - $start, 4);
