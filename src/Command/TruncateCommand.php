@@ -32,8 +32,6 @@ final class TruncateCommand extends Command
 
     /**
      * Запуск команды на исполнение.
-     *
-     * @throws \Exception
      */
     public function handle(): void
     {

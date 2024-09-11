@@ -6,7 +6,6 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;
-use Liquetsoft\Fias\Component\Exception\PipeException;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
@@ -30,9 +29,6 @@ final class InstallFromFolderCommand extends Command
 
     /**
      * Запуск команды на исполнение.
-     *
-     * @throws PipeException
-     * @throws \InvalidArgumentException
      */
     public function handle(): void
     {

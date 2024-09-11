@@ -6,7 +6,6 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;
-use Liquetsoft\Fias\Component\Exception\PipeException;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 
@@ -32,8 +31,6 @@ final class InstallCommand extends Command
 
     /**
      * Запуск команды на исполнение.
-     *
-     * @throws PipeException
      */
     public function handle(): void
     {

@@ -6,8 +6,6 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;
-use Liquetsoft\Fias\Component\Exception\PipeException;
-use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
@@ -15,22 +13,13 @@ use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
 /**
  * Консольная команда для обновления ФИАС с текущей версии до самой новой.
  */
-class UpdateCommand extends Command
+final class UpdateCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'liquetsoft:fias:update';
 
-    /**
-     * @var string|null
-     */
     protected $description = 'Updates FIAS to latest version.';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    private readonly Pipe $pipeline;
 
     /**
      * В конструкторе передаем ссылку на пайплайн установки.
@@ -43,12 +32,10 @@ class UpdateCommand extends Command
 
     /**
      * Запуск команды на исполнение.
-     *
-     * @throws PipeException
      */
     public function handle(): void
     {
-        $this->info('Updating FIAS.');
+        $this->info('Updating FIAS');
         $start = microtime(true);
 
         do {
@@ -56,21 +43,16 @@ class UpdateCommand extends Command
             try {
                 $this->pipeline->run($state);
             } catch (\Throwable $e) {
-                $message = "Something went wrong during the updating. Please check the Laravel's log to get more information.";
-                throw new FiasConsoleException($message, 0, $e);
-            }
-            $info = $state->getParameter(StateParameter::FIAS_INFO);
-            if (!($info instanceof InformerResponse)) {
-                throw new \RuntimeException(
-                    "There is no '" . StateParameter::FIAS_INFO . "' parameter in state."
+                throw new FiasConsoleException(
+                    message: "Something went wrong during the updating. Please check the Laravel's log to get more information",
+                    previous: $e
                 );
             }
-            if ($info->hasResult()) {
-                $this->info("Updated to version '{$info->getVersion()}'.");
-            }
-        } while ($info->hasResult());
+            $newVersion = $state->getParameterString(StateParameter::FIAS_NEXT_VERSION_NUMBER);
+            $this->info("Updated to version '{$newVersion}'");
+        } while ($newVersion !== '');
 
         $total = round(microtime(true) - $start, 4);
-        $this->info("FIAS updated after {$total} s.");
+        $this->info("FIAS updated after {$total} s");
     }
 }
