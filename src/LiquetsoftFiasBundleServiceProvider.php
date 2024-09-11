@@ -6,20 +6,22 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use Liquetsoft\Fias\Component\Downloader\CurlDownloader;
 use Liquetsoft\Fias\Component\Downloader\Downloader;
+use Liquetsoft\Fias\Component\Downloader\DownloaderImpl;
 use Liquetsoft\Fias\Component\EntityManager\BaseEntityManager;
 use Liquetsoft\Fias\Component\EntityManager\EntityManager;
 use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
 use Liquetsoft\Fias\Component\EntityRegistry\PhpArrayFileRegistry;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
-use Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer;
-use Liquetsoft\Fias\Component\FiasStatusChecker\CurlStatusChecker;
+use Liquetsoft\Fias\Component\FiasInformer\FiasInformerImpl;
 use Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusChecker;
+use Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusCheckerImpl;
 use Liquetsoft\Fias\Component\FilesDispatcher\EntityFileDispatcher;
 use Liquetsoft\Fias\Component\FilesDispatcher\FilesDispatcher;
 use Liquetsoft\Fias\Component\Filter\Filter;
 use Liquetsoft\Fias\Component\Filter\RegexpFilter;
+use Liquetsoft\Fias\Component\HttpTransport\HttpTransport;
+use Liquetsoft\Fias\Component\HttpTransport\HttpTransportCurl;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\Task\CheckStatusTask;
@@ -151,26 +153,17 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      */
     private function registerServices(array &$servicesList): void
     {
-        // объект, который получает ссылку на ФИАС через soap-клиент
-        $servicesList[FiasInformer::class] = function (): FiasInformer {
-            return new SoapFiasInformer($this->getOptionString('informer_wsdl'));
-        };
+        // http клиент
+        $servicesList[HttpTransport::class] = HttpTransportCurl::class;
+
+        // объект, который получает ссылку на ФИАС через http-клиент
+        $servicesList[FiasInformer::class] = FiasInformerImpl::class;
 
         // объект, который проверяет статус ФИАС
-        $servicesList[FiasStatusChecker::class] = function (Application $app): FiasStatusChecker {
-            return new CurlStatusChecker(
-                $this->getOptionString('informer_wsdl'),
-                $app->get(FiasInformer::class)
-            );
-        };
+        $servicesList[FiasStatusChecker::class] = FiasStatusCheckerImpl::class;
 
         // объект, который загружает файлы
-        $servicesList[Downloader::class] = function (): Downloader {
-            return new CurlDownloader(
-                $this->getOptionArray('curl_settings'),
-                $this->getOptionInt('download_retry_attempts') ?: 1
-            );
-        };
+        $servicesList[Downloader::class] = DownloaderImpl::class;
 
         // объект, который распаковывает архивы
         $servicesList[Unpacker::class] = ZipUnpacker::class;
