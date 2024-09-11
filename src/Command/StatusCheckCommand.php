@@ -45,6 +45,8 @@ final class StatusCheckCommand extends Command
     }
 
     /**
+     * Конвертирует массив статусов в массив строк для таблицы.
+     *
      * @return array<int, array<int, string>>
      */
     private function convertStatusToTableBody(FiasStatusCheckerResult $status): array
