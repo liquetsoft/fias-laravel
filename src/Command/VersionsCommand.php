@@ -43,17 +43,12 @@ final class VersionsCommand extends Command
             $this->showEmptyResponse('Current version of FIAS', 'FIAS is not installed');
         }
 
-        $latest = $this->informer->getLatestVersion();
-        if ($latest !== null) {
-            $this->showTable(
-                'Latest version of FIAS',
-                [
-                    $latest,
-                ]
-            );
-        } else {
-            $this->showEmptyResponse('Latest version of FIAS', 'Latest version not found');
-        }
+        $this->showTable(
+            'Latest version of FIAS',
+            [
+                $this->informer->getLatestVersion(),
+            ]
+        );
 
         $deltaVersions = $this->informer->getAllVersions();
         $this->showTable(
