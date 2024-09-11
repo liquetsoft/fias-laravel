@@ -40,11 +40,11 @@ final class InstallParallelRunningCommand extends Command
             $files = reset($files);
         }
 
-        if (!empty($files)) {
+        if ($files !== false && $files !== null && $files !== '') {
             $files = json_decode((string) $files, true);
         } else {
             $stdIn = file_get_contents('php://stdin');
-            if (!empty($stdIn)) {
+            if ($stdIn !== false && $stdIn !== '') {
                 $files = json_decode($stdIn, true);
             }
         }

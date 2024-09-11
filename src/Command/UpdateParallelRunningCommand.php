@@ -14,22 +14,13 @@ use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
 /**
  * Консольная команда, которая является одним из параллельных процессов обновления ФИАС.
  */
-class UpdateParallelRunningCommand extends Command
+final class UpdateParallelRunningCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'liquetsoft:fias:update_parallel_running {files?}';
 
-    /**
-     * @var string|null
-     */
     protected $description = 'Command for running parallel update.';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    private readonly Pipe $pipeline;
 
     /**
      * В конструкторе передаем ссылку на пайплайн установки.
@@ -52,11 +43,11 @@ class UpdateParallelRunningCommand extends Command
             $files = reset($files);
         }
 
-        if (!empty($files)) {
+        if ($files !== false && $files !== null && $files !== '') {
             $files = json_decode((string) $files, true);
         } else {
             $stdIn = file_get_contents('php://stdin');
-            if (!empty($stdIn)) {
+            if ($stdIn !== false && $stdIn !== '') {
                 $files = json_decode($stdIn, true);
             }
         }
