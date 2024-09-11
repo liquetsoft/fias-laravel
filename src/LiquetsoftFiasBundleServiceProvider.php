@@ -168,7 +168,12 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[FiasStatusChecker::class] = FiasStatusCheckerImpl::class;
 
         // объект, который загружает файлы
-        $servicesList[Downloader::class] = DownloaderImpl::class;
+        $servicesList[Downloader::class] = function (Application $app): Downloader {
+            return new DownloaderImpl(
+                $app->get(HttpTransport::class),
+                $this->getOptionInt('download_retry_attempts')
+            );
+        };
 
         // объект, который распаковывает архивы
         $servicesList[Unpacker::class] = ZipUnpacker::class;
