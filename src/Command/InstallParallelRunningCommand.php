@@ -14,22 +14,13 @@ use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
 /**
  * Консольная команда, которая является одним из параллельных процессов установки ФИАС.
  */
-class InstallParallelRunningCommand extends Command
+final class InstallParallelRunningCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'liquetsoft:fias:install_parallel_running {files?}';
 
-    /**
-     * @var string|null
-     */
     protected $description = 'Command for running parallel installation.';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    private readonly Pipe $pipeline;
 
     /**
      * В конструкторе передаем ссылку на пайплайн установки.
