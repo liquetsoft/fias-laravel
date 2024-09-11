@@ -53,7 +53,7 @@ final class VersionsCommand extends Command
         $deltaVersions = $this->informer->getAllVersions();
         $this->showTable(
             'All versions of FIAS',
-            \array_slice($deltaVersions, 0, 15)
+            \array_slice($deltaVersions, -15)
         );
 
         $this->line('');
