@@ -26,7 +26,7 @@ final class EloquentDenormalizer implements DenormalizerInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsDenormalization($data, $type, $format = null)
+    public function supportsDenormalization($data, string $type, ?string $format = null)
     {
         return is_subclass_of($type, Model::class);
     }
@@ -38,7 +38,7 @@ final class EloquentDenormalizer implements DenormalizerInterface
      *
      * @psalm-suppress InvalidStringClass
      */
-    public function denormalize($data, $type, $format = null, array $context = [])
+    public function denormalize($data, string $type, ?string $format = null, array $context = [])
     {
         $data = \is_array($data) ? $data : [];
         $type = trim($type, " \t\n\r\0\x0B\\/");

@@ -35,32 +35,32 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 /**
  * Скомпилированный класс для денормализации сущностей ФИАС в модели eloquent.
  */
-final class CompiledEntitesDenormalizer implements DenormalizerInterface
+class CompiledEntitesDenormalizer implements DenormalizerInterface
 {
     private const ALLOWED_ENTITIES = [
-        Apartments::class => true,
-        AddrObjDivision::class => true,
-        NormativeDocsTypes::class => true,
-        RoomTypes::class => true,
-        ObjectLevels::class => true,
-        NormativeDocsKinds::class => true,
-        Rooms::class => true,
-        ApartmentTypes::class => true,
-        AddrObjTypes::class => true,
-        Steads::class => true,
-        NormativeDocs::class => true,
-        OperationTypes::class => true,
-        Houses::class => true,
-        AdmHierarchy::class => true,
-        Carplaces::class => true,
-        ChangeHistory::class => true,
-        AddrObj::class => true,
-        ParamTypes::class => true,
-        Param::class => true,
-        ReestrObjects::class => true,
-        HouseTypes::class => true,
-        MunHierarchy::class => true,
-        FiasVersion::class => true,
+        Apartments::class,
+        AddrObjDivision::class,
+        NormativeDocsTypes::class,
+        RoomTypes::class,
+        ObjectLevels::class,
+        NormativeDocsKinds::class,
+        Rooms::class,
+        ApartmentTypes::class,
+        AddrObjTypes::class,
+        Steads::class,
+        NormativeDocs::class,
+        OperationTypes::class,
+        Houses::class,
+        AdmHierarchy::class,
+        Carplaces::class,
+        ChangeHistory::class,
+        AddrObj::class,
+        ParamTypes::class,
+        Param::class,
+        ReestrObjects::class,
+        HouseTypes::class,
+        MunHierarchy::class,
+        FiasVersion::class,
     ];
 
     /**
@@ -68,7 +68,7 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
      */
     public function supportsDenormalization($data, string $type, ?string $format = null)
     {
-        return \array_key_exists(trim($type, " \t\n\r\0\x0B\\/"), self::ALLOWED_ENTITIES);
+        return \in_array(trim($type, " \t\n\r\0\x0B\\/"), self::ALLOWED_ENTITIES);
     }
 
     /**
@@ -84,7 +84,8 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
         $entity = $context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new $type();
 
         if (!($entity instanceof Model)) {
-            throw new InvalidArgumentException("Bad class for populating entity, '" . Model::class . "' is required");
+            $message = \sprintf("Bad class for populating entity, need '%s' instance.", Model::class);
+            throw new InvalidArgumentException($message);
         }
 
         switch ($type) {
@@ -158,7 +159,8 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
                 $extractedData = $this->modelFiasVersionDataExtractor($data);
                 break;
             default:
-                throw new InvalidArgumentException("Can't find data extractor for '{$type}' type");
+                $message = \sprintf("Can't find data extractor for '%s' type.", $type);
+                throw new InvalidArgumentException($message);
                 break;
         }
 
@@ -172,7 +174,31 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
      */
     public function getSupportedTypes(?string $format): array
     {
-        return self::ALLOWED_ENTITIES;
+        return [
+            Apartments::class => true,
+            AddrObjDivision::class => true,
+            NormativeDocsTypes::class => true,
+            RoomTypes::class => true,
+            ObjectLevels::class => true,
+            NormativeDocsKinds::class => true,
+            Rooms::class => true,
+            ApartmentTypes::class => true,
+            AddrObjTypes::class => true,
+            Steads::class => true,
+            NormativeDocs::class => true,
+            OperationTypes::class => true,
+            Houses::class => true,
+            AdmHierarchy::class => true,
+            Carplaces::class => true,
+            ChangeHistory::class => true,
+            AddrObj::class => true,
+            ParamTypes::class => true,
+            Param::class => true,
+            ReestrObjects::class => true,
+            HouseTypes::class => true,
+            MunHierarchy::class => true,
+            FiasVersion::class => true,
+        ];
     }
 
     /**

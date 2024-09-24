@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Serializer;
 
 use Illuminate\Support\Carbon;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\CompiledEntitesDenormalizer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\MockModel\FiasSerializerMock;
@@ -22,7 +21,7 @@ class FiasSerializerTest extends BaseCase
     /**
      * Проверяет, что xml верно конвертируется в модель.
      */
-    public function testDenormalize(): void
+    public function testDeserialize(): void
     {
         $data = <<<EOT
 <ActualStatus
@@ -37,8 +36,8 @@ class FiasSerializerTest extends BaseCase
 EOT;
         $type = FiasSerializerMock::class;
 
-        $normalizer = new FiasSerializer();
-        $model = $normalizer->deserialize($data, $type, 'xml');
+        $serializer = new FiasSerializer();
+        $model = $serializer->deserialize($data, $type, 'xml');
 
         $this->assertInstanceOf($type, $model);
         $this->assertSame(10, $model->ACTSTATID);
@@ -55,7 +54,7 @@ EOT;
     /**
      * Проверяет, что xml верно конвертируется в указанный объект.
      */
-    public function testDenormalizeToObject(): void
+    public function testDeserializeToObject(): void
     {
         $data = <<<EOT
 <ActualStatus
@@ -69,11 +68,16 @@ EOT;
     />
 EOT;
 
-        $normalizer = new FiasSerializer();
+        $serializer = new FiasSerializer();
         $objectToPopulate = new FiasSerializerMock();
-        $model = $normalizer->deserialize($data, FiasSerializerMock::class, 'xml', [
-            'object_to_populate' => $objectToPopulate,
-        ]);
+        $model = $serializer->deserialize(
+            $data,
+            FiasSerializerMock::class,
+            'xml',
+            [
+                'object_to_populate' => $objectToPopulate,
+            ]
+        );
 
         $this->assertSame($objectToPopulate, $model);
         $this->assertSame(10, $model->ACTSTATID);
@@ -90,43 +94,48 @@ EOT;
     /**
      * Проверяет, что объект перехватит исключение в процессе приведения типов.
      */
-    public function testDenormalizeConvertException(): void
+    public function testDeserializeConvertException(): void
     {
         $data = '<ActualStatus testDateVal="test"/>';
         $type = FiasSerializerMock::class;
 
-        $normalizer = new CompiledEntitesDenormalizer();
+        $serializer = new FiasSerializer();
 
         $this->expectException(NotNormalizableValueException::class);
-        $normalizer->denormalize($data, $type, 'xml');
+        $serializer->deserialize($data, $type, 'xml');
     }
 
     /**
      * Проверяет, что объект выбросит исключение, если указан неверный объект для наполнения.
      */
-    public function testDenormalizeWrongObjectToPopulate(): void
+    public function testDeserializeWrongObjectToPopulate(): void
     {
         $data = '<ActualStatus defaultItem="test"/>';
         $type = FiasSerializerMock::class;
 
-        $normalizer = new CompiledEntitesDenormalizer();
+        $serializer = new FiasSerializer();
 
         $this->expectException(InvalidArgumentException::class);
-        $normalizer->denormalize($data, $type, 'xml', [
-            'object_to_populate' => new \stdClass(),
-        ]);
+        $serializer->deserialize(
+            $data,
+            $type,
+            'xml',
+            [
+                'object_to_populate' => new \stdClass(),
+            ]
+        );
     }
 
     /**
      * Проверяет, что пустая строка вернется как пустая строка, а не null.
      */
-    public function testDenormalizeEmptyString(): void
+    public function testDeserializeEmptyString(): void
     {
         $data = '<ActualStatus name=""/>';
         $type = FiasSerializerMock::class;
 
-        $normalizer = new FiasSerializer();
-        $model = $normalizer->deserialize($data, $type, 'xml');
+        $serializer = new FiasSerializer();
+        $model = $serializer->deserialize($data, $type, 'xml');
 
         $this->assertInstanceOf(FiasSerializerMock::class, $model);
         $this->assertSame('', $model->getAttribute('name'));

@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Serializer;
 /**
  * Преднастроенный объект сериализатора для ФИАС.
  */
-class FiasSerializer extends Serializer
+final class FiasSerializer extends Serializer
 {
     /**
      * @param array<DenormalizerInterface|NormalizerInterface>|null $normalizers
@@ -28,6 +28,7 @@ class FiasSerializer extends Serializer
         if ($normalizers === null) {
             $normalizers = [
                 new CompiledEntitesDenormalizer(),
+                new EloquentDenormalizer(),
                 new ObjectNormalizer(
                     null,
                     new FiasNameConverter(),
