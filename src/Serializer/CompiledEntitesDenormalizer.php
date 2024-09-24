@@ -38,29 +38,29 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 class CompiledEntitesDenormalizer implements DenormalizerInterface
 {
     private const ALLOWED_ENTITIES = [
-        Apartments::class,
-        AddrObjDivision::class,
-        NormativeDocsTypes::class,
-        RoomTypes::class,
-        ObjectLevels::class,
-        NormativeDocsKinds::class,
-        Rooms::class,
-        ApartmentTypes::class,
-        AddrObjTypes::class,
-        Steads::class,
-        NormativeDocs::class,
-        OperationTypes::class,
-        Houses::class,
-        AdmHierarchy::class,
-        Carplaces::class,
-        ChangeHistory::class,
-        AddrObj::class,
-        ParamTypes::class,
-        Param::class,
-        ReestrObjects::class,
-        HouseTypes::class,
-        MunHierarchy::class,
-        FiasVersion::class,
+        Apartments::class => true,
+        AddrObjDivision::class => true,
+        NormativeDocsTypes::class => true,
+        RoomTypes::class => true,
+        ObjectLevels::class => true,
+        NormativeDocsKinds::class => true,
+        Rooms::class => true,
+        ApartmentTypes::class => true,
+        AddrObjTypes::class => true,
+        Steads::class => true,
+        NormativeDocs::class => true,
+        OperationTypes::class => true,
+        Houses::class => true,
+        AdmHierarchy::class => true,
+        Carplaces::class => true,
+        ChangeHistory::class => true,
+        AddrObj::class => true,
+        ParamTypes::class => true,
+        Param::class => true,
+        ReestrObjects::class => true,
+        HouseTypes::class => true,
+        MunHierarchy::class => true,
+        FiasVersion::class => true,
     ];
 
     /**
@@ -68,7 +68,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
      */
     public function supportsDenormalization($data, string $type, ?string $format = null)
     {
-        return \in_array(trim($type, " \t\n\r\0\x0B\\/"), self::ALLOWED_ENTITIES);
+        return \array_key_exists(trim($type, " \t\n\r\0\x0B\\/"), self::ALLOWED_ENTITIES);
     }
 
     /**
@@ -172,31 +172,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
      */
     public function getSupportedTypes(?string $format): array
     {
-        return [
-            Apartments::class => true,
-            AddrObjDivision::class => true,
-            NormativeDocsTypes::class => true,
-            RoomTypes::class => true,
-            ObjectLevels::class => true,
-            NormativeDocsKinds::class => true,
-            Rooms::class => true,
-            ApartmentTypes::class => true,
-            AddrObjTypes::class => true,
-            Steads::class => true,
-            NormativeDocs::class => true,
-            OperationTypes::class => true,
-            Houses::class => true,
-            AdmHierarchy::class => true,
-            Carplaces::class => true,
-            ChangeHistory::class => true,
-            AddrObj::class => true,
-            ParamTypes::class => true,
-            Param::class => true,
-            ReestrObjects::class => true,
-            HouseTypes::class => true,
-            MunHierarchy::class => true,
-            FiasVersion::class => true,
-        ];
+        return self::ALLOWED_ENTITIES;
     }
 
     /**

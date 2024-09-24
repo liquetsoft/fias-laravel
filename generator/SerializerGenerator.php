@@ -69,7 +69,6 @@ class SerializerGenerator extends AbstractGenerator
     protected function decorateClass(ClassType $class): void
     {
         $constants = [];
-        $supportedTypes = '';
 
         $denormalizeBody = '$data = \\is_array($data) ? $data : [];' . "\n";
         $denormalizeBody .= '$type = trim($type, " \t\n\r\0\x0B\\\\/");' . "\n\n";
@@ -82,8 +81,7 @@ class SerializerGenerator extends AbstractGenerator
         $descriptors = $this->registry->getDescriptors();
         foreach ($descriptors as $descriptor) {
             $className = $this->unifyClassName($descriptor->getName());
-            $constants[] = new Literal("{$className}::class");
-            $supportedTypes .= "\n    {$className}::class => true,";
+            $constants[] = new Literal("{$className}::class => true");
             $denormalizeBody .= "    case {$className}::class:\n";
             $denormalizeBody .= "        \$extractedData = \$this->model{$className}DataExtractor(\$data);\n";
             $denormalizeBody .= "        break;\n";
@@ -103,7 +101,7 @@ class SerializerGenerator extends AbstractGenerator
         $supports = $class->addMethod('supportsDenormalization')
             ->addComment("{@inheritDoc}\n")
             ->setVisibility('public')
-            ->setBody('return \\in_array(trim($type, " \t\n\r\0\x0B\\\\/"), self::ALLOWED_ENTITIES);');
+            ->setBody('return \\array_key_exists(trim($type, " \t\n\r\0\x0B\\\\/"), self::ALLOWED_ENTITIES);');
         $supports->addParameter('data');
         $supports->addParameter('type')->setType('string');
         $supports->addParameter('format', new Literal('null'))->setType('string');
@@ -122,7 +120,7 @@ class SerializerGenerator extends AbstractGenerator
             ->addComment("{@inheritDoc}\n")
             ->setVisibility('public')
             ->setReturnType('array')
-            ->setBody("return [\n{$supportedTypes}\n];");
+            ->setBody('return self::ALLOWED_ENTITIES;');
         $getSupportedTypes->addParameter('format')->setType('string')->setNullable(true);
 
         foreach ($descriptors as $descriptor) {
