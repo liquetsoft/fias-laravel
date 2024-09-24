@@ -1,14 +1,15 @@
 {
   "name": "liquetsoft/fias-laravel",
   "type": "library",
-  "description": "Laravel bundle for FIAS database importer.",
+  "description": "Laravel bundle for FIAS database importer",
   "keywords": ["php", "fias", "laravel"],
   "license": "MIT",
   "require": {
     "php": ">=8.2",
     "liquetsoft/fias-component": "dev-master",
-    "illuminate/database": "^8.0|^9.0|^10.0",
-    "laravel/framework": "^8.0|^9.0|^10.0"
+    "illuminate/database": "^8.0|^9.0|^10.0|^11.0",
+    "illuminate/http": "^8.0|^9.0|^10.0|^11.0",
+    "laravel/framework": "^8.0|^9.0|^10.0|^11.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^10.0",

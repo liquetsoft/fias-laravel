@@ -21,7 +21,6 @@ use Liquetsoft\Fias\Component\FilesDispatcher\FilesDispatcher;
 use Liquetsoft\Fias\Component\Filter\Filter;
 use Liquetsoft\Fias\Component\Filter\RegexpFilter;
 use Liquetsoft\Fias\Component\HttpTransport\HttpTransport;
-use Liquetsoft\Fias\Component\HttpTransport\HttpTransportCurl;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\Task\CheckStatusTask;
@@ -58,6 +57,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateFromFolderCommand
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateParallelRunningCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\VersionsCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\VersionSetCommand;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\HttpTransport\HttpTransportLaravel;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage\EloquentStorage;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
@@ -156,7 +156,7 @@ final class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[FileSystemHelperInterface::class] = fn (): FileSystemHelperInterface => FileSystemFactory::create();
 
         // http клиент
-        $servicesList[HttpTransport::class] = HttpTransportCurl::class;
+        $servicesList[HttpTransport::class] = HttpTransportLaravel::class;
 
         // объект, который получает ссылку на ФИАС через http-клиент
         $servicesList[FiasInformer::class] = FiasInformerImpl::class;
