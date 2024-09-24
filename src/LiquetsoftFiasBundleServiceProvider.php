@@ -68,12 +68,9 @@ use Psr\Log\LoggerInterface;
 /**
  * Service provider для модуля.
  */
-class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
+final class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 {
-    /**
-     * @var string
-     */
-    protected $bundlePrefix = 'liquetsoft_fias';
+    private string $bundlePrefix = 'liquetsoft_fias';
 
     /**
      * Регистрирует сервисы модуля в приложении.
