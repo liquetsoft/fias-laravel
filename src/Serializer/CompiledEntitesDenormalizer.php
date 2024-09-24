@@ -84,8 +84,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
         $entity = $context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new $type();
 
         if (!($entity instanceof Model)) {
-            $message = \sprintf("Bad class for populating entity, need '%s' instance.", Model::class);
-            throw new InvalidArgumentException($message);
+            throw new InvalidArgumentException("Bad class for populating entity, '" . Model::class . "' is required");
         }
 
         switch ($type) {
@@ -159,8 +158,7 @@ class CompiledEntitesDenormalizer implements DenormalizerInterface
                 $extractedData = $this->modelFiasVersionDataExtractor($data);
                 break;
             default:
-                $message = \sprintf("Can't find data extractor for '%s' type.", $type);
-                throw new InvalidArgumentException($message);
+                throw new InvalidArgumentException("Can't find data extractor for '{$type}' type");
                 break;
         }
 

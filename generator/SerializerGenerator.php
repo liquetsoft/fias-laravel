@@ -75,8 +75,7 @@ class SerializerGenerator extends AbstractGenerator
         $denormalizeBody .= '$type = trim($type, " \t\n\r\0\x0B\\\\/");' . "\n\n";
         $denormalizeBody .= "\$entity = \$context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new \$type();\n\n";
         $denormalizeBody .= "if (!(\$entity instanceof Model)) {\n";
-        $denormalizeBody .= "    \$message = sprintf(\"Bad class for populating entity, need '%s' instance.\", Model::class);\n";
-        $denormalizeBody .= "    throw new InvalidArgumentException(\$message);\n";
+        $denormalizeBody .= "    throw new InvalidArgumentException(\"Bad class for populating entity, '\" . Model::class . \"' is required\");\n";
         $denormalizeBody .= "}\n\n";
         $denormalizeBody .= "switch (\$type) {\n";
 
@@ -91,8 +90,7 @@ class SerializerGenerator extends AbstractGenerator
         }
 
         $denormalizeBody .= "    default:\n";
-        $denormalizeBody .= "        \$message = sprintf(\"Can't find data extractor for '%s' type.\", \$type);\n";
-        $denormalizeBody .= "        throw new InvalidArgumentException(\$message);\n";
+        $denormalizeBody .= "        throw new InvalidArgumentException(\"Can't find data extractor for '{\$type}' type\");\n";
         $denormalizeBody .= "        break;\n";
         $denormalizeBody .= "}\n\n";
         $denormalizeBody .= "\$entity->setRawAttributes(\$extractedData);\n";

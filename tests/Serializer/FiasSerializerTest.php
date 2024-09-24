@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Serializer;
 
 use Illuminate\Support\Carbon;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\CompiledEntitesDenormalizer;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\MockModel\FiasSerializerMock;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
