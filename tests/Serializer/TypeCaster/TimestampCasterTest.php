@@ -66,8 +66,8 @@ final class TimestampCasterTest extends BaseCase
             ],
             'string' => [
                 'string',
-                '2023-10-10',
-                1696892400,
+                '2023-10-10 10:10:10+00:00',
+                1696932610,
             ],
         ];
     }
