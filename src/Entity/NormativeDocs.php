@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \DateTimeInterface|null $accdate    Дата вступления в силу нормативного документа
  * @property string|null             $comment    Комментарий
  */
-class NormativeDocs extends Model
+final class NormativeDocs extends Model
 {
     /** @var bool */
     public $timestamps = false;

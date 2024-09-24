@@ -13,7 +13,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
  *
  * @internal
  */
-class AdmHierarchyTest extends BaseCase
+final class AdmHierarchyTest extends BaseCase
 {
     /**
      * Проверяет, что ресурс верно преобразует сущность в массив.

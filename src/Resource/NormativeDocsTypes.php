@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property \DateTimeInterface $startdate
  * @property \DateTimeInterface $enddate
  */
-class NormativeDocsTypes extends JsonResource
+final class NormativeDocsTypes extends JsonResource
 {
     /**
      * Преобразует сущность 'NormativeDocsTypes' в массив.

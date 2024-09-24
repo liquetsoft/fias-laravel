@@ -29,7 +29,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int                $isactual
  * @property int                $isactive
  */
-class Houses extends JsonResource
+final class Houses extends JsonResource
 {
     /**
      * Преобразует сущность 'Houses' в массив.

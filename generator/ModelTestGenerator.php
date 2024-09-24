@@ -30,7 +30,7 @@ class ModelTestGenerator extends AbstractGenerator
         $namespace = $phpFile->addNamespace($namespace);
         $this->decorateNamespace($namespace, $descriptor);
 
-        $class = $namespace->addClass($name)->setExtends(BaseCase::class);
+        $class = $namespace->addClass($name)->setFinal()->setExtends(BaseCase::class);
         $this->decorateClass($class, $descriptor);
 
         file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));

@@ -20,7 +20,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property \DateTimeInterface $startdate
  * @property \DateTimeInterface $enddate
  */
-class Param extends JsonResource
+final class Param extends JsonResource
 {
     /**
      * Преобразует сущность 'Param' в массив.

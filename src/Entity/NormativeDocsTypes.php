@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \DateTimeInterface $startdate Дата начала действия записи
  * @property \DateTimeInterface $enddate   Дата окончания действия записи
  */
-class NormativeDocsTypes extends Model
+final class NormativeDocsTypes extends Model
 {
     /** @var bool */
     public $timestamps = false;

@@ -35,7 +35,7 @@ class SerializerGenerator extends AbstractGenerator
         $namespace = $phpFile->addNamespace($namespace);
         $this->decorateNamespace($namespace);
 
-        $class = $namespace->addClass($name)->addImplement(DenormalizerInterface::class);
+        $class = $namespace->addClass($name)->setFinal()->addImplement(DenormalizerInterface::class);
         $this->decorateClass($class);
 
         file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));

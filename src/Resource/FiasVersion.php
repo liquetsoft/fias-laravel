@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string             $deltaurl
  * @property \DateTimeInterface $created_at
  */
-class FiasVersion extends JsonResource
+final class FiasVersion extends JsonResource
 {
     /**
      * Преобразует сущность 'FiasVersion' в массив.

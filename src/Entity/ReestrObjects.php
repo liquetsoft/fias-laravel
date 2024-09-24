@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string             $objectguid GUID объекта
  * @property int                $isactive   Признак действующего объекта (1 - действующий, 0 - не действующий)
  */
-class ReestrObjects extends Model
+final class ReestrObjects extends Model
 {
     /** @var bool */
     public $timestamps = false;

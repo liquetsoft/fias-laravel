@@ -23,7 +23,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int                $isactive
  * @property string             $path
  */
-class MunHierarchy extends JsonResource
+final class MunHierarchy extends JsonResource
 {
     /**
      * Преобразует сущность 'MunHierarchy' в массив.

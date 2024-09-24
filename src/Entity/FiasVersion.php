@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string             $deltaurl   Ссылка для загрузки обновления до версии ФИАС
  * @property \DateTimeInterface $created_at Дата создания записи
  */
-class FiasVersion extends Model
+final class FiasVersion extends Model
 {
     /** @var bool */
     public $timestamps = false;

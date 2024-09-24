@@ -23,7 +23,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property \DateTimeInterface|null $accdate
  * @property string|null             $comment
  */
-class NormativeDocs extends JsonResource
+final class NormativeDocs extends JsonResource
 {
     /**
      * Преобразует сущность 'NormativeDocs' в массив.

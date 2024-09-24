@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \DateTimeInterface $enddate    Окончание действия записи
  * @property string             $isactive   Признак действующего адресного объекта
  */
-class ObjectLevels extends Model
+final class ObjectLevels extends Model
 {
     /** @var bool */
     public $timestamps = false;

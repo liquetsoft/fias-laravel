@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int $childid
  * @property int $changeid
  */
-class AddrObjDivision extends JsonResource
+final class AddrObjDivision extends JsonResource
 {
     /**
      * Преобразует сущность 'AddrObjDivision' в массив.

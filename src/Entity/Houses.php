@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                $isactual   Статус актуальности адресного объекта ФИАС
  * @property int                $isactive   Признак действующего адресного объекта
  */
-class Houses extends Model
+final class Houses extends Model
 {
     /** @var bool */
     public $timestamps = false;

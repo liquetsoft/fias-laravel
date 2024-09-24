@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null           $ndocid      ID документа
  * @property \DateTimeInterface $changedate  Дата изменения
  */
-class ChangeHistory extends Model
+final class ChangeHistory extends Model
 {
     /** @var bool */
     public $timestamps = false;

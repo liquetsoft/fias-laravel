@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                $isactive    Признак действующего адресного объекта
  * @property string             $path        Материализованный путь к объекту (полная иерархия)
  */
-class MunHierarchy extends Model
+final class MunHierarchy extends Model
 {
     /** @var bool */
     public $timestamps = false;

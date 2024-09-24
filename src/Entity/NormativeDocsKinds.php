@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int    $id   Идентификатор записи
  * @property string $name Наименование
  */
-class NormativeDocsKinds extends Model
+final class NormativeDocsKinds extends Model
 {
     /** @var bool */
     public $timestamps = false;

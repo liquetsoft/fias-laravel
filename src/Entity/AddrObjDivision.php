@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $childid  Дочерний ID
  * @property int $changeid ID изменившей транзакции
  */
-class AddrObjDivision extends Model
+final class AddrObjDivision extends Model
 {
     /** @var bool */
     public $timestamps = false;

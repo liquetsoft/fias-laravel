@@ -35,7 +35,7 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 /**
  * Скомпилированный класс для денормализации сущностей ФИАС в модели eloquent.
  */
-class CompiledEntitesDenormalizer implements DenormalizerInterface
+final class CompiledEntitesDenormalizer implements DenormalizerInterface
 {
     private const ALLOWED_ENTITIES = [
         Apartments::class => true,

@@ -26,7 +26,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int                $isactual
  * @property int                $isactive
  */
-class AddrObj extends JsonResource
+final class AddrObj extends JsonResource
 {
     /**
      * Преобразует сущность 'AddrObj' в массив.

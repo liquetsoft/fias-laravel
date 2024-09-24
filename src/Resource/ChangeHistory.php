@@ -17,7 +17,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int|null           $ndocid
  * @property \DateTimeInterface $changedate
  */
-class ChangeHistory extends JsonResource
+final class ChangeHistory extends JsonResource
 {
     /**
      * Преобразует сущность 'ChangeHistory' в массив.

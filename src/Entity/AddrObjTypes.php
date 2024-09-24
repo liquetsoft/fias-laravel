@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \DateTimeInterface $enddate    Окончание действия записи
  * @property string             $isactive   Статус активности
  */
-class AddrObjTypes extends Model
+final class AddrObjTypes extends Model
 {
     /** @var bool */
     public $timestamps = false;

@@ -20,7 +20,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property \DateTimeInterface $enddate
  * @property string             $isactive
  */
-class AddrObjTypes extends JsonResource
+final class AddrObjTypes extends JsonResource
 {
     /**
      * Преобразует сущность 'AddrObjTypes' в массив.
