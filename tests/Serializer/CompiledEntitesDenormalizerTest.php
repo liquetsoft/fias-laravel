@@ -60,7 +60,29 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
         $this->assertSame((int) $data['@ID'], $res->getAttribute('id'));
         $this->assertSame((int) $data['@OBJECTID'], $res->getAttribute('objectid'));
         $this->assertSame($data['@OBJECTGUID'], $res->getAttribute('objectguid'));
-        $this->assertNull($res->getAttribute('@PREVID'));
+        $this->assertNull($res->getAttribute('previd'));
+    }
+
+    /**
+     * Проверяет, что денормалайзер правильно преобразует массив в модель, используя имена полей из модели.
+     */
+    public function testDenormalizeModelNames(): void
+    {
+        $data = [
+            'id' => '100',
+            'objectid' => '101',
+            'objectguid' => '102',
+            'previd' => null,
+        ];
+
+        $denormalizer = new CompiledEntitesDenormalizer();
+        $res = $denormalizer->denormalize($data, AddrObj::class);
+
+        $this->assertInstanceOf(AddrObj::class, $res);
+        $this->assertSame((int) $data['id'], $res->getAttribute('id'));
+        $this->assertSame((int) $data['objectid'], $res->getAttribute('objectid'));
+        $this->assertSame($data['objectguid'], $res->getAttribute('objectguid'));
+        $this->assertNull($res->getAttribute('previd'));
     }
 
     /**
@@ -90,7 +112,7 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
         $this->assertSame((int) $data['@ID'], $res->getAttribute('id'));
         $this->assertSame((int) $data['@OBJECTID'], $res->getAttribute('objectid'));
         $this->assertSame($data['@OBJECTGUID'], $res->getAttribute('objectguid'));
-        $this->assertNull($res->getAttribute('@PREVID'));
+        $this->assertNull($res->getAttribute('previd'));
     }
 
     /**

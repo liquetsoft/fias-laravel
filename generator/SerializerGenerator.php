@@ -70,7 +70,7 @@ class SerializerGenerator extends AbstractGenerator
     {
         $constants = [];
 
-        $denormalizeBody = '$data = \\is_array($data) ? $data : [];' . "\n";
+        $denormalizeBody = "\$dataToPopulate = \$this->convertDataToInternalFormat(\$data);\n";
         $denormalizeBody .= '$type = trim($type, " \t\n\r\0\x0B\\\\/");' . "\n\n";
         $denormalizeBody .= "\$entity = \$context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new \$type();\n\n";
         $denormalizeBody .= "if (!(\$entity instanceof Model)) {\n";
@@ -83,7 +83,7 @@ class SerializerGenerator extends AbstractGenerator
             $className = $this->unifyClassName($descriptor->getName());
             $constants[] = new Literal("{$className}::class => true");
             $denormalizeBody .= "    case {$className}::class:\n";
-            $denormalizeBody .= "        \$extractedData = \$this->model{$className}DataExtractor(\$data);\n";
+            $denormalizeBody .= "        \$extractedData = \$this->model{$className}DataExtractor(\$dataToPopulate);\n";
             $denormalizeBody .= "        break;\n";
         }
 
@@ -123,6 +123,25 @@ class SerializerGenerator extends AbstractGenerator
             ->setBody('return self::ALLOWED_ENTITIES;');
         $getSupportedTypes->addParameter('format')->setType('string')->setNullable(true);
 
+        $convertDataToInternalFormatBody = <<<EOT
+\$result = [];
+if (!is_array(\$data)) {
+    return \$result;
+}
+
+foreach (\$data as \$key => \$value) {
+    \$newKey = strtolower(trim((string) \$key, " \\n\\r\\t\\v\\x00@"));
+    \$result[\$newKey] = \$value;
+}
+
+return \$result;
+EOT;
+        $convertDataToInternalFormat = $class->addMethod('convertDataToInternalFormat')
+            ->setVisibility('private')
+            ->setReturnType('array')
+            ->setBody($convertDataToInternalFormatBody);
+        $convertDataToInternalFormat->addParameter('data')->setType('mixed')->setNullable(false);
+
         foreach ($descriptors as $descriptor) {
             $className = $this->unifyClassName($descriptor->getName());
             $entityMethod = $class->addMethod("model{$className}DataExtractor");
@@ -140,20 +159,19 @@ class SerializerGenerator extends AbstractGenerator
         $body = "return [\n";
         foreach ($descriptor->getFields() as $field) {
             $column = $this->unifyColumnName($field->getName());
-            $xmlAttribute = '@' . strtoupper($column);
             $type = trim($field->getType() . '_' . $field->getSubType(), ' _');
             switch ($type) {
                 case 'int':
-                    $varType = "(int) \$data['{$xmlAttribute}']";
+                    $varType = "(int) \$data['{$column}']";
                     break;
                 case 'string_date':
-                    $varType = "new DateTimeImmutable((string) \$data['{$xmlAttribute}'])";
+                    $varType = "new DateTimeImmutable((string) \$data['{$column}'])";
                     break;
                 default:
-                    $varType = "trim((string) \$data['{$xmlAttribute}'])";
+                    $varType = "trim((string) \$data['{$column}'])";
                     break;
             }
-            $body .= "    '{$column}' => isset(\$data['{$xmlAttribute}']) ? {$varType} : null,\n";
+            $body .= "    '{$column}' => isset(\$data['{$column}']) ? {$varType} : null,\n";
         }
         $body .= '];';
 

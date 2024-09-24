@@ -78,7 +78,7 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
      */
     public function denormalize($data, string $type, ?string $format = null, array $context = [])
     {
-        $data = \is_array($data) ? $data : [];
+        $dataToPopulate = $this->convertDataToInternalFormat($data);
         $type = trim($type, " \t\n\r\0\x0B\\/");
 
         $entity = $context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new $type();
@@ -89,73 +89,73 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
 
         switch ($type) {
             case Apartments::class:
-                $extractedData = $this->modelApartmentsDataExtractor($data);
+                $extractedData = $this->modelApartmentsDataExtractor($dataToPopulate);
                 break;
             case AddrObjDivision::class:
-                $extractedData = $this->modelAddrObjDivisionDataExtractor($data);
+                $extractedData = $this->modelAddrObjDivisionDataExtractor($dataToPopulate);
                 break;
             case NormativeDocsTypes::class:
-                $extractedData = $this->modelNormativeDocsTypesDataExtractor($data);
+                $extractedData = $this->modelNormativeDocsTypesDataExtractor($dataToPopulate);
                 break;
             case RoomTypes::class:
-                $extractedData = $this->modelRoomTypesDataExtractor($data);
+                $extractedData = $this->modelRoomTypesDataExtractor($dataToPopulate);
                 break;
             case ObjectLevels::class:
-                $extractedData = $this->modelObjectLevelsDataExtractor($data);
+                $extractedData = $this->modelObjectLevelsDataExtractor($dataToPopulate);
                 break;
             case NormativeDocsKinds::class:
-                $extractedData = $this->modelNormativeDocsKindsDataExtractor($data);
+                $extractedData = $this->modelNormativeDocsKindsDataExtractor($dataToPopulate);
                 break;
             case Rooms::class:
-                $extractedData = $this->modelRoomsDataExtractor($data);
+                $extractedData = $this->modelRoomsDataExtractor($dataToPopulate);
                 break;
             case ApartmentTypes::class:
-                $extractedData = $this->modelApartmentTypesDataExtractor($data);
+                $extractedData = $this->modelApartmentTypesDataExtractor($dataToPopulate);
                 break;
             case AddrObjTypes::class:
-                $extractedData = $this->modelAddrObjTypesDataExtractor($data);
+                $extractedData = $this->modelAddrObjTypesDataExtractor($dataToPopulate);
                 break;
             case Steads::class:
-                $extractedData = $this->modelSteadsDataExtractor($data);
+                $extractedData = $this->modelSteadsDataExtractor($dataToPopulate);
                 break;
             case NormativeDocs::class:
-                $extractedData = $this->modelNormativeDocsDataExtractor($data);
+                $extractedData = $this->modelNormativeDocsDataExtractor($dataToPopulate);
                 break;
             case OperationTypes::class:
-                $extractedData = $this->modelOperationTypesDataExtractor($data);
+                $extractedData = $this->modelOperationTypesDataExtractor($dataToPopulate);
                 break;
             case Houses::class:
-                $extractedData = $this->modelHousesDataExtractor($data);
+                $extractedData = $this->modelHousesDataExtractor($dataToPopulate);
                 break;
             case AdmHierarchy::class:
-                $extractedData = $this->modelAdmHierarchyDataExtractor($data);
+                $extractedData = $this->modelAdmHierarchyDataExtractor($dataToPopulate);
                 break;
             case Carplaces::class:
-                $extractedData = $this->modelCarplacesDataExtractor($data);
+                $extractedData = $this->modelCarplacesDataExtractor($dataToPopulate);
                 break;
             case ChangeHistory::class:
-                $extractedData = $this->modelChangeHistoryDataExtractor($data);
+                $extractedData = $this->modelChangeHistoryDataExtractor($dataToPopulate);
                 break;
             case AddrObj::class:
-                $extractedData = $this->modelAddrObjDataExtractor($data);
+                $extractedData = $this->modelAddrObjDataExtractor($dataToPopulate);
                 break;
             case ParamTypes::class:
-                $extractedData = $this->modelParamTypesDataExtractor($data);
+                $extractedData = $this->modelParamTypesDataExtractor($dataToPopulate);
                 break;
             case Param::class:
-                $extractedData = $this->modelParamDataExtractor($data);
+                $extractedData = $this->modelParamDataExtractor($dataToPopulate);
                 break;
             case ReestrObjects::class:
-                $extractedData = $this->modelReestrObjectsDataExtractor($data);
+                $extractedData = $this->modelReestrObjectsDataExtractor($dataToPopulate);
                 break;
             case HouseTypes::class:
-                $extractedData = $this->modelHouseTypesDataExtractor($data);
+                $extractedData = $this->modelHouseTypesDataExtractor($dataToPopulate);
                 break;
             case MunHierarchy::class:
-                $extractedData = $this->modelMunHierarchyDataExtractor($data);
+                $extractedData = $this->modelMunHierarchyDataExtractor($dataToPopulate);
                 break;
             case FiasVersion::class:
-                $extractedData = $this->modelFiasVersionDataExtractor($data);
+                $extractedData = $this->modelFiasVersionDataExtractor($dataToPopulate);
                 break;
             default:
                 throw new InvalidArgumentException("Can't find data extractor for '{$type}' type");
@@ -175,26 +175,41 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
         return self::ALLOWED_ENTITIES;
     }
 
+    private function convertDataToInternalFormat(mixed $data): array
+    {
+        $result = [];
+        if (!\is_array($data)) {
+            return $result;
+        }
+
+        foreach ($data as $key => $value) {
+            $newKey = strtolower(trim((string) $key, " \n\r\t\v\x00@"));
+            $result[$newKey] = $value;
+        }
+
+        return $result;
+    }
+
     /**
      * Получает правильный массив данных для модели 'Apartments'.
      */
     private function modelApartmentsDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
-            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'number' => isset($data['@NUMBER']) ? trim((string) $data['@NUMBER']) : null,
-            'aparttype' => isset($data['@APARTTYPE']) ? (int) $data['@APARTTYPE'] : null,
-            'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
-            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
-            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
-            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'objectid' => isset($data['objectid']) ? (int) $data['objectid'] : null,
+            'objectguid' => isset($data['objectguid']) ? trim((string) $data['objectguid']) : null,
+            'changeid' => isset($data['changeid']) ? (int) $data['changeid'] : null,
+            'number' => isset($data['number']) ? trim((string) $data['number']) : null,
+            'aparttype' => isset($data['aparttype']) ? (int) $data['aparttype'] : null,
+            'opertypeid' => isset($data['opertypeid']) ? (int) $data['opertypeid'] : null,
+            'previd' => isset($data['previd']) ? (int) $data['previd'] : null,
+            'nextid' => isset($data['nextid']) ? (int) $data['nextid'] : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactual' => isset($data['isactual']) ? (int) $data['isactual'] : null,
+            'isactive' => isset($data['isactive']) ? (int) $data['isactive'] : null,
         ];
     }
 
@@ -204,10 +219,10 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelAddrObjDivisionDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'parentid' => isset($data['@PARENTID']) ? (int) $data['@PARENTID'] : null,
-            'childid' => isset($data['@CHILDID']) ? (int) $data['@CHILDID'] : null,
-            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'parentid' => isset($data['parentid']) ? (int) $data['parentid'] : null,
+            'childid' => isset($data['childid']) ? (int) $data['childid'] : null,
+            'changeid' => isset($data['changeid']) ? (int) $data['changeid'] : null,
         ];
     }
 
@@ -217,10 +232,10 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelNormativeDocsTypesDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'name' => isset($data['name']) ? trim((string) $data['name']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
         ];
     }
 
@@ -230,14 +245,14 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelRoomTypesDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim((string) $data['@SHORTNAME']) : null,
-            'desc' => isset($data['@DESC']) ? trim((string) $data['@DESC']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'name' => isset($data['name']) ? trim((string) $data['name']) : null,
+            'shortname' => isset($data['shortname']) ? trim((string) $data['shortname']) : null,
+            'desc' => isset($data['desc']) ? trim((string) $data['desc']) : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactive' => isset($data['isactive']) ? trim((string) $data['isactive']) : null,
         ];
     }
 
@@ -247,13 +262,13 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelObjectLevelsDataExtractor(array $data): array
     {
         return [
-            'level' => isset($data['@LEVEL']) ? (int) $data['@LEVEL'] : null,
-            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim((string) $data['@SHORTNAME']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
+            'level' => isset($data['level']) ? (int) $data['level'] : null,
+            'name' => isset($data['name']) ? trim((string) $data['name']) : null,
+            'shortname' => isset($data['shortname']) ? trim((string) $data['shortname']) : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactive' => isset($data['isactive']) ? trim((string) $data['isactive']) : null,
         ];
     }
 
@@ -263,8 +278,8 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelNormativeDocsKindsDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'name' => isset($data['name']) ? trim((string) $data['name']) : null,
         ];
     }
 
@@ -274,20 +289,20 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelRoomsDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
-            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'number' => isset($data['@NUMBER']) ? trim((string) $data['@NUMBER']) : null,
-            'roomtype' => isset($data['@ROOMTYPE']) ? (int) $data['@ROOMTYPE'] : null,
-            'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
-            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
-            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
-            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'objectid' => isset($data['objectid']) ? (int) $data['objectid'] : null,
+            'objectguid' => isset($data['objectguid']) ? trim((string) $data['objectguid']) : null,
+            'changeid' => isset($data['changeid']) ? (int) $data['changeid'] : null,
+            'number' => isset($data['number']) ? trim((string) $data['number']) : null,
+            'roomtype' => isset($data['roomtype']) ? (int) $data['roomtype'] : null,
+            'opertypeid' => isset($data['opertypeid']) ? (int) $data['opertypeid'] : null,
+            'previd' => isset($data['previd']) ? (int) $data['previd'] : null,
+            'nextid' => isset($data['nextid']) ? (int) $data['nextid'] : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactual' => isset($data['isactual']) ? (int) $data['isactual'] : null,
+            'isactive' => isset($data['isactive']) ? (int) $data['isactive'] : null,
         ];
     }
 
@@ -297,14 +312,14 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelApartmentTypesDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim((string) $data['@SHORTNAME']) : null,
-            'desc' => isset($data['@DESC']) ? trim((string) $data['@DESC']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'name' => isset($data['name']) ? trim((string) $data['name']) : null,
+            'shortname' => isset($data['shortname']) ? trim((string) $data['shortname']) : null,
+            'desc' => isset($data['desc']) ? trim((string) $data['desc']) : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactive' => isset($data['isactive']) ? trim((string) $data['isactive']) : null,
         ];
     }
 
@@ -314,15 +329,15 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelAddrObjTypesDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'level' => isset($data['@LEVEL']) ? (int) $data['@LEVEL'] : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim((string) $data['@SHORTNAME']) : null,
-            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
-            'desc' => isset($data['@DESC']) ? trim((string) $data['@DESC']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'level' => isset($data['level']) ? (int) $data['level'] : null,
+            'shortname' => isset($data['shortname']) ? trim((string) $data['shortname']) : null,
+            'name' => isset($data['name']) ? trim((string) $data['name']) : null,
+            'desc' => isset($data['desc']) ? trim((string) $data['desc']) : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactive' => isset($data['isactive']) ? trim((string) $data['isactive']) : null,
         ];
     }
 
@@ -332,19 +347,19 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelSteadsDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
-            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'number' => isset($data['@NUMBER']) ? trim((string) $data['@NUMBER']) : null,
-            'opertypeid' => isset($data['@OPERTYPEID']) ? trim((string) $data['@OPERTYPEID']) : null,
-            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
-            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
-            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'objectid' => isset($data['objectid']) ? (int) $data['objectid'] : null,
+            'objectguid' => isset($data['objectguid']) ? trim((string) $data['objectguid']) : null,
+            'changeid' => isset($data['changeid']) ? (int) $data['changeid'] : null,
+            'number' => isset($data['number']) ? trim((string) $data['number']) : null,
+            'opertypeid' => isset($data['opertypeid']) ? trim((string) $data['opertypeid']) : null,
+            'previd' => isset($data['previd']) ? (int) $data['previd'] : null,
+            'nextid' => isset($data['nextid']) ? (int) $data['nextid'] : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactual' => isset($data['isactual']) ? (int) $data['isactual'] : null,
+            'isactive' => isset($data['isactive']) ? (int) $data['isactive'] : null,
         ];
     }
 
@@ -354,18 +369,18 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelNormativeDocsDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
-            'date' => isset($data['@DATE']) ? new \DateTimeImmutable((string) $data['@DATE']) : null,
-            'number' => isset($data['@NUMBER']) ? trim((string) $data['@NUMBER']) : null,
-            'type' => isset($data['@TYPE']) ? (int) $data['@TYPE'] : null,
-            'kind' => isset($data['@KIND']) ? (int) $data['@KIND'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'orgname' => isset($data['@ORGNAME']) ? trim((string) $data['@ORGNAME']) : null,
-            'regnum' => isset($data['@REGNUM']) ? trim((string) $data['@REGNUM']) : null,
-            'regdate' => isset($data['@REGDATE']) ? new \DateTimeImmutable((string) $data['@REGDATE']) : null,
-            'accdate' => isset($data['@ACCDATE']) ? new \DateTimeImmutable((string) $data['@ACCDATE']) : null,
-            'comment' => isset($data['@COMMENT']) ? trim((string) $data['@COMMENT']) : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'name' => isset($data['name']) ? trim((string) $data['name']) : null,
+            'date' => isset($data['date']) ? new \DateTimeImmutable((string) $data['date']) : null,
+            'number' => isset($data['number']) ? trim((string) $data['number']) : null,
+            'type' => isset($data['type']) ? (int) $data['type'] : null,
+            'kind' => isset($data['kind']) ? (int) $data['kind'] : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'orgname' => isset($data['orgname']) ? trim((string) $data['orgname']) : null,
+            'regnum' => isset($data['regnum']) ? trim((string) $data['regnum']) : null,
+            'regdate' => isset($data['regdate']) ? new \DateTimeImmutable((string) $data['regdate']) : null,
+            'accdate' => isset($data['accdate']) ? new \DateTimeImmutable((string) $data['accdate']) : null,
+            'comment' => isset($data['comment']) ? trim((string) $data['comment']) : null,
         ];
     }
 
@@ -375,14 +390,14 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelOperationTypesDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim((string) $data['@SHORTNAME']) : null,
-            'desc' => isset($data['@DESC']) ? trim((string) $data['@DESC']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'name' => isset($data['name']) ? trim((string) $data['name']) : null,
+            'shortname' => isset($data['shortname']) ? trim((string) $data['shortname']) : null,
+            'desc' => isset($data['desc']) ? trim((string) $data['desc']) : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactive' => isset($data['isactive']) ? trim((string) $data['isactive']) : null,
         ];
     }
 
@@ -392,24 +407,24 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelHousesDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
-            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'housenum' => isset($data['@HOUSENUM']) ? trim((string) $data['@HOUSENUM']) : null,
-            'addnum1' => isset($data['@ADDNUM1']) ? trim((string) $data['@ADDNUM1']) : null,
-            'addnum2' => isset($data['@ADDNUM2']) ? trim((string) $data['@ADDNUM2']) : null,
-            'housetype' => isset($data['@HOUSETYPE']) ? (int) $data['@HOUSETYPE'] : null,
-            'addtype1' => isset($data['@ADDTYPE1']) ? (int) $data['@ADDTYPE1'] : null,
-            'addtype2' => isset($data['@ADDTYPE2']) ? (int) $data['@ADDTYPE2'] : null,
-            'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
-            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
-            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
-            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'objectid' => isset($data['objectid']) ? (int) $data['objectid'] : null,
+            'objectguid' => isset($data['objectguid']) ? trim((string) $data['objectguid']) : null,
+            'changeid' => isset($data['changeid']) ? (int) $data['changeid'] : null,
+            'housenum' => isset($data['housenum']) ? trim((string) $data['housenum']) : null,
+            'addnum1' => isset($data['addnum1']) ? trim((string) $data['addnum1']) : null,
+            'addnum2' => isset($data['addnum2']) ? trim((string) $data['addnum2']) : null,
+            'housetype' => isset($data['housetype']) ? (int) $data['housetype'] : null,
+            'addtype1' => isset($data['addtype1']) ? (int) $data['addtype1'] : null,
+            'addtype2' => isset($data['addtype2']) ? (int) $data['addtype2'] : null,
+            'opertypeid' => isset($data['opertypeid']) ? (int) $data['opertypeid'] : null,
+            'previd' => isset($data['previd']) ? (int) $data['previd'] : null,
+            'nextid' => isset($data['nextid']) ? (int) $data['nextid'] : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactual' => isset($data['isactual']) ? (int) $data['isactual'] : null,
+            'isactive' => isset($data['isactive']) ? (int) $data['isactive'] : null,
         ];
     }
 
@@ -419,23 +434,23 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelAdmHierarchyDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'parentobjid' => isset($data['@PARENTOBJID']) ? (int) $data['@PARENTOBJID'] : null,
-            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'regioncode' => isset($data['@REGIONCODE']) ? trim((string) $data['@REGIONCODE']) : null,
-            'areacode' => isset($data['@AREACODE']) ? trim((string) $data['@AREACODE']) : null,
-            'citycode' => isset($data['@CITYCODE']) ? trim((string) $data['@CITYCODE']) : null,
-            'placecode' => isset($data['@PLACECODE']) ? trim((string) $data['@PLACECODE']) : null,
-            'plancode' => isset($data['@PLANCODE']) ? trim((string) $data['@PLANCODE']) : null,
-            'streetcode' => isset($data['@STREETCODE']) ? trim((string) $data['@STREETCODE']) : null,
-            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
-            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
-            'path' => isset($data['@PATH']) ? trim((string) $data['@PATH']) : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'objectid' => isset($data['objectid']) ? (int) $data['objectid'] : null,
+            'parentobjid' => isset($data['parentobjid']) ? (int) $data['parentobjid'] : null,
+            'changeid' => isset($data['changeid']) ? (int) $data['changeid'] : null,
+            'regioncode' => isset($data['regioncode']) ? trim((string) $data['regioncode']) : null,
+            'areacode' => isset($data['areacode']) ? trim((string) $data['areacode']) : null,
+            'citycode' => isset($data['citycode']) ? trim((string) $data['citycode']) : null,
+            'placecode' => isset($data['placecode']) ? trim((string) $data['placecode']) : null,
+            'plancode' => isset($data['plancode']) ? trim((string) $data['plancode']) : null,
+            'streetcode' => isset($data['streetcode']) ? trim((string) $data['streetcode']) : null,
+            'previd' => isset($data['previd']) ? (int) $data['previd'] : null,
+            'nextid' => isset($data['nextid']) ? (int) $data['nextid'] : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactive' => isset($data['isactive']) ? (int) $data['isactive'] : null,
+            'path' => isset($data['path']) ? trim((string) $data['path']) : null,
         ];
     }
 
@@ -445,19 +460,19 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelCarplacesDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
-            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'number' => isset($data['@NUMBER']) ? trim((string) $data['@NUMBER']) : null,
-            'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
-            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
-            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
-            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'objectid' => isset($data['objectid']) ? (int) $data['objectid'] : null,
+            'objectguid' => isset($data['objectguid']) ? trim((string) $data['objectguid']) : null,
+            'changeid' => isset($data['changeid']) ? (int) $data['changeid'] : null,
+            'number' => isset($data['number']) ? trim((string) $data['number']) : null,
+            'opertypeid' => isset($data['opertypeid']) ? (int) $data['opertypeid'] : null,
+            'previd' => isset($data['previd']) ? (int) $data['previd'] : null,
+            'nextid' => isset($data['nextid']) ? (int) $data['nextid'] : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactual' => isset($data['isactual']) ? (int) $data['isactual'] : null,
+            'isactive' => isset($data['isactive']) ? (int) $data['isactive'] : null,
         ];
     }
 
@@ -467,12 +482,12 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelChangeHistoryDataExtractor(array $data): array
     {
         return [
-            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'adrobjectid' => isset($data['@ADROBJECTID']) ? trim((string) $data['@ADROBJECTID']) : null,
-            'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
-            'ndocid' => isset($data['@NDOCID']) ? (int) $data['@NDOCID'] : null,
-            'changedate' => isset($data['@CHANGEDATE']) ? new \DateTimeImmutable((string) $data['@CHANGEDATE']) : null,
+            'changeid' => isset($data['changeid']) ? (int) $data['changeid'] : null,
+            'objectid' => isset($data['objectid']) ? (int) $data['objectid'] : null,
+            'adrobjectid' => isset($data['adrobjectid']) ? trim((string) $data['adrobjectid']) : null,
+            'opertypeid' => isset($data['opertypeid']) ? (int) $data['opertypeid'] : null,
+            'ndocid' => isset($data['ndocid']) ? (int) $data['ndocid'] : null,
+            'changedate' => isset($data['changedate']) ? new \DateTimeImmutable((string) $data['changedate']) : null,
         ];
     }
 
@@ -482,21 +497,21 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelAddrObjDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
-            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
-            'typename' => isset($data['@TYPENAME']) ? trim((string) $data['@TYPENAME']) : null,
-            'level' => isset($data['@LEVEL']) ? trim((string) $data['@LEVEL']) : null,
-            'opertypeid' => isset($data['@OPERTYPEID']) ? (int) $data['@OPERTYPEID'] : null,
-            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
-            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactual' => isset($data['@ISACTUAL']) ? (int) $data['@ISACTUAL'] : null,
-            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'objectid' => isset($data['objectid']) ? (int) $data['objectid'] : null,
+            'objectguid' => isset($data['objectguid']) ? trim((string) $data['objectguid']) : null,
+            'changeid' => isset($data['changeid']) ? (int) $data['changeid'] : null,
+            'name' => isset($data['name']) ? trim((string) $data['name']) : null,
+            'typename' => isset($data['typename']) ? trim((string) $data['typename']) : null,
+            'level' => isset($data['level']) ? trim((string) $data['level']) : null,
+            'opertypeid' => isset($data['opertypeid']) ? (int) $data['opertypeid'] : null,
+            'previd' => isset($data['previd']) ? (int) $data['previd'] : null,
+            'nextid' => isset($data['nextid']) ? (int) $data['nextid'] : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactual' => isset($data['isactual']) ? (int) $data['isactual'] : null,
+            'isactive' => isset($data['isactive']) ? (int) $data['isactive'] : null,
         ];
     }
 
@@ -506,14 +521,14 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelParamTypesDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
-            'code' => isset($data['@CODE']) ? trim((string) $data['@CODE']) : null,
-            'desc' => isset($data['@DESC']) ? trim((string) $data['@DESC']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'name' => isset($data['name']) ? trim((string) $data['name']) : null,
+            'code' => isset($data['code']) ? trim((string) $data['code']) : null,
+            'desc' => isset($data['desc']) ? trim((string) $data['desc']) : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactive' => isset($data['isactive']) ? trim((string) $data['isactive']) : null,
         ];
     }
 
@@ -523,15 +538,15 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelParamDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'changeidend' => isset($data['@CHANGEIDEND']) ? (int) $data['@CHANGEIDEND'] : null,
-            'typeid' => isset($data['@TYPEID']) ? (int) $data['@TYPEID'] : null,
-            'value' => isset($data['@VALUE']) ? trim((string) $data['@VALUE']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'objectid' => isset($data['objectid']) ? (int) $data['objectid'] : null,
+            'changeid' => isset($data['changeid']) ? (int) $data['changeid'] : null,
+            'changeidend' => isset($data['changeidend']) ? (int) $data['changeidend'] : null,
+            'typeid' => isset($data['typeid']) ? (int) $data['typeid'] : null,
+            'value' => isset($data['value']) ? trim((string) $data['value']) : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
         ];
     }
 
@@ -541,13 +556,13 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelReestrObjectsDataExtractor(array $data): array
     {
         return [
-            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'createdate' => isset($data['@CREATEDATE']) ? new \DateTimeImmutable((string) $data['@CREATEDATE']) : null,
-            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'levelid' => isset($data['@LEVELID']) ? (int) $data['@LEVELID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'objectguid' => isset($data['@OBJECTGUID']) ? trim((string) $data['@OBJECTGUID']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
+            'objectid' => isset($data['objectid']) ? (int) $data['objectid'] : null,
+            'createdate' => isset($data['createdate']) ? new \DateTimeImmutable((string) $data['createdate']) : null,
+            'changeid' => isset($data['changeid']) ? (int) $data['changeid'] : null,
+            'levelid' => isset($data['levelid']) ? (int) $data['levelid'] : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'objectguid' => isset($data['objectguid']) ? trim((string) $data['objectguid']) : null,
+            'isactive' => isset($data['isactive']) ? (int) $data['isactive'] : null,
         ];
     }
 
@@ -557,14 +572,14 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelHouseTypesDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'name' => isset($data['@NAME']) ? trim((string) $data['@NAME']) : null,
-            'shortname' => isset($data['@SHORTNAME']) ? trim((string) $data['@SHORTNAME']) : null,
-            'desc' => isset($data['@DESC']) ? trim((string) $data['@DESC']) : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? trim((string) $data['@ISACTIVE']) : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'name' => isset($data['name']) ? trim((string) $data['name']) : null,
+            'shortname' => isset($data['shortname']) ? trim((string) $data['shortname']) : null,
+            'desc' => isset($data['desc']) ? trim((string) $data['desc']) : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactive' => isset($data['isactive']) ? trim((string) $data['isactive']) : null,
         ];
     }
 
@@ -574,18 +589,18 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelMunHierarchyDataExtractor(array $data): array
     {
         return [
-            'id' => isset($data['@ID']) ? (int) $data['@ID'] : null,
-            'objectid' => isset($data['@OBJECTID']) ? (int) $data['@OBJECTID'] : null,
-            'parentobjid' => isset($data['@PARENTOBJID']) ? (int) $data['@PARENTOBJID'] : null,
-            'changeid' => isset($data['@CHANGEID']) ? (int) $data['@CHANGEID'] : null,
-            'oktmo' => isset($data['@OKTMO']) ? trim((string) $data['@OKTMO']) : null,
-            'previd' => isset($data['@PREVID']) ? (int) $data['@PREVID'] : null,
-            'nextid' => isset($data['@NEXTID']) ? (int) $data['@NEXTID'] : null,
-            'updatedate' => isset($data['@UPDATEDATE']) ? new \DateTimeImmutable((string) $data['@UPDATEDATE']) : null,
-            'startdate' => isset($data['@STARTDATE']) ? new \DateTimeImmutable((string) $data['@STARTDATE']) : null,
-            'enddate' => isset($data['@ENDDATE']) ? new \DateTimeImmutable((string) $data['@ENDDATE']) : null,
-            'isactive' => isset($data['@ISACTIVE']) ? (int) $data['@ISACTIVE'] : null,
-            'path' => isset($data['@PATH']) ? trim((string) $data['@PATH']) : null,
+            'id' => isset($data['id']) ? (int) $data['id'] : null,
+            'objectid' => isset($data['objectid']) ? (int) $data['objectid'] : null,
+            'parentobjid' => isset($data['parentobjid']) ? (int) $data['parentobjid'] : null,
+            'changeid' => isset($data['changeid']) ? (int) $data['changeid'] : null,
+            'oktmo' => isset($data['oktmo']) ? trim((string) $data['oktmo']) : null,
+            'previd' => isset($data['previd']) ? (int) $data['previd'] : null,
+            'nextid' => isset($data['nextid']) ? (int) $data['nextid'] : null,
+            'updatedate' => isset($data['updatedate']) ? new \DateTimeImmutable((string) $data['updatedate']) : null,
+            'startdate' => isset($data['startdate']) ? new \DateTimeImmutable((string) $data['startdate']) : null,
+            'enddate' => isset($data['enddate']) ? new \DateTimeImmutable((string) $data['enddate']) : null,
+            'isactive' => isset($data['isactive']) ? (int) $data['isactive'] : null,
+            'path' => isset($data['path']) ? trim((string) $data['path']) : null,
         ];
     }
 
@@ -595,10 +610,10 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     private function modelFiasVersionDataExtractor(array $data): array
     {
         return [
-            'version' => isset($data['@VERSION']) ? (int) $data['@VERSION'] : null,
-            'fullurl' => isset($data['@FULLURL']) ? trim((string) $data['@FULLURL']) : null,
-            'deltaurl' => isset($data['@DELTAURL']) ? trim((string) $data['@DELTAURL']) : null,
-            'created_at' => isset($data['@CREATED_AT']) ? new \DateTimeImmutable((string) $data['@CREATED_AT']) : null,
+            'version' => isset($data['version']) ? (int) $data['version'] : null,
+            'fullurl' => isset($data['fullurl']) ? trim((string) $data['fullurl']) : null,
+            'deltaurl' => isset($data['deltaurl']) ? trim((string) $data['deltaurl']) : null,
+            'created_at' => isset($data['created_at']) ? new \DateTimeImmutable((string) $data['created_at']) : null,
         ];
     }
 }
