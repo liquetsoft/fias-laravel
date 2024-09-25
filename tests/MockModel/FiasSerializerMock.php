@@ -11,12 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class FiasSerializerMock extends Model
 {
-    /**
-     * @var string|null
-     */
     protected $dateFormat = 'Y-m-d H:i';
 
-    /** @var array<int, string> */
     protected $fillable = [
         'ACTSTATID',
         'name',
@@ -28,9 +24,6 @@ class FiasSerializerMock extends Model
         'nullableCast',
     ];
 
-    /**
-     * @var array
-     */
     protected $casts = [
         'ACTSTATID' => 'integer',
         'name' => 'string',

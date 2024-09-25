@@ -11,19 +11,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PipelineTestMockModel extends Model
 {
-    /** @var bool */
     public $timestamps = false;
 
-    /** @var bool */
     public $incrementing = false;
 
-    /** @var string|null */
     protected $table = 'pipeline_test_model';
 
-    /** @var string */
     protected $primaryKey = 'testId';
 
-    /** @var array<int, string> */
     protected $fillable = [
         'testId',
         'testName',
@@ -31,7 +26,6 @@ class PipelineTestMockModel extends Model
         'uuid',
     ];
 
-    /** @var array */
     protected $casts = [
         'testId' => 'integer',
         'testName' => 'string',
