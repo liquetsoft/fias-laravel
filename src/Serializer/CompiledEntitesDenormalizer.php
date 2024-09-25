@@ -66,7 +66,7 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     /**
      * {@inheritDoc}
      */
-    public function supportsDenormalization($data, string $type, ?string $format = null)
+    public function supportsDenormalization($data, string $type, ?string $format = null, array $context = []): bool
     {
         return \array_key_exists(trim($type, " \t\n\r\0\x0B\\/"), self::ALLOWED_ENTITIES);
     }
@@ -76,7 +76,7 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
      *
      * @psalm-suppress InvalidStringClass
      */
-    public function denormalize($data, string $type, ?string $format = null, array $context = [])
+    public function denormalize($data, string $type, ?string $format = null, array $context = []): mixed
     {
         $dataToPopulate = $this->convertDataToInternalFormat($data);
         $type = trim($type, " \t\n\r\0\x0B\\/");

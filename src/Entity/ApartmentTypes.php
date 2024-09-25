@@ -28,7 +28,7 @@ final class ApartmentTypes extends Model
     /** @var bool */
     public $incrementing = false;
 
-    /** @var string */
+    /** @var string|null */
     protected $table = 'fias_laravel_apartment_types';
 
     /** @var string */

@@ -28,7 +28,7 @@ final class HouseTypes extends Model
     /** @var bool */
     public $incrementing = false;
 
-    /** @var string */
+    /** @var string|null */
     protected $table = 'fias_laravel_house_types';
 
     /** @var string */

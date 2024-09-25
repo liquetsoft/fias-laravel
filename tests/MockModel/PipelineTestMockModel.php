@@ -17,7 +17,7 @@ class PipelineTestMockModel extends Model
     /** @var bool */
     public $incrementing = false;
 
-    /** @var string */
+    /** @var string|null */
     protected $table = 'pipeline_test_model';
 
     /** @var string */

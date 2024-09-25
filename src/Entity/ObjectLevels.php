@@ -27,7 +27,7 @@ final class ObjectLevels extends Model
     /** @var bool */
     public $incrementing = false;
 
-    /** @var string */
+    /** @var string|null */
     protected $table = 'fias_laravel_object_levels';
 
     /** @var string */

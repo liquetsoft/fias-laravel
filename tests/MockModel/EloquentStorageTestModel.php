@@ -17,7 +17,7 @@ class EloquentStorageTestModel extends Model
     /** @var bool */
     public $incrementing = false;
 
-    /** @var string */
+    /** @var string|null */
     protected $table = 'eloquent_storage_test_model';
 
     /** @var string */

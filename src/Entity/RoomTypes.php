@@ -28,7 +28,7 @@ final class RoomTypes extends Model
     /** @var bool */
     public $incrementing = false;
 
-    /** @var string */
+    /** @var string|null */
     protected $table = 'fias_laravel_room_types';
 
     /** @var string */

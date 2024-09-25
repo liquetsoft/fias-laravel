@@ -90,7 +90,7 @@ class ModelGenerator extends AbstractGenerator
         $tableName = $this->convertClassnameToTableName($descriptor->getName());
         $class->addProperty('table', $tableName)
             ->setVisibility('protected')
-            ->addComment('@var string')
+            ->addComment('@var string|null')
         ;
 
         $class->addProperty('primaryKey', $primaryName)

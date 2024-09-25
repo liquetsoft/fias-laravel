@@ -37,7 +37,7 @@ final class AdmHierarchy extends Model
     /** @var bool */
     public $incrementing = false;
 
-    /** @var string */
+    /** @var string|null */
     protected $table = 'fias_laravel_adm_hierarchy';
 
     /** @var string */

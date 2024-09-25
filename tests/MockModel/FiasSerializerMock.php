@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class FiasSerializerMock extends Model
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected $dateFormat = 'Y-m-d H:i';
 

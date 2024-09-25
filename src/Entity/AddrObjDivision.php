@@ -24,7 +24,7 @@ final class AddrObjDivision extends Model
     /** @var bool */
     public $incrementing = false;
 
-    /** @var string */
+    /** @var string|null */
     protected $table = 'fias_laravel_addr_obj_division';
 
     /** @var string */

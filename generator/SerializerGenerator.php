@@ -101,15 +101,18 @@ class SerializerGenerator extends AbstractGenerator
         $supports = $class->addMethod('supportsDenormalization')
             ->addComment("{@inheritDoc}\n")
             ->setVisibility('public')
+            ->setReturnType('bool')
             ->setBody('return \\array_key_exists(trim($type, " \t\n\r\0\x0B\\\\/"), self::ALLOWED_ENTITIES);');
         $supports->addParameter('data');
         $supports->addParameter('type')->setType('string');
         $supports->addParameter('format', new Literal('null'))->setType('string');
+        $supports->addParameter('context', new Literal('[]'))->setType('array');
 
         $denormalize = $class->addMethod('denormalize')
             ->addComment("{@inheritDoc}\n")
             ->addComment("@psalm-suppress InvalidStringClass\n")
             ->setVisibility('public')
+            ->setReturnType('mixed')
             ->setBody($denormalizeBody);
         $denormalize->addParameter('data');
         $denormalize->addParameter('type')->setType('string');

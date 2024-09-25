@@ -24,7 +24,7 @@ final class FiasVersion extends Model
     /** @var bool */
     public $incrementing = false;
 
-    /** @var string */
+    /** @var string|null */
     protected $table = 'fias_laravel_fias_version';
 
     /** @var string */
