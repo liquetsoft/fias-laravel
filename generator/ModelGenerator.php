@@ -79,42 +79,35 @@ class ModelGenerator extends AbstractGenerator
 
         $class->addProperty('timestamps', new Literal('false'))
             ->setVisibility('public')
-            ->addComment('@var bool')
         ;
 
         $class->addProperty('incrementing', new Literal('false'))
             ->setVisibility('public')
-            ->addComment('@var bool')
         ;
 
         $tableName = $this->convertClassnameToTableName($descriptor->getName());
         $class->addProperty('table', $tableName)
             ->setVisibility('protected')
-            ->addComment('@var string|null')
         ;
 
         $class->addProperty('primaryKey', $primaryName)
             ->setVisibility('protected')
-            ->addComment('@var string')
         ;
 
         if ($isPrimaryIsUuid) {
             $class->addProperty('keyType', 'string')
                 ->setVisibility('protected')
-                ->addComment('@var string')
             ;
         }
 
         $fillableValue = new Literal("[\n    '" . implode("',\n    '", $fill) . "',\n]");
         $class->addProperty('fillable', $fillableValue)
             ->setVisibility('protected')
-            ->addComment('@var array<int, string>')
         ;
 
         $castValue = new Literal($this->createCastValue($descriptor));
         $class->addProperty('casts', $castValue)
             ->setVisibility('protected')
-            ->addComment('@var array')
         ;
 
         $connectionMethod = "\$connection = \$this->connection;\n";

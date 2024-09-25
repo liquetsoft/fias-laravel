@@ -26,19 +26,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class MunHierarchy extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string|null */
     protected $table = 'fias_laravel_mun_hierarchy';
-
-    /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var array<int, string> */
     protected $fillable = [
         'id',
         'objectid',
@@ -54,7 +46,6 @@ final class MunHierarchy extends Model
         'path',
     ];
 
-    /** @var array */
     protected $casts = [
         'id' => 'integer',
         'objectid' => 'integer',

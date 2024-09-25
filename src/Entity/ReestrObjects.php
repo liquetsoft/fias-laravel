@@ -21,19 +21,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class ReestrObjects extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string|null */
     protected $table = 'fias_laravel_reestr_objects';
-
-    /** @var string */
     protected $primaryKey = 'objectid';
 
-    /** @var array<int, string> */
     protected $fillable = [
         'objectid',
         'createdate',
@@ -44,7 +36,6 @@ final class ReestrObjects extends Model
         'isactive',
     ];
 
-    /** @var array */
     protected $casts = [
         'objectid' => 'integer',
         'createdate' => 'datetime',

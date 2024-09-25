@@ -18,19 +18,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class FiasVersion extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string|null */
     protected $table = 'fias_laravel_fias_version';
-
-    /** @var string */
     protected $primaryKey = 'version';
 
-    /** @var array<int, string> */
     protected $fillable = [
         'version',
         'fullurl',
@@ -38,7 +30,6 @@ final class FiasVersion extends Model
         'created_at',
     ];
 
-    /** @var array */
     protected $casts = [
         'version' => 'integer',
         'fullurl' => 'string',

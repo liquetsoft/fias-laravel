@@ -16,25 +16,16 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class NormativeDocsKinds extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string|null */
     protected $table = 'fias_laravel_normative_docs_kinds';
-
-    /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var array<int, string> */
     protected $fillable = [
         'id',
         'name',
     ];
 
-    /** @var array */
     protected $casts = [
         'id' => 'integer',
         'name' => 'string',

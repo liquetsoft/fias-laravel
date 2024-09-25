@@ -22,19 +22,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class ApartmentTypes extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string|null */
     protected $table = 'fias_laravel_apartment_types';
-
-    /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var array<int, string> */
     protected $fillable = [
         'id',
         'name',
@@ -46,7 +38,6 @@ final class ApartmentTypes extends Model
         'isactive',
     ];
 
-    /** @var array */
     protected $casts = [
         'id' => 'integer',
         'name' => 'string',

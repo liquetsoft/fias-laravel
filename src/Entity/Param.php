@@ -23,19 +23,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class Param extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string|null */
     protected $table = 'fias_laravel_param';
-
-    /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var array<int, string> */
     protected $fillable = [
         'id',
         'objectid',
@@ -48,7 +40,6 @@ final class Param extends Model
         'enddate',
     ];
 
-    /** @var array */
     protected $casts = [
         'id' => 'integer',
         'objectid' => 'integer',

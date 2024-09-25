@@ -20,19 +20,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class ChangeHistory extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string|null */
     protected $table = 'fias_laravel_change_history';
-
-    /** @var string */
     protected $primaryKey = 'changeid';
 
-    /** @var array<int, string> */
     protected $fillable = [
         'changeid',
         'objectid',
@@ -42,7 +34,6 @@ final class ChangeHistory extends Model
         'changedate',
     ];
 
-    /** @var array */
     protected $casts = [
         'changeid' => 'integer',
         'objectid' => 'integer',

@@ -21,19 +21,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class ObjectLevels extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string|null */
     protected $table = 'fias_laravel_object_levels';
-
-    /** @var string */
     protected $primaryKey = 'level';
 
-    /** @var array<int, string> */
     protected $fillable = [
         'level',
         'name',
@@ -44,7 +36,6 @@ final class ObjectLevels extends Model
         'isactive',
     ];
 
-    /** @var array */
     protected $casts = [
         'level' => 'integer',
         'name' => 'string',
