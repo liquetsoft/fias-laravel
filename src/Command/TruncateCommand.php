@@ -35,7 +35,7 @@ final class TruncateCommand extends Command
      */
     public function handle(): void
     {
-        $this->info('Truncating storage for binded entities');
+        $this->info('Truncating storage for bound entities');
 
         $this->task->run(new ArrayState());
 
