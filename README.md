@@ -224,3 +224,14 @@ Allowed Memory Size Exhausted
             'report_query_bindings' => false,
         ],
         ```
+
+2. **laravel/telescope**
+
+    * отключите все логирование для консольных команд
+
+        ```php
+        // в config/telescope.php
+        'ignore_commands' => [
+            'liquetsoft:fias*',
+        ],
+        ```
