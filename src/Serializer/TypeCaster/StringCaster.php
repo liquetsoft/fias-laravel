@@ -6,13 +6,15 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster;
 
 /**
  * Преобразует данные в string.
+ *
+ * @internal
  */
-class StringCaster implements TypeCaster
+final class StringCaster implements TypeCaster
 {
     /**
      * {@inheritDoc}
      */
-    public function canCast(string $type, $value): bool
+    public function canCast(string $type, mixed $value): bool
     {
         return $type === 'string' || $type === 'str';
     }
@@ -20,7 +22,7 @@ class StringCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
-    public function cast(string $type, $value)
+    public function cast(string $type, mixed $value): mixed
     {
         return (string) $value;
     }

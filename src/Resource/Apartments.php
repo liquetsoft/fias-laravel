@@ -25,14 +25,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int                $isactual
  * @property int                $isactive
  */
-class Apartments extends JsonResource
+final class Apartments extends JsonResource
 {
     /**
      * Преобразует сущность 'Apartments' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

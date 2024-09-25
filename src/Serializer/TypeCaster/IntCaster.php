@@ -6,13 +6,15 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster;
 
 /**
  * Преобразует данные в int.
+ *
+ * @internal
  */
-class IntCaster implements TypeCaster
+final class IntCaster implements TypeCaster
 {
     /**
      * {@inheritDoc}
      */
-    public function canCast(string $type, $value): bool
+    public function canCast(string $type, mixed $value): bool
     {
         return $type === 'int' || $type === 'integer';
     }
@@ -20,7 +22,7 @@ class IntCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
-    public function cast(string $type, $value)
+    public function cast(string $type, mixed $value): mixed
     {
         return (int) $value;
     }

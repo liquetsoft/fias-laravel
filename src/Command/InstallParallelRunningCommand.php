@@ -6,7 +6,6 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;
-use Liquetsoft\Fias\Component\Exception\PipeException;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
 use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
@@ -14,27 +13,16 @@ use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
 /**
  * Консольная команда, которая является одним из параллельных процессов установки ФИАС.
  */
-class InstallParallelRunningCommand extends Command
+final class InstallParallelRunningCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'liquetsoft:fias:install_parallel_running {files?}';
 
-    /**
-     * @var string|null
-     */
     protected $description = 'Command for running parallel installation.';
 
-    /**
-     * @var Pipe
-     */
-    protected $pipeline;
+    private readonly Pipe $pipeline;
 
     /**
      * В конструкторе передаем ссылку на пайплайн установки.
-     *
-     * @param Application $app
      */
     public function __construct(Application $app)
     {
@@ -44,8 +32,6 @@ class InstallParallelRunningCommand extends Command
 
     /**
      * Запуск команды на исполнение.
-     *
-     * @throws PipeException
      */
     public function handle(): void
     {
@@ -54,11 +40,11 @@ class InstallParallelRunningCommand extends Command
             $files = reset($files);
         }
 
-        if (!empty($files)) {
+        if ($files !== false && $files !== null && $files !== '') {
             $files = json_decode((string) $files, true);
         } else {
             $stdIn = file_get_contents('php://stdin');
-            if (!empty($stdIn)) {
+            if ($stdIn !== false && $stdIn !== '') {
                 $files = json_decode($stdIn, true);
             }
         }

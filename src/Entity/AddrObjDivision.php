@@ -9,26 +9,20 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения по операциям переподчинения.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int $id       Уникальный идентификатор записи. Ключевое поле
  * @property int $parentid Родительский ID
  * @property int $childid  Дочерний ID
  * @property int $changeid ID изменившей транзакции
  */
-class AddrObjDivision extends Model
+final class AddrObjDivision extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string */
     protected $table = 'fias_laravel_addr_obj_division';
-
-    /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var string[] */
     protected $fillable = [
         'id',
         'parentid',
@@ -36,7 +30,6 @@ class AddrObjDivision extends Model
         'changeid',
     ];
 
-    /** @var array */
     protected $casts = [
         'id' => 'integer',
         'parentid' => 'integer',
@@ -52,7 +45,7 @@ class AddrObjDivision extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }

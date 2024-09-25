@@ -41,7 +41,7 @@ class MigrationGenerator extends AbstractGenerator
             $phpFile->addUse(Connection::class);
         }
 
-        $class = $phpFile->addClass($className)->addExtend(Migration::class);
+        $class = $phpFile->addClass($className)->setExtends(Migration::class);
         $class->addComment("Миграция для создания сущности '{$descriptor->getName()}'.");
         $this->decorateClassWithUpMethodByDescription($class, $descriptor);
         $this->decorateClassWithDownMethodByDescription($class, $descriptor);
@@ -51,9 +51,6 @@ class MigrationGenerator extends AbstractGenerator
 
     /**
      * Добавляет создание таблицы в класс миграции.
-     *
-     * @param ClassType        $class
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateClassWithUpMethodByDescription(ClassType $class, EntityDescriptor $descriptor): void
     {
@@ -159,9 +156,6 @@ class MigrationGenerator extends AbstractGenerator
 
     /**
      * Добавляет удаление таблицы в класс миграции.
-     *
-     * @param ClassType        $class
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateClassWithDownMethodByDescription(ClassType $class, EntityDescriptor $descriptor): void
     {

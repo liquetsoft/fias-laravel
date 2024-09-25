@@ -32,7 +32,7 @@ class ResourceGenerator extends AbstractGenerator
         $namespace = $phpFile->addNamespace($namespace);
         $this->decorateNamespace($namespace, $descriptor);
 
-        $class = $namespace->addClass($name)->addExtend(JsonResource::class);
+        $class = $namespace->addClass($name)->setFinal()->setExtends(JsonResource::class);
         $this->decorateClass($class, $descriptor);
 
         file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));
@@ -40,9 +40,6 @@ class ResourceGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые импорты в пространство имен.
-     *
-     * @param PhpNamespace     $namespace
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateNamespace(PhpNamespace $namespace, EntityDescriptor $descriptor): void
     {
@@ -57,9 +54,6 @@ class ResourceGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые для класса комментарии.
-     *
-     * @param ClassType        $class
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateClass(ClassType $class, EntityDescriptor $descriptor): void
     {
@@ -85,11 +79,6 @@ class ResourceGenerator extends AbstractGenerator
 
     /**
      * Добавляет все свойства в формате phpDoc, поскольку в laravel они используют магию.
-     *
-     * @param ClassType   $class
-     * @param EntityField $field
-     *
-     * @return string
      */
     protected function decorateProperty(ClassType $class, EntityField $field): string
     {

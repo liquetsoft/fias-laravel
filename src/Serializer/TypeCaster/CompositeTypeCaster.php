@@ -6,53 +6,43 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster;
 
 /**
  * Кастер, который выбирает подходящий кастер из внутреннего набора кастеров.
+ *
+ * @internal
  */
-class CompositeTypeCaster implements TypeCaster
+final class CompositeTypeCaster implements TypeCaster
 {
-    /**
-     * @var TypeCaster[]
-     */
-    protected $casters = [];
-
     /**
      * @param TypeCaster[] $casters
      */
-    public function __construct(array $casters = [])
+    public function __construct(private readonly array $casters = [])
     {
-        $this->casters = $casters;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function canCast(string $type, $value): bool
+    public function canCast(string $type, mixed $value): bool
     {
-        $canCast = false;
-
         foreach ($this->casters as $caster) {
             if ($caster->canCast($type, $value)) {
-                $canCast = true;
-                break;
+                return true;
             }
         }
 
-        return $canCast;
+        return false;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function cast(string $type, $value)
+    public function cast(string $type, mixed $value): mixed
     {
-        $castedValue = $value;
-
         foreach ($this->casters as $caster) {
             if ($caster->canCast($type, $value)) {
-                $castedValue = $caster->cast($type, $value);
-                break;
+                return $caster->cast($type, $value);
             }
         }
 
-        return $castedValue;
+        return $value;
     }
 }

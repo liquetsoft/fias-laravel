@@ -19,14 +19,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property \DateTimeInterface $enddate
  * @property string             $isactive
  */
-class RoomTypes extends JsonResource
+final class RoomTypes extends JsonResource
 {
     /**
      * Преобразует сущность 'RoomTypes' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

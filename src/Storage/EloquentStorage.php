@@ -21,14 +21,14 @@ class EloquentStorage implements Storage
      *
      * @var int
      */
-    protected $insertBatch;
+    private $insertBatch;
 
     /**
      * Объект для логгирования данных.
      *
      * @var LoggerInterface|null
      */
-    protected $logger;
+    private $logger;
 
     /**
      * Сохраненные в памяти данные для множественной вставки.
@@ -37,7 +37,7 @@ class EloquentStorage implements Storage
      *
      * @var array<string, array<int, array<string, mixed>>>
      */
-    protected $insertData = [];
+    private $insertData = [];
 
     /**
      * Сохраненные в памяти данные для множественного обновления.
@@ -46,14 +46,14 @@ class EloquentStorage implements Storage
      *
      * @var array<string, array<string, array<string, mixed>>>
      */
-    protected $upsertData = [];
+    private $upsertData = [];
 
     /**
      * Список колонок для классов моделей.
      *
      * @var array<string, string[]>
      */
-    protected $columnsLists = [];
+    private $columnsLists = [];
 
     /**
      * Флаг, который обозначает, что после завершения работы нужно включить
@@ -61,12 +61,8 @@ class EloquentStorage implements Storage
      *
      * @var bool
      */
-    protected $needToEnableLogging = false;
+    private $needToEnableLogging = false;
 
-    /**
-     * @param int                  $insertBatch
-     * @param LoggerInterface|null $logger
-     */
     public function __construct(int $insertBatch = 1000, ?LoggerInterface $logger = null)
     {
         $this->insertBatch = $insertBatch;
@@ -152,7 +148,7 @@ class EloquentStorage implements Storage
             }
             unset($persistedModel);
         } catch (\Throwable $e) {
-            throw new StorageException("Can't delete entity from storage.", 0, $e);
+            throw new StorageException("Can't delete entity from storage", 0, $e);
         }
     }
 
@@ -177,15 +173,14 @@ class EloquentStorage implements Storage
     {
         if (!class_exists($entityClassName) || !is_subclass_of($entityClassName, Model::class)) {
             throw new StorageException(
-                "Entity class for truncating must exists and extends '" . Model::class . "'"
-                . "got '{$entityClassName}'."
+                "Entity class for truncating must exists and extends '" . Model::class . "' got '{$entityClassName}'"
             );
         }
 
         try {
             $entityClassName::query()->delete();
         } catch (\Throwable $e) {
-            throw new StorageException("Can't truncate storage.", 0, $e);
+            throw new StorageException("Can't truncate storage", 0, $e);
         }
     }
 
@@ -193,11 +188,9 @@ class EloquentStorage implements Storage
      * Проверяет нужно ли отправлять запросы на множественные вставки элементов,
      * сохраненых в памяти.
      *
-     * @param bool $forceInsert
-     *
      * @throws StorageException
      */
-    protected function checkAndFlushInsert(bool $forceInsert = false): void
+    private function checkAndFlushInsert(bool $forceInsert = false): void
     {
         foreach ($this->insertData as $className => $insertData) {
             if ($forceInsert || \count($insertData) >= $this->insertBatch) {
@@ -211,13 +204,11 @@ class EloquentStorage implements Storage
      * Проверяет нужно ли отправлять запросы на множественные вставки элементов,
      * сохраненых в памяти.
      *
-     * @param bool $forceUpsert
-     *
      * @throws StorageException
      *
      * @psalm-suppress InvalidStringClass
      */
-    protected function checkAndFlushUpsert(bool $forceUpsert = false): void
+    private function checkAndFlushUpsert(bool $forceUpsert = false): void
     {
         foreach ($this->upsertData as $className => $upsertData) {
             if (!$forceUpsert && \count($upsertData) < $this->insertBatch) {
@@ -239,7 +230,7 @@ class EloquentStorage implements Storage
                     try {
                         $persistedModel->save();
                     } catch (\Throwable $e) {
-                        throw new StorageException("Can't update item in storage.", 0, $e);
+                        throw new StorageException("Can't update item in storage", 0, $e);
                     }
                 } else {
                     $toInsert[] = $upsertItem;
@@ -257,18 +248,13 @@ class EloquentStorage implements Storage
     /**
      * Проверяет, что объект является моделью eloquent.
      *
-     * @param object $entity
-     *
-     * @return Model
-     *
      * @throws StorageException
      */
-    protected function checkIsEntityAllowedForEloquent(object $entity): Model
+    private function checkIsEntityAllowedForEloquent(object $entity): Model
     {
         if (!($entity instanceof Model)) {
             throw new StorageException(
-                "Entity must be instance of '" . Model::class
-                . "', got '" . \get_class($entity) . "'."
+                "Entity must be instance of '" . Model::class . "', got '" . \get_class($entity) . "'"
             );
         }
 
@@ -278,11 +264,9 @@ class EloquentStorage implements Storage
     /**
      * Возвращает массив значений модели для вставки в таблицу.
      *
-     * @param Model $entity
-     *
      * @return array<string, mixed>
      */
-    protected function collectValuesFromModel(Model $entity): array
+    private function collectValuesFromModel(Model $entity): array
     {
         $columns = $this->getColumnsListForModel($entity);
 
@@ -302,11 +286,9 @@ class EloquentStorage implements Storage
     /**
      * Возвращает список колонок для таблицы, которой соответствует указанная модель.
      *
-     * @param Model $model
-     *
      * @return string[]
      */
-    protected function getColumnsListForModel(Model $model): array
+    private function getColumnsListForModel(Model $model): array
     {
         $class = \get_class($model);
 
@@ -322,14 +304,13 @@ class EloquentStorage implements Storage
     /**
      * Отправляет запрос на массовую вставку данных в таблицу.
      *
-     * @param string  $className
      * @param mixed[] $data
      *
      * @throws StorageException
      *
      * @psalm-suppress InvalidStringClass
      */
-    protected function bulkInsert(string $className, array $data): void
+    private function bulkInsert(string $className, array $data): void
     {
         try {
             $className::insert($data);
@@ -341,14 +322,13 @@ class EloquentStorage implements Storage
     /**
      * Фоллбэк на случай, если при записи бандла произошла ошибка. Пробуем сохранить все записи по одной.
      *
-     * @param string  $className
      * @param mixed[] $data
      *
      * @throws StorageException
      *
      * @psalm-suppress InvalidStringClass
      */
-    protected function bulkInsertFallback(string $className, array $data): void
+    private function bulkInsertFallback(string $className, array $data): void
     {
         foreach ($data as $item) {
             try {
@@ -356,7 +336,7 @@ class EloquentStorage implements Storage
             } catch (\Throwable $e) {
                 $this->log(
                     LogLevel::ERROR,
-                    "Error while inserting item of class '{$className}' to eloquent storage. Item wasn't proceed.",
+                    "Error while inserting item of class '{$className}' to eloquent storage. Item wasn't proceed",
                     [
                         'item' => $item,
                         'error_message' => $e->getMessage(),
@@ -368,12 +348,8 @@ class EloquentStorage implements Storage
 
     /**
      * Запись сообщения в лог.
-     *
-     * @param string $errorLevel
-     * @param string $message
-     * @param array  $context
      */
-    protected function log(string $errorLevel, string $message, array $context = []): void
+    private function log(string $errorLevel, string $message, array $context = []): void
     {
         if ($this->logger) {
             $this->logger->log($errorLevel, $message, $context);

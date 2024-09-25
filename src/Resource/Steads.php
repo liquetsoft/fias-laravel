@@ -24,14 +24,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int                $isactual
  * @property int                $isactive
  */
-class Steads extends JsonResource
+final class Steads extends JsonResource
 {
     /**
      * Преобразует сущность 'Steads' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

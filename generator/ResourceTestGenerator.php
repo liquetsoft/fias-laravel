@@ -23,7 +23,8 @@ class ResourceTestGenerator extends AbstractGenerator
     protected function generateClassByDescriptor(EntityDescriptor $descriptor, \SplFileInfo $dir, string $namespace): void
     {
         $name = $this->unifyClassName($descriptor->getName());
-        $fullPath = "{$dir->getPathname()}/{$name}Test.php";
+        $testName = "{$name}Test";
+        $fullPath = "{$dir->getPathname()}/{$testName}.php";
 
         $phpFile = new PhpFile();
         $phpFile->setStrictTypes();
@@ -31,7 +32,7 @@ class ResourceTestGenerator extends AbstractGenerator
         $namespace = $phpFile->addNamespace($namespace);
         $this->decorateNamespace($namespace, $descriptor);
 
-        $class = $namespace->addClass($name)->addExtend(BaseCase::class);
+        $class = $namespace->addClass($testName)->setFinal()->setExtends(BaseCase::class);
         $this->decorateClass($class, $descriptor);
 
         file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));
@@ -39,9 +40,6 @@ class ResourceTestGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые импорты в пространство имен.
-     *
-     * @param PhpNamespace     $namespace
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateNamespace(PhpNamespace $namespace, EntityDescriptor $descriptor): void
     {
@@ -68,9 +66,6 @@ class ResourceTestGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые для класса комментарии.
-     *
-     * @param ClassType        $class
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateClass(ClassType $class, EntityDescriptor $descriptor): void
     {

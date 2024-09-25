@@ -6,24 +6,28 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster;
 
 /**
  * Преобразует данные в timestamp.
+ *
+ * @internal
  */
-class TimestampCaster implements TypeCaster
+final class TimestampCaster implements TypeCaster
 {
     /**
      * {@inheritDoc}
      */
-    public function canCast(string $type, $value): bool
+    public function canCast(string $type, mixed $value): bool
     {
         return strpos($type, 'timestamp') === 0;
     }
 
     /**
      * {@inheritDoc}
-     *
-     * @throws \Exception
      */
-    public function cast(string $type, $value)
+    public function cast(string $type, mixed $value): mixed
     {
-        return is_numeric($value) ? (int) $value : (new \DateTimeImmutable((string) $value))->getTimestamp();
+        if (is_numeric($value)) {
+            return (int) $value;
+        } else {
+            return (new \DateTimeImmutable((string) $value))->getTimestamp();
+        }
     }
 }

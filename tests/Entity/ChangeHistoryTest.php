@@ -12,7 +12,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
  *
  * @internal
  */
-class ChangeHistoryTest extends BaseCase
+final class ChangeHistoryTest extends BaseCase
 {
     /**
      * Проверяет, что модель привязана к правильной таблице в базе.

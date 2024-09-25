@@ -10,8 +10,10 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 
 /**
  * Тест ресурса для сущности 'Rooms'.
+ *
+ * @internal
  */
-class Rooms extends BaseCase
+final class RoomsTest extends BaseCase
 {
     /**
      * Проверяет, что ресурс верно преобразует сущность в массив.

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения о классификаторе параметров адресообразующих элементов и объектов недвижимости.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int                $id          Идентификатор записи
  * @property int                $objectid    Глобальный уникальный идентификатор адресного объекта
  * @property int|null           $changeid    ID изменившей транзакции
@@ -19,21 +21,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property \DateTimeInterface $startdate   Дата начала действия записи
  * @property \DateTimeInterface $enddate     Дата окончания действия записи
  */
-class Param extends Model
+final class Param extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string */
     protected $table = 'fias_laravel_param';
-
-    /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var string[] */
     protected $fillable = [
         'id',
         'objectid',
@@ -46,7 +40,6 @@ class Param extends Model
         'enddate',
     ];
 
-    /** @var array */
     protected $casts = [
         'id' => 'integer',
         'objectid' => 'integer',
@@ -67,7 +60,7 @@ class Param extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }

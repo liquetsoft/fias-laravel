@@ -12,7 +12,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
  *
  * @internal
  */
-class MunHierarchyTest extends BaseCase
+final class MunHierarchyTest extends BaseCase
 {
     /**
      * Проверяет, что модель привязана к правильной таблице в базе.
@@ -43,6 +43,7 @@ class MunHierarchyTest extends BaseCase
         $this->assertContains('startdate', $fields);
         $this->assertContains('enddate', $fields);
         $this->assertContains('isactive', $fields);
+        $this->assertContains('path', $fields);
     }
 
     /**

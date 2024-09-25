@@ -6,13 +6,15 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster;
 
 /**
  * Преобразует данные в bool.
+ *
+ * @internal
  */
-class BoolCaster implements TypeCaster
+final class BoolCaster implements TypeCaster
 {
     /**
      * {@inheritDoc}
      */
-    public function canCast(string $type, $value): bool
+    public function canCast(string $type, mixed $value): bool
     {
         return $type === 'bool' || $type === 'boolean';
     }
@@ -20,7 +22,7 @@ class BoolCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
-    public function cast(string $type, $value)
+    public function cast(string $type, mixed $value): mixed
     {
         return (bool) $value;
     }

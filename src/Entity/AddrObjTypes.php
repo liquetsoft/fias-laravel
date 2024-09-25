@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения по типам адресных объектов.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int                $id         Идентификатор записи
  * @property int                $level      Уровень адресного объекта
  * @property string             $shortname  Краткое наименование типа объекта
@@ -19,21 +21,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property \DateTimeInterface $enddate    Окончание действия записи
  * @property string             $isactive   Статус активности
  */
-class AddrObjTypes extends Model
+final class AddrObjTypes extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string */
     protected $table = 'fias_laravel_addr_obj_types';
-
-    /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var string[] */
     protected $fillable = [
         'id',
         'level',
@@ -46,7 +40,6 @@ class AddrObjTypes extends Model
         'isactive',
     ];
 
-    /** @var array */
     protected $casts = [
         'id' => 'integer',
         'level' => 'integer',
@@ -67,7 +60,7 @@ class AddrObjTypes extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }

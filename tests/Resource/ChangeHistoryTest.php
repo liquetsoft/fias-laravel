@@ -10,8 +10,10 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 
 /**
  * Тест ресурса для сущности 'ChangeHistory'.
+ *
+ * @internal
  */
-class ChangeHistory extends BaseCase
+final class ChangeHistoryTest extends BaseCase
 {
     /**
      * Проверяет, что ресурс верно преобразует сущность в массив.

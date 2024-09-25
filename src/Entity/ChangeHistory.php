@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения по истории изменений.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int                $changeid    ID изменившей транзакции
  * @property int                $objectid    Уникальный ID объекта
  * @property string             $adrobjectid Уникальный ID изменившей транзакции (GUID)
@@ -16,21 +18,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null           $ndocid      ID документа
  * @property \DateTimeInterface $changedate  Дата изменения
  */
-class ChangeHistory extends Model
+final class ChangeHistory extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string */
     protected $table = 'fias_laravel_change_history';
-
-    /** @var string */
     protected $primaryKey = 'changeid';
 
-    /** @var string[] */
     protected $fillable = [
         'changeid',
         'objectid',
@@ -40,7 +34,6 @@ class ChangeHistory extends Model
         'changedate',
     ];
 
-    /** @var array */
     protected $casts = [
         'changeid' => 'integer',
         'objectid' => 'integer',
@@ -58,7 +51,7 @@ class ChangeHistory extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }

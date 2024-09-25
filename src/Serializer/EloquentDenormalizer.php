@@ -14,23 +14,21 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 /**
  * Нормализатор для объектов eloquent.
  */
-class EloquentDenormalizer implements DenormalizerInterface
+final class EloquentDenormalizer implements DenormalizerInterface
 {
-    /**
-     * @var TypeCaster|null
-     */
-    protected $typeCaster;
+    private readonly TypeCaster $typeCaster;
 
-    /**
-     * @param TypeCaster|null $typeCaster
-     */
     public function __construct(?TypeCaster $typeCaster = null)
     {
-        if ($typeCaster === null) {
-            $typeCaster = new EloquentTypeCaster();
-        }
+        $this->typeCaster = $typeCaster ?? new EloquentTypeCaster();
+    }
 
-        $this->typeCaster = $typeCaster;
+    /**
+     * {@inheritdoc}
+     */
+    public function supportsDenormalization($data, string $type, ?string $format = null, array $context = []): bool
+    {
+        return is_subclass_of($type, Model::class);
     }
 
     /**
@@ -40,18 +38,15 @@ class EloquentDenormalizer implements DenormalizerInterface
      *
      * @psalm-suppress InvalidStringClass
      */
-    public function denormalize($data, $type, $format = null, array $context = [])
+    public function denormalize($data, string $type, ?string $format = null, array $context = []): mixed
     {
-        if (!\is_array($data)) {
-            throw new InvalidArgumentException('Data for denormalization must be an array instance.');
-        }
+        $data = \is_array($data) ? $data : [];
+        $type = trim($type, " \t\n\r\0\x0B\\/");
 
         $entity = !empty($context['object_to_populate']) ? $context['object_to_populate'] : new $type();
 
         if (!($entity instanceof Model)) {
-            throw new InvalidArgumentException(
-                "Bad class for populating entity, need '" . Model::class . "' instance.'"
-            );
+            throw new InvalidArgumentException("Bad class for populating entity, '" . Model::class . "' is required");
         }
 
         try {
@@ -59,9 +54,8 @@ class EloquentDenormalizer implements DenormalizerInterface
             $entity->fill($dataArray);
         } catch (\Throwable $e) {
             throw new NotNormalizableValueException(
-                "Can't denormalize data to eloquent model.",
-                0,
-                $e
+                message: "Can't denormalize data to eloquent model",
+                previous: $e
             );
         }
 
@@ -69,34 +63,28 @@ class EloquentDenormalizer implements DenormalizerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function supportsDenormalization($data, $type, $format = null)
+    public function getSupportedTypes(?string $format): array
     {
-        return is_subclass_of($type, Model::class);
+        return [
+            Model::class => true,
+        ];
     }
 
     /**
      * Создает массив данных для вставки в модель на основании полей модели.
-     *
-     * @param mixed[] $data
-     * @param Model   $entity
-     *
-     * @return array
-     *
-     * @throws \Exception
      */
-    protected function createDataArrayForModel(array $data, Model $entity): array
+    private function createDataArrayForModel(array $data, Model $entity): array
     {
         $dataArray = [];
 
         foreach ($data as $propertyName => $propertyValue) {
             $modelAttribute = $this->mapParameterNameToModelAttributeName((string) $propertyName, $entity);
-            if ($modelAttribute === null) {
-                continue;
+            if ($modelAttribute !== null) {
+                $modelValue = $this->castValueForModel($propertyValue, $modelAttribute, $entity);
+                $dataArray[$modelAttribute] = $modelValue;
             }
-            $modelValue = $this->castValueForModel($propertyValue, $modelAttribute, $entity);
-            $dataArray[$modelAttribute] = $modelValue;
         }
 
         return $dataArray;
@@ -104,13 +92,8 @@ class EloquentDenormalizer implements DenormalizerInterface
 
     /**
      * Пробует преобразовать имя параметра так, чтобы получить соответствие из модели.
-     *
-     * @param string $name
-     * @param Model  $entity
-     *
-     * @return string|null
      */
-    protected function mapParameterNameToModelAttributeName(string $name, Model $entity): ?string
+    private function mapParameterNameToModelAttributeName(string $name, Model $entity): ?string
     {
         $mappedName = null;
 
@@ -124,11 +107,8 @@ class EloquentDenormalizer implements DenormalizerInterface
             strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $name)),
         ];
 
-        /** @var string[] */
-        $fields = $entity->getFillable();
-        foreach ($fields as $field) {
-            $loweredField = strtolower($field);
-            if (\in_array($loweredField, $nameVariants)) {
+        foreach ($entity->getFillable() as $field) {
+            if (\in_array(strtolower($field), $nameVariants)) {
                 $mappedName = $field;
                 break;
             }
@@ -139,22 +119,12 @@ class EloquentDenormalizer implements DenormalizerInterface
 
     /**
      * Преобразует значение атрибута к тому типу, который указан в модели.
-     *
-     * @param mixed  $value
-     * @param string $attributeName
-     * @param Model  $entity
-     *
-     * @return mixed
-     *
-     * @throws \Exception
      */
-    protected function castValueForModel($value, string $attributeName, Model $entity)
+    private function castValueForModel(mixed $value, string $attributeName, Model $entity): mixed
     {
-        /** @var array<string, string> */
-        $casts = $entity->getCasts();
-        $type = $casts[$attributeName] ?? '';
+        $type = (string) ($entity->getCasts()[$attributeName] ?? '');
 
-        if ($value !== null && $this->typeCaster && $this->typeCaster->canCast($type, $value)) {
+        if ($value !== null && $this->typeCaster->canCast($type, $value)) {
             $value = $this->typeCaster->cast($type, $value);
         }
 

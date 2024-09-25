@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения по типам комнат.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int                $id         Идентификатор типа (ключ)
  * @property string             $name       Наименование
  * @property string|null        $shortname  Краткое наименование
@@ -18,21 +20,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property \DateTimeInterface $enddate    Окончание действия записи
  * @property string             $isactive   Статус активности
  */
-class RoomTypes extends Model
+final class RoomTypes extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string */
     protected $table = 'fias_laravel_room_types';
-
-    /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var string[] */
     protected $fillable = [
         'id',
         'name',
@@ -44,7 +38,6 @@ class RoomTypes extends Model
         'isactive',
     ];
 
-    /** @var array */
     protected $casts = [
         'id' => 'integer',
         'name' => 'string',
@@ -64,7 +57,7 @@ class RoomTypes extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }

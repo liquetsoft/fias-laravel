@@ -18,14 +18,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string             $objectguid
  * @property int                $isactive
  */
-class ReestrObjects extends JsonResource
+final class ReestrObjects extends JsonResource
 {
     /**
      * Преобразует сущность 'ReestrObjects' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

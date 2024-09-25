@@ -12,7 +12,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
  *
  * @internal
  */
-class AddrObjTest extends BaseCase
+final class AddrObjTest extends BaseCase
 {
     /**
      * Проверяет, что модель привязана к правильной таблице в базе.

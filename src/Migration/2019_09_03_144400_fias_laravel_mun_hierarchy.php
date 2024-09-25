@@ -33,6 +33,7 @@ class Fiaslaravelmunhierarchy extends Migration
             $table->datetime('startdate')->nullable(false)->comment('Начало действия записи');
             $table->datetime('enddate')->nullable(false)->comment('Окончание действия записи');
             $table->unsignedInteger('isactive')->nullable(false)->comment('Признак действующего адресного объекта');
+            $table->string('path', 255)->nullable(false)->comment('Материализованный путь к объекту (полная иерархия)');
             // настройки таблицы
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

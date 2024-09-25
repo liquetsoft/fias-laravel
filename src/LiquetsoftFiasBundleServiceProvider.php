@@ -6,20 +6,21 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use Liquetsoft\Fias\Component\Downloader\CurlDownloader;
 use Liquetsoft\Fias\Component\Downloader\Downloader;
+use Liquetsoft\Fias\Component\Downloader\DownloaderImpl;
 use Liquetsoft\Fias\Component\EntityManager\BaseEntityManager;
 use Liquetsoft\Fias\Component\EntityManager\EntityManager;
 use Liquetsoft\Fias\Component\EntityRegistry\EntityRegistry;
 use Liquetsoft\Fias\Component\EntityRegistry\PhpArrayFileRegistry;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
-use Liquetsoft\Fias\Component\FiasInformer\SoapFiasInformer;
-use Liquetsoft\Fias\Component\FiasStatusChecker\CurlStatusChecker;
+use Liquetsoft\Fias\Component\FiasInformer\FiasInformerImpl;
 use Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusChecker;
+use Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusCheckerImpl;
 use Liquetsoft\Fias\Component\FilesDispatcher\EntityFileDispatcher;
 use Liquetsoft\Fias\Component\FilesDispatcher\FilesDispatcher;
 use Liquetsoft\Fias\Component\Filter\Filter;
 use Liquetsoft\Fias\Component\Filter\RegexpFilter;
+use Liquetsoft\Fias\Component\HttpTransport\HttpTransport;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\Task\CheckStatusTask;
@@ -56,25 +57,23 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateFromFolderCommand
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\UpdateParallelRunningCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\VersionsCommand;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command\VersionSetCommand;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\HttpTransport\HttpTransportLaravel;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage\EloquentStorage;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
+use Marvin255\FileSystemHelper\FileSystemFactory;
+use Marvin255\FileSystemHelper\FileSystemHelperInterface;
 use Psr\Log\LoggerInterface;
 
 /**
  * Service provider для модуля.
  */
-class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
+final class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 {
-    /**
-     * @var string
-     */
-    protected $bundlePrefix = 'liquetsoft_fias';
+    private string $bundlePrefix = 'liquetsoft_fias';
 
     /**
      * Регистрирует сервисы модуля в приложении.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -98,8 +97,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Загружает данныем модуля в приложение.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -152,29 +149,26 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      * Регистрирует сервисы бандла.
      *
      * @param array<string, \Closure|string> $servicesList
-     *
-     * @return void
      */
     private function registerServices(array &$servicesList): void
     {
-        // объект, который получает ссылку на ФИАС через soap-клиент
-        $servicesList[FiasInformer::class] = function (): FiasInformer {
-            return new SoapFiasInformer($this->getOptionString('informer_wsdl'));
-        };
+        // Объект для работы с файловой системой
+        $servicesList[FileSystemHelperInterface::class] = fn (): FileSystemHelperInterface => FileSystemFactory::create();
+
+        // http клиент
+        $servicesList[HttpTransport::class] = HttpTransportLaravel::class;
+
+        // объект, который получает ссылку на ФИАС через http-клиент
+        $servicesList[FiasInformer::class] = FiasInformerImpl::class;
 
         // объект, который проверяет статус ФИАС
-        $servicesList[FiasStatusChecker::class] = function (Application $app): FiasStatusChecker {
-            return new CurlStatusChecker(
-                $this->getOptionString('informer_wsdl'),
-                $app->get(FiasInformer::class)
-            );
-        };
+        $servicesList[FiasStatusChecker::class] = FiasStatusCheckerImpl::class;
 
         // объект, который загружает файлы
-        $servicesList[Downloader::class] = function (): Downloader {
-            return new CurlDownloader(
-                $this->getOptionArray('curl_settings'),
-                $this->getOptionInt('download_retry_attempts') ?: 1
+        $servicesList[Downloader::class] = function (Application $app): Downloader {
+            return new DownloaderImpl(
+                $app->get(HttpTransport::class),
+                $this->getOptionInt('download_retry_attempts')
             );
         };
 
@@ -244,8 +238,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      * Регистрирует задачи бандла.
      *
      * @param array<string, \Closure|string> $servicesList
-     *
-     * @return void
      */
     private function registerTasks(array &$servicesList): void
     {
@@ -346,8 +338,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      * Регистрирует пайплайны бандла.
      *
      * @param array<string, \Closure|string> $servicesList
-     *
-     * @return void
      */
     private function registerPipelines(array &$servicesList): void
     {
@@ -441,10 +431,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Возвращает значение указанной опции в виде строки.
-     *
-     * @param string $name
-     *
-     * @return string
      */
     private function getOptionString(string $name): string
     {
@@ -455,10 +441,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Возвращает значение указанной опции в виде целого числа.
-     *
-     * @param string $name
-     *
-     * @return int
      */
     private function getOptionInt(string $name): int
     {
@@ -469,10 +451,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Возвращает значение указанной опции в виде массива.
-     *
-     * @param string $name
-     *
-     * @return array
      */
     private function getOptionArray(string $name): array
     {
@@ -483,8 +461,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Возвращает значение указанной опции в виде массива строк.
-     *
-     * @param string $name
      *
      * @return array<string, string>
      */
@@ -501,10 +477,6 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Возвращает значение указанной опции в виде bool.
-     *
-     * @param string $name
-     *
-     * @return bool
      */
     private function getOptionBool(string $name): bool
     {
@@ -513,22 +485,14 @@ class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
 
     /**
      * Возвращает значение опции по ее названию.
-     *
-     * @param string $name
-     *
-     * @return mixed
      */
-    private function getOptionByName(string $name)
+    private function getOptionByName(string $name): mixed
     {
         return config($this->prefixString($name));
     }
 
     /**
      * Добавляет префикс модуля к строке.
-     *
-     * @param string $string
-     *
-     * @return string
      */
     private function prefixString(string $string): string
     {

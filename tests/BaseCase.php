@@ -9,6 +9,7 @@ use Faker\Generator;
 use Marvin255\FileSystemHelper\FileSystemException;
 use Marvin255\FileSystemHelper\FileSystemFactory;
 use Marvin255\FileSystemHelper\FileSystemHelperInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,20 +17,11 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class BaseCase extends TestCase
 {
-    /**
-     * @var Generator|null
-     */
-    private $faker = null;
+    private ?Generator $faker = null;
 
-    /**
-     * @var FileSystemHelperInterface|null
-     */
-    private $fs = null;
+    private ?FileSystemHelperInterface $fs = null;
 
-    /**
-     * @var string|null
-     */
-    private $tempDir = null;
+    private ?string $tempDir = null;
 
     /**
      * Возвращает объект php faker для генерации случайных данных.
@@ -37,8 +29,6 @@ abstract class BaseCase extends TestCase
      * Использует ленивую инициализацию и создает объект faker только при первом
      * запросе, для всех последующих запросов возвращает тот же самый инстанс,
      * который был создан в первый раз.
-     *
-     * @return Generator
      */
     public function createFakeData(): Generator
     {
@@ -51,8 +41,6 @@ abstract class BaseCase extends TestCase
 
     /**
      * Возвращает объект для работы с файловой системой.
-     *
-     * @return FileSystemHelperInterface
      */
     public function fs(): FileSystemHelperInterface
     {
@@ -65,8 +53,6 @@ abstract class BaseCase extends TestCase
 
     /**
      * Возвращает путь до базовой папки для тестов.
-     *
-     * @return string
      *
      * @throws \RuntimeException
      * @throws FileSystemException
@@ -91,10 +77,6 @@ abstract class BaseCase extends TestCase
     /**
      * Создает тестовую директорию во временной папке и возвращает путь до нее.
      *
-     * @param string $name
-     *
-     * @return string
-     *
      * @throws \RuntimeException
      * @throws FileSystemException
      */
@@ -113,11 +95,6 @@ abstract class BaseCase extends TestCase
 
     /**
      * Создает тестовый файл во временной директории.
-     *
-     * @param string      $name
-     * @param string|null $content
-     *
-     * @return string
      */
     protected function getPathToTestFile(string $name = '', ?string $content = null): string
     {
@@ -139,10 +116,26 @@ abstract class BaseCase extends TestCase
      */
     protected function tearDown(): void
     {
-        if ($this->tempDir) {
+        if ($this->tempDir !== null) {
             $this->fs()->remove($this->tempDir);
         }
 
         parent::tearDown();
+    }
+
+    /**
+     * @template T
+     *
+     * @param class-string<T> $className
+     *
+     * @return MockObject&T
+     */
+    protected function mock(string $className): MockObject
+    {
+        $mock = $this->getMockBuilder($className)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return $mock;
     }
 }

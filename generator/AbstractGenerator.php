@@ -20,17 +20,10 @@ abstract class AbstractGenerator
     /**
      * Создает php класс для указанного дескриптора.
      *
-     * @param EntityDescriptor $descriptor
-     * @param \SplFileInfo     $dir
-     * @param string           $namespace
-     *
      * @throws \Throwable
      */
     abstract protected function generateClassByDescriptor(EntityDescriptor $descriptor, \SplFileInfo $dir, string $namespace): void;
 
-    /**
-     * @param EntityRegistry $registry
-     */
     public function __construct(EntityRegistry $registry)
     {
         $this->registry = $registry;
@@ -38,9 +31,6 @@ abstract class AbstractGenerator
 
     /**
      * Создает классы сущностей в указанной папке с указанным пространством имен.
-     *
-     * @param \SplFileInfo $dir
-     * @param string       $namespace
      *
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
@@ -53,16 +43,13 @@ abstract class AbstractGenerator
         try {
             $this->generate($dir, $unifiedNamespace);
         } catch (\Throwable $e) {
-            $message = 'Error while class generation.';
+            $message = 'Error while class generation';
             throw new \RuntimeException($message, 0, $e);
         }
     }
 
     /**
      * Процесс генерации классов.
-     *
-     * @param \SplFileInfo $dir
-     * @param string       $namespace
      *
      * @throws \Throwable
      */
@@ -77,25 +64,19 @@ abstract class AbstractGenerator
     /**
      * Проверяет, что каталог существует и доступен на запись.
      *
-     * @param \SplFileInfo $dir
-     *
      * @throws \InvalidArgumentException
      */
     protected function checkDir(\SplFileInfo $dir): void
     {
         if (!$dir->isDir() || !$dir->isWritable()) {
             throw new \InvalidArgumentException(
-                "Destination folder '" . $dir->getPathname() . "' isn't writable or doesn't exist."
+                "Destination folder '" . $dir->getPathname() . "' isn't writable or doesn't exist"
             );
         }
     }
 
     /**
      * Приводит пространсва имен к единообразному виду.
-     *
-     * @param string $namespace
-     *
-     * @return string
      */
     protected function unifyClassName(string $namespace): string
     {
@@ -107,10 +88,6 @@ abstract class AbstractGenerator
 
     /**
      * Приводит пространства имен к единообразному виду.
-     *
-     * @param string $namespace
-     *
-     * @return string
      */
     protected function unifyNamespace(string $namespace): string
     {
@@ -119,10 +96,6 @@ abstract class AbstractGenerator
 
     /**
      * Приводит имена колонок к единообразному виду.
-     *
-     * @param string $name
-     *
-     * @return string
      */
     protected function unifyColumnName(string $name): string
     {
@@ -131,10 +104,6 @@ abstract class AbstractGenerator
 
     /**
      * Преобразует имя класса в имя таблицы в БД.
-     *
-     * @param string $name
-     *
-     * @return string
      */
     protected function convertClassnameToTableName(string $name): string
     {

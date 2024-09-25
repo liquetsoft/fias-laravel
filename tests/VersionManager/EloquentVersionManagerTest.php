@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\VersionManager;
 
-use Liquetsoft\Fias\Component\FiasInformer\InformerResponse;
+use Liquetsoft\Fias\Component\FiasInformer\FiasInformerResponse;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FiasVersion;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\EloquentTestCase;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
@@ -14,7 +14,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionM
  *
  * @internal
  */
-class EloquentVersionManagerTest extends EloquentTestCase
+final class EloquentVersionManagerTest extends EloquentTestCase
 {
     /**
      * Создает таблицу в бд перед тестами.
@@ -28,7 +28,10 @@ class EloquentVersionManagerTest extends EloquentTestCase
                     'type' => 'integer',
                     'primary' => true,
                 ],
-                'url' => [
+                'fullurl' => [
+                    'type' => 'string',
+                ],
+                'deltaurl' => [
                     'type' => 'string',
                 ],
                 'created_at' => [
@@ -43,12 +46,14 @@ class EloquentVersionManagerTest extends EloquentTestCase
      */
     public function testSetCurrentVersion(): void
     {
-        $version = $this->createFakeData()->numberBetween(1, 1000);
-        $url = $this->createFakeData()->url();
+        $version = 123;
+        $fullUrl = 'https://test.test/full';
+        $deltaUrl = 'https://test.test/delta';
 
-        $info = $this->getMockBuilder(InformerResponse::class)->getMock();
-        $info->method('getVersion')->willReturn($version);
-        $info->method('getUrl')->willReturn($url);
+        $info = $this->mock(FiasInformerResponse::class);
+        $info->expects($this->any())->method('getVersion')->willReturn($version);
+        $info->expects($this->any())->method('getFullUrl')->willReturn($fullUrl);
+        $info->expects($this->any())->method('getDeltaUrl')->willReturn($deltaUrl);
 
         $versionManager = new EloquentVersionManager(FiasVersion::class);
         $versionManager->setCurrentVersion($info);
@@ -57,22 +62,10 @@ class EloquentVersionManagerTest extends EloquentTestCase
             'fias_laravel_fias_version',
             [
                 'version' => $version,
-                'url' => $url,
+                'fullurl' => $fullUrl,
+                'deltaurl' => $deltaUrl,
             ]
         );
-    }
-
-    /**
-     * Проверяет, что объект выбросит исключение, если задан неверный класс сущности.
-     */
-    public function testSetCurrentVersionWrongEntityException(): void
-    {
-        $info = $this->getMockBuilder(InformerResponse::class)->getMock();
-
-        $versionManager = new EloquentVersionManager('test');
-
-        $this->expectException(\RuntimeException::class);
-        $versionManager->setCurrentVersion($info);
     }
 
     /**
@@ -80,30 +73,35 @@ class EloquentVersionManagerTest extends EloquentTestCase
      */
     public function testGetCurrentVersion(): void
     {
-        $version = $this->createFakeData()->numberBetween(1, 1000);
-        $url = $this->createFakeData()->url();
+        $version = 123;
+        $fullUrl = 'https://test.test/full';
+        $deltaUrl = 'https://test.test/delta';
 
-        $info = $this->getMockBuilder(InformerResponse::class)->getMock();
-        $info->method('getVersion')->willReturn($version);
-        $info->method('getUrl')->willReturn($url);
+        $info = $this->mock(FiasInformerResponse::class);
+        $info->expects($this->any())->method('getVersion')->willReturn($version);
+        $info->expects($this->any())->method('getFullUrl')->willReturn($fullUrl);
+        $info->expects($this->any())->method('getDeltaUrl')->willReturn($deltaUrl);
 
         $versionManager = new EloquentVersionManager(FiasVersion::class);
         $versionManager->setCurrentVersion($info);
-
         $versionResponse = $versionManager->getCurrentVersion();
 
+        $this->assertNotNull($versionResponse);
         $this->assertSame($version, $versionResponse->getVersion());
-        $this->assertSame($url, $versionResponse->getUrl());
+        $this->assertSame($fullUrl, $versionResponse->getFullUrl());
+        $this->assertSame($deltaUrl, $versionResponse->getDeltaUrl());
     }
 
     /**
      * Проверяет, что объект выбросит исключение, если задан неверный класс сущности.
      */
-    public function testGetCurrentVersionWrongEntityException(): void
+    public function testSetCurrentVersionWrongEntityException(): void
     {
+        $info = $this->mock(FiasInformerResponse::class);
+
         $versionManager = new EloquentVersionManager('test');
 
         $this->expectException(\RuntimeException::class);
-        $versionResponse = $versionManager->getCurrentVersion();
+        $versionManager->setCurrentVersion($info);
     }
 }

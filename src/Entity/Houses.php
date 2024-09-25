@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения по номерам домов улиц городов и населенных пунктов.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int                $id         Уникальный идентификатор записи. Ключевое поле
  * @property int                $objectid   Глобальный уникальный идентификатор объекта типа INTEGER
  * @property string             $objectguid Глобальный уникальный идентификатор адресного объекта типа UUID
@@ -28,21 +30,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                $isactual   Статус актуальности адресного объекта ФИАС
  * @property int                $isactive   Признак действующего адресного объекта
  */
-class Houses extends Model
+final class Houses extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string */
     protected $table = 'fias_laravel_houses';
-
-    /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var string[] */
     protected $fillable = [
         'id',
         'objectid',
@@ -64,7 +58,6 @@ class Houses extends Model
         'isactive',
     ];
 
-    /** @var array */
     protected $casts = [
         'id' => 'integer',
         'objectid' => 'integer',
@@ -94,7 +87,7 @@ class Houses extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }

@@ -10,8 +10,10 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 
 /**
  * Тест ресурса для сущности 'AdmHierarchy'.
+ *
+ * @internal
  */
-class AdmHierarchy extends BaseCase
+final class AdmHierarchyTest extends BaseCase
 {
     /**
      * Проверяет, что ресурс верно преобразует сущность в массив.
@@ -35,6 +37,7 @@ class AdmHierarchy extends BaseCase
         $model->startdate = $this->createFakeData()->dateTime();
         $model->enddate = $this->createFakeData()->dateTime();
         $model->isactive = $this->createFakeData()->numberBetween(1, 1000000);
+        $model->path = $this->createFakeData()->word();
 
         $resource = new Resource($model);
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
@@ -72,5 +75,7 @@ class AdmHierarchy extends BaseCase
         $this->assertSame($model->enddate->format(\DateTimeInterface::ATOM), $array['enddate']);
         $this->assertArrayHasKey('isactive', $array);
         $this->assertSame($model->isactive, $array['isactive']);
+        $this->assertArrayHasKey('path', $array);
+        $this->assertSame($model->path, $array['path']);
     }
 }

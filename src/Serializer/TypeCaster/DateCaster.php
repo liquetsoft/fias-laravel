@@ -6,23 +6,23 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster;
 
 /**
  * Преобразует данные в дату.
+ *
+ * @internal
  */
-class DateCaster implements TypeCaster
+final class DateCaster implements TypeCaster
 {
     /**
      * {@inheritDoc}
      */
-    public function canCast(string $type, $value): bool
+    public function canCast(string $type, mixed $value): bool
     {
         return strpos($type, 'date') === 0;
     }
 
     /**
      * {@inheritDoc}
-     *
-     * @throws \Exception
      */
-    public function cast(string $type, $value)
+    public function cast(string $type, mixed $value): mixed
     {
         return new \DateTimeImmutable((string) $value);
     }

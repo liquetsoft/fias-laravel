@@ -13,27 +13,16 @@ use Liquetsoft\Fias\Component\Pipeline\Task\Task;
  * Команда, которая очищает хранилища для всех сущностей проекта, привязанных
  * к сущностям ФИАС.
  */
-class TruncateCommand extends Command
+final class TruncateCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'liquetsoft:fias:truncate';
 
-    /**
-     * @var string|null
-     */
     protected $description = 'Truncates storage for binded entities.';
 
-    /**
-     * @var Task
-     */
-    protected $task;
+    private readonly Task $task;
 
     /**
      * В конструкторе передаем ссылку на пайплайн установки.
-     *
-     * @param Application $app
      */
     public function __construct(Application $app)
     {
@@ -43,16 +32,13 @@ class TruncateCommand extends Command
 
     /**
      * Запуск команды на исполнение.
-     *
-     * @throws \Exception
      */
     public function handle(): void
     {
-        $this->info('Truncating storage for binded entities.');
+        $this->info('Truncating storage for bound entities');
 
-        $state = new ArrayState();
-        $this->task->run($state);
+        $this->task->run(new ArrayState());
 
-        $this->info('Storage truncated.');
+        $this->info('Storage truncated');
     }
 }

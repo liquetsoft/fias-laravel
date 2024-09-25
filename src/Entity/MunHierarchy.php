@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Сведения по иерархии в муниципальном делении.
  *
+ * @psalm-consistent-constructor
+ *
  * @property int                $id          Уникальный идентификатор записи. Ключевое поле
  * @property int                $objectid    Глобальный уникальный идентификатор адресного объекта
  * @property int|null           $parentobjid Идентификатор родительского объекта
@@ -20,22 +22,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property \DateTimeInterface $startdate   Начало действия записи
  * @property \DateTimeInterface $enddate     Окончание действия записи
  * @property int                $isactive    Признак действующего адресного объекта
+ * @property string             $path        Материализованный путь к объекту (полная иерархия)
  */
-class MunHierarchy extends Model
+final class MunHierarchy extends Model
 {
-    /** @var bool */
     public $timestamps = false;
-
-    /** @var bool */
     public $incrementing = false;
-
-    /** @var string */
     protected $table = 'fias_laravel_mun_hierarchy';
-
-    /** @var string */
     protected $primaryKey = 'id';
 
-    /** @var string[] */
     protected $fillable = [
         'id',
         'objectid',
@@ -48,9 +43,9 @@ class MunHierarchy extends Model
         'startdate',
         'enddate',
         'isactive',
+        'path',
     ];
 
-    /** @var array */
     protected $casts = [
         'id' => 'integer',
         'objectid' => 'integer',
@@ -63,6 +58,7 @@ class MunHierarchy extends Model
         'startdate' => 'datetime',
         'enddate' => 'datetime',
         'isactive' => 'integer',
+        'path' => 'string',
     ];
 
     /**
@@ -73,7 +69,7 @@ class MunHierarchy extends Model
     public function getConnectionName()
     {
         $connection = $this->connection;
-        if (\function_exists('app') && app()->has('config')) {
+        if (\function_exists('app') && app()->has('config') === true) {
             /** @var string|null */
             $connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: $this->connection;
         }

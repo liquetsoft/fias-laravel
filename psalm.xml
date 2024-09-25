@@ -16,6 +16,7 @@
 
     <issueHandlers>
         <PropertyNotSetInConstructor errorLevel="suppress"/>
+        <InvalidTemplateParam errorLevel="suppress"/>
         <MixedAssignment errorLevel="suppress"/>
         <MixedArgument>
             <errorLevel type="suppress">

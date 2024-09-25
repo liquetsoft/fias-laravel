@@ -18,14 +18,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property \DateTimeInterface $enddate
  * @property string             $isactive
  */
-class ObjectLevels extends JsonResource
+final class ObjectLevels extends JsonResource
 {
     /**
      * Преобразует сущность 'ObjectLevels' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

@@ -32,10 +32,6 @@ return [
      */
     'allow_bundle_migrations' => true,
     /*
-     * Ссылка на WSDL сервиса, который возвращает ссылки на архив с ФИАС для указанных версий.
-     */
-    'informer_wsdl' => 'http://fias.nalog.ru/WebServices/Public/DownloadService.asmx?WSDL',
-    /*
      * Путь к yaml файлу с описаниями сущностей ФИАС. null - использовать по умолчанию.
      */
     'registry_path' => null,

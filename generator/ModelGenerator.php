@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\EntityField;
 use Nette\PhpGenerator\ClassType;
+use Nette\PhpGenerator\Literal;
 use Nette\PhpGenerator\PhpFile;
-use Nette\PhpGenerator\PhpLiteral;
 use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\PsrPrinter;
 
@@ -32,7 +32,7 @@ class ModelGenerator extends AbstractGenerator
         $namespace = $phpFile->addNamespace($namespace);
         $this->decorateNamespace($namespace, $descriptor);
 
-        $class = $namespace->addClass($name)->addExtend(Model::class);
+        $class = $namespace->addClass($name)->setFinal()->setExtends(Model::class);
         $this->decorateClass($class, $descriptor);
 
         file_put_contents($fullPath, (new PsrPrinter())->printFile($phpFile));
@@ -40,9 +40,6 @@ class ModelGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые импорты в пространство имен.
-     *
-     * @param PhpNamespace     $namespace
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateNamespace(PhpNamespace $namespace, EntityDescriptor $descriptor): void
     {
@@ -56,9 +53,6 @@ class ModelGenerator extends AbstractGenerator
 
     /**
      * Добавляет все необходимые для класса комментарии.
-     *
-     * @param ClassType        $class
-     * @param EntityDescriptor $descriptor
      */
     protected function decorateClass(ClassType $class, EntityDescriptor $descriptor): void
     {
@@ -66,6 +60,8 @@ class ModelGenerator extends AbstractGenerator
         if ($description) {
             $class->addComment("{$description}.\n");
         }
+
+        $class->addComment('@psalm-consistent-constructor');
 
         $isPrimaryIsUuid = false;
         $primaryName = null;
@@ -81,48 +77,41 @@ class ModelGenerator extends AbstractGenerator
             }
         }
 
-        $class->addProperty('timestamps', new PhpLiteral('false'))
+        $class->addProperty('timestamps', new Literal('false'))
             ->setVisibility('public')
-            ->addComment('@var bool')
         ;
 
-        $class->addProperty('incrementing', new PhpLiteral('false'))
+        $class->addProperty('incrementing', new Literal('false'))
             ->setVisibility('public')
-            ->addComment('@var bool')
         ;
 
         $tableName = $this->convertClassnameToTableName($descriptor->getName());
         $class->addProperty('table', $tableName)
             ->setVisibility('protected')
-            ->addComment('@var string')
         ;
 
         $class->addProperty('primaryKey', $primaryName)
             ->setVisibility('protected')
-            ->addComment('@var string')
         ;
 
         if ($isPrimaryIsUuid) {
             $class->addProperty('keyType', 'string')
                 ->setVisibility('protected')
-                ->addComment('@var string')
             ;
         }
 
-        $fillableValue = new PhpLiteral("[\n    '" . implode("',\n    '", $fill) . "',\n]");
+        $fillableValue = new Literal("[\n    '" . implode("',\n    '", $fill) . "',\n]");
         $class->addProperty('fillable', $fillableValue)
             ->setVisibility('protected')
-            ->addComment('@var string[]')
         ;
 
-        $castValue = new PhpLiteral($this->createCastValue($descriptor));
+        $castValue = new Literal($this->createCastValue($descriptor));
         $class->addProperty('casts', $castValue)
             ->setVisibility('protected')
-            ->addComment('@var array')
         ;
 
         $connectionMethod = "\$connection = \$this->connection;\n";
-        $connectionMethod .= "if (\\function_exists('app') && app()->has('config')) {\n";
+        $connectionMethod .= "if (\\function_exists('app') && app()->has('config') === true) {\n";
         $connectionMethod .= "    /** @var string|null */\n";
         $connectionMethod .= "    \$connection = app('config')->get('liquetsoft_fias.eloquent_connection') ?: \$this->connection;\n";
         $connectionMethod .= "}\n\n";
@@ -135,9 +124,6 @@ class ModelGenerator extends AbstractGenerator
 
     /**
      * Добавляет все свойства в формате phpDoc, поскольку в laravel они используют магию.
-     *
-     * @param ClassType   $class
-     * @param EntityField $field
      */
     protected function decorateProperty(ClassType $class, EntityField $field): void
     {

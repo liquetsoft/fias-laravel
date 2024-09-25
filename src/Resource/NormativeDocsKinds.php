@@ -13,14 +13,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int    $id
  * @property string $name
  */
-class NormativeDocsKinds extends JsonResource
+final class NormativeDocsKinds extends JsonResource
 {
     /**
      * Преобразует сущность 'NormativeDocsKinds' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

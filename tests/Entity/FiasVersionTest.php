@@ -12,7 +12,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
  *
  * @internal
  */
-class FiasVersionTest extends BaseCase
+final class FiasVersionTest extends BaseCase
 {
     /**
      * Проверяет, что модель привязана к правильной таблице в базе.
@@ -33,7 +33,8 @@ class FiasVersionTest extends BaseCase
         $fields = $model->getFillable();
 
         $this->assertContains('version', $fields);
-        $this->assertContains('url', $fields);
+        $this->assertContains('fullurl', $fields);
+        $this->assertContains('deltaurl', $fields);
         $this->assertContains('created_at', $fields);
     }
 

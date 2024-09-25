@@ -12,7 +12,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
  *
  * @internal
  */
-class RoomTypesTest extends BaseCase
+final class RoomTypesTest extends BaseCase
 {
     /**
      * Проверяет, что модель привязана к правильной таблице в базе.

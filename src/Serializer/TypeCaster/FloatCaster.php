@@ -6,13 +6,15 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster;
 
 /**
  * Преобразует данные в float.
+ *
+ * @internal
  */
-class FloatCaster implements TypeCaster
+final class FloatCaster implements TypeCaster
 {
     /**
      * {@inheritDoc}
      */
-    public function canCast(string $type, $value): bool
+    public function canCast(string $type, mixed $value): bool
     {
         return $type === 'real' || $type === 'float' || $type === 'double' || strpos($type, 'decimal') === 0;
     }
@@ -20,7 +22,7 @@ class FloatCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
-    public function cast(string $type, $value)
+    public function cast(string $type, mixed $value): mixed
     {
         return (float) $value;
     }

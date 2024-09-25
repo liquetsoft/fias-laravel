@@ -23,14 +23,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property \DateTimeInterface|null $accdate
  * @property string|null             $comment
  */
-class NormativeDocs extends JsonResource
+final class NormativeDocs extends JsonResource
 {
     /**
      * Преобразует сущность 'NormativeDocs' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {

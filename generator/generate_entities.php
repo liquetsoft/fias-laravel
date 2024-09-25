@@ -35,9 +35,15 @@ $registry = new ArrayEntityRegistry(array_merge($defaultRegistry->getDescriptors
                 'isPrimary' => true,
             ]),
             new BaseEntityField([
-                'name' => 'url',
+                'name' => 'fullUrl',
                 'type' => 'string',
-                'description' => 'Ссылка для загрузки указанной версии ФИАС',
+                'description' => 'Ссылка для загрузки полной версии ФИАС',
+                'isNullable' => false,
+            ]),
+            new BaseEntityField([
+                'name' => 'deltaUrl',
+                'type' => 'string',
+                'description' => 'Ссылка для загрузки обновления до версии ФИАС',
                 'isNullable' => false,
             ]),
             new BaseEntityField([

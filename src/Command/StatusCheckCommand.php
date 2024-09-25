@@ -6,32 +6,20 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 
 use Illuminate\Console\Command;
 use Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusChecker;
+use Liquetsoft\Fias\Component\FiasStatusChecker\FiasStatusCheckerResult;
 
 /**
  * Консольная команда, которая проверяет и отображает текущий статус ФИАС.
  */
-class StatusCheckCommand extends Command
+final class StatusCheckCommand extends Command
 {
-    /**
-     * @var string
-     */
     protected $signature = 'liquetsoft:fias:status';
 
-    /**
-     * @var string|null
-     */
     protected $description = 'Shows information about current status of FIAS services.';
 
-    /**
-     * @var FiasStatusChecker
-     */
-    private $statusChecker;
-
-    public function __construct(FiasStatusChecker $statusChecker)
+    public function __construct(private readonly FiasStatusChecker $statusChecker)
     {
         parent::__construct();
-
-        $this->statusChecker = $statusChecker;
     }
 
     /**
@@ -41,11 +29,38 @@ class StatusCheckCommand extends Command
     {
         $status = $this->statusChecker->check();
 
-        if ($status->getResultStatus() === FiasStatusChecker::STATUS_AVAILABLE) {
+        if ($status->canProceed()) {
             $this->info('FIAS is OK and available.');
         } else {
             $this->error('FIAS is not available.');
-            $this->table(['Service', 'Status', 'Reason'], $status->getPerServiceStatuses());
+            $this->table(
+                [
+                    'Service',
+                    'Status',
+                    'Reason',
+                ],
+                $this->convertStatusToTableBody($status)
+            );
         }
+    }
+
+    /**
+     * Конвертирует массив статусов в массив строк для таблицы.
+     *
+     * @return array<int, array<int, string>>
+     */
+    private function convertStatusToTableBody(FiasStatusCheckerResult $status): array
+    {
+        $tableBody = [];
+
+        foreach ($status->getPerServiceStatuses() as $serviceStatus) {
+            $tableBody[] = [
+                $serviceStatus->getService()->value,
+                $serviceStatus->getStatus()->value,
+                $serviceStatus->getReason(),
+            ];
+        }
+
+        return $tableBody;
     }
 }

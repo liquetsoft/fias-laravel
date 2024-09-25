@@ -26,15 +26,14 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property \DateTimeInterface $startdate
  * @property \DateTimeInterface $enddate
  * @property int                $isactive
+ * @property string             $path
  */
-class AdmHierarchy extends JsonResource
+final class AdmHierarchy extends JsonResource
 {
     /**
      * Преобразует сущность 'AdmHierarchy' в массив.
      *
      * @param Request $request
-     *
-     * @return array
      */
     public function toArray($request): array
     {
@@ -55,6 +54,7 @@ class AdmHierarchy extends JsonResource
             'startdate' => $this->startdate->format(\DateTimeInterface::ATOM),
             'enddate' => $this->enddate->format(\DateTimeInterface::ATOM),
             'isactive' => $this->isactive,
+            'path' => $this->path,
         ];
     }
 }
