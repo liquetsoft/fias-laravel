@@ -10,12 +10,13 @@ jobs:
 
 
   build:
-    name: Liquetsoft FIAS (PHP ${{ matrix.php-versions }})
+    name: Liquetsoft FIAS (PHP ${{ matrix.php-versions }}, Laravel ${{ matrix.laravel-versions }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
       matrix:
-        php-versions: ['8.2']
+        php-versions: ['8.2', '8.3']
+        laravel-versions: ['^9.0', '^10.0', '^11.0']
     steps:
     - uses: actions/checkout@v2
     - name: Install PHP
@@ -24,14 +25,20 @@ jobs:
         php-version: ${{ matrix.php-versions }}
     - name: Check PHP Version
       run: php -v
-    - name: Validate composer.json and composer.lock
+    - name: Validate composer.json
       run: composer validate
+    - name: Set up Laravel components versions
+      run: "sed -i -E \"s#\\\"(laravel/.+)\\\".*:.*\\\"(.+)\\\"#\\\"\\1\\\":\\\"${{ matrix.laravel-versions }}\\\"#g\" composer.json"
+    - name: Set up Illuminate components versions
+      run: "sed -i -E \"s#\\\"(illuminate/.+)\\\".*:.*\\\"(.+)\\\"#\\\"\\1\\\":\\\"${{ matrix.laravel-versions }}\\\"#g\" composer.json"
+    - name: Show composer.json
+      run: cat composer.json
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v2
       with:
         path: vendor
-        key: ${{ runner.os }}-php-${{ matrix.php-versions }}-${{ hashFiles('**/composer.json') }}
+        key: ${{ runner.os }}-php-${{ matrix.php-versions }}-laravel-${{ matrix.laravel-versions }}-${{ hashFiles('**/composer.json') }}
         restore-keys: |
           ${{ runner.os }}-php-
     - name: Install dependencies
@@ -63,8 +70,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.2']
-        laravel-version: ['^8.0', '^9.0', '^10.0', '^11.0']
+        php-version: ['8.2', '8.3']
+        laravel-version: ['^9.0', '^10.0', '^11.0']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
