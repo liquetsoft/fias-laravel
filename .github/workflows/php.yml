@@ -29,6 +29,7 @@ jobs:
       run: composer validate
     - name: Set up Symfony components versions
       run: |
+        ls -la
         "sed -i -E \"s#\\\"(laravel/.+)\\\".*:.*\\\"(.+)\\\"#\\\"\\1\\\":\\\"${{ matrix.laravel-versions }}\\\"#g\" composer.json"
         "sed -i -E \"s#\\\"(illuminate/.+)\\\".*:.*\\\"(.+)\\\"#\\\"\\1\\\":\\\"${{ matrix.laravel-versions }}\\\"#g\" composer.json"
     - name: Show composer.json
