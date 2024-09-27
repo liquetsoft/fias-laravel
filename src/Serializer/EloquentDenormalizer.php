@@ -92,7 +92,7 @@ final class EloquentDenormalizer implements DenormalizerInterface
 
     /**
      * Пробует преобразовать имя параметра так, чтобы получить соответствие из модели.
-     * 
+     *
      * @psalm-suppress MixedArgument
      */
     private function mapParameterNameToModelAttributeName(string $name, Model $entity): ?string
