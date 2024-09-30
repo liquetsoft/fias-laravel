@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 /**
  * Нормализатор для объектов eloquent.
  */
-final class EloquentDenormalizer implements DenormalizerInterface
+final class FiasEloquentDenormalizer implements DenormalizerInterface
 {
     private readonly TypeCaster $typeCaster;
 
