@@ -72,7 +72,9 @@ class SerializerGenerator extends AbstractGenerator
     {
         $constants = [];
 
-        $denormalizeBody = "\$dataToPopulate = \$this->convertDataToInternalFormat(\$data);\n";
+        $denormalizeBody = "if (!is_array(\$data)) {\n";
+        $denormalizeBody .= "    throw new InvalidArgumentException('Bad data parameter. Array instance is required');\n";
+        $denormalizeBody .= "}\n\n";
         $denormalizeBody .= '$type = trim($type, " \t\n\r\0\x0B\\\\/");' . "\n\n";
         $denormalizeBody .= "\$entity = \$context[AbstractNormalizer::OBJECT_TO_POPULATE] ?? new \$type();\n\n";
         $denormalizeBody .= "if (!(\$entity instanceof Model)) {\n";
@@ -85,13 +87,12 @@ class SerializerGenerator extends AbstractGenerator
             $className = $this->unifyClassName($descriptor->getName());
             $constants[] = new Literal("{$className}::class => true");
             $denormalizeBody .= "    case {$className}::class:\n";
-            $denormalizeBody .= "        \$extractedData = \$this->model{$className}DataExtractor(\$dataToPopulate);\n";
+            $denormalizeBody .= "        \$extractedData = \$this->model{$className}DataExtractor(\$data);\n";
             $denormalizeBody .= "        break;\n";
         }
 
         $denormalizeBody .= "    default:\n";
         $denormalizeBody .= "        throw new InvalidArgumentException(\"Can't find data extractor for '{\$type}' type\");\n";
-        $denormalizeBody .= "        break;\n";
         $denormalizeBody .= "}\n\n";
         $denormalizeBody .= "\$entity->setRawAttributes(\$extractedData);\n";
         $denormalizeBody .= "\n";
@@ -128,25 +129,6 @@ class SerializerGenerator extends AbstractGenerator
             ->setBody('return FiasSerializerFormat::XML->isEqual($format) ? self::ALLOWED_ENTITIES : [];');
         $getSupportedTypes->addParameter('format')->setType('string')->setNullable(true);
 
-        $convertDataToInternalFormatBody = <<<EOT
-\$result = [];
-if (!is_array(\$data)) {
-    return \$result;
-}
-
-foreach (\$data as \$key => \$value) {
-    \$newKey = strtolower(trim((string) \$key, " \\n\\r\\t\\v\\x00@"));
-    \$result[\$newKey] = \$value;
-}
-
-return \$result;
-EOT;
-        $convertDataToInternalFormat = $class->addMethod('convertDataToInternalFormat')
-            ->setVisibility('private')
-            ->setReturnType('array')
-            ->setBody($convertDataToInternalFormatBody);
-        $convertDataToInternalFormat->addParameter('data')->setType('mixed')->setNullable(false);
-
         foreach ($descriptors as $descriptor) {
             $className = $this->unifyClassName($descriptor->getName());
             $entityMethod = $class->addMethod("model{$className}DataExtractor");
@@ -164,19 +146,23 @@ EOT;
         $body = "return [\n";
         foreach ($descriptor->getFields() as $field) {
             $column = $this->unifyColumnName($field->getName());
+            $arrayParamName = '@' . strtoupper($field->getName());
             $type = trim($field->getType() . '_' . $field->getSubType(), ' _');
             switch ($type) {
                 case 'int':
-                    $varType = "(int) \$data['{$column}']";
+                    $varType = "(int) \$data['{$arrayParamName}']";
+                    $defaultValue = $field->isNullable() ? 'null' : '0';
                     break;
                 case 'string_date':
-                    $varType = "new DateTimeImmutable((string) \$data['{$column}'])";
+                    $varType = "new DateTimeImmutable((string) \$data['{$arrayParamName}'])";
+                    $defaultValue = 'null';
                     break;
                 default:
-                    $varType = "trim((string) \$data['{$column}'])";
+                    $varType = "trim((string) \$data['{$arrayParamName}'])";
+                    $defaultValue = $field->isNullable() ? 'null' : "''";
                     break;
             }
-            $body .= "    '{$column}' => isset(\$data['{$column}']) ? {$varType} : null,\n";
+            $body .= "    '{$column}' => isset(\$data['{$arrayParamName}']) ? {$varType} : {$defaultValue},\n";
         }
         $body .= '];';
 

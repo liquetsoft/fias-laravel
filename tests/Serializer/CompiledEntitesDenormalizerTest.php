@@ -72,25 +72,14 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
     }
 
     /**
-     * Проверяет, что денормалайзер правильно преобразует массив в модель, используя имена полей из модели.
+     * Проверяет, что денормалайзер не будет обрабатывать данные, если предоставлен не массив.
      */
-    public function testDenormalizeModelNames(): void
+    public function testDenormalizeNotAnArrayException(): void
     {
-        $data = [
-            'id' => '100',
-            'objectid' => '101',
-            'objectguid' => '102',
-            'previd' => null,
-        ];
-
         $denormalizer = new CompiledEntitesDenormalizer();
-        $res = $denormalizer->denormalize($data, AddrObj::class, FiasSerializerFormat::XML->value);
 
-        $this->assertInstanceOf(AddrObj::class, $res);
-        $this->assertSame((int) $data['id'], $res->getAttribute('id'));
-        $this->assertSame((int) $data['objectid'], $res->getAttribute('objectid'));
-        $this->assertSame($data['objectguid'], $res->getAttribute('objectguid'));
-        $this->assertNull($res->getAttribute('previd'));
+        $this->expectException(InvalidArgumentException::class);
+        $denormalizer->denormalize(123, AddrObj::class, FiasSerializerFormat::XML->value);
     }
 
     /**
@@ -130,7 +119,7 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
     public function testDenormalizeWithObjectToPopulateException(): void
     {
         $data = [
-            'id' => '100',
+            '@ID' => '100',
         ];
         $model = new \stdClass();
 
