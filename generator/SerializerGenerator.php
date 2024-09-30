@@ -6,6 +6,7 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Generator;
 
 use Illuminate\Database\Eloquent\Model;
 use Liquetsoft\Fias\Component\EntityDescriptor\EntityDescriptor;
+use Liquetsoft\Fias\Component\Serializer\FiasSerializerFormat;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\Literal;
 use Nette\PhpGenerator\Method;
@@ -50,6 +51,7 @@ class SerializerGenerator extends AbstractGenerator
         $namespace->addUse(AbstractNormalizer::class);
         $namespace->addUse(Model::class);
         $namespace->addUse(InvalidArgumentException::class);
+        $namespace->addUse(FiasSerializerFormat::class);
 
         $descriptors = $this->registry->getDescriptors();
         foreach ($descriptors as $descriptor) {
@@ -102,7 +104,7 @@ class SerializerGenerator extends AbstractGenerator
             ->addComment("{@inheritDoc}\n")
             ->setVisibility('public')
             ->setReturnType('bool')
-            ->setBody('return \\array_key_exists(trim($type, " \t\n\r\0\x0B\\\\/"), self::ALLOWED_ENTITIES);');
+            ->setBody('return FiasSerializerFormat::XML->isEqual($format) && \\array_key_exists(trim($type, " \t\n\r\0\x0B\\\\/"), self::ALLOWED_ENTITIES);');
         $supports->addParameter('data');
         $supports->addParameter('type')->setType('string');
         $supports->addParameter('format', new Literal('null'))->setType('string');
@@ -123,7 +125,7 @@ class SerializerGenerator extends AbstractGenerator
             ->addComment("{@inheritDoc}\n")
             ->setVisibility('public')
             ->setReturnType('array')
-            ->setBody('return self::ALLOWED_ENTITIES;');
+            ->setBody('return FiasSerializerFormat::XML->isEqual($format) ? self::ALLOWED_ENTITIES : [];');
         $getSupportedTypes->addParameter('format')->setType('string')->setNullable(true);
 
         $convertDataToInternalFormatBody = <<<EOT

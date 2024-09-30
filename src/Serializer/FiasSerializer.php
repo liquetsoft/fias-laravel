@@ -32,7 +32,7 @@ final class FiasSerializer implements SerializerInterface
         if ($normalizers === null) {
             $normalizers = [
                 new CompiledEntitesDenormalizer(),
-                new EloquentDenormalizer(),
+                new FiasEloquentDenormalizer(),
                 new DateTimeNormalizer(),
                 new ObjectNormalizer(
                     nameConverter: new FiasNameConverter(),

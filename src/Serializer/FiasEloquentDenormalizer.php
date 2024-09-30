@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer;
 
 use Illuminate\Database\Eloquent\Model;
+use Liquetsoft\Fias\Component\Serializer\FiasSerializerFormat;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster\EloquentTypeCaster;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster\TypeCaster;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
@@ -14,7 +15,7 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 /**
  * Нормализатор для объектов eloquent.
  */
-final class EloquentDenormalizer implements DenormalizerInterface
+final class FiasEloquentDenormalizer implements DenormalizerInterface
 {
     private readonly TypeCaster $typeCaster;
 
@@ -28,7 +29,8 @@ final class EloquentDenormalizer implements DenormalizerInterface
      */
     public function supportsDenormalization($data, string $type, ?string $format = null, array $context = []): bool
     {
-        return is_subclass_of($type, Model::class);
+        return FiasSerializerFormat::XML->isEqual($format)
+            && is_subclass_of($type, Model::class);
     }
 
     /**
@@ -67,6 +69,10 @@ final class EloquentDenormalizer implements DenormalizerInterface
      */
     public function getSupportedTypes(?string $format): array
     {
+        if (!FiasSerializerFormat::XML->isEqual($format)) {
+            return [];
+        }
+
         return [
             Model::class => true,
         ];

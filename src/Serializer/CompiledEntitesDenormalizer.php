@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer;
 
 use Illuminate\Database\Eloquent\Model;
+use Liquetsoft\Fias\Component\Serializer\FiasSerializerFormat;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddrObj;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddrObjDivision;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddrObjTypes;
@@ -68,7 +69,7 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
      */
     public function supportsDenormalization($data, string $type, ?string $format = null, array $context = []): bool
     {
-        return \array_key_exists(trim($type, " \t\n\r\0\x0B\\/"), self::ALLOWED_ENTITIES);
+        return FiasSerializerFormat::XML->isEqual($format) && \array_key_exists(trim($type, " \t\n\r\0\x0B\\/"), self::ALLOWED_ENTITIES);
     }
 
     /**
@@ -172,7 +173,7 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
      */
     public function getSupportedTypes(?string $format): array
     {
-        return self::ALLOWED_ENTITIES;
+        return FiasSerializerFormat::XML->isEqual($format) ? self::ALLOWED_ENTITIES : [];
     }
 
     private function convertDataToInternalFormat(mixed $data): array

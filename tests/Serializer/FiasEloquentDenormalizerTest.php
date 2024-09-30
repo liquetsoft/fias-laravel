@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Serializer;
 
 use Illuminate\Database\Eloquent\Model;
-use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\EloquentDenormalizer;
+use Liquetsoft\Fias\Component\Serializer\FiasSerializerFormat;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasEloquentDenormalizer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\TypeCaster\TypeCaster;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\MockModel\FiasSerializerMock;
@@ -15,19 +16,19 @@ use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 /**
  * @internal
  */
-final class EloquentDenormalizerTest extends BaseCase
+final class FiasEloquentDenormalizerTest extends BaseCase
 {
     /**
      * Проверяет, что денормалайзер правильно определит, что может преобразовать тип.
      *
      * @dataProvider provideSupportsDenormalization
      */
-    public function testSupportsDenormalization(string $type, bool $expected): void
+    public function testSupportsDenormalization(string $type, string $format, bool $expected): void
     {
         $caster = $this->mock(TypeCaster::class);
 
-        $denormalizer = new EloquentDenormalizer($caster);
-        $res = $denormalizer->supportsDenormalization([], $type);
+        $denormalizer = new FiasEloquentDenormalizer($caster);
+        $res = $denormalizer->supportsDenormalization([], $type, $format);
 
         $this->assertSame($expected, $res);
     }
@@ -35,12 +36,19 @@ final class EloquentDenormalizerTest extends BaseCase
     public static function provideSupportsDenormalization(): array
     {
         return [
-            'supported type' => [
+            'supported type and format' => [
                 FiasSerializerMock::class,
+                FiasSerializerFormat::XML->value,
                 true,
             ],
             'unsupported type' => [
                 'test',
+                FiasSerializerFormat::XML->value,
+                false,
+            ],
+            'unsupported format' => [
+                FiasSerializerMock::class,
+                'json',
                 false,
             ],
         ];
@@ -61,8 +69,8 @@ final class EloquentDenormalizerTest extends BaseCase
             'wrong_attr' => 'wrong attr value',
         ];
 
-        $denormalizer = new EloquentDenormalizer();
-        $res = $denormalizer->denormalize($data, FiasSerializerMock::class);
+        $denormalizer = new FiasEloquentDenormalizer();
+        $res = $denormalizer->denormalize($data, FiasSerializerMock::class, FiasSerializerFormat::XML->value);
 
         $this->assertInstanceOf(FiasSerializerMock::class, $res);
         $this->assertSame((int) $data['actstatid'], $res->getAttribute('ACTSTATID'));
@@ -88,10 +96,11 @@ final class EloquentDenormalizerTest extends BaseCase
         ];
         $model = new FiasSerializerMock();
 
-        $denormalizer = new EloquentDenormalizer();
+        $denormalizer = new FiasEloquentDenormalizer();
         $res = $denormalizer->denormalize(
             data: $data,
             type: FiasSerializerMock::class,
+            format: FiasSerializerFormat::XML->value,
             context: [
                 'object_to_populate' => $model,
             ]
@@ -117,12 +126,13 @@ final class EloquentDenormalizerTest extends BaseCase
         ];
         $model = new \stdClass();
 
-        $denormalizer = new EloquentDenormalizer();
+        $denormalizer = new FiasEloquentDenormalizer();
 
         $this->expectException(InvalidArgumentException::class);
         $denormalizer->denormalize(
             data: $data,
             type: FiasSerializerMock::class,
+            format: FiasSerializerFormat::XML->value,
             context: [
                 'object_to_populate' => $model,
             ]
@@ -143,25 +153,44 @@ final class EloquentDenormalizerTest extends BaseCase
             ->method('canCast')
             ->willThrowException(new \RuntimeException());
 
-        $denormalizer = new EloquentDenormalizer($caster);
+        $denormalizer = new FiasEloquentDenormalizer($caster);
 
         $this->expectException(NotNormalizableValueException::class);
-        $denormalizer->denormalize($data, FiasSerializerMock::class);
+        $denormalizer->denormalize($data, FiasSerializerMock::class, FiasSerializerFormat::XML->value);
     }
 
     /**
      * Проверяет, что денормалайзер вернет верный список поддерживаемых объектов.
+     *
+     * @dataProvider provideGetSupportedTypes
      */
-    public function testGetSupportedTypes(): void
+    public function testGetSupportedTypes(?string $format, array $expected): void
     {
-        $expected = [
-            Model::class => true,
-        ];
         $caster = $this->mock(TypeCaster::class);
 
-        $denormalizer = new EloquentDenormalizer($caster);
-        $res = $denormalizer->getSupportedTypes(null);
+        $denormalizer = new FiasEloquentDenormalizer($caster);
+        $res = $denormalizer->getSupportedTypes($format);
 
         $this->assertSame($expected, $res);
+    }
+
+    public static function provideGetSupportedTypes(): array
+    {
+        return [
+            'xml format' => [
+                FiasSerializerFormat::XML->value,
+                [
+                    Model::class => true,
+                ],
+            ],
+            'null format' => [
+                null,
+                [],
+            ],
+            'json format' => [
+                'json',
+                [],
+            ],
+        ];
     }
 }

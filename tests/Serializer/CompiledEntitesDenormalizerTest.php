@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\Serializer;
 
+use Liquetsoft\Fias\Component\Serializer\FiasSerializerFormat;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\AddrObj;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\CompiledEntitesDenormalizer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
@@ -19,10 +20,10 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
      *
      * @dataProvider provideSupportsDenormalization
      */
-    public function testSupportsDenormalization(string $type, bool $expected): void
+    public function testSupportsDenormalization(string $type, string $format, bool $expected): void
     {
         $denormalizer = new CompiledEntitesDenormalizer();
-        $res = $denormalizer->supportsDenormalization([], $type);
+        $res = $denormalizer->supportsDenormalization([], $type, $format);
 
         $this->assertSame($expected, $res);
     }
@@ -30,12 +31,19 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
     public static function provideSupportsDenormalization(): array
     {
         return [
-            'supported type' => [
+            'supported type and format' => [
                 AddrObj::class,
+                FiasSerializerFormat::XML->value,
                 true,
             ],
             'unsupported type' => [
                 'test',
+                FiasSerializerFormat::XML->value,
+                false,
+            ],
+            'unsupported format' => [
+                AddrObj::class,
+                'json',
                 false,
             ],
         ];
@@ -54,7 +62,7 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
         ];
 
         $denormalizer = new CompiledEntitesDenormalizer();
-        $res = $denormalizer->denormalize($data, AddrObj::class);
+        $res = $denormalizer->denormalize($data, AddrObj::class, FiasSerializerFormat::XML->value);
 
         $this->assertInstanceOf(AddrObj::class, $res);
         $this->assertSame((int) $data['@ID'], $res->getAttribute('id'));
@@ -76,7 +84,7 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
         ];
 
         $denormalizer = new CompiledEntitesDenormalizer();
-        $res = $denormalizer->denormalize($data, AddrObj::class);
+        $res = $denormalizer->denormalize($data, AddrObj::class, FiasSerializerFormat::XML->value);
 
         $this->assertInstanceOf(AddrObj::class, $res);
         $this->assertSame((int) $data['id'], $res->getAttribute('id'));
@@ -102,6 +110,7 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
         $res = $denormalizer->denormalize(
             data: $data,
             type: AddrObj::class,
+            format: FiasSerializerFormat::XML->value,
             context: [
                 'object_to_populate' => $model,
             ]
@@ -131,6 +140,7 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
         $denormalizer->denormalize(
             data: $data,
             type: AddrObj::class,
+            format: FiasSerializerFormat::XML->value,
             context: [
                 'object_to_populate' => $model,
             ]
@@ -139,12 +149,32 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
 
     /**
      * Проверяет, что денормалайзер вернет верный список поддерживаемых объектов.
+     *
+     * @dataProvider provideGetSupportedTypes
      */
-    public function testGetSupportedTypes(): void
+    public function testGetSupportedTypes(?string $format, array|true $expected): void
     {
         $denormalizer = new CompiledEntitesDenormalizer();
-        $res = $denormalizer->getSupportedTypes(null);
+        $res = $denormalizer->getSupportedTypes($format);
 
-        $this->assertNotEmpty($res);
+        if ($expected === true) {
+            $this->assertNotEmpty($res);
+        } else {
+            $this->assertSame($expected, $res);
+        }
+    }
+
+    public static function provideGetSupportedTypes(): array
+    {
+        return [
+            'xml format' => [
+                FiasSerializerFormat::XML->value,
+                true,
+            ],
+            'non xml format' => [
+                'json',
+                [],
+            ],
+        ];
     }
 }
