@@ -150,7 +150,7 @@
 5. Загрузка и распаковка архива с полной версией ФИАС
 
     ```bash
-    php artisan liquetsoft:fias:download /path/to/download full --extract
+    php artisan liquetsoft:fias:download /path/to/download latest --extract
     ```
 
 6. Установка ФИАС из указанного каталога
