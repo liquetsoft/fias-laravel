@@ -72,9 +72,9 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
     }
 
     /**
-     * Проверяет, что денормалайзер не будет обрабатывать данные, если рпедоставлен не массив.
+     * Проверяет, что денормалайзер не будет обрабатывать данные, если предоставлен не массив.
      */
-    public function testDenormalizeNotAnArray(): void
+    public function testDenormalizeNotAnArrayException(): void
     {
         $denormalizer = new CompiledEntitesDenormalizer();
 

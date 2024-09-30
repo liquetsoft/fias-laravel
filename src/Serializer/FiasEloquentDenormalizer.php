@@ -36,13 +36,14 @@ final class FiasEloquentDenormalizer implements DenormalizerInterface
     /**
      * {@inheritdoc}
      *
-     * @throws NotNormalizableValueException
-     *
      * @psalm-suppress InvalidStringClass
      */
     public function denormalize($data, string $type, ?string $format = null, array $context = []): mixed
     {
-        $data = \is_array($data) ? $data : [];
+        if (!\is_array($data)) {
+            throw new InvalidArgumentException('Bad data parameter. Array instance is required');
+        }
+
         $type = trim($type, " \t\n\r\0\x0B\\/");
 
         $entity = !empty($context['object_to_populate']) ? $context['object_to_populate'] : new $type();

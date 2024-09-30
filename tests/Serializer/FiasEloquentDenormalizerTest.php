@@ -117,7 +117,18 @@ final class FiasEloquentDenormalizerTest extends BaseCase
     }
 
     /**
-     * Проверяет, что денормалайзер выьросит исключение, если указана неверная модель для наполнения.
+     * Проверяет, что денормалайзер не будет обрабатывать данные, если предоставлен не массив.
+     */
+    public function testDenormalizeNotAnArrayException(): void
+    {
+        $denormalizer = new FiasEloquentDenormalizer();
+
+        $this->expectException(InvalidArgumentException::class);
+        $denormalizer->denormalize(123, FiasSerializerMock::class, FiasSerializerFormat::XML->value);
+    }
+
+    /**
+     * Проверяет, что денормалайзер выбросит исключение, если указана неверная модель для наполнения.
      */
     public function testDenormalizeWithObjectToPopulateException(): void
     {
