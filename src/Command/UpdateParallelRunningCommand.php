@@ -8,19 +8,21 @@ use Illuminate\Console\Command;
 use Illuminate\Foundation\Application;
 use Liquetsoft\Fias\Component\Exception\PipeException;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
-use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
-use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
+use Liquetsoft\Fias\Component\Pipeline\State\State;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Консольная команда, которая является одним из параллельных процессов обновления ФИАС.
  */
 final class UpdateParallelRunningCommand extends Command
 {
-    protected $signature = 'liquetsoft:fias:update_parallel_running {files?}';
+    protected $signature = 'liquetsoft:fias:update_parallel_running';
 
     protected $description = 'Command for running parallel update.';
 
     private readonly Pipe $pipeline;
+
+    private readonly SerializerInterface $serializer;
 
     /**
      * В конструкторе передаем ссылку на пайплайн установки.
@@ -29,6 +31,7 @@ final class UpdateParallelRunningCommand extends Command
     {
         parent::__construct();
         $this->pipeline = $app->get('liquetsoft_fias.pipe.update_parallel_running');
+        $this->serializer = $app->get('liquetsoft_fias.serializer.serializer');
     }
 
     /**
@@ -38,22 +41,13 @@ final class UpdateParallelRunningCommand extends Command
      */
     public function handle(): void
     {
-        $files = $this->argument('files');
-        if (\is_array($files)) {
-            $files = reset($files);
+        $stdIn = file_get_contents('php://stdin');
+        if ($stdIn === false || $stdIn === '') {
+            return;
         }
 
-        if ($files !== false && $files !== null && $files !== '') {
-            $files = json_decode((string) $files, true);
-        } else {
-            $stdIn = file_get_contents('php://stdin');
-            if ($stdIn !== false && $stdIn !== '') {
-                $files = json_decode($stdIn, true);
-            }
-        }
+        $state = $this->serializer->deserialize($stdIn, State::class, 'json');
 
-        $state = new ArrayState();
-        $state->setAndLockParameter(StateParameter::FILES_TO_PROCEED, $files);
         $this->pipeline->run($state);
     }
 }

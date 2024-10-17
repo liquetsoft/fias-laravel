@@ -4,10 +4,17 @@ declare(strict_types=1);
 
 namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer;
 
+use Liquetsoft\Fias\Component\Serializer\FiasFileDenormalizer;
+use Liquetsoft\Fias\Component\Serializer\FiasFileNormalizer;
 use Liquetsoft\Fias\Component\Serializer\FiasNameConverter;
+use Liquetsoft\Fias\Component\Serializer\FiasPipelineStateDenormalizer;
+use Liquetsoft\Fias\Component\Serializer\FiasPipelineStateNormalizer;
+use Liquetsoft\Fias\Component\Serializer\FiasUnpackerFileDenormalizer;
+use Liquetsoft\Fias\Component\Serializer\FiasUnpackerFileNormalizer;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -34,6 +41,12 @@ final class FiasSerializer implements SerializerInterface
                 new CompiledEntitesDenormalizer(),
                 new FiasEloquentDenormalizer(),
                 new DateTimeNormalizer(),
+                new FiasPipelineStateNormalizer(),
+                new FiasPipelineStateDenormalizer(),
+                new FiasUnpackerFileNormalizer(),
+                new FiasUnpackerFileDenormalizer(),
+                new FiasFileNormalizer(),
+                new FiasFileDenormalizer(),
                 new ObjectNormalizer(
                     nameConverter: new FiasNameConverter(),
                     propertyTypeExtractor: new ReflectionExtractor(),
@@ -47,6 +60,7 @@ final class FiasSerializer implements SerializerInterface
         if ($encoders === null) {
             $encoders = [
                 new XmlEncoder(),
+                new JsonEncoder(),
             ];
         }
 

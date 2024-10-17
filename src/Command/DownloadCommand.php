@@ -9,7 +9,7 @@ use Liquetsoft\Fias\Component\Downloader\Downloader;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformer;
 use Liquetsoft\Fias\Component\FiasInformer\FiasInformerResponse;
 use Liquetsoft\Fias\Component\Unpacker\Unpacker;
-use Marvin255\FileSystemHelper\FileSystemHelperInterface;
+use Marvin255\FileSystemHelper\FileSystemHelper;
 
 /**
  * Консольная команда, которая загружает указанную версию ФИАС в указанную папку.
@@ -26,7 +26,7 @@ final class DownloadCommand extends Command
         private readonly Downloader $downloader,
         private readonly Unpacker $unpacker,
         private readonly FiasInformer $informer,
-        private readonly FileSystemHelperInterface $fs,
+        private readonly FileSystemHelper $fs,
     ) {
         parent::__construct();
     }

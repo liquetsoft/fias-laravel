@@ -8,18 +8,24 @@ use Liquetsoft\Fias\Component\EntityDescriptor\BaseEntityDescriptor;
 use Liquetsoft\Fias\Component\EntityField\BaseEntityField;
 use Liquetsoft\Fias\Component\EntityManager\BaseEntityManager;
 use Liquetsoft\Fias\Component\EntityRegistry\ArrayEntityRegistry;
+use Liquetsoft\Fias\Component\FiasFileSelector\FiasFileSelectorArchive;
+use Liquetsoft\Fias\Component\FilesDispatcher\FilesDispatcherImpl;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\ArrayPipe;
 use Liquetsoft\Fias\Component\Pipeline\Pipe\Pipe;
 use Liquetsoft\Fias\Component\Pipeline\State\ArrayState;
+use Liquetsoft\Fias\Component\Pipeline\State\State;
 use Liquetsoft\Fias\Component\Pipeline\State\StateParameter;
+use Liquetsoft\Fias\Component\Pipeline\Task\ApplyNestedPipelineToFileTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\CleanupFilesUnpacked;
 use Liquetsoft\Fias\Component\Pipeline\Task\CleanupTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataDeleteTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\DataInsertTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\SelectFilesToProceedTask;
+use Liquetsoft\Fias\Component\Pipeline\Task\Task;
 use Liquetsoft\Fias\Component\Pipeline\Task\TruncateTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\UnpackTask;
 use Liquetsoft\Fias\Component\Pipeline\Task\VersionSetTask;
-use Liquetsoft\Fias\Component\Unpacker\ZipUnpacker;
+use Liquetsoft\Fias\Component\Unpacker\UnpackerZip;
 use Liquetsoft\Fias\Component\XmlReader\BaseXmlReader;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Entity\FiasVersion;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
@@ -27,6 +33,7 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Storage\EloquentStorage;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\EloquentTestCase;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\MockModel\PipelineTestMockModel;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\VersionManager\EloquentVersionManager;
+use Marvin255\FileSystemHelper\FileSystemFactory;
 
 /**
  * Тест для объекта папйлайна для установки базы данных.
@@ -89,13 +96,19 @@ class InstallPipelineTest extends EloquentTestCase
         copy(__DIR__ . '/_fixtures/install.zip', $testArchive);
 
         $version = 123;
-        $versionUrl = 'https://test.test/full';
+        $versionFullUrl = 'https://test.test/full';
+        $versionDeltaUrl = 'https://test.test/delta';
 
-        $state = new ArrayState();
-        $state->setAndLockParameter(StateParameter::PATH_TO_DOWNLOAD_FILE, $testArchive);
-        $state->setAndLockParameter(StateParameter::PATH_TO_EXTRACT_FOLDER, $testDir);
-        $state->setAndLockParameter(StateParameter::FIAS_NEXT_VERSION_NUMBER, $version);
-        $state->setAndLockParameter(StateParameter::FIAS_VERSION_ARCHIVE_URL, $versionUrl);
+        $state = new ArrayState(
+            [
+                StateParameter::PATH_TO_DOWNLOAD_FILE->value => $testArchive,
+                StateParameter::PATH_TO_EXTRACT_FOLDER->value => $testDir,
+                StateParameter::PATH_TO_SOURCE->value => $testArchive,
+                StateParameter::FIAS_NEXT_VERSION_NUMBER->value => $version,
+                StateParameter::FIAS_NEXT_VERSION_FULL_URL->value => $versionFullUrl,
+                StateParameter::FIAS_NEXT_VERSION_DELTA_URL->value => $versionDeltaUrl,
+            ]
+        );
 
         $pipeline = $this->createPipeLine();
         $pipeline->run($state);
@@ -177,24 +190,48 @@ class InstallPipelineTest extends EloquentTestCase
                 'mock' => PipelineTestMockModel::class,
             ]
         );
-
+        $fs = FileSystemFactory::create();
         $storage = new EloquentStorage();
-
+        $unpacker = new UnpackerZip();
+        $filesSelector = new FiasFileSelectorArchive($unpacker, $fiasEntityManager);
+        $filesDispatcher = new FilesDispatcherImpl($fiasEntityManager);
         $xmlReader = new BaseXmlReader();
-
         $serializer = new FiasSerializer();
-
         $versionManager = new EloquentVersionManager(FiasVersion::class);
 
+        $nestedTasksPipeline = new ArrayPipe(
+            [
+                new UnpackTask($unpacker),
+                new DataInsertTask($fiasEntityManager, $xmlReader, $storage, $serializer),
+                new DataDeleteTask($fiasEntityManager, $xmlReader, $storage, $serializer),
+            ],
+            new CleanupFilesUnpacked($fs),
+        );
+
+        $dispatchFilesTask = new class($filesDispatcher) implements Task {
+            public function __construct(private readonly FilesDispatcherImpl $filesDispatcher)
+            {
+            }
+
+            /**
+             * @psalm-suppress MixedArgument
+             */
+            public function run(State $state): State
+            {
+                $dispatchedFiles = $this->filesDispatcher->dispatch($state->getParameter(StateParameter::FILES_TO_PROCEED), 1);
+
+                return $state->setParameter(StateParameter::FILES_TO_PROCEED, $dispatchedFiles[0]);
+            }
+        };
+
         $tasks = [
-            new UnpackTask(new ZipUnpacker()),
             new TruncateTask($fiasEntityManager, $storage),
-            new SelectFilesToProceedTask($fiasEntityManager),
-            new DataInsertTask($fiasEntityManager, $xmlReader, $storage, $serializer),
-            new DataDeleteTask($fiasEntityManager, $xmlReader, $storage, $serializer),
+            new SelectFilesToProceedTask($filesSelector),
+            $dispatchFilesTask,
+            new ApplyNestedPipelineToFileTask($nestedTasksPipeline),
             new VersionSetTask($versionManager),
         ];
 
-        return new ArrayPipe($tasks, new CleanupTask());
+        return new ArrayPipe($tasks, new CleanupTask($fs));
     }
 }
