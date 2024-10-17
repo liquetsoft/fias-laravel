@@ -370,7 +370,7 @@ final class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[$this->prefixString('pipe.proceed_file_insert')] = function (Application $app): Pipe {
             return new ArrayPipe(
                 [
-                    $app->get($this->prefixString('task.data.unpack')),
+                    $app->get($this->prefixString('task.unpack')),
                     $app->get($this->prefixString('task.data.insert')),
                     $app->get($this->prefixString('task.data.delete')),
                 ],
@@ -390,8 +390,8 @@ final class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
         $servicesList[$this->prefixString('pipe.proceed_file_update')] = function (Application $app): Pipe {
             return new ArrayPipe(
                 [
+                    $app->get($this->prefixString('task.unpack')),
                     $app->get($this->prefixString('task.data.upsert')),
-                    $app->get($this->prefixString('task.data.insert')),
                     $app->get($this->prefixString('task.data.delete')),
                 ],
                 $app->get($this->prefixString('task.cleanup_files_unpacked')),
