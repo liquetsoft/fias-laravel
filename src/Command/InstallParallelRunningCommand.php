@@ -21,15 +21,16 @@ final class InstallParallelRunningCommand extends Command
 
     private readonly Pipe $pipeline;
 
+    private readonly SerializerInterface $serializer;
+
     /**
      * В конструкторе передаем ссылку на пайплайн установки.
      */
-    public function __construct(
-        private readonly SerializerInterface $serializer,
-        Application $app,
-    ) {
+    public function __construct(Application $app)
+    {
         parent::__construct();
         $this->pipeline = $app->get('liquetsoft_fias.pipe.install_parallel_running');
+        $this->serializer = $app->get('liquetsoft_fias.serializer.serializer');
     }
 
     /**
