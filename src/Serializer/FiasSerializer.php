@@ -14,6 +14,7 @@ use Liquetsoft\Fias\Component\Serializer\FiasUnpackerFileNormalizer;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -59,6 +60,7 @@ final class FiasSerializer implements SerializerInterface
         if ($encoders === null) {
             $encoders = [
                 new XmlEncoder(),
+                new JsonEncoder(),
             ];
         }
 
