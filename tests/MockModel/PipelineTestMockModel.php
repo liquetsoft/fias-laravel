@@ -24,6 +24,7 @@ class PipelineTestMockModel extends Model
         'testName',
         'startdate',
         'uuid',
+        'stringCode',
     ];
 
     protected $casts = [
@@ -31,5 +32,6 @@ class PipelineTestMockModel extends Model
         'testName' => 'string',
         'startdate' => 'datetime',
         'uuid' => 'string',
+        'stringCode' => 'string',
     ];
 }
