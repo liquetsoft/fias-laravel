@@ -14,13 +14,10 @@ use Liquetsoft\Fias\Component\Serializer\FiasUnpackerFileNormalizer;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\Encoder\DecoderInterface;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
@@ -28,7 +25,7 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 final class FiasSerializer implements SerializerInterface
 {
-    private readonly Serializer $nestedSerializer;
+    private readonly SerializerInterface $nestedSerializer;
 
     /**
      * @param array<DenormalizerInterface|NormalizerInterface>|null $normalizers
@@ -57,18 +54,7 @@ final class FiasSerializer implements SerializerInterface
             ];
         }
 
-        if ($encoders === null) {
-            $encoders = [
-                new XmlEncoder(
-                    [
-                        XmlEncoder::TYPE_CAST_ATTRIBUTES => false,
-                    ]
-                ),
-                new JsonEncoder(),
-            ];
-        }
-
-        $this->nestedSerializer = new Serializer($normalizers, $encoders);
+        $this->nestedSerializer = new \Liquetsoft\Fias\Component\Serializer\FiasSerializer($normalizers, $encoders);
     }
 
     /**
