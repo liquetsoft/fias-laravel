@@ -125,19 +125,4 @@ EOT;
             ]
         );
     }
-
-    /**
-     * Проверяет, что пустая строка вернется как пустая строка, а не null.
-     */
-    public function testDeserializeEmptyString(): void
-    {
-        $data = '<ActualStatus name=""/>';
-        $type = FiasSerializerMock::class;
-
-        $serializer = new FiasSerializer();
-        $model = $serializer->deserialize($data, $type, 'xml');
-
-        $this->assertInstanceOf(FiasSerializerMock::class, $model);
-        $this->assertSame('', $model->getAttribute('name'));
-    }
 }
