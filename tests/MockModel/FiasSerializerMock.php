@@ -7,7 +7,7 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\MockModel;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Мок для проверки десериалищации.
+ * Мок для проверки десериализации.
  */
 class FiasSerializerMock extends Model
 {

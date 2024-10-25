@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Serializer\FiasSerializer;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\BaseCase;
 use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\MockModel\FiasSerializerMock;
+use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\MockModel\FiasSerializerMockJson;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 
@@ -49,6 +50,32 @@ EOT;
         $this->assertSame(10101010, $model->timestamp);
         $this->assertSame('defaultItem', $model->defaultItem);
         $this->assertNull($model->nullableCast);
+    }
+
+    /**
+     * Проверяет, что json верно конвертируется в модель.
+     */
+    public function testDeserializeJson(): void
+    {
+        $data = json_encode(
+            [
+                'id' => '10',
+                'name' => 'test',
+                'floatNum' => '10.1',
+                'date' => '10.10.2019 10:10:10',
+            ]
+        );
+
+        $type = FiasSerializerMockJson::class;
+
+        $serializer = new FiasSerializer();
+        $model = $serializer->deserialize($data, $type, 'json');
+
+        $this->assertInstanceOf($type, $model);
+        $this->assertSame(10, $model->id);
+        $this->assertSame('test', $model->name);
+        $this->assertSame(10.1, $model->floatNum);
+        $this->assertSame('2019-10-10 10:10', $model->date?->format('Y-m-d H:i'));
     }
 
     /**
