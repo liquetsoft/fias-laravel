@@ -59,7 +59,11 @@ final class FiasSerializer implements SerializerInterface
 
         if ($encoders === null) {
             $encoders = [
-                new XmlEncoder(),
+                new XmlEncoder(
+                    [
+                        XmlEncoder::TYPE_CAST_ATTRIBUTES => false,
+                    ]
+                ),
                 new JsonEncoder(),
             ];
         }

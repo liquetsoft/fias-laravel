@@ -62,6 +62,9 @@ class UpdatePipelineTest extends EloquentTestCase
                 'uuid' => [
                     'type' => 'string',
                 ],
+                'stringCode' => [
+                    'type' => 'string',
+                ],
             ]
         );
 
@@ -126,6 +129,7 @@ class UpdatePipelineTest extends EloquentTestCase
                 'testName' => 'to insert',
                 'startDate' => new \DateTimeImmutable('2019-11-11 11:11:11'),
                 'uuid' => '123e4567-e89b-12d3-a456-426655440005',
+                'stringCode' => '227010000010000016740025000000000',
             ]
         );
         $this->assertDatabaseDoesNotHaveRow(
