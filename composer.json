@@ -15,7 +15,7 @@
     "phpunit/phpunit": "^10.0",
     "fakerphp/faker": "^1.7",
     "friendsofphp/php-cs-fixer": "^3.0",
-    "vimeo/psalm": "^5.0",
+    "vimeo/psalm": "^5.0|^6.0",
     "nette/php-generator": "^4.0"
   },
   "autoload": {
