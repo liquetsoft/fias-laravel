@@ -105,6 +105,7 @@ class SerializerGenerator extends AbstractGenerator
             ->addComment("{@inheritDoc}\n")
             ->setVisibility('public')
             ->setReturnType('bool')
+            ->addAttribute('Override')
             ->setBody('return FiasSerializerFormat::XML->isEqual($format) && \\array_key_exists(trim($type, " \t\n\r\0\x0B\\\\/"), self::ALLOWED_ENTITIES);');
         $supports->addParameter('data');
         $supports->addParameter('type')->setType('string');
@@ -116,6 +117,7 @@ class SerializerGenerator extends AbstractGenerator
             ->addComment("@psalm-suppress InvalidStringClass\n")
             ->setVisibility('public')
             ->setReturnType('mixed')
+            ->addAttribute('Override')
             ->setBody($denormalizeBody);
         $denormalize->addParameter('data');
         $denormalize->addParameter('type')->setType('string');
@@ -126,6 +128,7 @@ class SerializerGenerator extends AbstractGenerator
             ->addComment("{@inheritDoc}\n")
             ->setVisibility('public')
             ->setReturnType('array')
+            ->addAttribute('Override')
             ->setBody('return FiasSerializerFormat::XML->isEqual($format) ? self::ALLOWED_ENTITIES : [];');
         $getSupportedTypes->addParameter('format')->setType('string')->setNullable(true);
 
