@@ -70,6 +70,7 @@ class ResourceGenerator extends AbstractGenerator
             ->addComment("Преобразует сущность '{$entityName}' в массив.\n")
             ->addComment("@param Request \$request\n")
             ->addComment('@return array')
+            ->addAttribute('Override')
             ->setVisibility('public')
             ->setReturnType('array')
             ->setBody($methodBody);

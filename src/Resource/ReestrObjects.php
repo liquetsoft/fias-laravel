@@ -25,6 +25,7 @@ final class ReestrObjects extends JsonResource
      *
      * @param Request $request
      */
+    #[\Override]
     public function toArray($request): array
     {
         return [

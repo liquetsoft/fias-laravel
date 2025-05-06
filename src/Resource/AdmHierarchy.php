@@ -35,6 +35,7 @@ final class AdmHierarchy extends JsonResource
      *
      * @param Request $request
      */
+    #[\Override]
     public function toArray($request): array
     {
         return [
