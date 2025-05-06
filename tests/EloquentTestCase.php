@@ -21,6 +21,7 @@ abstract class EloquentTestCase extends BaseCase
     /**
      * СОздает новое соединение с базой данных для eloquent.
      */
+    #[\Override]
     public static function setUpBeforeClass(): void
     {
         $capsule = new Manager();

@@ -14,7 +14,7 @@ use Psr\Log\LogLevel;
 /**
  * Объект, который сохраняет данные ФИАС с помощью Eloquent.
  */
-class EloquentStorage implements Storage
+final class EloquentStorage implements Storage
 {
     /**
      * Размер стека для одномоментной вставки.
@@ -72,6 +72,7 @@ class EloquentStorage implements Storage
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function start(): void
     {
         $connection = DB::connection();
@@ -88,6 +89,7 @@ class EloquentStorage implements Storage
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function stop(): void
     {
         $this->checkAndFlushInsert(true);
@@ -107,6 +109,7 @@ class EloquentStorage implements Storage
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function supports(object $entity): bool
     {
         return $this->supportsClass(\get_class($entity));
@@ -115,6 +118,7 @@ class EloquentStorage implements Storage
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function supportsClass(string $class): bool
     {
         return is_subclass_of($class, Model::class);
@@ -123,6 +127,7 @@ class EloquentStorage implements Storage
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function insert(object $entity): void
     {
         $model = $this->checkIsEntityAllowedForEloquent($entity);
@@ -136,6 +141,7 @@ class EloquentStorage implements Storage
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function delete(object $entity): void
     {
         $model = $this->checkIsEntityAllowedForEloquent($entity);
@@ -155,6 +161,7 @@ class EloquentStorage implements Storage
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function upsert(object $entity): void
     {
         $model = $this->checkIsEntityAllowedForEloquent($entity);
@@ -169,6 +176,7 @@ class EloquentStorage implements Storage
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function truncate(string $entityClassName): void
     {
         if (!class_exists($entityClassName) || !is_subclass_of($entityClassName, Model::class)) {

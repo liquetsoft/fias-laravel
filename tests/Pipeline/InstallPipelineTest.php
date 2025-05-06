@@ -40,11 +40,12 @@ use Marvin255\FileSystemHelper\FileSystemFactory;
  *
  * @internal
  */
-class InstallPipelineTest extends EloquentTestCase
+final class InstallPipelineTest extends EloquentTestCase
 {
     /**
      * Создает таблицу в бд перед тестами.
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->prepareTableForTesting(
@@ -226,6 +227,7 @@ class InstallPipelineTest extends EloquentTestCase
             /**
              * @psalm-suppress MixedArgument
              */
+            #[\Override]
             public function run(State $state): State
             {
                 $dispatchedFiles = $this->filesDispatcher->dispatch($state->getParameter(StateParameter::FILES_TO_PROCEED), 1);

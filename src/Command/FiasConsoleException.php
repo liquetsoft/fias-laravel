@@ -6,6 +6,6 @@ namespace Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Command;
 
 use Symfony\Component\Console\Exception\ExceptionInterface;
 
-class FiasConsoleException extends \Exception implements ExceptionInterface
+final class FiasConsoleException extends \Exception implements ExceptionInterface
 {
 }

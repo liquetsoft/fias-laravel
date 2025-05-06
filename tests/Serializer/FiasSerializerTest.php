@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
  *
  * @internal
  */
-class FiasSerializerTest extends BaseCase
+final class FiasSerializerTest extends BaseCase
 {
     /**
      * Проверяет, что xml верно конвертируется в модель.

@@ -107,6 +107,7 @@ abstract class BaseCase extends TestCase
     /**
      * Удаляет тестовую директорию и все ее содержимое.
      */
+    #[\Override]
     protected function tearDown(): void
     {
         if ($this->tempDir !== null) {

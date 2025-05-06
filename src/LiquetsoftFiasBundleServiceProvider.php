@@ -81,6 +81,7 @@ final class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     /**
      * Регистрирует сервисы модуля в приложении.
      */
+    #[\Override]
     public function register(): void
     {
         $descriptions = $this->getServicesDescriptions();

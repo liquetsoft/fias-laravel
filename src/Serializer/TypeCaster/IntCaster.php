@@ -14,6 +14,7 @@ final class IntCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function canCast(string $type, mixed $value): bool
     {
         return $type === 'int' || $type === 'integer';
@@ -22,6 +23,7 @@ final class IntCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function cast(string $type, mixed $value): mixed
     {
         return (int) $value;

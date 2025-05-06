@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'HOUSE_TYPES'.
  */
-class Fiaslaravelhousetypes extends Migration
+final class Fiaslaravelhousetypes extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_house_types'.

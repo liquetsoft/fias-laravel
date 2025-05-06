@@ -24,6 +24,7 @@ final class EloquentVersionManager implements VersionManager
      *
      * @throws \RuntimeException
      */
+    #[\Override]
     public function setCurrentVersion(FiasInformerResponse $info): void
     {
         $entityClassName = $this->getEntityClassName();
@@ -45,6 +46,7 @@ final class EloquentVersionManager implements VersionManager
      *
      * @psalm-suppress MixedMethodCall
      */
+    #[\Override]
     public function getCurrentVersion(): ?FiasInformerResponse
     {
         $entityClassName = $this->getEntityClassName();

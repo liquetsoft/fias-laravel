@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Мок для проверки десериализации.
  */
-class FiasSerializerMock extends Model
+final class FiasSerializerMock extends Model
 {
     protected $dateFormat = 'Y-m-d H:i';
 

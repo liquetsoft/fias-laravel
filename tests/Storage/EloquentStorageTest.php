@@ -14,11 +14,12 @@ use Liquetsoft\Fias\Laravel\LiquetsoftFiasBundle\Tests\MockModel\EloquentStorage
  *
  * @internal
  */
-class EloquentStorageTest extends EloquentTestCase
+final class EloquentStorageTest extends EloquentTestCase
 {
     /**
      * Создает таблицу в бд перед тестами.
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->prepareTableForTesting(

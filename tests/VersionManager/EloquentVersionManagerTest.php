@@ -19,6 +19,7 @@ final class EloquentVersionManagerTest extends EloquentTestCase
     /**
      * Создает таблицу в бд перед тестами.
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->prepareTableForTesting(

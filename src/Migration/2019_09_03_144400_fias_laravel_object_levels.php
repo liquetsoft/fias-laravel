@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'OBJECT_LEVELS'.
  */
-class Fiaslaravelobjectlevels extends Migration
+final class Fiaslaravelobjectlevels extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_object_levels'.

@@ -14,6 +14,7 @@ final class StringCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function canCast(string $type, mixed $value): bool
     {
         return $type === 'string' || $type === 'str';
@@ -22,6 +23,7 @@ final class StringCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function cast(string $type, mixed $value): mixed
     {
         return (string) $value;

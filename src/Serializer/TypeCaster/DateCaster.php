@@ -14,6 +14,7 @@ final class DateCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function canCast(string $type, mixed $value): bool
     {
         return strpos($type, 'date') === 0;
@@ -22,6 +23,7 @@ final class DateCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function cast(string $type, mixed $value): mixed
     {
         return new \DateTimeImmutable((string) $value);

@@ -14,6 +14,7 @@ final class TimestampCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function canCast(string $type, mixed $value): bool
     {
         return strpos($type, 'timestamp') === 0;
@@ -22,6 +23,7 @@ final class TimestampCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function cast(string $type, mixed $value): mixed
     {
         if (is_numeric($value)) {

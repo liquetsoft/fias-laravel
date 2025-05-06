@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Модель для тестов пайплайнов.
  */
-class PipelineTestMockModel extends Model
+final class PipelineTestMockModel extends Model
 {
     public $timestamps = false;
 

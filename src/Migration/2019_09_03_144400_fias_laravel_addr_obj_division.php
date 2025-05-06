@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'ADDR_OBJ_DIVISION'.
  */
-class Fiaslaraveladdrobjdivision extends Migration
+final class Fiaslaraveladdrobjdivision extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_addr_obj_division'.
