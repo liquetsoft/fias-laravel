@@ -118,6 +118,7 @@ class ModelGenerator extends AbstractGenerator
         $connectionMethod .= 'return $connection;';
         $class->addMethod('getConnectionName')
             ->addComment("{@inheritDoc}\n\n@psalm-suppress MixedMethodCall")
+            ->addAttribute('Override')
             ->setBody($connectionMethod)
         ;
     }

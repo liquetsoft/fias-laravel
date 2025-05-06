@@ -84,6 +84,7 @@ final class Houses extends Model
      *
      * @psalm-suppress MixedMethodCall
      */
+    #[\Override]
     public function getConnectionName()
     {
         $connection = $this->connection;

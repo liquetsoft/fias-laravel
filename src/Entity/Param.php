@@ -57,6 +57,7 @@ final class Param extends Model
      *
      * @psalm-suppress MixedMethodCall
      */
+    #[\Override]
     public function getConnectionName()
     {
         $connection = $this->connection;
