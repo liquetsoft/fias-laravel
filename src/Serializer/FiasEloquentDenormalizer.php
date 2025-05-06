@@ -116,7 +116,7 @@ final class FiasEloquentDenormalizer implements DenormalizerInterface
         $nameVariants = [
             strtolower($name),
             str_replace('_', '', strtolower($name)),
-            strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $name)),
+            strtolower((string) preg_replace('/(?<!^)[A-Z]/', '_$0', $name)),
         ];
 
         foreach ($entity->getFillable() as $field) {
