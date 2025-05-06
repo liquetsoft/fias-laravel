@@ -66,6 +66,7 @@ final class NormativeDocs extends Model
      *
      * @psalm-suppress MixedMethodCall
      */
+    #[\Override]
     public function getConnectionName()
     {
         $connection = $this->connection;

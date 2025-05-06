@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Модель для тестов хранилища eloquent.
  */
-class EloquentStorageTestModel extends Model
+final class EloquentStorageTestModel extends Model
 {
     public $timestamps = false;
 

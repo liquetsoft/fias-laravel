@@ -23,21 +23,11 @@
                 <file name="./src/LiquetsoftFiasBundleServiceProvider.php" />
             </errorLevel>
         </MixedArgument>
-        <DeprecatedInterface>
-            <errorLevel type="suppress">
-                <file name="./src/Serializer/FiasSerializer.php" />
-            </errorLevel>
-        </DeprecatedInterface>
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <directory name="./src"/>
                 <directory name="./tests"/>
             </errorLevel>
         </PropertyNotSetInConstructor>
-        <MethodSignatureMustProvideReturnType>
-            <errorLevel type="suppress">
-                <directory name="./vendor"/>
-            </errorLevel>
-        </MethodSignatureMustProvideReturnType>
     </issueHandlers>
 </psalm>

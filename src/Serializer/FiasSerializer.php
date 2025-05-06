@@ -60,6 +60,7 @@ final class FiasSerializer implements SerializerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function serialize(mixed $data, string $format, array $context = []): string
     {
         return $this->nestedSerializer->serialize($data, $format, $context);
@@ -70,6 +71,7 @@ final class FiasSerializer implements SerializerInterface
      *
      * @psalm-suppress MixedReturnStatement
      */
+    #[\Override]
     public function deserialize(mixed $data, string $type, string $format, array $context = []): mixed
     {
         return $this->nestedSerializer->deserialize($data, $type, $format, $context);

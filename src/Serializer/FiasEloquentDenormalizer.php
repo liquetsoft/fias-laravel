@@ -27,6 +27,7 @@ final class FiasEloquentDenormalizer implements DenormalizerInterface
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function supportsDenormalization($data, string $type, ?string $format = null, array $context = []): bool
     {
         return FiasSerializerFormat::XML->isEqual($format)
@@ -38,6 +39,7 @@ final class FiasEloquentDenormalizer implements DenormalizerInterface
      *
      * @psalm-suppress InvalidStringClass
      */
+    #[\Override]
     public function denormalize($data, string $type, ?string $format = null, array $context = []): mixed
     {
         if (!\is_array($data)) {
@@ -68,6 +70,7 @@ final class FiasEloquentDenormalizer implements DenormalizerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getSupportedTypes(?string $format): array
     {
         if (!FiasSerializerFormat::XML->isEqual($format)) {
@@ -113,7 +116,7 @@ final class FiasEloquentDenormalizer implements DenormalizerInterface
         $nameVariants = [
             strtolower($name),
             str_replace('_', '', strtolower($name)),
-            strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $name)),
+            strtolower((string) preg_replace('/(?<!^)[A-Z]/', '_$0', $name)),
         ];
 
         foreach ($entity->getFillable() as $field) {

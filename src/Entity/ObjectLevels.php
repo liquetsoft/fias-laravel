@@ -51,6 +51,7 @@ final class ObjectLevels extends Model
      *
      * @psalm-suppress MixedMethodCall
      */
+    #[\Override]
     public function getConnectionName()
     {
         $connection = $this->connection;

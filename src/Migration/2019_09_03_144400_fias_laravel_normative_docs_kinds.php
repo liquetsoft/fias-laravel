@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'NORMATIVE_DOCS_KINDS'.
  */
-class Fiaslaravelnormativedocskinds extends Migration
+final class Fiaslaravelnormativedocskinds extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_normative_docs_kinds'.

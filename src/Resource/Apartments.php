@@ -32,6 +32,7 @@ final class Apartments extends JsonResource
      *
      * @param Request $request
      */
+    #[\Override]
     public function toArray($request): array
     {
         return [

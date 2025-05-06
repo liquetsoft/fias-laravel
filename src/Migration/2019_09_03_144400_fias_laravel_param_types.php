@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'PARAM_TYPES'.
  */
-class Fiaslaravelparamtypes extends Migration
+final class Fiaslaravelparamtypes extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_param_types'.

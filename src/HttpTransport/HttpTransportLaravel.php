@@ -19,6 +19,7 @@ final class HttpTransportLaravel implements HttpTransport
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function head(string $url): HttpTransportResponse
     {
         try {
@@ -40,6 +41,7 @@ final class HttpTransportLaravel implements HttpTransport
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function get(string $url, array $params = []): HttpTransportResponse
     {
         try {
@@ -63,6 +65,7 @@ final class HttpTransportLaravel implements HttpTransport
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function download(string $url, $destination, ?int $bytesFrom = null, ?int $bytesTo = null): HttpTransportResponse
     {
         try {

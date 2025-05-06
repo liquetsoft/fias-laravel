@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'CARPLACES'.
  */
-class Fiaslaravelcarplaces extends Migration
+final class Fiaslaravelcarplaces extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_carplaces'.

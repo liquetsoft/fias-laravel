@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'CHANGE_HISTORY'.
  */
-class Fiaslaravelchangehistory extends Migration
+final class Fiaslaravelchangehistory extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_change_history'.

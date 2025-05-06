@@ -35,6 +35,7 @@ final class EloquentTypeCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function canCast(string $type, mixed $value): bool
     {
         return $this->internalTypeCaster->canCast($type, $value);
@@ -43,6 +44,7 @@ final class EloquentTypeCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function cast(string $type, mixed $value): mixed
     {
         return $this->internalTypeCaster->cast($type, $value);

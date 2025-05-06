@@ -31,6 +31,7 @@ final class Carplaces extends JsonResource
      *
      * @param Request $request
      */
+    #[\Override]
     public function toArray($request): array
     {
         return [

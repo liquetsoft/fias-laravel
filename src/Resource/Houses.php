@@ -36,6 +36,7 @@ final class Houses extends JsonResource
      *
      * @param Request $request
      */
+    #[\Override]
     public function toArray($request): array
     {
         return [

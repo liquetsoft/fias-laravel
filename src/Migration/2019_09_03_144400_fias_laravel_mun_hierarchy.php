@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'MUN_HIERARCHY'.
  */
-class Fiaslaravelmunhierarchy extends Migration
+final class Fiaslaravelmunhierarchy extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_mun_hierarchy'.

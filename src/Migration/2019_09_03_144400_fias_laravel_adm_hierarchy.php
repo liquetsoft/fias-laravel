@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'ADM_HIERARCHY'.
  */
-class Fiaslaraveladmhierarchy extends Migration
+final class Fiaslaraveladmhierarchy extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_adm_hierarchy'.

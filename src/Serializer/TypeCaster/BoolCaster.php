@@ -14,6 +14,7 @@ final class BoolCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function canCast(string $type, mixed $value): bool
     {
         return $type === 'bool' || $type === 'boolean';
@@ -22,6 +23,7 @@ final class BoolCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function cast(string $type, mixed $value): mixed
     {
         return (bool) $value;

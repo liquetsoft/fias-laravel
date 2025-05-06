@@ -21,6 +21,7 @@ final class CompositeTypeCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function canCast(string $type, mixed $value): bool
     {
         foreach ($this->casters as $caster) {
@@ -35,6 +36,7 @@ final class CompositeTypeCaster implements TypeCaster
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function cast(string $type, mixed $value): mixed
     {
         foreach ($this->casters as $caster) {

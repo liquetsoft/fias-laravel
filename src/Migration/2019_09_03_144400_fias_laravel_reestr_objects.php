@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'REESTR_OBJECTS'.
  */
-class Fiaslaravelreestrobjects extends Migration
+final class Fiaslaravelreestrobjects extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_reestr_objects'.

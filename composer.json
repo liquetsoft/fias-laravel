@@ -5,7 +5,7 @@
   "keywords": ["php", "fias", "laravel"],
   "license": "MIT",
   "require": {
-    "php": ">=8.2 <=8.4",
+    "php": ">=8.2",
     "liquetsoft/fias-component": "^14.0",
     "illuminate/database": "^9.0|^10.0|^11.0|^12.0",
     "illuminate/http": "^9.0|^10.0|^11.0|^12.0",
@@ -15,7 +15,7 @@
     "phpunit/phpunit": "^10.0",
     "fakerphp/faker": "^1.7",
     "friendsofphp/php-cs-fixer": "^3.0",
-    "vimeo/psalm": "^5.0",
+    "vimeo/psalm": "^5.0|^6.0",
     "nette/php-generator": "^4.0"
   },
   "autoload": {

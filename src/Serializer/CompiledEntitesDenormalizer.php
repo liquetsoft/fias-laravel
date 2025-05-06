@@ -67,6 +67,7 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function supportsDenormalization($data, string $type, ?string $format = null, array $context = []): bool
     {
         return FiasSerializerFormat::XML->isEqual($format) && \array_key_exists(trim($type, " \t\n\r\0\x0B\\/"), self::ALLOWED_ENTITIES);
@@ -77,6 +78,7 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
      *
      * @psalm-suppress InvalidStringClass
      */
+    #[\Override]
     public function denormalize($data, string $type, ?string $format = null, array $context = []): mixed
     {
         if (!\is_array($data)) {
@@ -173,6 +175,7 @@ final class CompiledEntitesDenormalizer implements DenormalizerInterface
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getSupportedTypes(?string $format): array
     {
         return FiasSerializerFormat::XML->isEqual($format) ? self::ALLOWED_ENTITIES : [];

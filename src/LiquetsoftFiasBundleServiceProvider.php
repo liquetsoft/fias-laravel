@@ -81,6 +81,7 @@ final class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
     /**
      * Регистрирует сервисы модуля в приложении.
      */
+    #[\Override]
     public function register(): void
     {
         $descriptions = $this->getServicesDescriptions();
@@ -270,6 +271,7 @@ final class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      * @param array<string, \Closure|string> $servicesList
      *
      * @psalm-suppress PossiblyInvalidArgument
+     * @psalm-suppress InvalidArgument
      */
     private function registerTasks(array &$servicesList): void
     {
@@ -413,6 +415,7 @@ final class LiquetsoftFiasBundleServiceProvider extends ServiceProvider
      * @param array<string, \Closure|string> $servicesList
      *
      * @psalm-suppress PossiblyInvalidArgument
+     * @psalm-suppress InvalidArgument
      */
     private function registerPipelines(array &$servicesList): void
     {

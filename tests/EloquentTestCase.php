@@ -21,6 +21,7 @@ abstract class EloquentTestCase extends BaseCase
     /**
      * СОздает новое соединение с базой данных для eloquent.
      */
+    #[\Override]
     public static function setUpBeforeClass(): void
     {
         $capsule = new Manager();
@@ -48,7 +49,7 @@ abstract class EloquentTestCase extends BaseCase
     {
         $message = \sprintf(
             "Can't find '%s' row in '%s' table.",
-            json_encode($fields, \JSON_UNESCAPED_UNICODE),
+            json_encode($fields, \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR),
             $table
         );
 
@@ -64,7 +65,7 @@ abstract class EloquentTestCase extends BaseCase
     {
         $message = \sprintf(
             "Row '%s' exists in '%s' table.",
-            json_encode($fields, \JSON_UNESCAPED_UNICODE),
+            json_encode($fields, \JSON_UNESCAPED_UNICODE | \JSON_THROW_ON_ERROR),
             $table
         );
 

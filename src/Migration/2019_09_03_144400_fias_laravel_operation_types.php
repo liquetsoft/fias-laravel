@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 /**
  * Миграция для создания сущности 'OPERATION_TYPES'.
  */
-class Fiaslaraveloperationtypes extends Migration
+final class Fiaslaraveloperationtypes extends Migration
 {
     /**
      * Создание таблицы 'fias_laravel_operation_types'.
