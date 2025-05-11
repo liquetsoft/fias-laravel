@@ -20,9 +20,8 @@ final class FiasEloquentDenormalizerTest extends BaseCase
 {
     /**
      * Проверяет, что денормалайзер правильно определит, что может преобразовать тип.
-     *
-     * @dataProvider provideSupportsDenormalization
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideSupportsDenormalization')]
     public function testSupportsDenormalization(string $type, string $format, bool $expected): void
     {
         $caster = $this->mock(TypeCaster::class);
@@ -172,9 +171,8 @@ final class FiasEloquentDenormalizerTest extends BaseCase
 
     /**
      * Проверяет, что денормалайзер вернет верный список поддерживаемых объектов.
-     *
-     * @dataProvider provideGetSupportedTypes
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideGetSupportedTypes')]
     public function testGetSupportedTypes(?string $format, array $expected): void
     {
         $caster = $this->mock(TypeCaster::class);
