@@ -14,9 +14,8 @@ final class BoolCasterTest extends BaseCase
 {
     /**
      * Проверяет, что кастер правильно определит тип преобразования.
-     *
-     * @dataProvider provideTestCanCast
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTestCanCast')]
     public function testCanCast(string $type, mixed $value, mixed $expected): void
     {
         $caster = new BoolCaster();
@@ -49,9 +48,8 @@ final class BoolCasterTest extends BaseCase
 
     /**
      * Проверяет, что кастер правильно преобразует значение.
-     *
-     * @dataProvider provideTestCast
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTestCast')]
     public function testCast(string $type, mixed $value, mixed $expected): void
     {
         $caster = new BoolCaster();

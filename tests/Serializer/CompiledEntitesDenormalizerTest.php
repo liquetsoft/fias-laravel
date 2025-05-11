@@ -17,9 +17,8 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
 {
     /**
      * Проверяет, что денормалайзер правильно определит, что может преобразовать тип.
-     *
-     * @dataProvider provideSupportsDenormalization
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideSupportsDenormalization')]
     public function testSupportsDenormalization(string $type, string $format, bool $expected): void
     {
         $denormalizer = new CompiledEntitesDenormalizer();
@@ -138,9 +137,8 @@ final class CompiledEntitesDenormalizerTest extends BaseCase
 
     /**
      * Проверяет, что денормалайзер вернет верный список поддерживаемых объектов.
-     *
-     * @dataProvider provideGetSupportedTypes
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideGetSupportedTypes')]
     public function testGetSupportedTypes(?string $format, array|true $expected): void
     {
         $denormalizer = new CompiledEntitesDenormalizer();
